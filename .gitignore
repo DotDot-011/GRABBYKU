@@ -2,7 +2,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-
+/googlemap/node_modules
 /googlemap/.pnp
 .pnp.js
 
@@ -27,7 +27,7 @@ yarn-error.log*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-
+/driver/node_modules
 /driver/.pnp
 .pnp.js
 
