@@ -272,12 +272,7 @@ class App extends React.Component {
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
      !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath)){
         
-        // Axios.post('http://localhost:3001/create',{
-        // LatitudeStart: this.state.markerPosition.lat,
-        // LongtitudeStart: this.state.markerPosition.lng,
-        // LatitudeDestination: this.state.markerDestinationPosition.lat,
-        // LongtitudeDestination: this.state.markerDestinationPosition.lng,
-        // })
+        
         fetch("http://localhost:1236/location/1",{
             method: 'put',
             headers: {
@@ -300,26 +295,7 @@ class App extends React.Component {
         })
 
         this.timeoutId = setInterval(()=>{
-          // fetch("http://localhost:1234/response")
-          //   .then(response=> response.json())
-          //   .then(data=>{
-          //     console.log(data[0]);
-          //     if(data[0].status ==="true"){
-               
-          //       fetch("http://localhost:1234/response/1",{
-          //           method: 'put',
-          //           headers: {
-          //               'Content-Type': 'application/json'
-          //           },
-          //           body: JSON.stringify({
-          //               "id": 1,
-          //               "status": "false",
-          //           })
-          //       })
-          //       .catch(err => console.log(err));
-
-          //     }
-          // });
+         
           fetch("http://localhost:1237/driverDetail")
           .then(response=> response.json())
           .then(data=>{

@@ -10,7 +10,6 @@ export default function QueueDriver(props) {
         }
         let queueList = document.querySelector('#queueList');
         document.getElementById('queueList').innerHTML='';
-        //let tmpQueueList = document.createElement('ul');
         data.forEach(val => {
             let myEl = document.createElement('span');
             myEl.innerText = `1 : ${val.driver_name} `;
@@ -64,31 +63,7 @@ export default function QueueDriver(props) {
             .then(response=> console.log(response))
             .catch(err => console.log(err));
     }
-
-    // function updateStatus(){
-    //     fetch("http://localhost:1234/response")
-    //     .then(response=> response.json())
-    //     .then(data=>{
-    //         console.log(data[0]);
-    //         if(data[0].status ==="false"){
-    //             fetch("http://localhost:1234/response/1",{
-    //                 method: 'put',
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 },
-    //                 body: JSON.stringify({
-    //                     "id": 1,
-    //                     "status": "true",
-    //                 })
-    //             })
-    //             .catch(err => console.log(err));
-    //         }
-    //     })
-    // }
-
-    
-     
-    
+ 
 
     return(
         <div className="queue-container">
