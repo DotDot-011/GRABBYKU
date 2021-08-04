@@ -70,7 +70,7 @@ class App extends React.Component {
               clearInterval(this.cancelIntervalId);
               this.setState({
                 queueDriverAppear:1,
-                
+                buttonAcceptCancelAppear:1,
               })
               // document.location.reload()
           }
