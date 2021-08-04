@@ -72,14 +72,17 @@ class App extends React.Component {
                 queueDriverAppear:1,
                 
               })
-              document.location.reload()
+              // document.location.reload()
           }
         })
     }, 1500);
   }
 
   driverCancel = () =>{
-    document.location.reload();
+    this.setState({
+      queueDriverAppear:1,
+    })
+    // document.location.reload();
   }
   driverAccept = () =>{
     fetch("http://localhost:1237/driverDetail/1",{
@@ -112,6 +115,7 @@ class App extends React.Component {
         }
         else{
           this.queueDriver= null;
+          clearInterval(this.cancelIntervalId)
           this.cancelCase();
         }
         if(!!this.state.buttonAcceptCancelAppear){

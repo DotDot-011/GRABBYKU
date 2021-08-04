@@ -1,5 +1,5 @@
 import './QueueDriver.css'
-import { useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 export default function QueueDriver(props) {
    
     
@@ -18,13 +18,15 @@ export default function QueueDriver(props) {
         
     }
     
-    
-    window.timeoutId1 = setInterval(()=>{
+    useEffect(()=>{
+        clearInterval(window.timeoutId2);
+        window.timeoutId1 = setInterval(()=>{
             fetch("http://localhost:1235/queueDriver")
                 .then(response=> response.json())
                 .then(data => showQueue(data));
-        },1000)
-    
+            },1500)
+    },[])
+
     function enQueue() {
 
         fetch("http://localhost:1235/queueDriver",{
@@ -45,10 +47,9 @@ export default function QueueDriver(props) {
                 .then(response=> response.json())
                 .then(data => {
                     if(data[0].status ==='true'){
-                        
+                        leaveQueue();
                         clearInterval(window.timeoutId1);
                         clearInterval(window.timeoutId2);
-                        leaveQueue();
                         props.handleForUpdate(data[0].latitudeStart, data[0].longtitudeStart , data[0].latitudeDestination ,data[0].longtitudeDestination ,null )
                 }
             })
