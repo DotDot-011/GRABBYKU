@@ -111,6 +111,7 @@ class App extends React.Component {
   render() {
         
         if(!!this.state.queueDriverAppear){
+          clearInterval(this.cancelIntervalId)
           this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}/>
         }
         else{

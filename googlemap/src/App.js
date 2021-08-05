@@ -18,7 +18,7 @@ Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
 class App extends React.Component {
-    
+
     state = {
       address: '',
       city: '',
@@ -330,9 +330,7 @@ class App extends React.Component {
       window.alert("Error");
      } 
     }
-    // deleteLocation = (id) =>{
-    //   Axios.delete(`http://localhost:3001/delete/${id}`)
-    // }
+    
     
     
     
