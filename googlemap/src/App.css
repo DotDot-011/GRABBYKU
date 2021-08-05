@@ -1,5 +1,14 @@
 .button-start{
     position: relative;
-    left: 419px;
+    left: 40%;
 }
 
+.button-currentLocation{
+    position: relative;
+    left: 10%;
+}
+
+#map{
+
+
+}

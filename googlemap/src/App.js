@@ -528,7 +528,7 @@ class App extends React.Component {
       ));
       return(
         
-        <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
+        <div id="map" style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
         <h1>User</h1>
           
         {/* <Descriptions bordered>
@@ -543,7 +543,7 @@ class App extends React.Component {
 
         <MapWithAMarker
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
-          containerElement={<div style={{ height: `400px` }} />}
+          containerElement={<div style={{ height: `380px` }} />}
           loadingElement={<div style={{ height: `100%` }} />}
           
           mapElement={<div style={{ height: `100%` }} />}
