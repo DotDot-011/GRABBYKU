@@ -14,6 +14,7 @@ import { Descriptions } from 'antd';
 import AutoComplete from 'react-google-autocomplete'
 import Axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
+import leaveQueue from "./component/LeaveQueue";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -81,7 +82,8 @@ class App extends React.Component {
   driverCancel = () =>{
     this.setState({
       queueDriverAppear:1,
-    })
+    });
+    leaveQueue();
     // document.location.reload();
   }
   driverAccept = () =>{
@@ -103,7 +105,8 @@ class App extends React.Component {
         .catch(err => console.log(err));
     this.setState({
       buttonAcceptCancelAppear: null,
-    })
+    });
+    leaveQueue();
   }
   queueDriver = null;
   buttonAcceptCancel = null;
@@ -122,14 +125,14 @@ class App extends React.Component {
         if(!!this.state.buttonAcceptCancelAppear){
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
                                       <button className="accept-button" onClick={this.driverAccept}> ยอมรับ </button>
-                                      <button className="cancel-button" onClick={this.driverCancel}> ยกเลิก </button>
+                                      <button className="cancel-button" onClick={this.driverCancel}> ปฏิเสธ </button>
                                     </div>
           this.buttonDone=null;
         }
         else{
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
-                              <button className="done-button">Done</button>
+                              <button className="done-button"> เสร็จสิ้น </button>
                             </div>
         }
 

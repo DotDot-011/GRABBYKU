@@ -47,7 +47,7 @@ export default function QueueDriver(props) {
             fetch("http://localhost:1236/location")
                 .then(response=> response.json())
                 .then(data => {
-                    leaveQueue();
+                    
                     if(data[0].status ==='true'){
                         clearInterval(window.timeoutId1);
                         clearInterval(window.timeoutId2);

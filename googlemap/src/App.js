@@ -496,9 +496,9 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceDestinationSelected}
             placeholder={this.state.showPlaceHolderDestination}
             />
-          <button class="button-currentLocation" onClick={this.findMylocation}>your location</button>
+          <button class="button-currentLocation" onClick={this.findMylocation}> ตำแหน่งปัจจุบัน </button>
 
-          <button className="button-start" onClick={this.addLocation}>START</button>
+          <button className="button-start" onClick={this.addLocation}> เริ่มต้น </button>
 
           <Polygon
               path={[
