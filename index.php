@@ -12,5 +12,5 @@ if(isset($routes[$route][$method])) {
     // echo json_encode($users);
 }else {
     echo "this routes is not route.php";
-//eiei
+//eieitt
 }
