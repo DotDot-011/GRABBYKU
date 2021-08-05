@@ -121,8 +121,8 @@ class App extends React.Component {
         }
         if(!!this.state.buttonAcceptCancelAppear){
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
-                                      <button className="accept-button" onClick={this.driverAccept}>Accept</button>
-                                      <button className="cancel-button" onClick={this.driverCancel}>Cencel</button>
+                                      <button className="accept-button" onClick={this.driverAccept}> ยอมรับ </button>
+                                      <button className="cancel-button" onClick={this.driverCancel}> ยกเลิก </button>
                                     </div>
           this.buttonDone=null;
         }
