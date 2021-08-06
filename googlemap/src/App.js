@@ -531,10 +531,10 @@ class App extends React.Component {
             options={
               {
                 strokeColor: "green",
-                strokeOpacity: 0.2,
+                strokeOpacity: 0,
                 strokeWeight: 3,
                 fillColor: "green",
-                fillOpacity: 0.1,
+                fillOpacity: 0,
               }
             }
           />
