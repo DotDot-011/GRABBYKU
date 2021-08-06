@@ -261,18 +261,8 @@ class App extends React.Component {
       {latitude:13.857277966250578, longitude:100.57639848267323},
       {latitude:13.857659300458918, longitude:100.58083861265405},
       {latitude:13.850487798245787, longitude:100.5815458679391},
-      {latitude:13.838080862978906, longitude:100.57438477818036},
-      {latitude:13.838926837307145, longitude:100.57261728000668},
-      {latitude:13.839207853669947, longitude:100.57149758183783},
-      {latitude:13.839164290084023, longitude:100.57046566364782},
-      {latitude:13.840180771629475, longitude:100.56849155928428},
-      {latitude:13.84222824239746,  longitude:100.5678484798325},
-      {latitude:13.841836174922516, longitude:100.5644087525324},
-      {latitude:13.842736477029229, longitude:100.5640647798024},
-      {latitude:13.84291072864725,  longitude:100.563481521695},
-      {latitude:13.844275695168301, longitude:100.56330205765967},
-      {latitude:13.844885571222475, longitude:100.5612531766157},
-      {latitude:13.845560131549451, longitude:100.560626926484},
+      {latitude:13.836416483501072, longitude:100.57339372833995},
+      {latitude:13.842558941191157, longitude:100.5590814720114},
       {latitude:13.855458118865057, longitude:100.56596600925597},
     ]
 
@@ -447,7 +437,7 @@ class App extends React.Component {
             restriction:{
               latLngBounds:{
                 north: this.state.mapPosition.lat+ 0.010,
-                south: this.state.mapPosition.lat - 0.0117,
+                south: this.state.mapPosition.lat - 0.0127,
                 east: this.state.mapPosition.lng + 0.0134,
                 west: this.state.mapPosition.lng - 0.0103,
               },
@@ -531,20 +521,8 @@ class App extends React.Component {
               {lat:13.850487798245787, lng:100.5815458679391},
               
             
-              {lat:13.838080862978906, lng:100.57438477818036},
-              {lat:13.838926837307145, lng:100.57261728000668},
-              {lat:13.839207853669947, lng:100.57149758183783},
-              {lat:13.839164290084023, lng:100.57046566364782},
-              {lat:13.840180771629475, lng:100.56849155928428},
-              {lat:13.84222824239746, lng:100.5678484798325},
-              {lat:13.841836174922516, lng:100.5644087525324},
-              {lat:13.842736477029229, lng:100.5640647798024},
-              {lat:13.84291072864725, lng:100.563481521695},
-              {lat:13.844275695168301, lng:100.56330205765967},
-              {lat:13.844885571222475, lng:100.5612531766157},
-
-              {lat:13.845560131549451, lng:100.560626926484},
-
+              {lat:13.836416483501072, lng:100.57339372833995},
+              {lat:13.842558941191157, lng:100.5590814720114},
 
 
               {lat:13.855458118865057, lng:100.56596600925597},
@@ -553,10 +531,10 @@ class App extends React.Component {
             options={
               {
                 strokeColor: "green",
-                strokeOpacity: 0,
+                strokeOpacity: 0.2,
                 strokeWeight: 3,
                 fillColor: "green",
-                fillOpacity: 0,
+                fillOpacity: 0.1,
               }
             }
           />
