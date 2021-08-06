@@ -15,6 +15,8 @@ import AutoComplete from 'react-google-autocomplete'
 import Axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
+import UserInfo from "./component/userInfo";
+
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -111,16 +113,20 @@ class App extends React.Component {
   queueDriver = null;
   buttonAcceptCancel = null;
   buttonDone = null;
+  userInfo = null;
+
   render() {
         
         if(!!this.state.queueDriverAppear){
           clearInterval(this.cancelIntervalId)
           this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}/>
+          this.userInfo = null;
         }
         else{
           this.queueDriver= null;
           clearInterval(this.cancelIntervalId)
           this.cancelCase();
+          this.userInfo = <UserInfo/>;
         }
         if(!!this.state.buttonAcceptCancelAppear){
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
@@ -191,6 +197,7 @@ class App extends React.Component {
         <div style={{ padding: '1rem', margin: '0 auto', maxWidth: 600 }}>
         {this.queueDriver}
           <h1>Driver</h1>
+          {this.userInfo}
 
           {/* <Descriptions bordered>
             <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
