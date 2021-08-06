@@ -19,6 +19,7 @@ Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 class App extends React.Component {
     
+
     state = {
       address: '',
       city: '',
@@ -45,7 +46,7 @@ class App extends React.Component {
       detailDriverAppear:null,
       locationList:[],
     }
-    
+
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
           this.setState({
@@ -404,10 +405,10 @@ class App extends React.Component {
         this.detailDriver=null;
       }
 
-
+      
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>
         
-        <GoogleMap
+        <GoogleMap 
           
           defaultZoom={15}
           defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
@@ -433,6 +434,7 @@ class App extends React.Component {
               
             },
            }}
+        
         >
           
           <Marker 
@@ -453,9 +455,9 @@ class App extends React.Component {
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>
-          
-          <Autocomplete 
-            style={{width:"100%", height:'40px' , paddingLeft: 16 , marginTop:10 , marginBottom:'2rem'}}
+          {/* here1 */}
+          <Autocomplete id="input1"
+            // style={{ paddingLeft: 16 , marginTop:10 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -476,9 +478,9 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceSelected}
             placeholder={this.state.showPlaceHolder}
             />
-
-            <Autocomplete 
-            style={{width:"100%", height:'40px' , paddingLeft: 16 , marginTop:2 , marginBottom:'2rem'}}
+          {/* here2 */}
+          <Autocomplete id="input2"
+            // style={{  paddingLeft: 16 , marginTop:2 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -498,6 +500,7 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceDestinationSelected}
             placeholder={this.state.showPlaceHolderDestination}
             />
+            
           <button class="button-currentLocation" onClick={this.findMylocation}>your location</button>
 
           <button className="button-start" onClick={this.addLocation}>START</button>
@@ -526,10 +529,12 @@ class App extends React.Component {
         
         </GoogleMap>
       ));
+
       return(
         
-        <div id="map" style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
-        <h1>User</h1>
+        <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
+
+        {/* <h1>User</h1> */}
           
         {/* <Descriptions bordered>
           <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
@@ -540,14 +545,11 @@ class App extends React.Component {
         {this.watingQueue}
         {this.detailDriver}
 
-
-        <MapWithAMarker
+        <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
-          containerElement={<div style={{ height: `380px` }} />}
+          containerElement={<div id="map" style={{ height: `380px` ,marginTop :10 }} />}
           loadingElement={<div style={{ height: `100%` }} />}
-          
           mapElement={<div style={{ height: `100%` }} />}
-          
         />
         
         </div>

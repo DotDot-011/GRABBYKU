@@ -1,10 +1,38 @@
 .button-start{
     position: relative;
+    margin-top: 1rem;
     left: 40%;
 }
 
 .button-currentLocation{
     position: relative;
+    margin-top: 1rem;
     left: 10%;
 }
+
+/* yourlocation input */
+#input1.pac-target-input{
+    position: fixed;
+    top: 10%;
+    left: 15%;
+    width: 70%;
+    height: 40px;
+
+}
+
+/* start */
+#input2.pac-target-input{
+    position: fixed;
+    top: 18%;
+    left: 15%;
+    width: 70%;
+    height: 40px;
+
+}
+#map{
+    position: relative;
+    top: 7rem;
+
+}
+
 
