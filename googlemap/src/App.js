@@ -31,12 +31,12 @@ class App extends React.Component {
         lng: 100.56908802639256,
       },
       markerPosition: {
-          lat: 13.852409944222796,
-          lng: 100.57689203927386,
+          lat: 13.851130590990257,
+          lng: 100.56620801275722,
       },
       markerDestinationPosition:{
-          lat:13.852409944222796, 
-          lng:100.57889203927386,
+          lat: 13.851130590990257,
+          lng: 100.56743435031639,
       },
       showPlaceHolder:'เลือกตำแหน่งของคุณ',
       showPlaceHolderDestination:'เลือกจุดหมาย',
@@ -256,6 +256,26 @@ class App extends React.Component {
       })
     }
     
+    greenZonePath = [
+      {latitude:13.855458118865057, longitude:100.56596600925597},
+      {latitude:13.857277966250578, longitude:100.57639848267323},
+      {latitude:13.857659300458918, longitude:100.58083861265405},
+      {latitude:13.850487798245787, longitude:100.5815458679391},
+      {latitude:13.838080862978906, longitude:100.57438477818036},
+      {latitude:13.838926837307145, longitude:100.57261728000668},
+      {latitude:13.839207853669947, longitude:100.57149758183783},
+      {latitude:13.839164290084023, longitude:100.57046566364782},
+      {latitude:13.840180771629475, longitude:100.56849155928428},
+      {latitude:13.84222824239746,  longitude:100.5678484798325},
+      {latitude:13.841836174922516, longitude:100.5644087525324},
+      {latitude:13.842736477029229, longitude:100.5640647798024},
+      {latitude:13.84291072864725,  longitude:100.563481521695},
+      {latitude:13.844275695168301, longitude:100.56330205765967},
+      {latitude:13.844885571222475, longitude:100.5612531766157},
+      {latitude:13.845560131549451, longitude:100.560626926484},
+      {latitude:13.855458118865057, longitude:100.56596600925597},
+    ]
+
     redZonePath = [
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
         {latitude: 13.848348039187117,longitude: 100.56569906630881},
@@ -270,7 +290,11 @@ class App extends React.Component {
     timeoutId = 0;
     addLocation = () =>{
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
-     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath)){
+     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
+     
+     isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
+     isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
+     {
         
         
         fetch("http://localhost:1236/location/1",{
@@ -422,10 +446,10 @@ class App extends React.Component {
             mapTypeControl:false,
             restriction:{
               latLngBounds:{
-                north: this.state.mapPosition.lat+ 0.0122,
-                south: this.state.mapPosition.lat - 0.0122,
-                east: this.state.mapPosition.lng + 0.0122,
-                west: this.state.mapPosition.lng - 0.0122,
+                north: this.state.mapPosition.lat+ 0.010,
+                south: this.state.mapPosition.lat - 0.0117,
+                east: this.state.mapPosition.lng + 0.0134,
+                west: this.state.mapPosition.lng - 0.0103,
               },
               strictBounds:true,
               
@@ -499,6 +523,43 @@ class App extends React.Component {
           <button class="button-currentLocation" onClick={this.findMylocation}> ตำแหน่งปัจจุบัน </button>
 
           <button className="button-start" onClick={this.addLocation}> เริ่มต้น </button>
+          <Polygon
+            path={[
+              {lat:13.855458118865057, lng:100.56596600925597},
+              {lat:13.857277966250578, lng:100.57639848267323},
+              {lat:13.857659300458918, lng:100.58083861265405},
+              {lat:13.850487798245787, lng:100.5815458679391},
+              
+            
+              {lat:13.838080862978906, lng:100.57438477818036},
+              {lat:13.838926837307145, lng:100.57261728000668},
+              {lat:13.839207853669947, lng:100.57149758183783},
+              {lat:13.839164290084023, lng:100.57046566364782},
+              {lat:13.840180771629475, lng:100.56849155928428},
+              {lat:13.84222824239746, lng:100.5678484798325},
+              {lat:13.841836174922516, lng:100.5644087525324},
+              {lat:13.842736477029229, lng:100.5640647798024},
+              {lat:13.84291072864725, lng:100.563481521695},
+              {lat:13.844275695168301, lng:100.56330205765967},
+              {lat:13.844885571222475, lng:100.5612531766157},
+
+              {lat:13.845560131549451, lng:100.560626926484},
+
+
+
+              {lat:13.855458118865057, lng:100.56596600925597},
+            ]}
+            
+            options={
+              {
+                strokeColor: "green",
+                strokeOpacity: 0,
+                strokeWeight: 3,
+                fillColor: "green",
+                fillOpacity: 0,
+              }
+            }
+          />
 
           <Polygon
               path={[
