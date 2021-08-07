@@ -9,3 +9,5 @@ $routes["/backend/api/register_driver"]["POST"] = "./registerDriver/register_dri
 
 $routes["/backend/api/login_user"]["POST"] = "./login/user/login.php";
 $routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
+
+$routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
