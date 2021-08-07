@@ -1,5 +1,5 @@
 .detail-driver-container{
-    max-width: 600px;
+    /* max-width: 600px;
     margin-left: auto;
     margin-right:auto ;
     position: fixed;
@@ -7,12 +7,55 @@
     width: 600px;
     background-color: rgb(33, 34, 30);
     z-index: 1;
-    text-align:center;
+    text-align:center; */
+    margin: 0 auto;
+    position: fixed;
+    /* top: 0%; */
+    /* left: 0%; */
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    max-height: 800px;
+    height: 70%;
+    /* max-width: 560px; */
+    width: 90%;
+    background-color: #62d2A2;
+
+    border-radius: 20px;
+    border-style: inset;
+    border-width: 4px;
+    border-color:#137e63;
+}
+.detail-driver-container h4{
+    margin-top: 20px;
+    font-size: 24px;
+    color: white;
+    font-weight: bolder
 }
 
-.cancel-button{
+#driver-detail{
+    margin: 20px auto;
+    position: relative;
+    min-width: 250px;
+    width: 50%;
+    height: 30%;
+    background-color: white;
+    border-radius: 30px;
+}
+#money-detail{
+    margin: 20px auto;
+    position: relative;
+    min-width: 250px;
+    width: 50%;
+    height: 10%;
+    background-color: white;
+    border-radius: 30px;
+}
+/* .cancel-button{
     margin: 0 auto;
     position: relative;
     width: 100px;
     top:40px;
-}
+} */
