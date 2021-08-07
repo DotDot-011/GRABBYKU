@@ -454,7 +454,7 @@ class App extends React.Component {
             onDragEnd={this.onMarkerDragEnd}
             icon={{
               url:"/pictures/markgreen.png",
-              scaledSize:{height: 40 , width: 28},
+              scaledSize:{height: 40 , width: 25},
             }}
             >  
           </Marker>
@@ -464,7 +464,7 @@ class App extends React.Component {
             onDragEnd={this.onMarkerDestinationDragEnd}
             icon={{
               url:"/pictures/markred.png",
-              scaledSize:{height: 40 , width: 28},
+              scaledSize:{height: 40 , width: 25},
             }}
           
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
