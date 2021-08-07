@@ -35,6 +35,9 @@ $routes["/backend/api/line2"]["POST"] = "./homeUser/line_2.php";
 #insert user and driver to booking
 $routes["/backend/api/userdriver2book"]["POST"] = "./homedriver/userdriver2book/userdriver2book.php";
 
+#check user and driver in booking
+$routes["/backend/api/userdriverinbook"]["POST"] = "./homedriver/userdriverinbook/userdriverinbook.php";
+
 #always check user in queue
 $routes["/backend/api/checkuser"]["POST"] = "./homedriver/checkuser/checkuser.php";
 
