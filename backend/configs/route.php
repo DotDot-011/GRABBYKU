@@ -10,6 +10,6 @@ $routes["/backend/api/register_driver"]["POST"] = "./register/driver/register.ph
 $routes["/backend/api/login_user"]["POST"] = "./login/user/login.php";
 $routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
 
-$routes["/backend/api/postdriver"]["POST"] = "./postdriver/postdriver.php";
-$routes["/backend/api/postdriverinq"]["POST"] = "./postdriverinq/postdriverinq.php";
-$routes["/backend/api/getqueue"]["GET"] = "./getqueue/getqueue.php";
+$routes["/backend/api/postdriver"]["POST"] = "./homedriver/postdriver/postdriver.php";
+$routes["/backend/api/postdriverinq"]["POST"] = "./homedriver/postdriverinq/postdriverinq.php";
+$routes["/backend/api/getqueue"]["GET"] = "./homedriver/getqueue/getqueue.php";
