@@ -452,6 +452,10 @@ class App extends React.Component {
             draggable={true}
             position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
             onDragEnd={this.onMarkerDragEnd}
+            icon={{
+              url:"/pictures/markgreen.png",
+              scaledSize:{height: 40 , width: 25},
+            }}
             >  
           </Marker>
 
@@ -459,8 +463,8 @@ class App extends React.Component {
             draggable={true}
             onDragEnd={this.onMarkerDestinationDragEnd}
             icon={{
-              url:"/pictures/markerGreen.png",
-              scaledSize:{height: 40 , width: 27},
+              url:"/pictures/markred.png",
+              scaledSize:{height: 40 , width: 25},
             }}
           
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
@@ -515,9 +519,7 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceDestinationSelected}
             placeholder={this.state.showPlaceHolderDestination}
             />
-          <button class="button-currentLocation" onClick={this.findMylocation}> ตำแหน่งปัจจุบัน </button>
 
-          <button className="button-start" onClick={this.addLocation}> เริ่มต้น </button>
           <Polygon
             path={[
               {lat:13.855458118865057, lng:100.56596600925597},

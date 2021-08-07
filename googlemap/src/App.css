@@ -15,12 +15,13 @@
     float: right;
     height: 40px;
     width: 15%;
-    background-image: url("pinme2.PNG");
+    background-image: url("pinme3.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    background-color: white;
-    border-color: white;
+    background-color: whitesmoke;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     /* box-shadow: 0    ; */
@@ -51,16 +52,27 @@
     width: 90%;
     height: 40px;
 }
-#input1,#input2{
+#input1{
     background-color: white;
-    background-image: url('search_icon.png');
+    background-image: url('markgreen.png');
     background-position: 5px 0px;
     background-repeat: no-repeat;
+    border-style: solid;
     border-radius: 10px;
-    border-color: white;
+    border-color: whitesmoke;
     padding: 0px 45px;
     background-size: contain;
-
+}
+#input2{
+    background-color: white;
+    background-image: url('markred.png');
+    background-position: 5px 0px;
+    background-repeat: no-repeat;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: whitesmoke;
+    padding: 0px 45px;
+    background-size: contain;
 }
 
 #map{
