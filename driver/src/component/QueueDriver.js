@@ -1,5 +1,6 @@
 import './QueueDriver.css'
 import React,{ useState, useEffect } from 'react';
+import leaveQueue from './LeaveQueue';
 export default function QueueDriver(props) {
    
     
@@ -46,23 +47,14 @@ export default function QueueDriver(props) {
             fetch("http://localhost:1236/location")
                 .then(response=> response.json())
                 .then(data => {
+                    
                     if(data[0].status ==='true'){
-                        leaveQueue();
                         clearInterval(window.timeoutId1);
                         clearInterval(window.timeoutId2);
                         props.handleForUpdate(data[0].latitudeStart, data[0].longtitudeStart , data[0].latitudeDestination ,data[0].longtitudeDestination ,null )
                 }
             })
         }, 1500);
-    }
-
-    function leaveQueue() {
-        fetch("http://localhost:1235/queueDriver/1",{
-                method: 'delete',
-                
-            })
-            .then(response=> console.log(response))
-            .catch(err => console.log(err));
     }
  
 

@@ -1,0 +1,10 @@
+{
+    "UserDetail" : [
+        {
+            "id": 1,
+            "UserName": "1q2w3e4r",
+            "FName": "John", 
+            "LName": "Doe"
+        }
+    ]
+}

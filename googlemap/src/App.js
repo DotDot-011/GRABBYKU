@@ -18,7 +18,6 @@ Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
 class App extends React.Component {
-    
 
     state = {
       address: '',
@@ -32,12 +31,12 @@ class App extends React.Component {
         lng: 100.56908802639256,
       },
       markerPosition: {
-          lat: 13.852409944222796,
-          lng: 100.57689203927386,
+          lat: 13.851130590990257,
+          lng: 100.56620801275722,
       },
       markerDestinationPosition:{
-          lat:13.852409944222796, 
-          lng:100.57889203927386,
+          lat: 13.851130590990257,
+          lng: 100.56743435031639,
       },
       showPlaceHolder:'เลือกตำแหน่งของคุณ',
       showPlaceHolderDestination:'เลือกจุดหมาย',
@@ -257,6 +256,16 @@ class App extends React.Component {
       })
     }
     
+    greenZonePath = [
+      {latitude:13.855458118865057, longitude:100.56596600925597},
+      {latitude:13.857277966250578, longitude:100.57639848267323},
+      {latitude:13.857659300458918, longitude:100.58083861265405},
+      {latitude:13.850487798245787, longitude:100.5815458679391},
+      {latitude:13.836416483501072, longitude:100.57339372833995},
+      {latitude:13.842558941191157, longitude:100.5590814720114},
+      {latitude:13.855458118865057, longitude:100.56596600925597},
+    ]
+
     redZonePath = [
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
         {latitude: 13.848348039187117,longitude: 100.56569906630881},
@@ -271,7 +280,11 @@ class App extends React.Component {
     timeoutId = 0;
     addLocation = () =>{
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
-     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath)){
+     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
+     
+     isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
+     isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
+     {
         
         
         fetch("http://localhost:1236/location/1",{
@@ -331,9 +344,7 @@ class App extends React.Component {
       window.alert("Error");
      } 
     }
-    // deleteLocation = (id) =>{
-    //   Axios.delete(`http://localhost:3001/delete/${id}`)
-    // }
+    
     
     
     
@@ -425,10 +436,10 @@ class App extends React.Component {
             mapTypeControl:false,
             restriction:{
               latLngBounds:{
-                north: this.state.mapPosition.lat+ 0.0122,
-                south: this.state.mapPosition.lat - 0.0122,
-                east: this.state.mapPosition.lng + 0.0122,
-                west: this.state.mapPosition.lng - 0.0122,
+                north: this.state.mapPosition.lat+ 0.010,
+                south: this.state.mapPosition.lat - 0.0127,
+                east: this.state.mapPosition.lng + 0.0134,
+                west: this.state.mapPosition.lng - 0.0103,
               },
               strictBounds:true,
               
@@ -504,7 +515,35 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceDestinationSelected}
             placeholder={this.state.showPlaceHolderDestination}
             />
+          <button class="button-currentLocation" onClick={this.findMylocation}> ตำแหน่งปัจจุบัน </button>
+
+          <button className="button-start" onClick={this.addLocation}> เริ่มต้น </button>
+          <Polygon
+            path={[
+              {lat:13.855458118865057, lng:100.56596600925597},
+              {lat:13.857277966250578, lng:100.57639848267323},
+              {lat:13.857659300458918, lng:100.58083861265405},
+              {lat:13.850487798245787, lng:100.5815458679391},
+              
             
+              {lat:13.836416483501072, lng:100.57339372833995},
+              {lat:13.842558941191157, lng:100.5590814720114},
+
+
+              {lat:13.855458118865057, lng:100.56596600925597},
+            ]}
+            
+            options={
+              {
+                strokeColor: "green",
+                strokeOpacity: 0,
+                strokeWeight: 3,
+                fillColor: "green",
+                fillOpacity: 0,
+              }
+            }
+          />
+
           {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
           <div id="bottombutt">
             <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
