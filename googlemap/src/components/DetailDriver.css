@@ -21,31 +21,37 @@
 .detail-driver-container h4{
     margin-top: 20px;
     font-size: 24px;
-    color: white;
+    color: rgb(0, 0, 0);
     font-weight: bolder
 }
 
-#driver-detail{
+.driver-detail{
     margin: 20px auto;
     position: relative;
-    min-width: 250px;
+    min-width: 300px;
     width: 50%;
     height: 30%;
     background-color: white;
     border-radius: 30px;
+    padding: 15px 0px 12px 0px;
+
 }
-#money-detail{
+
+.driver-detail div{
+    text-align: left;
+    /* top right bott left   */
+    margin: 0px 0px 10px 40%;
+    font-size: 16px;
+}
+
+.money-div{
     margin: 20px auto;
+    padding: 15px;
     position: relative;
     min-width: 250px;
     width: 50%;
     height: 10%;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
+    /* background-color: teal; */
     border-radius: 30px;
 }
-/* .cancel-button{
-    margin: 0 auto;
-    position: relative;
-    width: 100px;
-    top:40px;
-} */
