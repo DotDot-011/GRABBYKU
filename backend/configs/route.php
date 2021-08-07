@@ -11,3 +11,7 @@ $routes["/backend/api/login_user"]["POST"] = "./login/user/login.php";
 $routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
 
 $routes["/backend/api/postdriver"]["POST"] = "./postdriver/postdriver.php";
+
+$routes["/backend/api/driver_accept"]["POST"] = "./booking/driver/driver_accept.php";
+$routes["/backend/api/driver_cancel"]["POST"] = "./booking/driver/driver_accept.php";
+$routes["/backend/api/check_user_cancel"]["POST"] = "./booking/driver/check_user_cancel.php";
