@@ -8,11 +8,11 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 70%;
+    /* height: 71%; */
     max-width: 560px;
     width: 90%;
+    height: 580px;
     background-color: #62d2A2;
-
     border-radius: 20px;
     border-style: inset;
     border-width: 4px;
@@ -39,7 +39,7 @@
     width: 50%;
     height: 30%;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 20px;
     /* top right bott left   */
     padding: 15px 0px 15px 0px;
 }
@@ -48,7 +48,7 @@
     /* align-items: center; */
     text-align: left;
     /* top right bott left   */
-    margin: 0px 0px 12px 20px;
+    margin: 0px 0px 13px 20px;
     font-size: 20px;
 }
 

@@ -8,11 +8,10 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 70%;
+    height: 71%;
     max-width: 560px;
     width: 90%;
     background-color: #62d2A2;
-
     border-radius: 20px;
     border-style: inset;
     border-width: 4px;
@@ -32,7 +31,7 @@
     width: 50%;
     height: 30%;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 20px;
     padding: 15px 0px 12px 0px;
 
 }
@@ -53,5 +52,5 @@
     height: 10%;
     background-color: rgb(255, 255, 255);
     /* background-color: teal; */
-    border-radius: 30px;
+    border-radius: 20px;
 }

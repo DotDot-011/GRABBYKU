@@ -8,7 +8,7 @@ export default function DetailDriver(props){
             <h5>'-เวลาโดยประมาณ-'</h5>
             <div class="driver-detail">
                 <div class="name-driver">นายธนาคาร  หลักแหลม</div>
-                <div class="name-license">ทะเบียนรถ : กอจ666</div>
+                <div class="name-license">ทะเบียนรถ : กอจ 666</div>
                 <div class="name-number">เลขประจำตัว : 47</div>
                 <div class="name-position">ประจำจุด : ประตูนรก</div>
             </div>
