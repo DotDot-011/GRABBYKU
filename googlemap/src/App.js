@@ -408,7 +408,7 @@ class App extends React.Component {
       
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>
         
-        <GoogleMap 
+        <GoogleMap div id="con"
           
           defaultZoom={15}
           defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
@@ -455,6 +455,7 @@ class App extends React.Component {
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>
+          <div id="inbutt">
           {/* here1 */}
           <Autocomplete id="input1"
             // style={{ paddingLeft: 16 , marginTop:10 , marginBottom:'1rem'}}
@@ -478,6 +479,9 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceSelected}
             placeholder={this.state.showPlaceHolder}
             />
+
+          <button class="button-currentLocation" onClick={this.findMylocation}></button>
+          </div>  
           {/* here2 */}
           <Autocomplete id="input2"
             // style={{  paddingLeft: 16 , marginTop:2 , marginBottom:'1rem'}}
@@ -501,10 +505,11 @@ class App extends React.Component {
             placeholder={this.state.showPlaceHolderDestination}
             />
             
-          <button class="button-currentLocation" onClick={this.findMylocation}>your location</button>
-
-          <button className="button-start" onClick={this.addLocation}>START</button>
-
+          {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
+          <div id="bottombutt">
+            <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
+            {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
+          </div>
           <Polygon
               path={[
                 {lat: 13.84680634471089,lng: 100.56479688230758},
