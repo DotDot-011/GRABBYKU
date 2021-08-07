@@ -45,7 +45,7 @@ class App extends React.Component {
       detailDriverAppear:null,
       locationList:[],
     }
-    
+
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
           this.setState({
@@ -416,10 +416,10 @@ class App extends React.Component {
         this.detailDriver=null;
       }
 
-
+      
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>
         
-        <GoogleMap
+        <GoogleMap div id="con"
           
           defaultZoom={15}
           defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
@@ -445,6 +445,7 @@ class App extends React.Component {
               
             },
            }}
+        
         >
           
           <Marker 
@@ -465,9 +466,10 @@ class App extends React.Component {
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>
-          
-          <Autocomplete 
-            style={{width:"100%", height:'40px' , paddingLeft: 16 , marginTop:10 , marginBottom:'2rem'}}
+          <div id="inbutt">
+          {/* here1 */}
+          <Autocomplete id="input1"
+            // style={{ paddingLeft: 16 , marginTop:10 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -489,8 +491,11 @@ class App extends React.Component {
             placeholder={this.state.showPlaceHolder}
             />
 
-            <Autocomplete 
-            style={{width:"100%", height:'40px' , paddingLeft: 16 , marginTop:2 , marginBottom:'2rem'}}
+          <button class="button-currentLocation" onClick={this.findMylocation}></button>
+          </div>  
+          {/* here2 */}
+          <Autocomplete id="input2"
+            // style={{  paddingLeft: 16 , marginTop:2 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -539,6 +544,11 @@ class App extends React.Component {
             }
           />
 
+          {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
+          <div id="bottombutt">
+            <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
+            {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
+          </div>
           <Polygon
               path={[
                 {lat: 13.84680634471089,lng: 100.56479688230758},
@@ -563,10 +573,12 @@ class App extends React.Component {
         
         </GoogleMap>
       ));
+
       return(
         
         <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
-        <h1>User</h1>
+
+        {/* <h1>User</h1> */}
           
         {/* <Descriptions bordered>
           <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
@@ -577,14 +589,11 @@ class App extends React.Component {
         {this.watingQueue}
         {this.detailDriver}
 
-
-        <MapWithAMarker
+        <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
-          containerElement={<div style={{ height: `400px` }} />}
+          containerElement={<div id="map" style={{ height: `380px` ,marginTop :10 }} />}
           loadingElement={<div style={{ height: `100%` }} />}
-          
           mapElement={<div style={{ height: `100%` }} />}
-          
         />
         
         </div>
