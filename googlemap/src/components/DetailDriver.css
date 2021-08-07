@@ -1,13 +1,4 @@
 .detail-driver-container{
-    /* max-width: 600px;
-    margin-left: auto;
-    margin-right:auto ;
-    position: fixed;
-    height: 800px;
-    width: 600px;
-    background-color: rgb(33, 34, 30);
-    z-index: 1;
-    text-align:center; */
     margin: 0 auto;
     position: fixed;
     /* top: 0%; */
@@ -17,9 +8,8 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    max-height: 800px;
     height: 70%;
-    /* max-width: 560px; */
+    max-width: 560px;
     width: 90%;
     background-color: #62d2A2;
 

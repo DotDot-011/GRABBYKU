@@ -15,11 +15,11 @@
     float: right;
     height: 40px;
     width: 15%;
-    background-image: url("pinme2.png");
+    background-image: url("pinme3.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    background-color: rgb(157, 161, 158);
+    background-color: whitesmoke;
     border-style: solid;
     /* border-color: white; */
     border-top-right-radius: 10px;
