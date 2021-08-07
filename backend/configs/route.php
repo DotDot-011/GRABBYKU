@@ -13,3 +13,6 @@ $routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
 $routes["/backend/api/postdriver"]["POST"] = "./homedriver/postdriver/postdriver.php";
 $routes["/backend/api/postdriverinq"]["POST"] = "./homedriver/postdriverinq/postdriverinq.php";
 $routes["/backend/api/getqueue"]["GET"] = "./homedriver/getqueue/getqueue.php";
+
+$routes["/backend/api/line1"]["POST"] = "./homeUser/line_1.php";
+$routes["/backend/api/line2"]["POST"] = "./homeUser/line_2.php";
