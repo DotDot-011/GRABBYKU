@@ -35,4 +35,11 @@ $routes["/backend/api/line2"]["POST"] = "./homeUser/line_2.php";
 #insert user and driver to booking
 $routes["/backend/api/userdriver2book"]["POST"] = "./homedriver/userdriver2book/userdriver2book.php";
 
+#cancel booking by user 
+$routes["/backend/api/cancelation"]["POST"] = "./homeUser/homeuserline_5.php";
+#when driver accept -> sent driver info to user =]
+$routes["/backend/api/request_driver_info"]["POST"] = "./homeUser/homeuserline_4.php";
+#user keep fetching his booking when queing =]
+$routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/homeuserline_3.php";
+
 ?>
