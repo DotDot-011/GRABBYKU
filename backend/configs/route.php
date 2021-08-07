@@ -24,11 +24,15 @@ $routes["/backend/api/check_user_cancel"]["POST"] = "./homedriver/booking/check_
 $routes["/backend/api/postdriver"]["POST"] = "./homedriver/postdriver/postdriver.php";
 $routes["/backend/api/postdriverinq"]["POST"] = "./homedriver/postdriverinq/postdriverinq.php";
 
+
 # driver - get queue
 $routes["/backend/api/getqueue"]["GET"] = "./homedriver/getqueue/getqueue.php";
 
 # user - get user data
 $routes["/backend/api/line1"]["POST"] = "./homeUser/line_1.php";
 $routes["/backend/api/line2"]["POST"] = "./homeUser/line_2.php";
+
+#insert user and driver to booking
+$routes["/backend/api/userdriver2book"]["POST"] = "./homedriver/userdriver2book/userdriver2book.php";
 
 ?>
