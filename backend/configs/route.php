@@ -12,3 +12,4 @@ $routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
 
 $routes["/backend/api/postdriver"]["POST"] = "./postdriver/postdriver.php";
 $routes["/backend/api/postdriverinq"]["POST"] = "./postdriverinq/postdriverinq.php";
+$routes["/backend/api/getqueue"]["POST"] = "./getqueue/getqueue.php";
