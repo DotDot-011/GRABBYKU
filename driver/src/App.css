@@ -1,7 +1,75 @@
 .app-section{
-    padding: 20px;
+    padding: 10px;
+    height: 727px;
+    /* width: 100%; */
     
 }
-.button-accept-cancel-done{
+.driver-detail{
+    /* margin: auto; */
+    /* padding: 3px; */
+    
+    border-radius: 30px;
+    position: relative;
+    min-width: 250px;
+    width: 100%;
+    height: 150px;
+    background:#d7fbe8;
+    text-align: center;
+    /* left: 35px; */
+}
+.head-detail{
+    margin: 0px;
+    font-size: 26px;
+    /* margin: 5px; */
+    padding: 8px;
+}
+.detail{
+    font-size: 17px;
+    /* margin: 5px; */
+}
+/* .button-accept-cancel-done{
     text-align:center;
+} */
+.accept-button{
+    background-color: #1FAb89;
+    /* border-color:green; */
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    height: 50px;
+    width: 100px;
+    left: 38px;
+    top: 30px;
+    /* right: 20px; */
+}
+.cancel-button{
+    background-color: rgb(29, 53, 43);
+    /* border-color: black; */
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    height: 50px;
+    width: 100px;
+    left: 120px;
+    top: 30px;
+}
+.done-button{
+    background-color: #1FAb89;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    height: 50px;
+    width: 100px;
+    left: 127px;
+    top: 30px;
+}
+#map{
+    position: relative;
+    top: 20px;
 }

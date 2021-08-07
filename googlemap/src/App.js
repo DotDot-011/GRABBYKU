@@ -548,7 +548,7 @@ class App extends React.Component {
 
           {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
           <div id="bottombutt">
-            <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
+          <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
             {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
           </div>
           <Polygon

@@ -1,18 +1,43 @@
 .queue-container{
-    max-width: 600px;
-    margin-left: auto;
-    margin-right:auto ;
     position: fixed;
-    height: 800px;
-    width: 600px;
-    background-color: grey;
+    border-radius: 25px;
+    height: 77%;
+    max-width: 600px;
+    width: 82%;
+    background: #d7fbe8;
     z-index: 1;
     text-align:center;
-    
+    font-size: 22px;       
 }
-
-.button-queue{
-    margin-top: 10%;
-    margin-left:  auto;
-    margin-right: auto;
+#queueList{
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    min-width: 250px;
+    width: 60%;
+    height: 65%;
+}
+.button-enQueue{
+    background-color: #1FAb89;
+    /* border-color:green; */
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    height: 50px;
+    width: 100px;
+    right: 20px;
+}
+.button-leaveQueue{
+    background-color: rgb(29, 53, 43);
+    /* border-color: black; */
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+    height: 50px;
+    width: 100px;
+    left: 26px;
 }

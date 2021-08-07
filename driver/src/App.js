@@ -174,14 +174,18 @@ class App extends React.Component {
           draggable={false}
           // onDragEnd={this.onMarkerDragEnd}
           position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
+          icon={{
+            url:"/pictures/markgreen.png",
+            scaledSize:{height: 40 , width: 25},
+          }}
 
         >
         </Marker>
         <Marker 
             
             icon={{
-              url:"/pictures/markerGreen.png",
-              scaledSize:{height: 40 , width: 27},
+              url:"/pictures/markred.png",
+              scaledSize:{height: 40 , width: 25},
             }}
             
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}
@@ -194,11 +198,13 @@ class App extends React.Component {
     return (
       <section className="app-section">
         
-        <div style={{ padding: '1rem', margin: '0 auto', maxWidth: 600 }}>
-        {this.queueDriver}
-          <h1>Driver</h1>
-          {this.userInfo}
-
+        <div style={{ padding: '1rem', margin: '0 auto', maxWidth: 600 , maxHeight: 900 }}>
+          <div className="driver-detail">
+            {this.queueDriver}
+            <h1 className="head-detail">Driver</h1>
+            <div className="detail">{this.userInfo}</div>
+          </div>
+        
           {/* <Descriptions bordered>
             <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
           <Descriptions.Item label="Area">{this.state.area}</Descriptions.Item>
@@ -208,7 +214,7 @@ class App extends React.Component {
           <MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `400px` }} />}
+                containerElement={<div id="map" style={{ height: `400px` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
               /> 
           

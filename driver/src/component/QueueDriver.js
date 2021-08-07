@@ -1,10 +1,9 @@
 import './QueueDriver.css'
 import React,{ useState, useEffect } from 'react';
 import leaveQueue from './LeaveQueue';
+
 export default function QueueDriver(props) {
    
-    
-    
     function showQueue(data){
         if( !!! document.getElementById('queueList')){
             return;
