@@ -1,38 +1,35 @@
 .app-section{
     padding: 10px;
     height: 727px;
-    /* width: 100%; */
-    
+}
+.detail-map{
+    margin: 0 auto;
+    text-align: center;
 }
 .driver-detail{
-    /* margin: auto; */
-    /* padding: 3px; */
-    
+    margin: 0 auto;
     border-radius: 30px;
-    position: relative;
-    min-width: 250px;
-    width: 100%;
-    height: 150px;
+    position: static;
+    width: 80%;
+    height: 80px;
     background:#d7fbe8;
     text-align: center;
-    /* left: 35px; */
 }
 .head-detail{
     margin: 0px;
     font-size: 26px;
-    /* margin: 5px; */
     padding: 8px;
 }
 .detail{
     font-size: 17px;
-    /* margin: 5px; */
 }
+
 /* .button-accept-cancel-done{
-    text-align:center;
+    margin: 0 auto;
 } */
+
 .accept-button{
     background-color: #1FAb89;
-    /* border-color:green; */
     border-radius: 15px;
     border: none;
     color: white;
@@ -42,11 +39,9 @@
     width: 100px;
     left: 38px;
     top: 30px;
-    /* right: 20px; */
 }
 .cancel-button{
     background-color: rgb(29, 53, 43);
-    /* border-color: black; */
     border-radius: 15px;
     border: none;
     color: white;
@@ -70,6 +65,9 @@
     top: 30px;
 }
 #map{
-    position: relative;
-    top: 20px;
+    margin: 0 auto;
+    margin-top: 20px;
+    position: static;
+    top: 110px;
+    width: 520px;
 }
