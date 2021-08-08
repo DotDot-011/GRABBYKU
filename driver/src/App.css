@@ -1,7 +1,8 @@
-.app-section{
+/* .app-section{
     padding: 10px;
     height: 727px;
-}
+} */
+
 .detail-map{
     margin: 0 auto;
     text-align: center;
@@ -10,7 +11,7 @@
     margin: 0 auto;
     border-radius: 30px;
     position: static;
-    width: 80%;
+    width: 100%;
     height: 80px;
     background:#d7fbe8;
     text-align: center;
@@ -23,12 +24,13 @@
 .detail{
     font-size: 17px;
 }
-
-/* .button-accept-cancel-done{
+.button-accept-cancel-done{
     margin: 0 auto;
-} */
-
+    text-align: center;
+}
 .accept-button{
+    top: 30px;
+    right: 30px;
     background-color: #1FAb89;
     border-radius: 15px;
     border: none;
@@ -37,10 +39,10 @@
     position: relative;
     height: 50px;
     width: 100px;
-    left: 38px;
-    top: 30px;
 }
 .cancel-button{
+    top: 30px;
+    left: 30px;
     background-color: rgb(29, 53, 43);
     border-radius: 15px;
     border: none;
@@ -49,10 +51,9 @@
     position: relative;
     height: 50px;
     width: 100px;
-    left: 120px;
-    top: 30px;
 }
 .done-button{
+    top: 30px;
     background-color: #1FAb89;
     border-radius: 15px;
     border: none;
@@ -61,13 +62,11 @@
     position: relative;
     height: 50px;
     width: 100px;
-    left: 127px;
-    top: 30px;
 }
 #map{
-    margin: 0 auto;
-    margin-top: 20px;
-    position: static;
-    top: 110px;
-    width: 520px;
+    margin-top: 30px;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    
 }
