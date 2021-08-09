@@ -19,6 +19,10 @@
     border-width: 4px;
     border-color:#137e63;
 }
+.queue-container h4 {
+    padding-top: 10px;
+    font-size: 30px;
+}
 #queueList{
     margin: 20px auto;
     padding: 20px;
@@ -27,30 +31,31 @@
     /* max-height: 6000px; */
     width: 80%;
     height: 70%;
+    font-size: 30px;
 }
 .button-queue{
     margin: 0 auto;
 }
 .button-enQueue{
     background-color: #1FAb89;
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 26px;
     position: relative;
-    height: 50px;
+    height: 42px;
     width: 100px;
     right: 19px;
     top: 20px;
 }
 .button-leaveQueue{
     background-color: rgb(29, 53, 43);
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 26px;
     position: relative;
-    height: 50px;
+    height: 42px;
     width: 100px;
     left: 26px;
     top: 20px;

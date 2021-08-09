@@ -1,5 +1,6 @@
+
 .detail-driver-container{
-    margin: 0 auto;
+    margin: auto;
     position: fixed;
     /* top: 0%; */
     /* left: 0%; */
@@ -8,7 +9,7 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 580px;
+    height: 600px;
     max-width: 560px;
     width: 90%;
     background-color: #62d2A2;
@@ -17,23 +18,38 @@
     border-width: 4px;
     border-color:#137e63;
 }
-.detail-driver-container h4{
+/* .detail-driver-container h4{
     margin-top: 60px;
-    font-size: 24px;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    font-weight: bolder
+} */
+
+.detail-driver-container h4{
+    position:static;
+    margin-top: 60px;
+    font-size: 36px;
     color: rgb(0, 0, 0);
     font-weight: bolder
 }
+.detail-driver-container h5{
+    position:static;
+    margin-top: 20px;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+}
+
 
 .driver-detail{
     margin: 40px auto 0px auto;
     position: relative;
     min-width: 300px;
-    width: 50%;
+    width: 55%;
     height: 30%;
     background-color: white;
     border-radius: 20px;
     padding: 15px 0px 12px 0px;
-
+    
 }
 .driver-detail .image-driver{
     position: absolute;
@@ -47,8 +63,8 @@
 .driver-detail .name-driver ,.name-license ,.name-number ,.name-position{
     text-align: left;
     /* top right bott left   */
-    margin: 0px 0px 10px 45%;
-    font-size: 16px;
+    margin: 0px 0px 4px 45%;
+    font-size: 22px;
 }
 
 .money-div{
@@ -61,4 +77,5 @@
     background-color: rgb(255, 255, 255);
     /* background-color: teal; */
     border-radius: 20px;
+    font-size: 22px;
 }

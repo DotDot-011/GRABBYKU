@@ -15,6 +15,7 @@
     height: 80px;
     background:#d7fbe8;
     text-align: center;
+    font-size: 24px;
 }
 .head-detail{
     margin: 0px;
@@ -22,7 +23,7 @@
     padding: 8px;
 }
 .detail{
-    font-size: 17px;
+    font-size: 21px;
 }
 .button-accept-cancel-done{
     margin: 0 auto;
@@ -32,35 +33,38 @@
     top: 30px;
     right: 30px;
     background-color: #1FAb89;
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 26px;
     position: relative;
-    height: 50px;
+    margin: auto;
+    padding: auto;
+    height: 42px;
     width: 100px;
 }
 .cancel-button{
     top: 30px;
     left: 30px;
     background-color: rgb(29, 53, 43);
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 26px;
+
     position: relative;
-    height: 50px;
+    height: 42px;
     width: 100px;
 }
 .done-button{
     top: 30px;
     background-color: #1FAb89;
-    border-radius: 15px;
+    border-radius: 20px;
     border: none;
     color: white;
-    font-size: 18px;
+    font-size: 26px;
     position: relative;
-    height: 50px;
+    height: 42px;
     width: 100px;
 }
 #map{
