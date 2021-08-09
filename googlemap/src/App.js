@@ -470,6 +470,7 @@ class App extends React.Component {
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>
+          <div class="locationbox">
           <div id="inbutt">
           {/* here1 */}
           <Autocomplete id="input1"
@@ -519,6 +520,7 @@ class App extends React.Component {
             onPlaceSelected={this.onPlaceDestinationSelected}
             placeholder={this.state.showPlaceHolderDestination}
             />
+          </div>
 
           <Polygon
             path={[
@@ -548,7 +550,7 @@ class App extends React.Component {
 
           {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
           <div id="bottombutt">
-            <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
+          <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
             {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
           </div>
           <Polygon
@@ -593,7 +595,7 @@ class App extends React.Component {
 
         <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
-          containerElement={<div id="map" style={{ height: `380px` ,marginTop :10 }} />}
+          containerElement={<div id="map" style={{ height: `380px` }} />}
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />

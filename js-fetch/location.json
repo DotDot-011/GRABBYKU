@@ -2,11 +2,11 @@
   "location": [
     {
       "id": 1,
-      "status": "false",
-      "latitudeStart": 0,
-      "longtitudeStart": 0,
-      "latitudeDestination": 0,
-      "longtitudeDestination": 0
+      "status": "true",
+      "latitudeStart": 13.84898470946302,
+      "longtitudeStart": 100.56492055243007,
+      "latitudeDestination": 13.844862904263875,
+      "longtitudeDestination": 100.56601125507986
     }
   ]
 }

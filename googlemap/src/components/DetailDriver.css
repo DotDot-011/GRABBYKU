@@ -1,51 +1,81 @@
+
 .detail-driver-container{
-    margin: 0 auto;
+    margin: auto;
     position: fixed;
     /* top: 0%; */
     /* left: 0%; */
-    display: block;
+    /* display: block; */
     justify-content: center;
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 70%;
+    height: 600px;
     max-width: 560px;
     width: 90%;
     background-color: #62d2A2;
-
     border-radius: 20px;
     border-style: inset;
     border-width: 4px;
     border-color:#137e63;
 }
+/* .detail-driver-container h4{
+    margin-top: 60px;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    font-weight: bolder
+} */
+
 .detail-driver-container h4{
-    margin-top: 20px;
-    font-size: 24px;
-    color: white;
+    position:static;
+    margin-top: 60px;
+    font-size: 36px;
+    color: rgb(0, 0, 0);
     font-weight: bolder
 }
+.detail-driver-container h5{
+    position:static;
+    margin-top: 20px;
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+}
 
-#driver-detail{
-    margin: 20px auto;
+
+.driver-detail{
+    margin: 40px auto 0px auto;
     position: relative;
-    min-width: 250px;
-    width: 50%;
+    min-width: 300px;
+    width: 55%;
     height: 30%;
     background-color: white;
-    border-radius: 30px;
+    border-radius: 20px;
+    padding: 15px 0px 12px 0px;
+    
 }
-#money-detail{
+.driver-detail .image-driver{
+    position: absolute;
+    background-color: rgb(99, 99, 99);
+    /* background-image: url('../search_icon.png'); */
+    border-radius: 10px;
+    width: 110px;
+    height: 140px;
+    margin-left: 4%;
+}
+.driver-detail .name-driver ,.name-license ,.name-number ,.name-position{
+    text-align: left;
+    /* top right bott left   */
+    margin: 0px 0px 4px 45%;
+    font-size: 22px;
+}
+
+.money-div{
     margin: 20px auto;
-    position: relative;
+    padding: 15px;
+    position: static;
     min-width: 250px;
     width: 50%;
     height: 10%;
-    background-color: white;
-    border-radius: 30px;
+    background-color: rgb(255, 255, 255);
+    /* background-color: teal; */
+    border-radius: 20px;
+    font-size: 22px;
 }
-/* .cancel-button{
-    margin: 0 auto;
-    position: relative;
-    width: 100px;
-    top:40px;
-} */
