@@ -19,12 +19,14 @@
     border-color:#137e63;
 }
 .waiting-box h4{
-    margin-top: 20px;
+    position:static;
+    margin-top: 60px;
     font-size: 24px;
     color: rgb(0, 0, 0);
     font-weight: bolder
 }
 .waiting-box h5{
+    position:static;
     margin-top: 20px;
     font-size: 24px;
     color: rgb(0, 0, 0);
@@ -33,7 +35,7 @@
 
 
 #waiting-detail{
-    margin: 20px auto;
+    margin: 50px auto;
     position: relative;
     min-width: 250px;
     width: 50%;

@@ -3,12 +3,11 @@
     position: fixed;
     /* top: 0%; */
     /* left: 0%; */
-    display: block;
+    /* display: block; */
     justify-content: center;
     align-items: center;
     text-align: center;
     z-index: 1;
-    /* height: 71%; */
     height: 580px;
     max-width: 560px;
     width: 90%;
@@ -19,14 +18,14 @@
     border-color:#137e63;
 }
 .detail-driver-container h4{
-    margin-top: 20px;
+    margin-top: 60px;
     font-size: 24px;
     color: rgb(0, 0, 0);
     font-weight: bolder
 }
 
 .driver-detail{
-    margin: 20px auto;
+    margin: 40px auto 0px auto;
     position: relative;
     min-width: 300px;
     width: 50%;
@@ -55,7 +54,7 @@
 .money-div{
     margin: 20px auto;
     padding: 15px;
-    position: relative;
+    position: static;
     min-width: 250px;
     width: 50%;
     height: 10%;
