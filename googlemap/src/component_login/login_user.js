@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import User from '../components_user/User';
-
+import axios from "axios";
 function LoginUser() {
     const nameRef = useRef("");
     const passwordRef = useRef("");
@@ -8,23 +8,16 @@ function LoginUser() {
     
     function CheckUser() {
 
-        fetch("https://edca-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user",{
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "username": nameRef.current.value,
-                    "password": passwordRef.current.value
-                })
-            })
-            .then(response=> console.log(response))
-            .catch(err => console.log(err));
+        axios.post("http://d253-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user", 
+        {username: nameRef.current.value, password:passwordRef.current.value })
+        .then(res => console.log(res.data));
     }
 
     function submitLogin(){
         console.log(nameRef.current.value);
+        console.log(typeof(nameRef.current.value));
         console.log(passwordRef.current.value);
+        console.log(typeof(passwordRef.current.value));
         CheckUser();
         //setLoginSuccess(1);
         
