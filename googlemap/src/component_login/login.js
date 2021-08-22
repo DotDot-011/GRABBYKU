@@ -4,15 +4,17 @@ import LoginUser from "./login_user";
 import RegisDriver from "./regis_driver";
 import RegisUser from "./regis_user";
 
+
 function Login() {
+    
     const [count, setCount] = useState(0);
-    if(count == 1) {
+    if(count === 1) {
         return <LoginUser />
-    }else if(count == 2) {
+    }else if(count === 2) {
         return <LoginDriver />
-    }else if(count == 3) {
+    }else if(count === 3) {
         return <RegisUser />
-    }if(count == 4) {
+    }if(count === 4) {
         return <RegisDriver />
     }else {
         return (
