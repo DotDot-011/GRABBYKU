@@ -44,7 +44,7 @@ function RegisUser() {
                     <input type="text" placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" />
                 </div>
             </form>
-            <button>ลงทะเบียน</button>
+            <button type="button">ลงทะเบียน</button>
         </div>
     );
 }

@@ -21,7 +21,7 @@ export default function App() {
           </Route>
           <Route path="/driver">
             <Driver/>
-            {/* hello my friend I'm ice &  write it*/}
+            
           </Route>
         </Switch>
       

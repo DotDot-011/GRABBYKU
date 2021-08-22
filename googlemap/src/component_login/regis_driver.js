@@ -52,7 +52,7 @@ function RegisDriver() {
                     <input type="text" placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="plate" />
                 </div>
             </form>
-            <button>ลงทะเบียน</button>
+            <button type="button">ลงทะเบียน</button>
         </div>
     );
 }
