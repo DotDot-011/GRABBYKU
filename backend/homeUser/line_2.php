@@ -7,14 +7,15 @@
 
 $postData = json_decode(file_get_contents("php://input"));
 
+$user_id = $postData->user_id;
 $lat_user = $postData->latitudeStart;
 $lng_user = $postData->longtitudeStart;
 $lat_des = $postData->latitudeDestination;
 $lng_des = $postData->longtitudeDestination;
 // file_put_contents("./registerUser/test.txt", $postData);
 
-$sql = "INSERT INTO booking (lat_user, lng_user, lat_des, lng_des)
-VALUES ('$lat_user', '$lng_user', '$lat_des', '$lng_des')";
+$sql = "INSERT INTO booking (user_id, lat_user, lng_user, lat_des, lng_des)
+VALUES ('$user_id', '$lat_user', '$lng_user', '$lat_des', '$lng_des')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
