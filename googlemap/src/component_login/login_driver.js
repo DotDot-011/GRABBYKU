@@ -1,34 +1,25 @@
 import React, { useRef, useState } from "react";
 import Driver from "../components_driver/Driver";
-
+import axios from "axios";
 
 function LoginUser() {
     const nameRef = useRef("");
     const passwordRef = useRef("");
     const [loginSuccess, setLoginSuccess] = useState(0);
     
-    function CheckDriver() {
-
-        fetch("",{
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "username": nameRef.current.value,
-                    "password": passwordRef.current.value
-                })
-            })
-            .then(response=> console.log(response))
-            .catch(err => console.log(err));
-    }
-
-    function submitLogin(){
-        console.log(nameRef.current.value);
-        console.log(passwordRef.current.value);
-        CheckDriver();
-        //setLoginSuccess(1);
-        
+    function CheckUser() {
+        axios.post("http://4070-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user", 
+        {username: nameRef.current.value, password:passwordRef.current.value })
+        .then(res => {
+            console.log(res.data);
+            if(res.data.message){
+                document.getElementById('loginError').innerHTML=null;
+                setLoginSuccess(1);
+            }else{
+                setLoginSuccess(0);
+                document.getElementById('loginError').innerHTML=' --- ชื่อผู้ใช้งาน หรือ รหัสผ่าน ผิดพลาด ! --- ';
+            }
+        })
     }
 
 
@@ -48,7 +39,8 @@ function LoginUser() {
                         <label>password</label>
                         <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="password"/>
                     </div>
-                    <button type="button" onClick={submitLogin}> เข้าสู่ระบบ </button>
+                    <p id="loginError"></p>
+                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
                 </form>
                 
             </div> 

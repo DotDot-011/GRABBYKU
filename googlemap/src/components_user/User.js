@@ -10,11 +10,15 @@ import {
 } from "react-google-maps";
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete'
-import Axios from 'axios'
 import isPointInPolygon from "geolib/es/isPointInPolygon"
 import Wait from "./Wait";
 import DetailDriver from "./DetailDriver";
+import axios from "axios";
+import { Url } from '../LinkToBackend';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
+
+
+
 
 
 class User extends React.Component {
@@ -45,6 +49,11 @@ class User extends React.Component {
       detailDriverAppear:null,
       locationList:[],
     }
+
+    watingQueue=null;
+    detailDriver=null;
+    timeoutId = 0;
+    driverId=null;
 
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -277,7 +286,8 @@ class User extends React.Component {
     ]
 
     //sent location to database
-    timeoutId = 0;
+    //timeoutId = 0;
+    //driverId=null;
     addLocation = () =>{
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
      !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
@@ -309,7 +319,7 @@ class User extends React.Component {
         })
 
         this.timeoutId = setInterval(()=>{
-         
+         /*
           fetch("http://localhost:1237/driverDetail")
           .then(response=> response.json())
           .then(data=>{
@@ -336,7 +346,25 @@ class User extends React.Component {
 
             }
           });
+          */
+          //------------------------
+          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", {id: "1"})
+          .then(res=>{
+            console.log(res);
+            console.log(res.data);
+            if(!!res.data.driver_id){
+              console.log("ekwai");
+              this.driverId=res.data.driver_id;
+              this.setState({
+                waitingQueueAppear:null,
+                detailDriverAppear:1,
+              })
+            }else{
+              //console.log("here");
+            }
+          })
 
+          
           
         },1500)         
      }
@@ -397,11 +425,11 @@ class User extends React.Component {
     //   });
     // }
     }
-    watingQueue=null;
-    detailDriver=null;
+    //watingQueue=null;
+    //detailDriver=null;
 
     render(){
-      
+      //console.log(this.props.username);
       if(!!this.state.waitingQueueAppear){
         this.watingQueue= <Wait cancelQueue={this.cancelQueue}/>
       }
@@ -410,7 +438,7 @@ class User extends React.Component {
         clearInterval(this.timeoutId);
       }
       if(!!this.state.detailDriverAppear){
-        this.detailDriver = <DetailDriver cancelQueue={this.cancelQueue}/>
+        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue}/>
       }
       else{
         this.detailDriver=null;
