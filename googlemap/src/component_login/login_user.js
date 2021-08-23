@@ -7,8 +7,7 @@ function LoginUser() {
     const [loginSuccess, setLoginSuccess] = useState(0);
     
     function CheckUser() {
-
-        axios.post("http://d253-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user", 
+        axios.post("http://4070-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user", 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => console.log(res.data));
     }
@@ -19,8 +18,8 @@ function LoginUser() {
         console.log(passwordRef.current.value);
         console.log(typeof(passwordRef.current.value));
         CheckUser();
-        //setLoginSuccess(1);
-        
+        setLoginSuccess(1);
+        //ยังไม่ได้เขียนให้เสร็จ แค่สร้างมาtest
     }
 
 
