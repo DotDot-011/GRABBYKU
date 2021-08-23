@@ -1,6 +1,6 @@
 <?php
 
-$postData = json_decode(file_put_contents("php://input"));
+$postData = json_decode(file_get_contents("php://input"));
 $driver_id = $postData->driver_id;
 $driver_id = $postData->user_id;
 
