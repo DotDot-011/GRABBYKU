@@ -14,7 +14,7 @@ $lat_des = $postData->latitudeDestination;
 $lng_des = $postData->longtitudeDestination;
 // file_put_contents("./registerUser/test.txt", $postData);
 
-$sql = "INSERT INTO booking (user_id, lat_user, lng_user, lat_des, lng_des)
+$sql = "INSERT INTO booking (user_id, lat_user, lng_user, lat_dis, lng_dis)
 VALUES ('$user_id', '$lat_user', '$lng_user', '$lat_des', '$lng_des')";
 
 if ($conn->query($sql) === TRUE) {

@@ -1,7 +1,7 @@
 <?php 
  $postdata = json_decode(file_get_contents("php://input"));;
  
- $driver_id = $postdata->id;
+ $driver_id = $postdata->driver_id;
  
  $statement = "SELECT * FROM driver WHERE driver_id = '$driver_id'";
  
