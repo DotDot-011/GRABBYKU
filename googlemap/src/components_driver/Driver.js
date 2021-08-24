@@ -12,11 +12,11 @@ import Geocode from "react-geocode";
 import { throwStatement } from "@babel/types";
 import { Descriptions } from 'antd';
 import AutoComplete from 'react-google-autocomplete'
-import Axios from 'axios'
+import axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
 import UserInfo from "./component/userInfo";
-
+import { Url } from '../LinkToBackend';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -44,8 +44,15 @@ class Driver extends React.Component {
     locationList:[],
     queueDriverAppear:1,
     buttonAcceptCancelAppear:1,
+    driverId:null,
+    userId:null,
   }
-
+  queueDriver = null;
+  buttonAcceptCancel = null;
+  buttonDone = null;
+  userInfo = null;
+  
+  
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus){
     this.setState({
       markerPosition: {
@@ -57,6 +64,7 @@ class Driver extends React.Component {
         lng: DestinationLng,
       },
       queueDriverAppear:queuePageStatus,
+      
     });
   
   }
@@ -85,41 +93,67 @@ class Driver extends React.Component {
     this.setState({
       queueDriverAppear:1,
     });
-    leaveQueue();
+    leaveQueue(this.state.driverId);
     // document.location.reload();
   }
   driverAccept = () =>{
-    fetch("http://localhost:1237/driverDetail/1",{
-            method: 'put',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              "id":1,
-              "status": "true",
-              "name" : "xxxx xxxx",
-              "area" : "ประตู 3",
-              "plate": "abc 1234"
+    // fetch("http://localhost:1237/driverDetail/1",{
+    //         method: 'put',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //           "id":1,
+    //           "status": "true",
+    //           "name" : "xxxx xxxx",
+    //           "area" : "ประตู 3",
+    //           "plate": "abc 1234"
                 
-            })
-        })
-        .then(response=> console.log(response))
-        .catch(err => console.log(err));
+    //         })
+    //     })
+    //     .then(response=> console.log(response))
+    //     .catch(err => console.log(err));
+    //--------------------------------------
+    axios.post(Url.LinkToBackend+"backend/api/userdriver2book",{
+      driver_id: this.props.driverId,
+      user_id: this.state.userId,
+      lng_user: this.state.markerPosition.lng,
+      lat_user: this.state.markerPosition.lat,
+      lng_des: this.state.markerDestinationPosition.lng,
+      lat_des: this.state.markerDestinationPosition.lat,
+      
+    })
+    .then(res=>{
+        console.log(res.data);
+        // 2bookมาดูใหม่
+    });
+
     this.setState({
       buttonAcceptCancelAppear: null,
     });
-    leaveQueue();
+    leaveQueue(this.state.driverId);
   }
-  queueDriver = null;
-  buttonAcceptCancel = null;
-  buttonDone = null;
-  userInfo = null;
+  
+  componentDidMount(){
+    axios.post(Url.LinkToBackend+"backend/api/postdriver",{
+      username : this.props.username
+    })
+    .then(res=>{
+      console.log(res.data);
+      this.setState({
+        driverId: parseInt(res.data[0].driver_id),
+      })
+      
+      console.log(typeof(this.state.driverId));
+      
+    })
+  }
 
   render() {
         
         if(!!this.state.queueDriverAppear){
-          clearInterval(this.cancelIntervalId)
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}/>
+          clearInterval(this.cancelIntervalId);
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId}/>
           this.userInfo = null;
         }
         else{

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Driver from "../components_driver/Driver";
 import axios from "axios";
+import { Url } from '../LinkToBackend';
 
 function LoginUser() {
     const nameRef = useRef("");
@@ -8,7 +9,7 @@ function LoginUser() {
     const [loginSuccess, setLoginSuccess] = useState(0);
     
     function CheckUser() {
-        axios.post("http://4070-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user", 
+        axios.post(`${Url.LinkToBackend}backend/api/login_driver`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
             console.log(res.data);
@@ -24,7 +25,7 @@ function LoginUser() {
 
 
     if(loginSuccess){
-        return <Driver/>
+        return <Driver username={nameRef.current.value}/>
     }
     else{
         return (

@@ -54,6 +54,7 @@ class User extends React.Component {
     detailDriver=null;
     timeoutId = 0;
     driverId=null;
+    userId=null;
 
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -297,63 +298,29 @@ class User extends React.Component {
      {
         
         
-        fetch("http://localhost:1236/location/1",{
-            method: 'put',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "id": 1,
-                "status":"true",
-                "latitudeStart": this.state.markerPosition.lat,
-                "longtitudeStart": this.state.markerPosition.lng,
-                "latitudeDestination": this.state.markerDestinationPosition.lat,
-                "longtitudeDestination": this.state.markerDestinationPosition.lng
-            })
+        
+        axios.post(Url.LinkToBackend+"backend/api/line2",{
+          user_id: this.userId,
+          latitudeStart: this.state.markerPosition.lat,
+          longtitudeStart: this.state.markerPosition.lng,
+          latitudeDestination: this.state.markerDestinationPosition.lat,
+          longtitudeDestination: this.state.markerDestinationPosition.lng
         })
-        .then(response=> console.log(response))
-        .catch(err => console.log(err));
-
+        .then(res=>{
+          console.log(res.data);
+          //console.log(this.userId);
+        })
         this.setState({
           waitingQueueAppear:1,
         })
 
         this.timeoutId = setInterval(()=>{
-         /*
-          fetch("http://localhost:1237/driverDetail")
-          .then(response=> response.json())
-          .then(data=>{
-            console.log(data[0]);
-            if(data[0].status ==="true"){
-                this.setState({
-                    waitingQueueAppear:null,
-                    detailDriverAppear:1,
-                })
-                fetch("http://localhost:1237/driverDetail/1",{
-                    method: 'put',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                      "id": 1,
-                      "status": "false",
-                      "name": "xxxx xxxx",
-                      "area": "ประตู 3",
-                      "plate": "abc 1234"
-                    })
-                })
-                .catch(err => console.log(err));
-
-            }
-          });
-          */
-          //------------------------
-          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", {id: "1"})
+          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", {id: this.userId})
           .then(res=>{
-            console.log(res);
-            console.log(res.data);
+            //console.log(res);
+            //console.log(res.data);
             if(!!res.data.driver_id){
-              console.log("ekwai");
+              //console.log("ekwai");
               this.driverId=res.data.driver_id;
               this.setState({
                 waitingQueueAppear:null,
@@ -427,9 +394,18 @@ class User extends React.Component {
     }
     //watingQueue=null;
     //detailDriver=null;
+    componentDidMount(){
+      axios.post(Url.LinkToBackend+"backend/api/line1",{
+        username : this.props.username
+      })
+      .then(res=>{
+        this.userId=res.data[0].user_id;
+      })
+    }
 
     render(){
-      //console.log(this.props.username);
+      
+      
       if(!!this.state.waitingQueueAppear){
         this.watingQueue= <Wait cancelQueue={this.cancelQueue}/>
       }

@@ -6,10 +6,10 @@ function LoginUser() {
     const nameRef = useRef("");
     const passwordRef = useRef("");
     const [loginSuccess, setLoginSuccess] = useState(0);
-    console.log(Url);
-    console.log(Url.LinkToBackend);
-    console.log(typeof(Url.LinkToBackend));
-    console.log(`${Url.LinkToBackend}backend/api/login_user`);
+    //console.log(Url);
+    //console.log(Url.LinkToBackend);
+    //console.log(typeof(Url.LinkToBackend));
+    //console.log(`${Url.LinkToBackend}backend/api/login_user`);
     
     function CheckUser() {
         axios.post(`${Url.LinkToBackend}backend/api/login_user`, 
