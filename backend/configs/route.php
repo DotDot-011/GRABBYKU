@@ -48,4 +48,6 @@ $routes["/backend/api/request_driver_info"]["POST"] = "./homeUser/homeuserline_4
 #user keep fetching his booking when queing =]
 $routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/homeuserline_3.php";
 
+$routes["/backend/api/deletequeue"]["POST"] = "./homedriver/deleteQueue/deleteQueue.php";
+
 ?>

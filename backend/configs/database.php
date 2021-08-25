@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$password = "";
+$password = "Opal_ku79";
 $dbname = "grabbutku";
 
 $conn = new mysqli($host, $user, $password, $dbname);
