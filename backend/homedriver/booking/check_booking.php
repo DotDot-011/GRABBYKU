@@ -8,14 +8,14 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $user_id = $row[0]["user_id"];
-    $sql = "UPDATE `booking` SET `booking`.`driver_id` = $driver_id WHERE `booking`.`user_id` = $user_id";
-    if ($conn->query($sql) == TRUE) {
+    $user_id = $row["user_id"];
+    $sql1 = "UPDATE `booking` SET `booking`.`driver_id` = $driver_id WHERE `booking`.`user_id` = $user_id";
+    if ($conn->query($sql1) == TRUE) {
         echo json_encode([
-            "message" => "update booking table successfully\n"
+            "message" => "update booking table successfully"
         ]);
-        $sql = "UPDATE `queue` SET `queue`.`status` = 'ready' WHERE `queue`.`driver_id` = $driver_id";
-        if ($conn->query($sql) == TRUE) {
+        $sql2 = "UPDATE `queue` SET `queue`.`status` = 'ready' WHERE `queue`.`driver_id` = $driver_id";
+        if ($conn->query($sql2) == TRUE) {
             echo json_encode([
                 "message" => "update successfully"
             ]);
@@ -26,7 +26,7 @@ if ($result->num_rows > 0) {
         }
     } else {
         echo json_encode([
-            "message" => "data not found\n"
+            "message" => "data not found"
         ]);
     }
 }
