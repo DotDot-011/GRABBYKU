@@ -29,4 +29,8 @@ if ($result->num_rows > 0) {
             "message" => "data not found"
         ]);
     }
+} else {
+    echo json_encode([
+        "message" => "available booking not found"
+    ]);
 }
