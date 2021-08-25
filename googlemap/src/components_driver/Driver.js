@@ -1,7 +1,6 @@
 import React from "react";
 import './Driver.css'
 import {
-  InfoWindow,
   withScriptjs,
   withGoogleMap,
   GoogleMap,
@@ -9,9 +8,9 @@ import {
 } from "react-google-maps";
 
 import Geocode from "react-geocode";
-import { throwStatement } from "@babel/types";
-import { Descriptions } from 'antd';
-import AutoComplete from 'react-google-autocomplete'
+// import { throwStatement } from "@babel/types";
+// import { Descriptions } from 'antd';
+// import AutoComplete from 'react-google-autocomplete'
 import axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
@@ -138,7 +137,7 @@ class Driver extends React.Component {
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
       username : this.props.username
     })
-    .then(res=>{
+    .then((res)=>{
       console.log(res.data);
       this.setState({
         driverId: parseInt(res.data[0].driver_id),
@@ -233,7 +232,7 @@ class Driver extends React.Component {
       <section className="app-section">
         
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
-          <div className="driver-detail">
+          <div key={this.state.driverId} className="driver-detail">
             {this.queueDriver}
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>

@@ -1,10 +1,25 @@
 import './QueueDriver.css'
-import React,{ useEffect } from 'react';
+import React,{ useEffect , useState } from 'react';
 import leaveQueue from './LeaveQueue';
 import axios from 'axios';
 import { Url } from '../../LinkToBackend';
+
 export default function QueueDriver(props) {
-   
+    
+    
+    function firstQueue() {
+        clearInterval(window.timeoutId1);
+        clearInterval(window.timeoutId2);
+
+        axios.post(Url.LinkToBackend +"backend/api/check_booking",{
+            driver_id : props.driverId
+        })
+        .then( res=>{
+            console.log(res.data);
+        });
+        
+    }
+
     function showQueue(data){
         if( !!! document.getElementById('queueList')){
             return;
@@ -15,8 +30,15 @@ export default function QueueDriver(props) {
         if(typeof(data)=== 'object' ){
             data.forEach(val => {
                 let myEl = document.createElement('span');
-                myEl.innerText = `${i} : ${val.driver_id} `;
+                myEl.innerText = `${i} : ${val.driver_id}  \n`;
                 queueList.appendChild(myEl);
+                if (i==1 && val.driver_id==props.driverId){
+ 
+                    firstQueue();
+                }
+                else{
+                    
+                }
                 i++;
             })
         }
@@ -27,6 +49,7 @@ export default function QueueDriver(props) {
     }
     
     useEffect(()=>{
+        clearInterval(window.timeoutId1);
         clearInterval(window.timeoutId2);
         window.timeoutId1 = setInterval(()=>{
             // fetch("http://localhost:1235/queueDriver")
@@ -37,36 +60,23 @@ export default function QueueDriver(props) {
                 driver_id: props.driverId
               })
               .then(res=>{
-                //console.log(res.data);
+                // console.log(typeof(res.data));
                   showQueue(res.data);
                   // เดี๋ยวมาดูใหม่
               });
 
             },1500)
-    },[])
+    },[]);
+
 
     function enQueue() {
-
-        // fetch("http://localhost:1235/queueDriver",{
-        //         method: 'post',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             "id": 1,
-        //             "driver_name": "driver1"
-        //         })
-        //     })
-        //     .then(response=> console.log(response))
-        //     .catch(err => console.log(err));
-        //--------------------------------
-        console.log(props.driverId);
-        console.log(typeof(props.driverId));
+        clearInterval(window.timeoutId2);
         axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{driver_id : props.driverId})
         .then(res=>{
             console.log(res.data);
         });
         
+
 
         // window.timeoutId2=setInterval(()=>{
         //     fetch("http://localhost:1236/location")
@@ -80,6 +90,7 @@ export default function QueueDriver(props) {
         //         }
         //     })
         // }, 1500);
+        // axios.post(Url.LinkToBackend +"")
     }
  
 
@@ -89,7 +100,7 @@ export default function QueueDriver(props) {
             <div className="queue-list" id="queueList"></div>
             <div className="button-queue">
                 <button className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
-                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId)}}> ออกคิว </button>
+                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId);}}> ออกคิว </button>
             </div>
         </div>
     )

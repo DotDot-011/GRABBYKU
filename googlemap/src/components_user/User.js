@@ -1,7 +1,6 @@
 import React from "react";
 import './User.css'
 import {
-  InfoWindow,
   withScriptjs,
   withGoogleMap,
   GoogleMap,
@@ -345,52 +344,36 @@ class User extends React.Component {
     
     cancelQueue = ()=>{
       clearInterval(this.timeoutId);
-      fetch("http://localhost:1236/location/1",{
-            method: 'put',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "id": 1,
-                "status":"false",
-                "latitudeStart": 0,
-                "longtitudeStart": 0,
-                "latitudeDestination": 0,
-                "longtitudeDestination": 0
-            })
-        })
-        .then(response=> console.log(response))
-        .catch(err => console.log(err));
+      // fetch("http://localhost:1236/location/1",{
+      //       method: 'put',
+      //       headers: {
+      //           'Content-Type': 'application/json'
+      //       },
+      //       body: JSON.stringify({
+      //           "id": 1,
+      //           "status":"false",
+      //           "latitudeStart": 0,
+      //           "longtitudeStart": 0,
+      //           "latitudeDestination": 0,
+      //           "longtitudeDestination": 0
+      //       })
+      //   })
+      //   .then(response=> console.log(response))
+      //   .catch(err => console.log(err));
+      //---------------------------------
+      axios.post(Url.LinkToBackend +"backend/api/cancelation",{
+        id: this.userId
+      })
+      .then( res=>{
+        console.log(res.data);
+      });
+
+
       this.setState({
             waitingQueueAppear:null,
             detailDriverAppear:null,
       })
-    //   Axios.get('http://localhost:3001/location').then((response) =>{
-    //     console.log(response);
-    //     this.setState(state=>{
-    //       this.state.locationList = response.data;
 
-    //     });
-    //     let idLocation = this.state.locationList[this.state.locationList.length-1].id;
-    //     console.log(idLocation);
-    //     this.deleteLocation(idLocation);
-    //     this.setState({
-    //       markerPosition: {
-    //         lat: 13.852409944222796,
-    //         lng: 100.57689203927386,
-    //     },
-    //       markerDestinationPosition:{
-    //         lat:13.852409944222796, 
-    //         lng:100.57889203927386,
-    //       },
-    //   })
-    //     this.addLocation();
-    //     this.setState({
-    //       waitingQueueAppear:null,
-    //     })
-        
-    //   });
-    // }
     }
     //watingQueue=null;
     //detailDriver=null;
