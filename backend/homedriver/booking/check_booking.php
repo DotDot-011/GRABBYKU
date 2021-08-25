@@ -14,8 +14,13 @@ if ($result->num_rows > 0) {
         echo json_encode([
             "message" => "update booking table successfully"
         ]);
+<<<<<<< HEAD
         $sql2 = "UPDATE `queue` SET `queue`.`status` = 'ready' WHERE `queue`.`driver_id` = $driver_id";
         if ($conn->query($sql2) == TRUE) {
+=======
+        $sql = "UPDATE `queue` SET `queue`.`status` = 'waiting' WHERE `queue`.`driver_id` = $driver_id";
+        if ($conn->query($sql) == TRUE) {
+>>>>>>> cce8f16516066cadb361065797d1a2cd80909d72
             echo json_encode([
                 "message" => "update successfully"
             ]);
