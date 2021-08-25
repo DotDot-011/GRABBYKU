@@ -14,19 +14,20 @@ if ($result->num_rows > 0) {
         echo json_encode([
             "message" => "update booking table successfully"
         ]);
+        echo json_encode([$row, JSON_PRETTY_PRINT]);
         $sql2 = "UPDATE `queue` SET `queue`.`status` = 'waiting' WHERE `queue`.`driver_id` = $driver_id";
         if ($conn->query($sql2) == TRUE) {
             echo json_encode([
-                "message" => "update successfully"
+                "message" => "update queue table successfully"
             ]);
         } else {
             echo json_encode([
-                "message" => "database not found"
+                "message" => "driver_id not found"
             ]);
         }
     } else {
         echo json_encode([
-            "message" => "data not found"
+            "message" => "user_id not found"
         ]);
     }
 } else {
