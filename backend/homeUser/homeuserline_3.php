@@ -21,11 +21,11 @@
    echo json_encode($data);
   }
   else{
-   echo "there is more than one booking for this user ";
+   echo "there are more than one booking for this user or there is no booking match";
   }
  }
  else{
-  echo json_encode($data);
+  echo "error";
  }
 
 $conn->close();
