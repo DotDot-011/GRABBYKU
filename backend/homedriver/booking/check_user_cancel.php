@@ -5,13 +5,14 @@ $user_id = $postData->user_id;
 
 $sql = "SELECT * FROM `booking` WHERE `user_id` = $user_id";
 
-if($conn->query($sql) == TRUE){
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
     echo json_encode([
-        "message"=> TRUE
+        "message" => true
     ]);
-}else{
+} else {
     echo json_encode([
-        "message"=> FALSE
+        "message" => false
     ]);
 }
-
