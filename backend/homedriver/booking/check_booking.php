@@ -10,19 +10,15 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $user_id = $row["user_id"];
     $data = [];
-    $data["message"] = FALSE;
     $data["user_id"] = $row["user_id"];
     $data["lng_user"] = $row["lng_user"];
     $data["lat_user"] = $row["lat_user"];
     $data["lng_dis"] = $row["lng_dis"];
     $data["lat_dis"] = $row["lat_dis"];
-    $sql1 = "UPDATE `booking` SET `driver_id` = '$driver_id' WHERE `user_id` = '$user_id'";
-    if ($conn->query($sql1) == TRUE) {
-        $data["driver_id"] = $driver_id;
-        $data["message"] = TRUE;
-        $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";
-        $result = $conn->query($sql2);
-    }
+    $data["driver_id"] = $driver_id;
+    $data["message"] = TRUE;
+    $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";
+    $result = $conn->query($sql2);
     echo json_encode($data, JSON_PRETTY_PRINT);
 } else {
     echo json_encode([
