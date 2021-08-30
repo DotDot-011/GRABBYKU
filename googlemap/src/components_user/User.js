@@ -14,6 +14,7 @@ import Wait from "./Wait";
 import DetailDriver from "./DetailDriver";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
+
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -47,14 +48,15 @@ class User extends React.Component {
       waitingQueueAppear:null,
       detailDriverAppear:null,
       locationList:[],
+      redZoneErrorState:null,
     }
-
+    
     watingQueue=null;
     detailDriver=null;
     timeoutId = 0;
     driverId=null;
     userId=null;
-
+    redZoneError=null;
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
           this.setState({
@@ -314,19 +316,20 @@ class User extends React.Component {
         })
 
         this.timeoutId = setInterval(()=>{
-          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", {id: this.userId})
+          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
+          {id: this.userId})
           .then(res=>{
-            //console.log(res);
-            //console.log(res.data);
-            if(!!res.data.driver_id){
-              //console.log("ekwai");
+                              
+            if(!!res.data.driver_id){                    
+              console.log(res);
+              console.log(res.data);   
               this.driverId=res.data.driver_id;
               this.setState({
                 waitingQueueAppear:null,
                 detailDriverAppear:1,
               })
             }else{
-              //console.log("here");
+              
             }
           })
 
@@ -335,7 +338,10 @@ class User extends React.Component {
         },1500)         
      }
      else{
-      window.alert("Error");
+       this.setState({
+         redZoneErrorState:1
+       })
+      
      } 
     }
     
@@ -378,8 +384,11 @@ class User extends React.Component {
     //watingQueue=null;
     //detailDriver=null;
     componentDidMount(){
+      axios.get( Url.LinkToBackend +"backend/api/bomb")
       axios.post(Url.LinkToBackend+"backend/api/line1",{
-        username : this.props.username
+      
+        
+        username: localStorage.getItem("username")
       })
       .then(res=>{
         this.userId=res.data[0].user_id;
@@ -403,6 +412,16 @@ class User extends React.Component {
         this.detailDriver=null;
       }
 
+      if(!!this.state.redZoneErrorState){
+        this.redZoneError = <div className="redzone-error"> 
+                            <h3> ไม่อยู่ในพื้นที่บริการ </h3>
+                            <button onClick={()=>{this.setState({redZoneErrorState:null})}}> ตกลง </button>
+                          </div>
+      }
+      else{
+        this.redZoneError=null
+      }
+      
       
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>
         
@@ -568,7 +587,7 @@ class User extends React.Component {
       return(
         
         <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
-
+        
         {/* <h1>User</h1> */}
           
         {/* <Descriptions bordered>
@@ -579,14 +598,14 @@ class User extends React.Component {
         </Descriptions>         */}
         {this.watingQueue}
         {this.detailDriver}
-
+        {this.redZoneError}
+        
         <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
           containerElement={<div id="map" style={{ height: `380px` }} />}
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
-        
         </div>
         
         

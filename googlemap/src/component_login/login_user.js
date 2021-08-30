@@ -27,6 +27,8 @@ function LoginUser() {
     }
 
     if(loginSuccess){
+        localStorage.setItem("loginStatus","user");
+        localStorage.setItem("username",nameRef.current.value);
         return <User username={nameRef.current.value}/>
     }
     else{

@@ -8,9 +8,6 @@ import {
 } from "react-google-maps";
 
 import Geocode from "react-geocode";
-// import { throwStatement } from "@babel/types";
-// import { Descriptions } from 'antd';
-// import AutoComplete from 'react-google-autocomplete'
 import axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
@@ -51,8 +48,8 @@ class Driver extends React.Component {
   buttonDone = null;
   userInfo = null;
   
-  
-  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus){
+  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser){
+    console.log(startLat,startLng)
     this.setState({
       markerPosition: {
         lat: startLat,
@@ -63,68 +60,67 @@ class Driver extends React.Component {
         lng: DestinationLng,
       },
       queueDriverAppear:queuePageStatus,
-      
+      userId: idUser
     });
   
   }
   
-
+  driverAcknowledge =()=>{
+    this.setState({
+      queueDriverAppear:1,
+      buttonAcceptCancelAppear:1,
+      userCancelAlert:null
+    })
+  }
+  
 
   cancelIntervalId=0;
   cancelCase=()=>{
     this.cancelIntervalId=setInterval(()=>{
-      fetch("http://localhost:1236/location")
-      .then(response=> response.json())
-      .then(data => {
-          if(data[0].status ==='false'){
-              clearInterval(this.cancelIntervalId);
-              this.setState({
-                queueDriverAppear:1,
-                buttonAcceptCancelAppear:1,
-              })
-              // document.location.reload()
-          }
-        })
+      
+      axios.post(Url.LinkToBackend + "backend/api/check_user_cancel",{
+        user_id : this.state.userId
+      })
+      .then(res=>{
+        console.log(res.data);
+        console.log(res.data.message);
+        if (!res.data.message){
+          clearInterval(this.cancelIntervalId);
+          leaveQueue(this.state.driverId);
+          this.setState({
+            queueDriverAppear:1,
+            buttonAcceptCancelAppear:1,
+          })
+        }
+      })
     }, 1500);
   }
 
   driverCancel = () =>{
+    console.log(parseInt(this.state.driverId));
+    console.log(parseInt(this.state.userId));
     this.setState({
       queueDriverAppear:1,
     });
-    leaveQueue(this.state.driverId);
+    // leaveQueue(this.state.driverId);
     // document.location.reload();
-  }
-  driverAccept = () =>{
-    // fetch("http://localhost:1237/driverDetail/1",{
-    //         method: 'put',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //           "id":1,
-    //           "status": "true",
-    //           "name" : "xxxx xxxx",
-    //           "area" : "ประตู 3",
-    //           "plate": "abc 1234"
-                
-    //         })
-    //     })
-    //     .then(response=> console.log(response))
-    //     .catch(err => console.log(err));
-    //--------------------------------------
-    axios.post(Url.LinkToBackend+"backend/api/userdriver2book",{
-      driver_id: this.props.driverId,
-      user_id: this.state.userId,
-      lng_user: this.state.markerPosition.lng,
-      lat_user: this.state.markerPosition.lat,
-      lng_des: this.state.markerDestinationPosition.lng,
-      lat_des: this.state.markerDestinationPosition.lat,
-      
+    axios.post(Url.LinkToBackend+"backend/api/driver_cancel",{
+      driver_id: parseInt(this.state.driverId),
+      user_id: parseInt(this.state.userId)
     })
     .then(res=>{
-        console.log(res.data);
-        // 2bookมาดูใหม่
+      console.log(res.data.message);
+    });
+  }
+  driverAccept = () =>{
+    
+    
+    axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
+      driver_id: parseInt(this.state.driverId),
+      user_id: parseInt(this.state.userId)
+    })
+    .then(res=>{
+      console.log(res.data.message);
     });
 
     this.setState({
@@ -134,8 +130,10 @@ class Driver extends React.Component {
   }
   
   componentDidMount(){
+    axios.get( Url.LinkToBackend +"backend/api/bomb")
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
-      username : this.props.username
+      username: localStorage.getItem("username")
+      // username : this.props.username
     })
     .then((res)=>{
       console.log(res.data);
@@ -173,6 +171,14 @@ class Driver extends React.Component {
           this.buttonDone = <div className="button-accept-cancel-done">
                               <button className="done-button"> เสร็จสิ้น </button>
                             </div>
+        }
+        if(!!this.state.userCancelAlert){
+          this.errorAlert= <div >
+          <button onClick={this.driverAcknowledge} >Testtttt</button> 
+        </div>
+        }
+        else{
+          this.errorAlert=null;
         }
 
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
@@ -231,6 +237,7 @@ class Driver extends React.Component {
     return (
       <section className="app-section">
         
+        
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
           <div key={this.state.driverId} className="driver-detail">
             {this.queueDriver}
@@ -244,16 +251,20 @@ class Driver extends React.Component {
           <Descriptions.Item label="State">{this.state.state}</Descriptions.Item>
             <Descriptions.Item label="Address">{this.state.address}</Descriptions.Item>
           </Descriptions> */}
+          {/* <div class="error">{this.errorAlert}</div> */}
           <MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div id="map" style={{ height: `400px`}} />}
                 mapElement={<div style={{ height: `100%` }} />}
+                // key={this.state.mapPosition.lat}
               /> 
           
         </div>
         {this.buttonAcceptCancel}
         {this.buttonDone}
+        
+        
       </section>
 
     );

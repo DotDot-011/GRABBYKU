@@ -9,8 +9,13 @@ function Login() {
     
     const [count, setCount] = useState(0);
     if(count === 1) {
+        // localStorage.clear();
+        // localStorage.setItem("loginStatus","user");
+        
         return <LoginUser />
     }else if(count === 2) {
+        // localStorage.setItem("loginStatus","driver");
+        
         return <LoginDriver />
     }else if(count === 3) {
         return <RegisUser />

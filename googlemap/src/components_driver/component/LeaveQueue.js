@@ -14,6 +14,6 @@ export default function leaveQueue(driverId) {
         .then(res=>{
                 console.log(typeof(driverId));
                 console.log(res.data);
-                //เดี๋ยวมาดู
+                
         });
 }

@@ -8,14 +8,25 @@ export default function QueueDriver(props) {
     
     
     function firstQueue() {
-        clearInterval(window.timeoutId1);
-        clearInterval(window.timeoutId2);
+        
 
         axios.post(Url.LinkToBackend +"backend/api/check_booking",{
             driver_id : props.driverId
         })
         .then( res=>{
             console.log(res.data);
+            console.log(typeof(res.data.message));
+            
+            console.log(res.data.message);
+            if (res.data.message){
+                clearInterval(window.timeoutId1);
+                clearInterval(window.timeoutId2);
+                console.log(Number(res.data.lat_user));
+                props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_dis) ,Number(res.data.lng_dis) ,null ,res.data.user_id)
+            }
+
+               
+
         });
         
     }
@@ -52,17 +63,11 @@ export default function QueueDriver(props) {
         clearInterval(window.timeoutId1);
         clearInterval(window.timeoutId2);
         window.timeoutId1 = setInterval(()=>{
-            // fetch("http://localhost:1235/queueDriver")
-            //     .then(response=> response.json())
-            //     .then(data => showQueue(data));
-            
             axios.get(Url.LinkToBackend+"backend/api/getqueue",{
                 driver_id: props.driverId
               })
               .then(res=>{
-                // console.log(typeof(res.data));
                   showQueue(res.data);
-                  // เดี๋ยวมาดูใหม่
               });
 
             },1500)
@@ -73,7 +78,7 @@ export default function QueueDriver(props) {
         clearInterval(window.timeoutId2);
         axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{driver_id : props.driverId})
         .then(res=>{
-            console.log(res.data);
+            // console.log(res.data);
         });
         
 
@@ -91,6 +96,7 @@ export default function QueueDriver(props) {
         //     })
         // }, 1500);
         // axios.post(Url.LinkToBackend +"")
+        //---------------------------------------
     }
  
 

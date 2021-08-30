@@ -3,6 +3,17 @@
     height: 727px;
 } */
 
+.error{
+    z-index: -1;
+    background-color: red;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .detail-map{
     margin: 0 auto;
     text-align: center;

@@ -25,6 +25,8 @@ function LoginUser() {
 
 
     if(loginSuccess){
+        localStorage.setItem("loginStatus","driver");
+        localStorage.setItem("username",nameRef.current.value);
         return <Driver username={nameRef.current.value}/>
     }
     else{
