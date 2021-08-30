@@ -17,9 +17,10 @@ $routes["/backend/api/login_driver"]["POST"] = "./login/driver/login.php";
 
 # driver - booking
 $routes["/backend/api/driver_accept"]["POST"] = "./homedriver/booking/driver_accept.php";
-$routes["/backend/api/driver_cancel"]["POST"] = "./homedriver/booking/driver_accept.php";
+$routes["/backend/api/driver_cancel"]["POST"] = "./homedriver/booking/driver_cancel.php";
 $routes["/backend/api/check_user_cancel"]["POST"] = "./homedriver/booking/check_user_cancel.php";
 $routes["/backend/api/check_booking"]["POST"] = "./homedriver/booking/check_booking.php";
+$routes["/backend/api/bomb"]["GET"] = "./homedriver/booking/SelfDestruction.php";
 
 # driver - get driver data
 $routes["/backend/api/postdriver"]["POST"] = "./homedriver/postdriver/postdriver.php";
