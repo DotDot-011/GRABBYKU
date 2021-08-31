@@ -12,6 +12,11 @@ if ($result->num_rows > 0) {
 
         $data[$i]["id"] = $row['queue_id'];
         $data[$i]["driver_id"] = $row['driver_id'];
+        $driver_id = $row['driver_id'];
+        $sql1 = "SELECT fname FROM driver WHERE driver_id = '$driver_id'";
+        $result1 = $conn->query($sql1);
+        $row1 = $result1->fetch_assoc();
+        $data[$i]["driver_name"] = $row1['fname'];
         $data[$i]["status"] = $row['status'];
         $data[$i]["time_stamp"] = $row['create_at'];
         $i++;
