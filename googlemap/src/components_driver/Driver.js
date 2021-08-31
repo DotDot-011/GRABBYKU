@@ -13,6 +13,10 @@ import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
 import UserInfo from "./component/userInfo";
 import { Url } from '../LinkToBackend';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { stack as Menu } from 'react-burger-menu'
+
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -87,6 +91,8 @@ class Driver extends React.Component {
         if (!res.data.message){
           clearInterval(this.cancelIntervalId);
           leaveQueue(this.state.driverId);
+          NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
+          
           this.setState({
             queueDriverAppear:1,
             buttonAcceptCancelAppear:1,
@@ -235,8 +241,15 @@ class Driver extends React.Component {
       </GoogleMap>
     ));
     return (
+
       <section className="app-section">
-        
+        <Menu right>
+          {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
+            <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
+            <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
+        </Menu>  
         
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
           <div key={this.state.driverId} className="driver-detail">
@@ -263,7 +276,7 @@ class Driver extends React.Component {
         </div>
         {this.buttonAcceptCancel}
         {this.buttonDone}
-        
+        <NotificationContainer />
         
       </section>
 

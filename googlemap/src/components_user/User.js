@@ -14,7 +14,10 @@ import Wait from "./Wait";
 import DetailDriver from "./DetailDriver";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
-
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { stack as Menu } from 'react-burger-menu'
+// import { slide as Menu } from 'react-burger-menu'   เอาไปเล่นนะจ๊ะเด็กๆ <3
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -48,7 +51,7 @@ class User extends React.Component {
       waitingQueueAppear:null,
       detailDriverAppear:null,
       locationList:[],
-      redZoneErrorState:null,
+      
     }
     
     watingQueue=null;
@@ -56,7 +59,9 @@ class User extends React.Component {
     timeoutId = 0;
     driverId=null;
     userId=null;
-    redZoneError=null;
+    
+    
+
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
           this.setState({
@@ -213,7 +218,8 @@ class User extends React.Component {
 
     onPlaceSelected = (place)=>{
       if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
+        // window.alert("No details available for input: '" + place.name + "'");
+        NotificationManager.error("No details available for input: '" + place.name + "'",'Alert',3000);
         return;
       }
       console.log(place)
@@ -244,7 +250,8 @@ class User extends React.Component {
     
     onPlaceDestinationSelected = (place)=>{
       if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
+        NotificationManager.error("No details available for input: '" + place.name + "'",'Alert',3000);
+        // window.NotificationManager("No details available for input: '" + place.name + "'");
         return;
       }
       const address = place.formatted_address,
@@ -338,10 +345,10 @@ class User extends React.Component {
         },1500)         
      }
      else{
-       this.setState({
-         redZoneErrorState:1
-       })
-      
+      //  this.setState({
+      //    redZoneErrorState:1
+      //  })
+      NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',3000);
      } 
     }
     
@@ -394,6 +401,10 @@ class User extends React.Component {
         this.userId=res.data[0].user_id;
       })
     }
+    showSettings (event) {
+      event.preventDefault();
+      
+    }
 
     render(){
       
@@ -412,15 +423,7 @@ class User extends React.Component {
         this.detailDriver=null;
       }
 
-      if(!!this.state.redZoneErrorState){
-        this.redZoneError = <div className="redzone-error"> 
-                            <h3> ไม่อยู่ในพื้นที่บริการ </h3>
-                            <button onClick={()=>{this.setState({redZoneErrorState:null})}}> ตกลง </button>
-                          </div>
-      }
-      else{
-        this.redZoneError=null
-      }
+      
       
       
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>
@@ -583,8 +586,19 @@ class User extends React.Component {
         
         </GoogleMap>
       ));
-
+      
       return(
+        <div>
+          
+          <Menu right>
+          {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
+            <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
+            <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
+          </Menu>
+            
+          
         
         <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
         
@@ -598,7 +612,7 @@ class User extends React.Component {
         </Descriptions>         */}
         {this.watingQueue}
         {this.detailDriver}
-        {this.redZoneError}
+    
         
         <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
@@ -606,8 +620,10 @@ class User extends React.Component {
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
-        </div>
+        <NotificationContainer />
         
+        </div>
+        </div>
         
       );
     }

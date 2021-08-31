@@ -41,7 +41,7 @@ export default function QueueDriver(props) {
         if(typeof(data)=== 'object' ){
             data.forEach(val => {
                 let myEl = document.createElement('span');
-                myEl.innerText = `${i} : ${val.driver_id}  \n`;
+                myEl.innerText = `${i} : ${val.driver_name}  \n`;
                 queueList.appendChild(myEl);
                 if (i==1 && val.driver_id==props.driverId){
  
@@ -71,6 +71,7 @@ export default function QueueDriver(props) {
               });
 
             },1500)
+        return ()=>{}
     },[]);
 
 
