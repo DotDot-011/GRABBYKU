@@ -46,14 +46,17 @@ class Driver extends React.Component {
     buttonAcceptCancelAppear:1,
     driverId:null,
     userId:null,
+    userFname:null,
+    userLname:null,
   }
   queueDriver = null;
   buttonAcceptCancel = null;
   buttonDone = null;
   userInfo = null;
   
-  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser){
+  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
     console.log(startLat,startLng)
+    console.log(userFName,userLName)
     this.setState({
       markerPosition: {
         lat: startLat,
@@ -63,25 +66,26 @@ class Driver extends React.Component {
         lat: DestinationLat, 
         lng: DestinationLng,
       },
-      queueDriverAppear:queuePageStatus,
-      userId: idUser
+      queueDriverAppear: queuePageStatus,
+      userId: idUser,
+      userFname: userFName,
+      userLname: userLName,
     });
   
   }
   
-  driverAcknowledge =()=>{
-    this.setState({
-      queueDriverAppear:1,
-      buttonAcceptCancelAppear:1,
-      userCancelAlert:null
-    })
-  }
+  // driverAcknowledge =()=>{
+  //   this.setState({
+  //     queueDriverAppear:1,
+  //     buttonAcceptCancelAppear:1,
+  //     userCancelAlert:null
+  //   })
+  // }
   
 
   cancelIntervalId=0;
   cancelCase=()=>{
     this.cancelIntervalId=setInterval(()=>{
-      
       axios.post(Url.LinkToBackend + "backend/api/check_user_cancel",{
         user_id : this.state.userId
       })
@@ -163,7 +167,7 @@ class Driver extends React.Component {
           this.queueDriver= null;
           clearInterval(this.cancelIntervalId)
           this.cancelCase();
-          this.userInfo = <UserInfo/>;
+          this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
         }
         if(!!this.state.buttonAcceptCancelAppear){
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
@@ -178,14 +182,14 @@ class Driver extends React.Component {
                               <button className="done-button"> เสร็จสิ้น </button>
                             </div>
         }
-        if(!!this.state.userCancelAlert){
-          this.errorAlert= <div >
-          <button onClick={this.driverAcknowledge} >Testtttt</button> 
-        </div>
-        }
-        else{
-          this.errorAlert=null;
-        }
+        // if(!!this.state.userCancelAlert){
+        //   this.errorAlert= <div >
+        //   <button onClick={this.driverAcknowledge} >Testtttt</button> 
+        // </div>
+        // }
+        // else{
+        //   this.errorAlert=null;
+        // }
 
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
           <GoogleMap
@@ -257,7 +261,7 @@ class Driver extends React.Component {
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>
           </div>
-        
+         
           {/* <Descriptions bordered>
             <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
           <Descriptions.Item label="Area">{this.state.area}</Descriptions.Item>
