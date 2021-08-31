@@ -4,6 +4,8 @@ import { Url } from '../LinkToBackend';
 
 function RegisUser() {
 
+    
+    // userRefพวกนนี้สามารถลบแล้วเขียนใหม่ได้เลย
     const usernameRef = useRef("");
     const fnameRef = useRef("");
     const lnameRef = useRef("");

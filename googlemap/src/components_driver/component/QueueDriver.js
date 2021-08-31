@@ -71,7 +71,7 @@ export default function QueueDriver(props) {
                   showQueue(res.data);
               });
 
-            },1000)
+            },1500)
         return ()=>{
             clearInterval(window.timeoutId1);
         }

@@ -61,7 +61,7 @@ class User extends React.Component {
     userId=null;
     
     
-
+    //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
           this.setState({
@@ -91,7 +91,9 @@ class User extends React.Component {
           })
         })
     }
-    getCountry = (addressArray)=>{
+
+    //function getCountry getCity getArea getDistrict getStreet getState สำหรับหาเอาข้อมูลที่อยู่จาก latitude longtitude แต่ไม่ได้ใช้
+    getCountry = (addressArray)=>{ 
       let Country='';
       for(let index = 0 ; index < addressArray.length ; index++){
         if(addressArray[index].types[0] && addressArray[index].types[0]==='country'){
@@ -159,12 +161,14 @@ class User extends React.Component {
             }
         }
     };   
-
+    
+    //--------------------------function ถูกเรียกตอนวางMarkerสีเขียวปักลงในแผนที่  ------------------
     onMarkerDragEnd = (event)=>{
       let newLat = event.latLng.lat();
       let newLng= event.latLng.lng();
       console.log('newLat',newLat);
       console.log('newLng',newLng);
+      //api ของ googlemap สำหรับเอาข้อมูลlatitude longtitude ไปหา address
       Geocode.fromLatLng(newLat,newLng)
       .then(response=>{
         console.log(response)
@@ -188,11 +192,13 @@ class User extends React.Component {
       })
     }
 
+    //-------------------function ถูกเรียกตอนวางMarkerสีแดงปักลงในแผนที่----------------
     onMarkerDestinationDragEnd = (event)=>{
       let newLat = event.latLng.lat();
       let newLng= event.latLng.lng();
       console.log('newLat',newLat);
       console.log('newLng',newLng);
+      //api ของ googlemap สำหรับเอาข้อมูลlatitude longtitude ไปหา address
       Geocode.fromLatLng(newLat,newLng)
       .then(response=>{
         console.log(response)
@@ -216,10 +222,11 @@ class User extends React.Component {
       })
     }
 
+    //----------------------function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีเขียว--------
     onPlaceSelected = (place)=>{
-      if (!place.geometry) {
-        // window.alert("No details available for input: '" + place.name + "'");
-        NotificationManager.error("No details available for input: '" + place.name + "'",'Alert',3000);
+      //กรณีไม่เจอไม่เจอสถานที่
+      if (!place.geometry) {                                                  
+        NotificationManager.error("ไม่พบ :'" + place.name + "'",'Alert',3000);
         return;
       }
       console.log(place)
@@ -248,10 +255,11 @@ class User extends React.Component {
       
     }
     
+    //function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีแดง
     onPlaceDestinationSelected = (place)=>{
       if (!place.geometry) {
+        //กรณีไม่เจอไม่เจอสถานที่
         NotificationManager.error("No details available for input: '" + place.name + "'",'Alert',3000);
-        // window.NotificationManager("No details available for input: '" + place.name + "'");
         return;
       }
       const address = place.formatted_address,
@@ -274,6 +282,7 @@ class User extends React.Component {
       })
     }
     
+    //---------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ให้บริการ---------
     greenZonePath = [
       {latitude:13.855458118865057, longitude:100.56596600925597},
       {latitude:13.857277966250578, longitude:100.57639848267323},
@@ -284,6 +293,7 @@ class User extends React.Component {
       {latitude:13.855458118865057, longitude:100.56596600925597},
     ]
 
+    //--------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ห้ามวินผ่าน----------
     redZonePath = [
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
         {latitude: 13.848348039187117,longitude: 100.56569906630881},
@@ -293,20 +303,18 @@ class User extends React.Component {
         {latitude:13.842952063786939, longitude:100.57158130599677},
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
     ]
-
-    //sent location to database
-    //timeoutId = 0;
-    //driverId=null;
+    
+    //--------------functionถูกเรียกเมื่อ user กดปุ่มเริ่มต้น-------------------- 
     addLocation = () =>{
+      //-----------------เช็คตำแหน่งของทั้งสองmarkerว่าอยู่ในพื้นที่ให้บริการและอยู่นอก redzone หรือไม่-------------------
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
      !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
      
      isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
      isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
      {
-        
-        
-        
+
+        // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
         axios.post(Url.LinkToBackend+"backend/api/line2",{
           user_id: this.userId,
           latitudeStart: this.state.markerPosition.lat,
@@ -316,13 +324,13 @@ class User extends React.Component {
         })
         .then(res=>{
           console.log(res.data);
-          //console.log(this.userId);
         })
         this.setState({
           waitingQueueAppear:1,
         })
 
         this.timeoutId = setInterval(()=>{
+          // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
           axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
           {id: this.userId})
           .then(res=>{
@@ -345,35 +353,15 @@ class User extends React.Component {
         },1500)         
      }
      else{
-      //  this.setState({
-      //    redZoneErrorState:1
-      //  })
       NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',3000);
      } 
     }
     
     
     
-    
+    // ------------------ check user cancel ในทุกกรณี ------------------
     cancelQueue = ()=>{
       clearInterval(this.timeoutId);
-      // fetch("http://localhost:1236/location/1",{
-      //       method: 'put',
-      //       headers: {
-      //           'Content-Type': 'application/json'
-      //       },
-      //       body: JSON.stringify({
-      //           "id": 1,
-      //           "status":"false",
-      //           "latitudeStart": 0,
-      //           "longtitudeStart": 0,
-      //           "latitudeDestination": 0,
-      //           "longtitudeDestination": 0
-      //       })
-      //   })
-      //   .then(response=> console.log(response))
-      //   .catch(err => console.log(err));
-      //---------------------------------
       axios.post(Url.LinkToBackend +"backend/api/cancelation",{
         id: this.userId
       })
@@ -388,26 +376,25 @@ class User extends React.Component {
       })
 
     }
-    //watingQueue=null;
-    //detailDriver=null;
+
+    // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
       axios.get( Url.LinkToBackend +"backend/api/bomb")
       axios.post(Url.LinkToBackend+"backend/api/line1",{
-      
-        
         username: localStorage.getItem("username")
       })
       .then(res=>{
         this.userId=res.data[0].user_id;
       })
-    }
+  }
     showSettings (event) {
       event.preventDefault();
       
     }
 
+
+    
     render(){
-      
       
       if(!!this.state.waitingQueueAppear){
         this.watingQueue= <Wait cancelQueue={this.cancelQueue}/>
@@ -422,14 +409,11 @@ class User extends React.Component {
       else{
         this.detailDriver=null;
       }
-
-      
-      
-      
-      const MapWithAMarker = withScriptjs(withGoogleMap(props =>
-        
+    
+      //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
+      const MapWithAMarker = withScriptjs(withGoogleMap(props =>       
         <GoogleMap div id="con"
-          
+          //------------------setting ของตัวแผนที่--------------------------
           defaultZoom={15}
           defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
           
@@ -454,9 +438,8 @@ class User extends React.Component {
               
             },
            }}
-        
         >
-          
+          {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
           <Marker 
             draggable={true}
             position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
@@ -467,7 +450,7 @@ class User extends React.Component {
             }}
             >  
           </Marker>
-
+            {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
           <Marker 
             draggable={true}
             onDragEnd={this.onMarkerDestinationDragEnd}
@@ -481,9 +464,8 @@ class User extends React.Component {
           </Marker>
           <div class="locationbox">
           <div id="inbutt">
-          {/* here1 */}
+          {/* ----------component กล่องค้นหาตำแหน่งเริ่มต้น--------- */}
           <Autocomplete id="input1"
-            // style={{ paddingLeft: 16 , marginTop:10 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -507,9 +489,8 @@ class User extends React.Component {
 
           <button class="button-currentLocation" onClick={this.findMylocation}></button>
           </div>  
-          {/* here2 */}
+            {/* ----------component กล่องค้นหาตำแหน่งปลายทาง--------- */}
           <Autocomplete id="input2"
-            // style={{  paddingLeft: 16 , marginTop:2 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -537,12 +518,8 @@ class User extends React.Component {
               {lat:13.857277966250578, lng:100.57639848267323},
               {lat:13.857659300458918, lng:100.58083861265405},
               {lat:13.850487798245787, lng:100.5815458679391},
-              
-            
               {lat:13.836416483501072, lng:100.57339372833995},
               {lat:13.842558941191157, lng:100.5590814720114},
-
-
               {lat:13.855458118865057, lng:100.56596600925597},
             ]}
             
@@ -589,8 +566,10 @@ class User extends React.Component {
       
       return(
         <div>
-          
-          <Menu right>
+
+
+          {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
+          <Menu right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
             <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
             <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
@@ -601,15 +580,7 @@ class User extends React.Component {
           
         
         <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
-        
-        {/* <h1>User</h1> */}
           
-        {/* <Descriptions bordered>
-          <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
-          <Descriptions.Item label="Area">{this.state.area}</Descriptions.Item>
-          <Descriptions.Item label="State">{this.state.state}</Descriptions.Item>
-          <Descriptions.Item label="Address">{this.state.address}</Descriptions.Item>
-        </Descriptions>         */}
         {this.watingQueue}
         {this.detailDriver}
     

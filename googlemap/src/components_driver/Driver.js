@@ -54,6 +54,8 @@ class Driver extends React.Component {
   buttonDone = null;
   userInfo = null;
   
+
+  //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
     console.log(startLat,startLng)
     console.log(userFName,userLName)
@@ -74,15 +76,8 @@ class Driver extends React.Component {
   
   }
   
-  // driverAcknowledge =()=>{
-  //   this.setState({
-  //     queueDriverAppear:1,
-  //     buttonAcceptCancelAppear:1,
-  //     userCancelAlert:null
-  //   })
-  // }
   
-
+  // ------------------ เช็คว่า user cancel หรือยัง ------------------
   cancelIntervalId=0;
   cancelCase=()=>{
     this.cancelIntervalId=setInterval(()=>{
@@ -106,6 +101,7 @@ class Driver extends React.Component {
     }, 1500);
   }
 
+  // ------------------ driver กด ปฏิเสธไม่รับงาน ------------------
   driverCancel = () =>{
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
@@ -122,6 +118,8 @@ class Driver extends React.Component {
       console.log(res.data.message);
     });
   }
+
+  // ------------------ driver กด ยอมรับงาน ------------------
   driverAccept = () =>{
     
     
@@ -139,6 +137,7 @@ class Driver extends React.Component {
     leaveQueue(this.state.driverId);
   }
   
+  // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
     axios.get( Url.LinkToBackend +"backend/api/bomb")
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
@@ -182,22 +181,13 @@ class Driver extends React.Component {
                               <button className="done-button"> เสร็จสิ้น </button>
                             </div>
         }
-        // if(!!this.state.userCancelAlert){
-        //   this.errorAlert= <div >
-        //   <button onClick={this.driverAcknowledge} >Testtttt</button> 
-        // </div>
-        // }
-        // else{
-        //   this.errorAlert=null;
-        // }
-
+        
+        //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
         const MapWithAMarker = withScriptjs(withGoogleMap(props =>
           <GoogleMap
-
+          // ------------------ set default map KA(ค่ะ) ------------------
           defaultZoom={15}
           defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
-          
-          
           defaultOptions={{
             
             zoomControl:true,
@@ -218,7 +208,7 @@ class Driver extends React.Component {
             },
           }}
           >
-
+        {/* ----------componentของmarkerตำแหน่งที่ต้องไปรับ(สีเขียว) ----------*/}
         <Marker
           draggable={false}
           // onDragEnd={this.onMarkerDragEnd}
@@ -230,8 +220,9 @@ class Driver extends React.Component {
 
         >
         </Marker>
+
+        {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
         <Marker 
-            
             icon={{
               url:"/pictures/markred.png",
               scaledSize:{height: 40 , width: 25},
@@ -262,13 +253,6 @@ class Driver extends React.Component {
             <div className="detail">{this.userInfo}</div>
           </div>
          
-          {/* <Descriptions bordered>
-            <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
-          <Descriptions.Item label="Area">{this.state.area}</Descriptions.Item>
-          <Descriptions.Item label="State">{this.state.state}</Descriptions.Item>
-            <Descriptions.Item label="Address">{this.state.address}</Descriptions.Item>
-          </Descriptions> */}
-          {/* <div class="error">{this.errorAlert}</div> */}
           <MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}

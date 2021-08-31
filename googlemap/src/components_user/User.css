@@ -99,12 +99,16 @@
     background-color: red;
 }
 
+
+
+/* ส่วนนี้คือHamberger bar ขวา ถ้าจะปรับแต่งต้องดูRef */
 .menu{
     width: 150px;
     height: 150px;
     z-index: 1;
     background-color: red;
 }
+
 /* Position and sizing of burger button */
 .bm-burger-button {
     position: fixed;
@@ -173,3 +177,20 @@
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
   }
+
+
+
+  /* ด้านล่างนี้คิือCSSสำหรับตัวNotification */
+  .message{
+    font-size: 20px;
+  }
+
+  .notification-message{
+    font-size: 20px;
+  }
+
+  .notification{
+    /* width: 50px; */
+  }
+
+

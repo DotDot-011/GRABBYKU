@@ -13,6 +13,7 @@ export default function DetailDriver(props){
     const [driverNo, setdriverNo] = useState("47");
     const [driverPosition, setdriverPosition] = useState("ประตูนรก");
     
+    // ------------------ show ข้อมูลของ driver ที่ match ------------------
     useEffect(()=>{
         axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
         driver_id: props.driverId})
