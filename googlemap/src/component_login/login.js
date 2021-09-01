@@ -8,7 +8,7 @@ import RegisUser from "./regis_user";
 function Login() {
     
     const [count, setCount] = useState(0);
-    if(count === 1) {
+    if(count === 1) {        
         return <LoginUser />
     }else if(count === 2) {
         return <LoginDriver />

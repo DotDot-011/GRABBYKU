@@ -1,30 +1,28 @@
+import axios from 'axios';
 import React from 'react';
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
+import { Url } from './LinkToBackend';
 import Login from './component_login/login';
-import Driver from './components_driver/Driver';
 import User from './components_user/User';
+import Driver from './components_driver/Driver';
 
 export default function App() {
-
-    return (
-      
-        <Switch>
-          <Route path="/" exact>
-            <Login/>
-          </Route>
-          <Route path="/user" >
-            
+    
+    if(localStorage.getItem("loginStatus")==="user"){
+        return(
             <User/>
-          </Route>
-          <Route path="/driver">
+        )
+    }
+    else if(localStorage.getItem("loginStatus")==="driver"){
+        return(
             <Driver/>
+        )
+    }
+    else{
+        return (
             
-          </Route>
-        </Switch>
-      
-    )
+            <Login/>
+      )
+    }
+
 }
 

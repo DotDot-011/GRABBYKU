@@ -1,5 +1,6 @@
 import './Wait.css'
 
+// ------------------ user รอ match กับ driver ------------------
 export default function Wait(props){
     const { cancelQueue } = props; 
     

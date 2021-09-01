@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import Driver from "../components_driver/Driver";
 import axios from "axios";
+import { Url } from '../LinkToBackend';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 
 function LoginUser() {
     const nameRef = useRef("");
@@ -8,10 +11,11 @@ function LoginUser() {
     const [loginSuccess, setLoginSuccess] = useState(0);
     
     function CheckUser() {
-        axios.post("http://4070-2001-fb1-132-988a-2c49-2ecb-17ea-f8cd.ngrok.io/backend/api/login_user", 
+        console.log(typeof(nameRef.current.value))
+        axios.post(`${Url.LinkToBackend}backend/api/login_driver`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
-            console.log(res.data);
+            console.log(res);
             if(res.data.message){
                 document.getElementById('loginError').innerHTML=null;
                 setLoginSuccess(1);
@@ -20,11 +24,16 @@ function LoginUser() {
                 document.getElementById('loginError').innerHTML=' --- ชื่อผู้ใช้งาน หรือ รหัสผ่าน ผิดพลาด ! --- ';
             }
         })
+        .catch(err=>{
+            NotificationManager.error(err.message,'Login error',3000);
+        })
     }
 
 
     if(loginSuccess){
-        return <Driver/>
+        localStorage.setItem("loginStatus","driver");
+        localStorage.setItem("username",nameRef.current.value);
+        return <Driver username={nameRef.current.value}/>
     }
     else{
         return (
@@ -42,7 +51,7 @@ function LoginUser() {
                     <p id="loginError"></p>
                     <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
                 </form>
-                
+                <NotificationContainer />
             </div> 
             );
     }

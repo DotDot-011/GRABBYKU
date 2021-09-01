@@ -1,7 +1,6 @@
 import React from "react";
 import './User.css'
 import {
-  InfoWindow,
   withScriptjs,
   withGoogleMap,
   GoogleMap,
@@ -15,6 +14,11 @@ import Wait from "./Wait";
 import DetailDriver from "./DetailDriver";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { stack as Menu } from 'react-burger-menu'
+import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
+// import { slide as Menu } from 'react-burger-menu'   เอาไปเล่นนะจ๊ะเด็กๆ <3
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -48,13 +52,17 @@ class User extends React.Component {
       waitingQueueAppear:null,
       detailDriverAppear:null,
       locationList:[],
+      
     }
-
+    
     watingQueue=null;
     detailDriver=null;
     timeoutId = 0;
     driverId=null;
-
+    userId=null;
+    fetchUserIdInterval=null;
+    
+    //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
           this.setState({
@@ -84,7 +92,9 @@ class User extends React.Component {
           })
         })
     }
-    getCountry = (addressArray)=>{
+
+    //function getCountry getCity getArea getDistrict getStreet getState สำหรับหาเอาข้อมูลที่อยู่จาก latitude longtitude แต่ไม่ได้ใช้
+    getCountry = (addressArray)=>{ 
       let Country='';
       for(let index = 0 ; index < addressArray.length ; index++){
         if(addressArray[index].types[0] && addressArray[index].types[0]==='country'){
@@ -152,12 +162,14 @@ class User extends React.Component {
             }
         }
     };   
-
+    
+    //--------------------------function ถูกเรียกตอนวางMarkerสีเขียวปักลงในแผนที่  ------------------
     onMarkerDragEnd = (event)=>{
       let newLat = event.latLng.lat();
       let newLng= event.latLng.lng();
       console.log('newLat',newLat);
       console.log('newLng',newLng);
+      //api ของ googlemap สำหรับเอาข้อมูลlatitude longtitude ไปหา address
       Geocode.fromLatLng(newLat,newLng)
       .then(response=>{
         console.log(response)
@@ -181,11 +193,13 @@ class User extends React.Component {
       })
     }
 
+    //-------------------function ถูกเรียกตอนวางMarkerสีแดงปักลงในแผนที่----------------
     onMarkerDestinationDragEnd = (event)=>{
       let newLat = event.latLng.lat();
       let newLng= event.latLng.lng();
       console.log('newLat',newLat);
       console.log('newLng',newLng);
+      //api ของ googlemap สำหรับเอาข้อมูลlatitude longtitude ไปหา address
       Geocode.fromLatLng(newLat,newLng)
       .then(response=>{
         console.log(response)
@@ -209,9 +223,11 @@ class User extends React.Component {
       })
     }
 
+    //----------------------function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีเขียว--------
     onPlaceSelected = (place)=>{
-      if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
+      //กรณีไม่เจอไม่เจอสถานที่
+      if (!place.geometry) {                                                  
+        NotificationManager.error("ไม่พบ :'" + place.name + "'",'Alert',3000);
         return;
       }
       console.log(place)
@@ -240,9 +256,11 @@ class User extends React.Component {
       
     }
     
+    //function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีแดง
     onPlaceDestinationSelected = (place)=>{
       if (!place.geometry) {
-        window.alert("No details available for input: '" + place.name + "'");
+        //กรณีไม่เจอไม่เจอสถานที่
+        NotificationManager.error("No details available for input: '" + place.name + "'",'Alert',3000);
         return;
       }
       const address = place.formatted_address,
@@ -265,6 +283,7 @@ class User extends React.Component {
       })
     }
     
+    //---------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ให้บริการ---------
     greenZonePath = [
       {latitude:13.855458118865057, longitude:100.56596600925597},
       {latitude:13.857277966250578, longitude:100.57639848267323},
@@ -275,6 +294,7 @@ class User extends React.Component {
       {latitude:13.855458118865057, longitude:100.56596600925597},
     ]
 
+    //--------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ห้ามวินผ่าน----------
     redZonePath = [
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
         {latitude: 13.848348039187117,longitude: 100.56569906630881},
@@ -284,152 +304,114 @@ class User extends React.Component {
         {latitude:13.842952063786939, longitude:100.57158130599677},
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
     ]
-
-    //sent location to database
-    //timeoutId = 0;
-    //driverId=null;
+    
+    //--------------functionถูกเรียกเมื่อ user กดปุ่มเริ่มต้น-------------------- 
     addLocation = () =>{
+      //-----------------เช็คตำแหน่งของทั้งสองmarkerว่าอยู่ในพื้นที่ให้บริการและอยู่นอก redzone หรือไม่-------------------
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
      !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
      
      isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
      isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
      {
-        
-        
-        fetch("http://localhost:1236/location/1",{
-            method: 'put',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "id": 1,
-                "status":"true",
-                "latitudeStart": this.state.markerPosition.lat,
-                "longtitudeStart": this.state.markerPosition.lng,
-                "latitudeDestination": this.state.markerDestinationPosition.lat,
-                "longtitudeDestination": this.state.markerDestinationPosition.lng
-            })
+
+        // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
+        axios.post(Url.LinkToBackend+"backend/api/line2",{
+          user_id: this.userId,
+          latitudeStart: this.state.markerPosition.lat,
+          longtitudeStart: this.state.markerPosition.lng,
+          latitudeDestination: this.state.markerDestinationPosition.lat,
+          longtitudeDestination: this.state.markerDestinationPosition.lng
         })
-        .then(response=> console.log(response))
-        .catch(err => console.log(err));
-
-        this.setState({
-          waitingQueueAppear:1,
-        })
-
-        this.timeoutId = setInterval(()=>{
-         /*
-          fetch("http://localhost:1237/driverDetail")
-          .then(response=> response.json())
-          .then(data=>{
-            console.log(data[0]);
-            if(data[0].status ==="true"){
-                this.setState({
-                    waitingQueueAppear:null,
-                    detailDriverAppear:1,
-                })
-                fetch("http://localhost:1237/driverDetail/1",{
-                    method: 'put',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                      "id": 1,
-                      "status": "false",
-                      "name": "xxxx xxxx",
-                      "area": "ประตู 3",
-                      "plate": "abc 1234"
-                    })
-                })
-                .catch(err => console.log(err));
-
-            }
-          });
-          */
-          //------------------------
-          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", {id: "1"})
-          .then(res=>{
-            console.log(res);
-            console.log(res.data);
-            if(!!res.data.driver_id){
-              console.log("ekwai");
-              this.driverId=res.data.driver_id;
-              this.setState({
-                waitingQueueAppear:null,
-                detailDriverAppear:1,
-              })
-            }else{
-              //console.log("here");
-            }
+        .then(res=>{
+          console.log(res.data);
+          this.setState({
+            waitingQueueAppear:1,
           })
+          this.timeoutId = setInterval(()=>{
+            // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
+            axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
+            {id: this.userId})
+            .then(res=>{
+                                
+              if(!!res.data.driver_id){                    
+                console.log(res);
+                console.log(res.data);   
+                this.driverId=res.data.driver_id;
+                this.setState({
+                  waitingQueueAppear:null,
+                  detailDriverAppear:1,
+                })
+              }else{
+                
+              }
+            })
+          },1500)
+        })
+        .catch(err=>{
+          NotificationManager.error(err.message,'Alert',1000);
+          
+        })
+        
 
-          
-          
-        },1500)         
+                 
      }
      else{
-      window.alert("Error");
+      NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',3000);
      } 
     }
     
     
     
-    
+    // ------------------ check user cancel ในทุกกรณี ------------------
     cancelQueue = ()=>{
       clearInterval(this.timeoutId);
-      fetch("http://localhost:1236/location/1",{
-            method: 'put',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "id": 1,
-                "status":"false",
-                "latitudeStart": 0,
-                "longtitudeStart": 0,
-                "latitudeDestination": 0,
-                "longtitudeDestination": 0
-            })
-        })
-        .then(response=> console.log(response))
-        .catch(err => console.log(err));
-      this.setState({
-            waitingQueueAppear:null,
-            detailDriverAppear:null,
+      axios.post(Url.LinkToBackend +"backend/api/cancelation",{
+        id: this.userId
       })
-    //   Axios.get('http://localhost:3001/location').then((response) =>{
-    //     console.log(response);
-    //     this.setState(state=>{
-    //       this.state.locationList = response.data;
-
-    //     });
-    //     let idLocation = this.state.locationList[this.state.locationList.length-1].id;
-    //     console.log(idLocation);
-    //     this.deleteLocation(idLocation);
-    //     this.setState({
-    //       markerPosition: {
-    //         lat: 13.852409944222796,
-    //         lng: 100.57689203927386,
-    //     },
-    //       markerDestinationPosition:{
-    //         lat:13.852409944222796, 
-    //         lng:100.57889203927386,
-    //       },
-    //   })
-    //     this.addLocation();
-    //     this.setState({
-    //       waitingQueueAppear:null,
-    //     })
+      .then( res=>{
+        console.log(res.data);
+        this.setState({
+          waitingQueueAppear:null,
+          detailDriverAppear:null,
+    })
+      })
+      .catch(err=>{
+        NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
         
-    //   });
-    // }
+      })
     }
-    //watingQueue=null;
-    //detailDriver=null;
 
+    // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
+    componentDidMount(){
+      addResponseMessage("Welcome to this awesome chat!");
+      axios.get( Url.LinkToBackend +"backend/api/bomb")
+      this.fetchUserIdInterval=setInterval(()=>{
+        axios.post(Url.LinkToBackend+"backend/api/line1",{
+          username: localStorage.getItem("username")
+        })
+        .then(res=>{
+          clearInterval(this.fetchUserIdInterval)
+          this.userId=res.data[0].user_id;
+        })
+        .catch(err=>{
+          NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        })
+      },1500)
+      
+    }
+    showSettings (event) {
+      event.preventDefault();
+      
+    }
+
+    handleNewUserMessage = (newMessage) => {
+      console.log(`New message incomig! ${newMessage}`);
+      // Now send the message throught the backend API
+    }
+    
     render(){
-      //console.log(this.props.username);
+      
       if(!!this.state.waitingQueueAppear){
         this.watingQueue= <Wait cancelQueue={this.cancelQueue}/>
       }
@@ -443,12 +425,11 @@ class User extends React.Component {
       else{
         this.detailDriver=null;
       }
-
-      
-      const MapWithAMarker = withScriptjs(withGoogleMap(props =>
-        
+    
+      //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
+      const MapWithAMarker = withScriptjs(withGoogleMap(props =>       
         <GoogleMap div id="con"
-          
+          //------------------setting ของตัวแผนที่--------------------------
           defaultZoom={15}
           defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
           
@@ -473,9 +454,8 @@ class User extends React.Component {
               
             },
            }}
-        
         >
-          
+          {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
           <Marker 
             draggable={true}
             position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
@@ -486,7 +466,7 @@ class User extends React.Component {
             }}
             >  
           </Marker>
-
+            {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
           <Marker 
             draggable={true}
             onDragEnd={this.onMarkerDestinationDragEnd}
@@ -500,9 +480,8 @@ class User extends React.Component {
           </Marker>
           <div class="locationbox">
           <div id="inbutt">
-          {/* here1 */}
+          {/* ----------component กล่องค้นหาตำแหน่งเริ่มต้น--------- */}
           <Autocomplete id="input1"
-            // style={{ paddingLeft: 16 , marginTop:10 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -526,9 +505,8 @@ class User extends React.Component {
 
           <button class="button-currentLocation" onClick={this.findMylocation}></button>
           </div>  
-          {/* here2 */}
+            {/* ----------component กล่องค้นหาตำแหน่งปลายทาง--------- */}
           <Autocomplete id="input2"
-            // style={{  paddingLeft: 16 , marginTop:2 , marginBottom:'1rem'}}
             options={
               {
                 bounds:{
@@ -556,12 +534,8 @@ class User extends React.Component {
               {lat:13.857277966250578, lng:100.57639848267323},
               {lat:13.857659300458918, lng:100.58083861265405},
               {lat:13.850487798245787, lng:100.5815458679391},
-              
-            
               {lat:13.836416483501072, lng:100.57339372833995},
               {lat:13.842558941191157, lng:100.5590814720114},
-
-
               {lat:13.855458118865057, lng:100.56596600925597},
             ]}
             
@@ -605,31 +579,44 @@ class User extends React.Component {
         
         </GoogleMap>
       ));
-
+      
       return(
+        <div>
+
+
+          {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
+          <Menu right>   
+          {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
+            <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
+            <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
+          </Menu>
+            
+          
         
         <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
-
-        {/* <h1>User</h1> */}
           
-        {/* <Descriptions bordered>
-          <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
-          <Descriptions.Item label="Area">{this.state.area}</Descriptions.Item>
-          <Descriptions.Item label="State">{this.state.state}</Descriptions.Item>
-          <Descriptions.Item label="Address">{this.state.address}</Descriptions.Item>
-        </Descriptions>         */}
         {this.watingQueue}
         {this.detailDriver}
-
+    
+        
         <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
           containerElement={<div id="map" style={{ height: `380px` }} />}
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
-        
+        <NotificationContainer />
+        <Chat
+          handleNewUserMessage={this.handleNewUserMessage}
+          profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+          title="Icezy"
+          subtitle="And my cool subtitle"
+        />
         </div>
         
+        </div>
         
       );
     }
