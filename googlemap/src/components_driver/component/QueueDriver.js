@@ -6,10 +6,10 @@ import { Url } from '../../LinkToBackend';
 
 export default function QueueDriver(props) {
     
-    
+    // ------------------ฟังชันเมื่อ driver ถึง queue แรก------------------------
     function firstQueue() {
         
-
+        //  ------------------ driver เอาข้อมูลของ user ผ่าน api check_booking--------------------
         axios.post(Url.LinkToBackend +"backend/api/check_booking",{
             driver_id : props.driverId
         })
@@ -31,6 +31,7 @@ export default function QueueDriver(props) {
         
     }
 
+    //--------------------------function แสดง queue ของ driver ทั้งหมด --------------------------
     function showQueue(data){
         if( !!! document.getElementById('queueList')){
             return;
@@ -77,7 +78,7 @@ export default function QueueDriver(props) {
         }
     },[]);
 
-
+    // ------------------เมื่อdriverกดปุ่มเข้าคิว----------------------
     function enQueue() {
         axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{
             driver_id : props.driverId})
