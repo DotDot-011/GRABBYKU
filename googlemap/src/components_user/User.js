@@ -611,7 +611,7 @@ class User extends React.Component {
         <Chat
           handleNewUserMessage={this.handleNewUserMessage}
           profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
-          title="Icey โย้ๆ"
+          title="Icezy"
           subtitle="And my cool subtitle"
         />
         </div>

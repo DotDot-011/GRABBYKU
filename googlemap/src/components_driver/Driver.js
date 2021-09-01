@@ -16,7 +16,7 @@ import { Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
-
+import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -144,9 +144,15 @@ class Driver extends React.Component {
 
     
   }
+
+  handleNewUserMessage = (newMessage) => {
+    console.log(`New message incomig! ${newMessage}`);
+    // Now send the message throught the backend API
+  }
   
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
+    addResponseMessage("Welcome to this awesome chat!");
     axios.get( Url.LinkToBackend +"backend/api/bomb")
     this.fetchDriverIdInterval = setInterval(()=>{
       axios.post(Url.LinkToBackend+"backend/api/postdriver",{
@@ -284,7 +290,12 @@ class Driver extends React.Component {
         {this.buttonAcceptCancel}
         {this.buttonDone}
         <NotificationContainer />
-        
+        <Chat
+          handleNewUserMessage={this.handleNewUserMessage}
+          profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+          title="Zeedzy"
+          subtitle="And my cool subtitle"
+        />
       </section>
 
     );

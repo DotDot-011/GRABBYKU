@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 function RegisUser() {
 
     
@@ -83,6 +83,7 @@ function RegisUser() {
                 </div>
             </form>
             <button type="submit" onClick={sendData}>ลงทะเบียน</button>
+            <NotificationContainer />
         </div>
     );
 }

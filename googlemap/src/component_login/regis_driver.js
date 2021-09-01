@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
-
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 function RegisDriver() {
 
     const usernameRef = useRef("");
@@ -100,6 +100,7 @@ function RegisDriver() {
                 </div>
             </form>
             <button type="button" onClick={sendData}>ลงทะเบียน</button>
+            <NotificationContainer />
         </div>
     );
 }
