@@ -17,6 +17,7 @@ import { Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
+import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 // import { slide as Menu } from 'react-burger-menu'   เอาไปเล่นนะจ๊ะเด็กๆ <3
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
@@ -59,7 +60,7 @@ class User extends React.Component {
     timeoutId = 0;
     driverId=null;
     userId=null;
-    
+    fetchUserIdInterval=null;
     
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
@@ -324,33 +325,36 @@ class User extends React.Component {
         })
         .then(res=>{
           console.log(res.data);
-        })
-        this.setState({
-          waitingQueueAppear:1,
-        })
-
-        this.timeoutId = setInterval(()=>{
-          // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
-          axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
-          {id: this.userId})
-          .then(res=>{
-                              
-            if(!!res.data.driver_id){                    
-              console.log(res);
-              console.log(res.data);   
-              this.driverId=res.data.driver_id;
-              this.setState({
-                waitingQueueAppear:null,
-                detailDriverAppear:1,
-              })
-            }else{
-              
-            }
+          this.setState({
+            waitingQueueAppear:1,
           })
+          this.timeoutId = setInterval(()=>{
+            // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
+            axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
+            {id: this.userId})
+            .then(res=>{
+                                
+              if(!!res.data.driver_id){                    
+                console.log(res);
+                console.log(res.data);   
+                this.driverId=res.data.driver_id;
+                this.setState({
+                  waitingQueueAppear:null,
+                  detailDriverAppear:1,
+                })
+              }else{
+                
+              }
+            })
+          },1500)
+        })
+        .catch(err=>{
+          NotificationManager.error(err.message,'Alert',1000);
+          
+        })
+        
 
-          
-          
-        },1500)         
+                 
      }
      else{
       NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',3000);
@@ -367,32 +371,44 @@ class User extends React.Component {
       })
       .then( res=>{
         console.log(res.data);
-      });
-
-
-      this.setState({
-            waitingQueueAppear:null,
-            detailDriverAppear:null,
+        this.setState({
+          waitingQueueAppear:null,
+          detailDriverAppear:null,
+    })
       })
-
+      .catch(err=>{
+        NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        
+      })
     }
 
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
+      addResponseMessage("Welcome to this awesome chat!");
       axios.get( Url.LinkToBackend +"backend/api/bomb")
-      axios.post(Url.LinkToBackend+"backend/api/line1",{
-        username: localStorage.getItem("username")
-      })
-      .then(res=>{
-        this.userId=res.data[0].user_id;
-      })
-  }
+      this.fetchUserIdInterval=setInterval(()=>{
+        axios.post(Url.LinkToBackend+"backend/api/line1",{
+          username: localStorage.getItem("username")
+        })
+        .then(res=>{
+          clearInterval(this.fetchUserIdInterval)
+          this.userId=res.data[0].user_id;
+        })
+        .catch(err=>{
+          NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        })
+      },1500)
+      
+    }
     showSettings (event) {
       event.preventDefault();
       
     }
 
-
+    handleNewUserMessage = (newMessage) => {
+      console.log(`New message incomig! ${newMessage}`);
+      // Now send the message throught the backend API
+    }
     
     render(){
       
@@ -592,8 +608,14 @@ class User extends React.Component {
           mapElement={<div style={{ height: `100%` }} />}
         />
         <NotificationContainer />
-        
+        <Chat
+          handleNewUserMessage={this.handleNewUserMessage}
+          profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+          title="Icey โย้ๆ"
+          subtitle="And my cool subtitle"
+        />
         </div>
+        
         </div>
         
       );

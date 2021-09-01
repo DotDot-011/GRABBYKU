@@ -53,7 +53,7 @@ class Driver extends React.Component {
   buttonAcceptCancel = null;
   buttonDone = null;
   userInfo = null;
-  
+  fetchDriverIdInterval=null;
 
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
@@ -105,9 +105,7 @@ class Driver extends React.Component {
   driverCancel = () =>{
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
-    this.setState({
-      queueDriverAppear:1,
-    });
+    
     // leaveQueue(this.state.driverId);
     // document.location.reload();
     axios.post(Url.LinkToBackend+"backend/api/driver_cancel",{
@@ -116,7 +114,13 @@ class Driver extends React.Component {
     })
     .then(res=>{
       console.log(res.data.message);
-    });
+      this.setState({
+        queueDriverAppear:1,
+      });
+    })
+    .catch(err=>{
+      NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+  })
   }
 
   // ------------------ driver กด ยอมรับงาน ------------------
@@ -129,30 +133,45 @@ class Driver extends React.Component {
     })
     .then(res=>{
       console.log(res.data.message);
-    });
+      this.setState({
+        buttonAcceptCancelAppear: null,
+      });
+      leaveQueue(this.state.driverId);
+    })
+    .catch(err=>{
+      NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+  })
 
-    this.setState({
-      buttonAcceptCancelAppear: null,
-    });
-    leaveQueue(this.state.driverId);
+    
   }
   
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
     axios.get( Url.LinkToBackend +"backend/api/bomb")
-    axios.post(Url.LinkToBackend+"backend/api/postdriver",{
-      username: localStorage.getItem("username")
-      // username : this.props.username
-    })
-    .then((res)=>{
-      console.log(res.data);
-      this.setState({
-        driverId: parseInt(res.data[0].driver_id),
+    this.fetchDriverIdInterval = setInterval(()=>{
+      axios.post(Url.LinkToBackend+"backend/api/postdriver",{
+        username: localStorage.getItem("username")
+        // username : this.props.username
       })
+      .then((res)=>{
+        clearInterval(this.fetchDriverIdInterval);
+        console.log(res.data);
+        this.setState({
+          driverId: parseInt(res.data[0].driver_id),
+        })
+        
+      })
+      .catch(err=>{
+        NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        
+        console.log(typeof(this.state.driverId));
+        
+      })
+    },1500)
       
-      console.log(typeof(this.state.driverId));
-      
-    })
+    
+    
+    
   }
 
   render() {

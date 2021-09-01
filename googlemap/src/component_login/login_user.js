@@ -2,6 +2,9 @@ import React, { useRef, useState } from "react";
 import User from '../components_user/User';
 import axios from "axios";
 import { Url } from '../LinkToBackend';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
+
 function LoginUser() {
     const nameRef = useRef("");
     const passwordRef = useRef("");
@@ -23,6 +26,9 @@ function LoginUser() {
                 setLoginSuccess(0);
                 document.getElementById('loginError').innerHTML=' --- ชื่อผู้ใช้งาน หรือ รหัสผ่าน ผิดพลาด ! --- ';
             }
+        })
+        .catch(err=>{
+            NotificationManager.error(err.message,'Login error',3000);
         })
     }
 
@@ -47,7 +53,7 @@ function LoginUser() {
                     <p id="loginError"></p>
                     <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
                 </form>
-                
+                <NotificationContainer />
             </div> 
             );
     }

@@ -3,6 +3,8 @@ import React,{ useEffect , useState } from 'react';
 import leaveQueue from './LeaveQueue';
 import axios from 'axios';
 import { Url } from '../../LinkToBackend';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 
 export default function QueueDriver(props) {
     
@@ -25,9 +27,11 @@ export default function QueueDriver(props) {
                  ,null ,res.data.user_id, res.data.user_fname, res.data.user_lname);
             }
 
-               
-
-        });
+        })
+        .catch(err=>{
+            NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        })
+        
         
     }
 
@@ -84,7 +88,10 @@ export default function QueueDriver(props) {
             driver_id : props.driverId})
         .then(res=>{
             // console.log(res.data);
-        });
+        })
+        .catch(err=>{
+            NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        })
         
 
 
@@ -113,6 +120,7 @@ export default function QueueDriver(props) {
                 <button className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
                 <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId);}}> ออกคิว </button>
             </div>
+            
         </div>
     )
 }

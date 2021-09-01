@@ -32,6 +32,9 @@ function RegisUser() {
         .then(res=>{
             console.log(res.data);
         })
+        .catch(err=>{
+            NotificationManager.error(err.message,'Alert',3000);
+        })
     }
     
     return (

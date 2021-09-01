@@ -2,6 +2,7 @@ import './DetailDriver.css'
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { useEffect, useState } from 'react';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 export default function DetailDriver(props){
     const { cancelQueue } = props;
     //console.log(props.driverId);
@@ -18,13 +19,15 @@ export default function DetailDriver(props){
         axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
         driver_id: props.driverId})
         .then(res=>{
-        console.log(res.data);
-        
-        setFirst_name(res.data.fname);
-        setLast_name(res.data.lname);
-        setPlate(res.data.plate);
-        setdriverNo(res.data.driver_no);
-        setdriverPosition(res.data.win_name);
+            console.log(res.data)
+            setFirst_name(res.data.fname);
+            setLast_name(res.data.lname);
+            setPlate(res.data.plate);
+            setdriverNo(res.data.driver_no);
+            setdriverPosition(res.data.win_name);
+        })
+        .catch(err=>{
+            NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
         })
     },[])
     

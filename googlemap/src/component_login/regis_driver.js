@@ -36,6 +36,9 @@ function RegisDriver() {
             console.log(res.data);
             
         })
+        .catch(err=>{
+            NotificationManager.error(err.message,'Alert',3000);
+        })
     }
 
 

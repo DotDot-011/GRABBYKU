@@ -1,5 +1,7 @@
 import axios from "axios";
 import { Url } from '../../LinkToBackend';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 export default function leaveQueue(driverId) {
 
         // fetch("http://localhost:1235/queueDriver/1",{
@@ -15,5 +17,9 @@ export default function leaveQueue(driverId) {
                 console.log(typeof(driverId));
                 console.log(res.data);
                 
-        });
+        })
+        .catch(err=>{
+                NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+
+        })
 }
