@@ -3,6 +3,7 @@ import User from '../components_user/User';
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import Login from "./login";
 
 
 function LoginUser() {
@@ -52,6 +53,7 @@ function LoginUser() {
                     </div>
                     <p id="loginError"></p>
                     <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button type="submit" onClick={()=> {return <Login />}}> กลับ </button>
                 </form>
                 <NotificationContainer />
             </div> 
