@@ -1,0 +1,41 @@
+#main_userlog{
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+}
+#main_userlog h1 {
+    margin-top: 110px;
+    margin-bottom: 8px;
+    padding: 10px;
+    font-size: 55px;
+}
+#userlog label{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
+    font-size: 30px;
+}
+#userlog input{
+    margin-left: 10px;
+    font-size: 22px;
+    width: 50%;
+    height: 40px;
+    border-style: solid;
+    border-color: #12634f;
+    border-radius: 5px;
+}
+#sum_user{
+    text-align: center;
+    margin-top: 20px;
+    background-color: #1b9274;
+    border-radius: 14px;
+    border: none;
+    color: white;
+    font-size: 26px;
+    position: relative;
+    height: 50px;
+    width: 100px;
+}

@@ -1,0 +1,42 @@
+#main_driverreg{
+    margin-left: 10px;
+    margin: 0 auto;
+    padding: 5px;
+    position: relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+}
+#main_driverreg h1 {
+    margin-top: 2px;
+    margin-bottom: 1px;
+    padding: 2px;
+    font-size: 49px;
+}
+#driverreg label{
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding: 1px;
+    font-size: 23px;
+}
+#driverreg input{
+    margin-left: 10px;
+    font-size: 20px;
+    width: 43%;
+    height: 32px;
+    border-style: solid;
+    border-color: #12634f;
+    border-radius: 5px;
+}
+#sum_driverreg{
+    text-align: center;
+    margin-top: 15px;
+    background-color: #1b9274;
+    border-radius: 14px;
+    border: none;
+    color: white;
+    font-size: 26px;
+    position: relative;
+    height: 50px;
+    width: 120px;
+}

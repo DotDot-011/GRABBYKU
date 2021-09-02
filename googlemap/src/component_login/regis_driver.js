@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import './regis_driver.css'
+
 function RegisDriver() {
 
     const usernameRef = useRef("");
@@ -43,9 +45,9 @@ function RegisDriver() {
 
 
     return (
-        <div>
+        <div classname="main_driverreg" id="main_driverreg">
             <h1>Register as Driver</h1>
-            <form classname="" action="" method="post">
+            <form classname="driverreg" id="driverreg" action="" method="post">
                 <div>
                     <label>ชื่อผู้ใช้</label>
                     <input type="text" ref={usernameRef} value={usernameRef.current.value} placeholder="กรอกชื่อผู้ใช้" name="username"/>
@@ -99,7 +101,7 @@ function RegisDriver() {
                     <input type="text" ref={plateRef} value={plateRef.current.value} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="plate" />
                 </div>
             </form>
-            <button type="button" onClick={sendData}>ลงทะเบียน</button>
+            <button classname="sum_driverreg" id="sum_driverreg" type="button" onClick={sendData}>ลงทะเบียน</button>
             <NotificationContainer />
         </div>
     );

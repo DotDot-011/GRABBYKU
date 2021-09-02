@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import './regis_user.css'
+
 function RegisUser() {
 
     
@@ -38,9 +40,9 @@ function RegisUser() {
     }
     
     return (
-        <div>
+        <div classname="main_userreg" id="main_userreg">
             <h1>Register as User</h1>
-            <form classname="" action="" method="post">
+            <form classname="userreg" id="userreg" action="" method="post">
                 <div>
                     <label>ชื่อผู้ใช้</label>
                     <input type="text" ref={usernameRef} value={usernameRef.current.value} placeholder="กรอกชื่อผู้ใช้" name="username"/>
@@ -82,7 +84,7 @@ function RegisUser() {
                     <input type="password" placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" />
                 </div>
             </form>
-            <button type="submit" onClick={sendData}>ลงทะเบียน</button>
+            <button classname="sum_userreg" id="sum_userreg" type="submit" onClick={sendData}>ลงทะเบียน</button>
             <NotificationContainer />
         </div>
     );
