@@ -23,9 +23,9 @@ function Login() {
                 <h1>Login As </h1>
                 <button classname="user_log" id="user_log" onClick={() => setCount(1)}>User</button>
                 <button classname="driver_log" id="driver_log" onClick={() => setCount(2)}>Driver</button>
-                <h4>Or Register As</h4>
-                <button classname="user_reg" id="user_reg" onClick={() => setCount(3)}>user</button>
-                <button classname="driver_reg" id="driver_reg" onClick={() => setCount(4)}>driver</button>
+                <h4>Or Sign up As</h4>
+                <button classname="user_reg" id="user_reg" onClick={() => setCount(3)}>User</button>
+                <button classname="driver_reg" id="driver_reg" onClick={() => setCount(4)}>Driver</button>
             </div>
         );
     }

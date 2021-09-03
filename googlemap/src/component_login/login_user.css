@@ -6,26 +6,44 @@
     align-items: center;
     text-align: center;
 }
+/* input, label {
+    display:block;
+} */
 #main_userlog h1 {
     margin-top: 115px;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 0;
+    padding: 5px;
     font-size: 55px;
 }
+#main_userlog h2 {
+    font-size: 40px;
+}
+#userlog{
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+    width: 35%;
+    min-width: 300px;
+    max-width: 400px;
+}
 #userlog label{
+    text-align: left;
+    display:block;
     margin-top: 10px;
     margin-bottom: 4px;
-    padding: 4px;
+    padding-left: 6px;
     font-size: 30px;
 }
 #userlog input{
-    margin-left: 8px;
+    /* margin-left: 8px; */
     font-size: 22px;
-    width: 50%;
-    height: 40px;
+    width: 100%;
+    /* max-width: 400px; */
+    height: 50px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
+    padding-left: 8px;
 }
 #sum_user{
     text-align: center;
@@ -38,6 +56,7 @@
     position: relative;
     height: 55px;
     width: 115px;
+    transition: 0.3s;
 }
 #sum_user:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-6px);

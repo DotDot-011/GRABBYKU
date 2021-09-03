@@ -16,6 +16,7 @@
     align-content: center;
     margin: auto;
     font-size: 26px;
+    transition: 0.3s;
 }
 #buttstart:hover {
   transform: scaleX(1.05) scaleY(1.05) translateY(-5px);

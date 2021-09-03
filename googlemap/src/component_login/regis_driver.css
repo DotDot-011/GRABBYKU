@@ -11,23 +11,35 @@
     margin-bottom: 1px;
     font-size: 50px;
 }
+#boxinput-driver{
+    margin: 0 auto;
+    padding: 0 auto;
+    /* background-color: lavender; */
+    height: 60px;
+    /* min-height: 45px;
+    max-height: 50px;
+    width: 55%; */
+    min-width: 400px;
+    max-width: 600px;
+}
 #driverreg label{
-    margin-top: 3px;
-    margin-bottom: 1px;
-    font-size: 22px;
+    margin-left: 6px;
+    float: left;
+    font-size: 30px;
 }
 #driverreg input{
-    /* margin-right: 6%; */
     float: right;
-    transform: translateX(-18%);
-
-    margin-left: 14px;
-    font-size: 18px;
-    width: 42%;
-    height: 33px;
+    transform: translateX(-14%);
+    /* margin-left: 15px; */
+    margin-right: 0px;
+    font-size: 22px;
+    width: 35%;
+    min-width: 300px;
+    height: 45px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
+    padding-left:10px;
 }
 #sum_driverreg{
     text-align: center;

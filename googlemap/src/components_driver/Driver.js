@@ -267,7 +267,7 @@ class Driver extends React.Component {
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
             <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
             <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href="">ตั้งค่า</a>
             <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
         </Menu>  
         
@@ -277,6 +277,7 @@ class Driver extends React.Component {
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>
           </div>
+          <div className="pin-info"></div>
          
           <MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"

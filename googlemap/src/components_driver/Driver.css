@@ -21,6 +21,7 @@
 }
 .driver-detail-driv{
     margin: 0 auto;
+    /* padding: 20px; */
     border-radius: 30px;
     position: static;
     width: 100%;
@@ -30,12 +31,11 @@
     font-size: 24px;
 }
 .head-detail{
-    margin: 0px;
     font-size: 26px;
     padding: 8px;
 }
 .detail{
-    font-size: 21px;
+    font-size: 24px;
 }
 .button-accept-cancel-done{
     margin: 0 auto;
@@ -54,6 +54,7 @@
     padding: auto;
     height: 42px;
     width: 100px;
+    transition: 0.3s;
 }
 .accept-button:hover {
   transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -68,19 +69,22 @@
     top: 30px;
     left: 30px;
     /* background-color: rgb(29, 53, 43); */
-    background-color: #929191;
+    /* background-color: #929191; */
+    background-color: #575757;
     border-radius: 20px;
     border: none;
     color: white;
     font-size: 26px;
-
     position: relative;
     height: 42px;
     width: 100px;
+    transition: 0.3s;
+
 }
 .cancel-button:hover {
   transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-  background-color: #6e6e6e;
+  /* background-color: #6e6e6e; */
+  background-color: #424242;
   box-shadow: 0 8px 11px #555454;
 }
 .cancel-button:active {
