@@ -59,10 +59,21 @@
 
 }
 #buttcancel{
-    background-color: rgb(41, 80, 64);
-    border-color: rgb(0, 0, 0);
+    /* background-color: rgb(41, 80, 64); */
+    background-color: #929191;
+    /* border-color: rgb(0, 0, 0); */
+    border: none;
     border-radius: 18px;
-    width: 80px;
+    width: 85px;
     height: 45px;
     font-size: 26px;
+}
+#buttcancel:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #6e6e6e;
+    box-shadow: 0 8px 11px #555454;
+}
+#buttcancel:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #555454;
 }

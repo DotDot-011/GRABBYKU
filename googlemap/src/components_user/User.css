@@ -7,15 +7,24 @@
     text-align: center;
 }
 #buttstart{
-    background-color: #198a6e;
+    background-color: #1a9274;
     border-radius: 20px;
-    border-color:#1FAB89;
-    border-radius: 18px;
+    /* border-color:#1FAB89; */
+    border: none;
     width: 100px;
     height: 45px;
     align-content: center;
     margin: auto;
     font-size: 26px;
+}
+#buttstart:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #10725a;
+  box-shadow: 0 8px 11px #115745;
+}
+#buttstart:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
 }
 
 .button-currentLocation{
@@ -31,6 +40,15 @@
     border-color: rgb(223, 223, 223);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.button-currentLocation:hover {
+  /* transform: scaleX(1.05) scaleY(1.05) translateY(-5px); */
+  background-color: rgb(219, 219, 219);
+  box-shadow: 0 3px 6px #929191;
+}
+.button-currentLocation:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 4px #929191;
 }
 
 .locationbox{

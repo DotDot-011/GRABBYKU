@@ -55,10 +55,20 @@
     height: 42px;
     width: 100px;
 }
+.accept-button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #10725a;
+  box-shadow: 0 8px 11px #115745;
+}
+.accept-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
+}
 .cancel-button{
     top: 30px;
     left: 30px;
-    background-color: rgb(29, 53, 43);
+    /* background-color: rgb(29, 53, 43); */
+    background-color: #929191;
     border-radius: 20px;
     border: none;
     color: white;
@@ -67,6 +77,15 @@
     position: relative;
     height: 42px;
     width: 100px;
+}
+.cancel-button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #6e6e6e;
+  box-shadow: 0 8px 11px #555454;
+}
+.cancel-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #555454;
 }
 .done-button{
     top: 30px;
@@ -78,6 +97,15 @@
     position: relative;
     height: 42px;
     width: 100px;
+}
+.done-button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #10725a;
+  box-shadow: 0 8px 11px #115745;
+}
+.done-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
 }
 #map{
     margin-top: 30px;
