@@ -8,14 +8,14 @@
 }
 #main_driverreg h1 {
     margin-top: 2px;
-    margin-bottom: 1px;
+    margin-bottom: 20px;
     font-size: 50px;
 }
 #boxinput-driver{
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 60px;
+    height: 50px;
     /* min-height: 45px;
     max-height: 50px;
     width: 55%; */
@@ -35,7 +35,7 @@
     font-size: 22px;
     width: 35%;
     min-width: 300px;
-    height: 45px;
+    height: 40px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
@@ -52,6 +52,7 @@
     position: relative;
     height: 56px;
     width: 125px;
+    transition: 0.3s;
 }
 #sum_driverreg:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-6px);

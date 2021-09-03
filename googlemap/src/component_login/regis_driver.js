@@ -46,7 +46,7 @@ function RegisDriver() {
 
     return (
         <div classname="main_driverreg" id="main_driverreg">
-            <h1>Register as Driver</h1>
+            <h1>Sign up as Driver</h1>
             <form classname="driverreg" id="driverreg" action="" method="post">
                 <div id="boxinput-driver">
                     <label>ชื่อผู้ใช้</label>
