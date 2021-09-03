@@ -272,7 +272,7 @@ class Driver extends React.Component {
         </Menu>  
         
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
-          <div key={this.state.driverId} className="driver-detail">
+          <div key={this.state.driverId} className="driver-detail-driv">
             {this.queueDriver}
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>

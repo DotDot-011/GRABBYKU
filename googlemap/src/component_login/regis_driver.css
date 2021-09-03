@@ -1,7 +1,6 @@
 #main_driverreg{
-    margin-left: 10px;
     margin: 0 auto;
-    padding: 5px;
+    padding: 8px;
     position: relative;
     display: block;
     align-items: center;
@@ -10,33 +9,44 @@
 #main_driverreg h1 {
     margin-top: 2px;
     margin-bottom: 1px;
-    padding: 2px;
-    font-size: 49px;
+    font-size: 50px;
 }
 #driverreg label{
-    margin-top: 1px;
+    margin-top: 3px;
     margin-bottom: 1px;
-    padding: 1px;
-    font-size: 23px;
+    font-size: 22px;
 }
 #driverreg input{
-    margin-left: 10px;
-    font-size: 20px;
-    width: 43%;
-    height: 32px;
+    /* margin-right: 6%; */
+    float: right;
+    transform: translateX(-18%);
+
+    margin-left: 14px;
+    font-size: 18px;
+    width: 42%;
+    height: 33px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
 }
 #sum_driverreg{
     text-align: center;
-    margin-top: 15px;
-    background-color: #1b9274;
-    border-radius: 14px;
+    margin-top: 14px;
+    background-color: #29967b;
+    border-radius: 15px;
     border: none;
     color: white;
-    font-size: 26px;
+    font-size: 27px;
     position: relative;
-    height: 50px;
-    width: 120px;
+    height: 56px;
+    width: 125px;
+}
+#sum_driverreg:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-6px);
+    background-color: #21725e;
+    box-shadow: 0 8px 13px #115745;
+}
+#sum_driverreg:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 9px #115745;
 }

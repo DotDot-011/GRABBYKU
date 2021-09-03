@@ -16,9 +16,10 @@
 
 .detail-map{
     margin: 0 auto;
+    padding: 0px;
     text-align: center;
 }
-.driver-detail{
+.driver-detail-driv{
     margin: 0 auto;
     border-radius: 30px;
     position: static;
@@ -172,7 +173,6 @@
     font-size: 20px;
   }
 
-  .notification{
+  /* .notification{ */
     /* width: 50px; */
-    
-  }
+  /* } */
