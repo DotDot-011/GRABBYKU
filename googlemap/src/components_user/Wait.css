@@ -9,7 +9,7 @@
     z-index: 1;
     max-width: 560px;
     width: 90%;
-    height: 600px;
+    height: 650px;
     background-color: #62d2A2;
     border-radius: 20px;
     border-style: inset;
@@ -29,7 +29,6 @@
     font-size: 30px;
     color: rgb(0, 0, 0);
 }
-
 
 #waiting-detail{
     margin: 50px auto;
@@ -60,10 +59,23 @@
 
 }
 #buttcancel{
-    background-color: rgb(41, 80, 64);
-    border-color: rgb(0, 0, 0);
+    /* background-color: rgb(41, 80, 64); */
+    /* background-color: #929191; */
+    /* background-color: #535353; */
+    background-color: #4e4e4e;
+    border: none;
     border-radius: 18px;
-    width: 80px;
+    width: 85px;
     height: 45px;
     font-size: 26px;
+    transition: 0.3s;
+}
+#buttcancel:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #2b2b2b;
+    box-shadow: 0 8px 11px #555454;
+}
+#buttcancel:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #555454;
 }

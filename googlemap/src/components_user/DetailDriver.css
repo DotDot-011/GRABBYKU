@@ -9,7 +9,7 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 600px;
+    height: 650px;
     max-width: 560px;
     width: 90%;
     background-color: #62d2A2;
@@ -75,7 +75,6 @@
     width: 50%;
     height: 10%;
     background-color: rgb(255, 255, 255);
-    /* background-color: teal; */
     border-radius: 20px;
     font-size: 22px;
 }

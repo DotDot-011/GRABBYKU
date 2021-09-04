@@ -1,1 +1,70 @@
 
+#main_userlog{
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+}
+/* input, label {
+    display:block;
+} */
+#main_userlog h1 {
+    margin-top: 115px;
+    margin-bottom: 0;
+    padding: 5px;
+    font-size: 55px;
+}
+#main_userlog h2 {
+    font-size: 40px;
+}
+#userlog{
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+    width: 35%;
+    min-width: 300px;
+    max-width: 400px;
+}
+#userlog label{
+    text-align: left;
+    display:block;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    padding-left: 6px;
+    font-size: 30px;
+}
+#userlog input{
+    /* margin-left: 8px; */
+    font-size: 22px;
+    width: 100%;
+    /* max-width: 400px; */
+    height: 50px;
+    border-style: solid;
+    border-color: #12634f;
+    border-radius: 5px;
+    padding-left: 8px;
+}
+#sum_user{
+    text-align: center;
+    margin-top: 26px;
+    background-color: #29967b;
+    border-radius: 15px;
+    border: none;
+    color: white;
+    font-size: 27px;
+    position: relative;
+    height: 55px;
+    width: 115px;
+    transition: 0.3s;
+}
+#sum_user:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-6px);
+    background-color: #21725e;
+    box-shadow: 0 8px 13px #115745;
+}
+#sum_user:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 9px #115745;
+}
