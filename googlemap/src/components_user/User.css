@@ -53,7 +53,7 @@
 }
 
 .locationbox{
-    top: -530px;
+    bottom: 475px;
     position: relative;
     margin: 0 auto;
     text-align: center;
@@ -112,7 +112,7 @@
 }
 /* map position */
 #mapbox{
-  top: 140px;
+  top: 125px;
   position: relative;
 }
 
@@ -138,7 +138,7 @@
     width: 36px;
     height: 30px;
     left: 80%;
-    top: 3%;
+    top: 2%;
   }
   
   /* Color/shape of burger icon bars */
