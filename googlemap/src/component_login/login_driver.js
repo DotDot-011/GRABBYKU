@@ -4,6 +4,7 @@ import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import './login_driver.css'
+import Login from "./login";
 
 
 function LoginUser() {
@@ -51,7 +52,12 @@ function LoginUser() {
                         <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="Password"/>
                     </div>
                     <p id="loginError"></p>
+
                     <button classname="sum_driver" id="sum_driver" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+
+                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button type="submit" onClick={()=> {return <Login />}}> กลับ </button>
+
                 </form>
                 <NotificationContainer />
             </div> 

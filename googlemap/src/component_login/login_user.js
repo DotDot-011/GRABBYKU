@@ -3,7 +3,9 @@ import User from '../components_user/User';
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 import './login_user.css'
+import Login from "./login";
 
 
 function LoginUser() {
@@ -53,7 +55,12 @@ function LoginUser() {
                         <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="Password"/>
                     </div>
                     <p id="loginError"></p>
+
                     <button classname="sum_user" id="sum_user" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+
+                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button type="submit" onClick={()=> {return <Login />}}> กลับ </button>
+
                 </form>
                 <NotificationContainer />
             </div> 
