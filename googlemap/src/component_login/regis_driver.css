@@ -1,7 +1,7 @@
 
 #main_driverreg{
     margin: 0 auto;
-    padding: 8px;
+    padding: 5px;
     position: relative;
     display: block;
     align-items: center;
@@ -9,21 +9,21 @@
 }
 #main_driverreg h1 {
     margin-top: 2px;
-    margin-bottom: 20px;
-    font-size: 50px;
+    margin-bottom: 5px;
+    font-size: 48px;
 }
 #boxinput-driver{
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 43px;
+    height: 37px;
     width: 55%;
     min-width: 365px;
 }
 #driverreg label{
     margin-left: 6px;
     float: left;
-    font-size: 26px;
+    font-size: 22px;
 }
 #driverreg input{
     float: right;
@@ -34,7 +34,7 @@
     width: 40%;
     /* min-width: 200px */
     max-width: 300px;
-    height: 40px;
+    height: 35px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
@@ -42,7 +42,7 @@
 }
 #sum_driverreg{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 15px;
     margin-right: 13px;
     background-color: #29967b;
     border-radius: 15px 3px 3px 15px;

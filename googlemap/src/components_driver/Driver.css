@@ -139,6 +139,7 @@
     position: relative;
     height: 42px;
     width: 100px;
+    transition: 0.3s;
 }
 .done-button:hover {
   transform: scaleX(1.05) scaleY(1.05) translateY(-5px);

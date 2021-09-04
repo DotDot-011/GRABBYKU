@@ -15,7 +15,7 @@
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 50px;
+    height: 45px;
     width: 55%;
     min-width: 365px;
     /* max-width: 500px; */
@@ -32,7 +32,7 @@
     width: 40%;
     /* min-width: 200px */
     max-width: 300px;
-    height: 45px;
+    height: 40px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
