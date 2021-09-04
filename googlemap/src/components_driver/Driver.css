@@ -28,8 +28,46 @@
     height: 80px;
     background:#d7fbe8;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
 }
+
+.pin-red,.pin-green,.pin-green-info,.pin-red-info{
+  display: inline-block;
+  /* width: 25%; */
+  /* height: 30px; */
+}
+.pin-green{
+  margin-top: 10px;
+  height:30px;
+  width: 25px;
+  background-image: url('./pictures/markgreen.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.pin-green-info{
+  top: -10px;
+  position: relative;
+  font-size: 22px;
+  /* background-color: darksalmon; */
+}
+.pin-red{
+  margin-left: 20px;
+  margin-top: 10px;
+  height:30px;
+  width: 25px;
+  background-image: url('./pictures/markred.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* background-color: rgb(150, 64, 36); */
+
+}
+.pin-red-info{
+  top: -10px;
+  position: relative;
+  font-size: 22px;
+  /* background-color: darksalmon; */
+}
+
 .head-detail{
     font-size: 26px;
     padding: 8px;
@@ -42,7 +80,7 @@
     text-align: center;
 }
 .accept-button{
-    top: 30px;
+    top: 10px;
     right: 30px;
     background-color: #1FAb89;
     border-radius: 20px;
@@ -66,7 +104,7 @@
   box-shadow: 0 4px 7px #115745;
 }
 .cancel-button{
-    top: 30px;
+    top: 10px;
     left: 30px;
     /* background-color: rgb(29, 53, 43); */
     /* background-color: #929191; */
@@ -92,7 +130,7 @@
   box-shadow: 0 4px 7px #555454;
 }
 .done-button{
-    top: 30px;
+    top: 10px;
     background-color: #1FAb89;
     border-radius: 20px;
     border: none;
@@ -112,10 +150,10 @@
   box-shadow: 0 4px 7px #115745;
 }
 #map{
-    margin-top: 30px;
+    margin-top: 0px;
     position: relative;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     
 }
 
