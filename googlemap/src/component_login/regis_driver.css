@@ -16,26 +16,24 @@
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 50px;
-    /* min-height: 45px;
-    max-height: 50px;
-    width: 55%; */
-    min-width: 400px;
-    max-width: 600px;
+    height: 43px;
+    width: 55%;
+    min-width: 365px;
 }
 #driverreg label{
     margin-left: 6px;
     float: left;
-    font-size: 30px;
+    font-size: 26px;
 }
 #driverreg input{
     float: right;
     transform: translateX(-14%);
     /* margin-left: 15px; */
     margin-right: 0px;
-    font-size: 22px;
-    width: 35%;
-    min-width: 300px;
+    font-size: 18px;
+    width: 40%;
+    /* min-width: 200px */
+    max-width: 300px;
     height: 40px;
     border-style: solid;
     border-color: #12634f;

@@ -15,22 +15,23 @@
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 60px;
+    height: 50px;
     width: 55%;
-    min-width: 400px;
-    max-width: 600px;
+    min-width: 365px;
+    /* max-width: 500px; */
 }
 #userreg label{
     float: left;
-    font-size: 30px;
+    font-size: 26px;
 }
 #userreg input{
     float: right;
     transform: translateX(-14%);
     /* margin-left: 15px; */
-    font-size: 22px;
-    width: 35%;
-    min-width: 300px;
+    font-size: 18px;
+    width: 40%;
+    /* min-width: 200px */
+    max-width: 300px;
     height: 45px;
     border-style: solid;
     border-color: #12634f;
