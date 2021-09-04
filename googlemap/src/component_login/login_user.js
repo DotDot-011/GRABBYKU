@@ -59,8 +59,8 @@ function LoginUser() {
 {/* CSS แก้ */}
                     {/* <button classname="sum_user" id="sum_user" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button> */}
 
-                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
-                    <button type="submit" onClick={()=> {return <Login />}}> กลับ </button>
+                    <button id="sum_user" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button id="back_user" type="submit" onClick={()=> {return <Login />}}> กลับ </button>
 
                 </form>
                 <NotificationContainer />

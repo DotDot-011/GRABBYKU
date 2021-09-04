@@ -44,23 +44,48 @@
 }
 #sum_driverreg{
     text-align: center;
-    margin-top: 14px;
+    margin-top: 26px;
+    margin-right: 13px;
     background-color: #29967b;
-    border-radius: 15px;
+    border-radius: 15px 3px 3px 15px;
     border: none;
     color: white;
     font-size: 27px;
     position: relative;
-    height: 56px;
-    width: 125px;
+    height: 53px;
+    width: 110px;
     transition: 0.3s;
 }
 #sum_driverreg:hover {
-    transform: scaleX(1.05) scaleY(1.05) translateY(-6px);
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px) translateX(-7px);
     background-color: #21725e;
     box-shadow: 0 8px 13px #115745;
 }
 #sum_driverreg:active {
     transform: translateY(1px);
     box-shadow: 0 4px 9px #115745;
+}
+
+#back_driverreg{
+    text-align: center;
+    margin-top: 26px;
+    margin-left: 13px;
+    background-color: #616362;
+    border-radius: 3px 15px 15px 3px;
+    border: none;
+    color: white;
+    font-size: 27px;
+    position: relative;
+    height: 53px;
+    width: 110px;
+    transition: 0.3s;
+}
+#back_driverreg:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px) translateX(7px);
+    background-color: #4f5050;
+    box-shadow: 0 8px 13px #555454;
+}
+#back_driverreg:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 9px #555454;
 }

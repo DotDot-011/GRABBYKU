@@ -55,8 +55,8 @@ function LoginUser() {
 {/* CSS แก้ให้เป็นปุ่มเดียวกัน */}
                     {/* <button classname="sum_driver" id="sum_driver" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button> */}
 
-                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
-                    <button type="submit" onClick={()=> {return <Login />}}> กลับ </button>
+                    <button id="sum_driver" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button id="back_driver" type="submit" onClick={()=> {return <Login />}}> กลับ </button>
 
                 </form>
                 <NotificationContainer />
