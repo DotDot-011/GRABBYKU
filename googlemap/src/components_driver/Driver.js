@@ -16,7 +16,9 @@ import { Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
-import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
+import ChatDriver from "./component/ChatDriver";
+import Receipt from "./component/Receipt";
+
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -48,13 +50,15 @@ class Driver extends React.Component {
     userId:null,
     userFname:null,
     userLname:null,
+    loadingState:0,
   }
   queueDriver = null;
   buttonAcceptCancel = null;
   buttonDone = null;
   userInfo = null;
   fetchDriverIdInterval=null;
-
+  chatDriver=null;
+  
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
     console.log(startLat,startLng)
@@ -145,17 +149,14 @@ class Driver extends React.Component {
     
   }
 
-  handleNewUserMessage = (newMessage) => {
-    console.log(`New message incomig! ${newMessage}`);
-    // Now send the message throught the backend API
-  }
+  
   
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
-    addResponseMessage("Welcome to this awesome chat!");
+    // addResponseMessage("Welcome to this awesome chat!");
     axios.get( Url.LinkToBackend +"backend/api/bomb")
-    this.fetchDriverIdInterval = setInterval(()=>{
-      axios.post(Url.LinkToBackend+"backend/api/postdriver",{
+    this.fetchDriverIdInterval =setInterval(()=>{
+    axios.post(Url.LinkToBackend+"backend/api/postdriver",{
         username: localStorage.getItem("username")
         // username : this.props.username
       })
@@ -164,6 +165,7 @@ class Driver extends React.Component {
         console.log(res.data);
         this.setState({
           driverId: parseInt(res.data[0].driver_id),
+          loadingState:1,
         })
         
       })
@@ -173,11 +175,8 @@ class Driver extends React.Component {
         console.log(typeof(this.state.driverId));
         
       })
-    },1500)
-      
-    
-    
-    
+    },1000)
+
   }
 
   render() {
@@ -199,12 +198,14 @@ class Driver extends React.Component {
                                       <button className="cancel-button" onClick={this.driverCancel}> ปฏิเสธ </button>
                                     </div>
           this.buttonDone=null;
+          this.chatDriver=null;
         }
         else{
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
-                              <button className="done-button"> เสร็จสิ้น </button>
+                              <Receipt/>
                             </div>
+          this.chatDriver=<ChatDriver/>
         }
         
         //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
@@ -260,6 +261,10 @@ class Driver extends React.Component {
 
       </GoogleMap>
     ));
+
+    if (this.state.loadingState===0){
+      return <img src="../pictures/Loading.gif"/>
+    }else{
     return (
 
       <section className="app-section">
@@ -298,17 +303,15 @@ class Driver extends React.Component {
         </div>
         {this.buttonAcceptCancel}
         {this.buttonDone}
+        {this.chatDriver}
         <NotificationContainer />
-        <Chat
-          handleNewUserMessage={this.handleNewUserMessage}
-          profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
-          title="Zeedzy"
-          subtitle="And my cool subtitle"
-        />
+        
       </section>
 
     );
+    }
   }
 }
+
 
 export default Driver;

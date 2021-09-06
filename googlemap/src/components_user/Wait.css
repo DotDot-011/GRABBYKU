@@ -79,3 +79,9 @@
     transform: translateY(1px);
     box-shadow: 0 4px 7px #555454;
 }
+
+.confirmCancel {
+    height: 250px;
+    width: 250px;
+    background-color:red;
+}

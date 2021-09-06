@@ -1,0 +1,25 @@
+.comment-driver-container{
+    margin: auto;
+    position: fixed;
+    /* top: 0%; */
+    /* left: 0%; */
+    /* display: block; */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    height: 620px;
+    max-width: 560px;
+    width: 90%;
+    background-color: #62d2A2;
+    border-radius: 20px;
+    border-style: inset;
+    border-width: 4px;
+    border-color:#137e63;
+}
+
+.thankyou{
+    width: 400px;
+    height: 400px;
+    background-color: wheat;
+}

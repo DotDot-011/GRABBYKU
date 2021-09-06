@@ -3,6 +3,9 @@ import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { useEffect, useState } from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import ChatUser from './ChatUser';
+import Popup from 'reactjs-popup';
+
 export default function DetailDriver(props){
     const { cancelQueue } = props;
     //console.log(props.driverId);
@@ -13,6 +16,8 @@ export default function DetailDriver(props){
     const [plate, setPlate] = useState("กอจ 666");
     const [driverNo, setdriverNo] = useState("47");
     const [driverPosition, setdriverPosition] = useState("ประตูนรก");
+
+    
     
     // ------------------ show ข้อมูลของ driver ที่ match ------------------
     useEffect(()=>{
@@ -44,7 +49,17 @@ export default function DetailDriver(props){
                 <div class="name-position">ประจำจุด : {driverPosition}</div>
             </div>
             <div class="money-div">จำนวนเงินที่ต้องชำระ : $</div>
-            <button className="cancel-button" type="button" type="button" class="btn btn-primary" id="buttcancel" onClick={cancelQueue}>ยกเลิก</button>
+            {/* <button className="cancel-button" type="button" type="button" class="btn btn-primary" id="buttcancel" onClick={cancelQueue}>ยกเลิก</button> */}
+            <ChatUser/>
+            <Popup trigger={<button className="cancel-button" type="button" class="btn btn-primary" id="buttcancel"> ยกเลิก</button>} modal nested>
+            {close=>(
+                <div className="confirmCancel"> มิ้น แม่มึงเป็นไรมากปะ ?
+                    <button onClick={()=>{cancelQueue();close();}}>ตกลง</button>
+                    <button onClick={()=>{close();}}>ปฏิเสธ</button>
+                </div>)
+            }
+            
+            </Popup>
         </div>
     )
 }
