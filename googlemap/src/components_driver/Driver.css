@@ -16,32 +16,71 @@
 
 .detail-map{
     margin: 0 auto;
+    padding: 0px;
     text-align: center;
 }
-.driver-detail{
+.driver-detail-driv{
     margin: 0 auto;
+    /* padding: 20px; */
     border-radius: 30px;
     position: static;
     width: 100%;
-    height: 80px;
+    height: 60px;
     background:#d7fbe8;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
 }
+
+.pin-red,.pin-green,.pin-green-info,.pin-red-info{
+  display: inline-block;
+  /* width: 25%; */
+  /* height: 30px; */
+}
+.pin-green{
+  margin-top: 10px;
+  height:30px;
+  width: 25px;
+  background-image: url('./pictures/markgreen.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.pin-green-info{
+  top: -10px;
+  position: relative;
+  font-size: 22px;
+  /* background-color: darksalmon; */
+}
+.pin-red{
+  margin-left: 20px;
+  margin-top: 10px;
+  height:30px;
+  width: 25px;
+  background-image: url('./pictures/markred.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* background-color: rgb(150, 64, 36); */
+
+}
+.pin-red-info{
+  top: -10px;
+  position: relative;
+  font-size: 22px;
+  /* background-color: darksalmon; */
+}
+
 .head-detail{
-    margin: 0px;
     font-size: 26px;
     padding: 8px;
 }
 .detail{
-    font-size: 21px;
+    font-size: 24px;
 }
 .button-accept-cancel-done{
     margin: 0 auto;
     text-align: center;
 }
 .accept-button{
-    top: 30px;
+    top: 10px;
     right: 30px;
     background-color: #1FAb89;
     border-radius: 20px;
@@ -53,22 +92,45 @@
     padding: auto;
     height: 42px;
     width: 100px;
+    transition: 0.3s;
+}
+.accept-button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #10725a;
+  box-shadow: 0 8px 11px #115745;
+}
+.accept-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
 }
 .cancel-button{
-    top: 30px;
+    top: 10px;
     left: 30px;
-    background-color: rgb(29, 53, 43);
+    /* background-color: rgb(29, 53, 43); */
+    /* background-color: #929191; */
+    background-color: #575757;
     border-radius: 20px;
     border: none;
     color: white;
     font-size: 26px;
-
     position: relative;
     height: 42px;
     width: 100px;
+    transition: 0.3s;
+
+}
+.cancel-button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  /* background-color: #6e6e6e; */
+  background-color: #424242;
+  box-shadow: 0 8px 11px #555454;
+}
+.cancel-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #555454;
 }
 .done-button{
-    top: 30px;
+    top: 10px;
     background-color: #1FAb89;
     border-radius: 20px;
     border: none;
@@ -77,12 +139,22 @@
     position: relative;
     height: 42px;
     width: 100px;
+    transition: 0.3s;
+}
+.done-button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #10725a;
+  box-shadow: 0 8px 11px #115745;
+}
+.done-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
 }
 #map{
-    margin-top: 30px;
+    margin-top: 0px;
     position: relative;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     
 }
 
@@ -101,7 +173,8 @@
     width: 36px;
     height: 30px;
     left: 80%;
-    top: 36px;
+    /* top: 36px; */
+    top: 2%;
   }
   
   /* Color/shape of burger icon bars */
@@ -172,7 +245,6 @@
     font-size: 20px;
   }
 
-  .notification{
+  /* .notification{ */
     /* width: 50px; */
-    
-  }
+  /* } */

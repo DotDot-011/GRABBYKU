@@ -3,6 +3,8 @@ import Driver from "../components_driver/Driver";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import './login_driver.css'
+import Login from "./login";
 
 
 function LoginUser() {
@@ -37,19 +39,25 @@ function LoginUser() {
     }
     else{
         return (
-            <div classname="">
-                <h1> เข้าสู่ระบบ Driver </h1> 
-                <form>
+            <div classname="main_driverlog" id="main_driverlog">
+                <h1>เข้าสู่ระบบ</h1> 
+                <h2>Driver</h2> 
+                <form classname="driverlog" id="driverlog">
                     <div>
-                        <label>username</label>
-                        <input type="text" ref={nameRef} value={nameRef.current.value} placeholder="username"/>
+                        <label>Username</label>
+                        <input type="text" ref={nameRef} value={nameRef.current.value} placeholder="Username"/>
                     </div>
                     <div>
-                        <label>password</label>
-                        <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="password"/>
+                        <label>Password</label>
+                        <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="Password"/>
                     </div>
                     <p id="loginError"></p>
-                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+{/* CSS แก้ให้เป็นปุ่มเดียวกัน */}
+                    {/* <button classname="sum_driver" id="sum_driver" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button> */}
+
+                    <button id="sum_driver" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button id="back_driver" type="submit" onClick={()=> {return <Login />}}> กลับ </button>
+
                 </form>
                 <NotificationContainer />
             </div> 

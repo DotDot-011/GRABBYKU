@@ -4,6 +4,9 @@ import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
+import './login_user.css'
+import Login from "./login";
+
 
 function LoginUser() {
     const nameRef = useRef("");
@@ -39,19 +42,26 @@ function LoginUser() {
     }
     else{
         return (
-            <div classname="">
-                <h1> เข้าสู่ระบบ User </h1>
-                <form>
+            <div classname="main_userlog" id="main_userlog">
+                <h1>เข้าสู่ระบบ</h1>
+                <h2>User</h2>
+                <form classname="userlog" id="userlog"> 
                     <div>
-                        <label>username</label>
-                        <input type="text" ref={nameRef} value={nameRef.current.value} placeholder="username"/>
+                        <label>Username</label>
+                        <input type="text" ref={nameRef} value={nameRef.current.value} placeholder="Username"/>
                     </div>
                     <div>
-                        <label>password</label>
-                        <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="password"/>
+                        <label>Password</label>
+                        <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="Password"/>
                     </div>
                     <p id="loginError"></p>
-                    <button type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+
+{/* CSS แก้ */}
+                    {/* <button classname="sum_user" id="sum_user" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button> */}
+
+                    <button id="sum_user" type="submit" onClick={(event)=>{CheckUser(); event.preventDefault()}}> เข้าสู่ระบบ </button>
+                    <button id="back_user" type="submit" onClick={()=> {return <Login />}}> กลับ </button>
+
                 </form>
                 <NotificationContainer />
             </div> 

@@ -1,5 +1,6 @@
 .queue-container{
     margin: 0 auto;
+    /* position: fixed; */
     position: relative;
     display: block;
     justify-content: center;
@@ -8,17 +9,18 @@
     z-index: 1;
     max-width: 700px;
     /* max-height: 800px; */
-    height: 635px;
+    height: 630px;
     width: 100%;
     /* height: 80%; */
     /* width: 300px; */
-
-    background-color: #62d2A2;
+    /* background-color: #62d2A2; */
+    background-color: white;
     border-radius: 20px;
     border-style: inset;
     border-width: 4px;
     border-color:#137e63;
 }
+
 .queue-container h4 {
     padding-top: 10px;
     font-size: 30px;
@@ -47,9 +49,22 @@
     width: 100px;
     right: 19px;
     top: 20px;
+    transition: 0.3s;
 }
+.button-enQueue:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #10725a;
+    box-shadow: 0 8px 11px #115745;
+}
+.button-enQueue:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #115745;
+}
+
 .button-leaveQueue{
-    background-color: rgb(29, 53, 43);
+    /* background-color: rgb(29, 53, 43); */
+    /* background-color: #929191; */
+    background-color: #575757;
     border-radius: 20px;
     border: none;
     color: white;
@@ -59,4 +74,16 @@
     width: 100px;
     left: 26px;
     top: 20px;
+    transition: 0.3s;
+
+}
+
+.button-leaveQueue:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #424242;
+    box-shadow: 0 8px 11px #555454;
+}
+.button-leaveQueue:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #555454;
 }

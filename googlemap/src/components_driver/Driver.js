@@ -267,21 +267,30 @@ class Driver extends React.Component {
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
             <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
             <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href="">ตั้งค่า</a>
             <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
         </Menu>  
         
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
-          <div key={this.state.driverId} className="driver-detail">
+          <div key={this.state.driverId} className="driver-detail-driv">
             {this.queueDriver}
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>
           </div>
+          {/* <div className="pin-info"> */}
+            <div className="pin-green"></div>
+            <div className="pin-green-info">ตำแหน่งของลูกค้า</div>
+
+            <div className="pin-red"></div>
+            <div className="pin-red-info">ตำแหน่งปลายทาง</div>
+
+
+          {/* </div> */}
          
           <MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div id="map" style={{ height: `400px`}} />}
+                containerElement={<div id="map" style={{ height: `420px`}} />}
                 mapElement={<div style={{ height: `100%` }} />}
                 // key={this.state.mapPosition.lat}
               /> 
