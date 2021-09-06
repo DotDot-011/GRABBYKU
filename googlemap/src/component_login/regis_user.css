@@ -5,34 +5,37 @@
     display: block;
     align-items: center;
     text-align: center;
+    
+    /* min-width: 800px;
+    min-height: 550px; */
 }
 #main_userreg h1 {
-    margin-top: 10px;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     font-size: 55px;
 }
 #boxinput-user{
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 45px;
+    height: 37px;
     width: 55%;
     min-width: 365px;
     /* max-width: 500px; */
 }
 #userreg label{
     float: left;
-    font-size: 26px;
+    font-size: 23px;
 }
 #userreg input{
     float: right;
     transform: translateX(-14%);
     /* margin-left: 15px; */
-    font-size: 18px;
+    font-size: 16px;
     width: 40%;
     /* min-width: 200px */
     max-width: 300px;
-    height: 40px;
+    height: 34px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
@@ -40,7 +43,7 @@
 }
 #sum_userreg{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 20px;
     margin-right: 13px;
     background-color: #29967b;
     border-radius: 15px 3px 3px 15px;
@@ -64,7 +67,7 @@
 
 #back{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 20px;
     margin-left: 13px;
     background-color: #616362;
     border-radius: 3px 15px 15px 3px;

@@ -1,7 +1,7 @@
 
 #main_driverreg{
     margin: 0 auto;
-    padding: 5px;
+    padding: 2px;
     position: relative;
     display: block;
     align-items: center;
@@ -9,32 +9,32 @@
 }
 #main_driverreg h1 {
     margin-top: 2px;
-    margin-bottom: 5px;
-    font-size: 48px;
+    margin-bottom: 2px;
+    font-size: 42px;
 }
 #boxinput-driver{
     margin: 0 auto;
     padding: 0 auto;
     /* background-color: lavender; */
-    height: 37px;
+    height: 33px;
     width: 55%;
     min-width: 365px;
 }
 #driverreg label{
     margin-left: 6px;
     float: left;
-    font-size: 22px;
+    font-size: 18px;
 }
 #driverreg input{
     float: right;
     transform: translateX(-14%);
     /* margin-left: 15px; */
     margin-right: 0px;
-    font-size: 18px;
+    font-size: 15px;
     width: 40%;
     /* min-width: 200px */
     max-width: 300px;
-    height: 35px;
+    height: 28px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
@@ -42,16 +42,16 @@
 }
 #sum_driverreg{
     text-align: center;
-    margin-top: 15px;
+    margin-top: 9px;
     margin-right: 13px;
     background-color: #29967b;
     border-radius: 15px 3px 3px 15px;
     border: none;
     color: white;
-    font-size: 27px;
+    font-size: 26px;
     position: relative;
-    height: 53px;
-    width: 110px;
+    height: 48px;
+    width: 100px;
     transition: 0.3s;
 }
 #sum_driverreg:hover {
@@ -66,16 +66,16 @@
 
 #back_driverreg{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 9px;
     margin-left: 13px;
     background-color: #616362;
     border-radius: 3px 15px 15px 3px;
     border: none;
     color: white;
-    font-size: 27px;
+    font-size: 26px;
     position: relative;
-    height: 53px;
-    width: 110px;
+    height: 48px;
+    width: 100px;
     transition: 0.3s;
 }
 #back_driverreg:hover {
