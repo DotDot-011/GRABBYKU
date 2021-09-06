@@ -8,15 +8,15 @@ import TextField from '@material-ui/core/TextField';
 import Popup from 'reactjs-popup';
 const labels = {
     // 0.5: 'Useless',
-    1: 'หีมาก',
+    1: 'ควรปรับปรุง',
     // 1.5: 'Poor',
-    2: 'หี',
+    2: 'พอใช้',
     // 2.5: 'Ok',
-    3: 'พอใช้',
+    3: 'ดี',
     // 3.5: 'Good',
-    4: 'ดี',
+    4: 'ดีมาก',
     // 4.5: 'Excellent',
-    5: 'ดีมาก',
+    5: 'สุดยอด',
   };
   
   const useStyles = makeStyles({
@@ -32,7 +32,7 @@ const labels = {
 
 
 export default function CommentDriver(props){
-    const [value, setValue] = useState(3);
+    const [value, setValue] = useState(0);
     const [hover, setHover] = React.useState(-1);
     const classes = useStyles();
     const commentRef = useRef("");
