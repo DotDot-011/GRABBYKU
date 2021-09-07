@@ -5,42 +5,49 @@
     display: block;
     align-items: center;
     text-align: center;
-    
-    /* min-width: 800px;
-    min-height: 550px; */
+    height: 92%;
 }
 #main_userreg h1 {
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-size: 55px;
+}
+#userreg{
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    position: static;
+    height: 80%;
+    /* background-color: rgb(26, 157, 180); */
 }
 #boxinput-user{
     margin: 0 auto;
-    padding: 0 auto;
     /* background-color: lavender; */
-    height: 37px;
-    width: 55%;
-    min-width: 365px;
-    /* max-width: 500px; */
+    height: auto;
+    width: 90%;
+    max-width: 700px;
+    height: 10%;
 }
 #userreg label{
+    margin: 0 auto;
     float: left;
+    position: static;
     font-size: 23px;
 }
 #userreg input{
+    position: static;
     float: right;
-    transform: translateX(-14%);
-    /* margin-left: 15px; */
-    font-size: 16px;
+    font-size: 18px;
     width: 40%;
-    /* min-width: 200px */
     max-width: 300px;
-    height: 34px;
+    height: 80%;
+    max-height: 50px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
     padding-left:10px;
 }
+
 #sum_userreg{
     text-align: center;
     margin-top: 20px;
@@ -51,7 +58,9 @@
     color: white;
     font-size: 27px;
     position: relative;
-    height: 53px;
+    height: 10%;
+    min-height: 40px;
+    max-height: 50px;
     width: 110px;
     transition: 0.3s;
 }
@@ -75,7 +84,9 @@
     color: white;
     font-size: 27px;
     position: relative;
-    height: 53px;
+    height: 10%;
+    min-height: 40px;
+    max-height: 50px;
     width: 110px;
     transition: 0.3s;
 }
