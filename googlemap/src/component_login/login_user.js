@@ -44,7 +44,7 @@ function LoginUser() {
         return (
             <div classname="main_userlog" id="main_userlog">
                 <h1>เข้าสู่ระบบ</h1>
-                <h2>User</h2>
+                <h2>Customer</h2>
                 <form classname="userlog" id="userlog"> 
                     <div>
                         <label>Username</label>

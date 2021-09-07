@@ -17,7 +17,8 @@ import { Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
-import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
+import CommentDriver from "./CommentDriver";
+
 // import { slide as Menu } from 'react-burger-menu'   เอาไปเล่นนะจ๊ะเด็กๆ <3
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
@@ -52,7 +53,7 @@ class User extends React.Component {
       waitingQueueAppear:null,
       detailDriverAppear:null,
       locationList:[],
-      
+      loadingState:0,
     }
     
     watingQueue=null;
@@ -384,7 +385,6 @@ class User extends React.Component {
 
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
-      addResponseMessage("Welcome to this awesome chat!");
       axios.get( Url.LinkToBackend +"backend/api/bomb")
       this.fetchUserIdInterval=setInterval(()=>{
         axios.post(Url.LinkToBackend+"backend/api/line1",{
@@ -393,6 +393,9 @@ class User extends React.Component {
         .then(res=>{
           clearInterval(this.fetchUserIdInterval)
           this.userId=res.data[0].user_id;
+          this.setState({
+            loadingState:1,
+          })
         })
         .catch(err=>{
           NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -405,9 +408,12 @@ class User extends React.Component {
       
     }
 
-    handleNewUserMessage = (newMessage) => {
-      console.log(`New message incomig! ${newMessage}`);
-      // Now send the message throught the backend API
+    handleForUpdate(stateCommentPage){
+      
+      this.setState({
+        detailDriverAppear:stateCommentPage,
+      });
+    
     }
     
     render(){
@@ -419,8 +425,11 @@ class User extends React.Component {
         this.watingQueue=null;
         clearInterval(this.timeoutId);
       }
-      if(!!this.state.detailDriverAppear){
+      if(this.state.detailDriverAppear===1){
         this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue}/>
+      }
+      else if(this.state.detailDriverAppear===2){
+        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)}/> 
       }
       else{
         this.detailDriver=null;
@@ -580,6 +589,10 @@ class User extends React.Component {
         </GoogleMap>
       ));
       
+
+      if (this.state.loadingState===0){
+        return <img src="../pictures/Loading.gif"/>
+      }else{
       return(
         <div>
 
@@ -609,17 +622,17 @@ class User extends React.Component {
           mapElement={<div style={{ height: `100%` }} />}
         />
         <NotificationContainer />
-        <Chat
-          handleNewUserMessage={this.handleNewUserMessage}
-          profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
-          title="Icezy"
-          subtitle="And my cool subtitle"
-        />
-        </div>
         
+        </div>
+          <button onClick={()=>{
+            this.setState({detailDriverAppear:2})
+          }} onDoubleClick={()=>{
+            this.setState({detailDriverAppear:null})
+          }}>sadasd</button>
         </div>
         
       );
+      }
     }
 }
 
