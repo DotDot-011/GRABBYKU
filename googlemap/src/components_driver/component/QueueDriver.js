@@ -23,7 +23,7 @@ export default function QueueDriver(props) {
             if (res.data.message){
                 // clearInterval(window.timeoutId1);
                 // console.log(Number(res.data.lat_user));
-                props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_dis) ,Number(res.data.lng_dis)
+                props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
                  ,null ,res.data.user_id, res.data.user_fname, res.data.user_lname);
             }
 

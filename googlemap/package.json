@@ -11,8 +11,12 @@
     "alert": "^5.0.10",
     "antd": "^4.16.13",
     "axios": "^0.21.1",
+    "bootstrap": "^5.1.0",
     "geolib": "^3.3.1",
+    "google-distance-matrix": "^1.1.1",
+    "google_directions": "^0.6.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0-beta.6",
     "react-burger-menu": "^3.0.6",
     "react-chat-popup": "^1.1.2",
     "react-dom": "^17.0.2",
@@ -24,6 +28,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "reactjs-popup": "^2.0.5",
+    "socket.io-client": "^4.2.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

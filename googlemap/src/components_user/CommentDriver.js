@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Popup from 'reactjs-popup';
+import CloseButton from 'react-bootstrap/CloseButton'
 const labels = {
     // 0.5: 'Useless',
     1: 'ควรปรับปรุง',
@@ -38,7 +39,8 @@ export default function CommentDriver(props){
     const commentRef = useRef("");
     return(
         <div className="comment-driver-container">
-            <div>
+            <CloseButton onClick={()=>{props.handleForUpdate(null);}} />
+            <div>   
                 <Box component="fieldset" mb={3} borderColor="transparent">
                     <Typography component="legend">ให้คะแนน</Typography>
                     <Rating

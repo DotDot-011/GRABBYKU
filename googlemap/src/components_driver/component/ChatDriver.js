@@ -1,7 +1,10 @@
 import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
-
 export default function ChatDriver(){
+    
+
     function handleNewUserMessage(newMessage){
+        
+        // conn.send(newMessage)
         console.log(`New message incomig! ${newMessage}`);
         // Now send the message throught the backend API
       }

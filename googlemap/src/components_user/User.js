@@ -18,16 +18,13 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
 import CommentDriver from "./CommentDriver";
-
-// import { slide as Menu } from 'react-burger-menu'   เอาไปเล่นนะจ๊ะเด็กๆ <3
+import distance from 'google_directions';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
 
-
-
 class User extends React.Component {
-
+    
     state = {
       address: '',
       city: '',
@@ -54,6 +51,7 @@ class User extends React.Component {
       detailDriverAppear:null,
       locationList:[],
       loadingState:0,
+      travelDistance:0,
     }
     
     watingQueue=null;
@@ -305,8 +303,31 @@ class User extends React.Component {
         {latitude:13.842952063786939, longitude:100.57158130599677},
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
     ]
-    
+   
     //--------------functionถูกเรียกเมื่อ user กดปุ่มเริ่มต้น-------------------- 
+    getDistance = () => {
+        var params = {
+        // REQUIRED
+        origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
+        destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
+        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+    
+        // OPTIONAL
+        mode: "walking",
+        avoid: "",
+        language: "",
+        units: "",
+        region: "",
+      };
+      distance.getDirections(params, (err,data)=> {
+        this.setState ({
+          travelDistance: data.routes[0].legs[0].distance.value
+        })
+      })
+      
+      
+    }
+    
     addLocation = () =>{
       //-----------------เช็คตำแหน่งของทั้งสองmarkerว่าอยู่ในพื้นที่ให้บริการและอยู่นอก redzone หรือไม่-------------------
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
@@ -315,7 +336,7 @@ class User extends React.Component {
      isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
      isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
      {
-
+        this.getDistance()
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
         axios.post(Url.LinkToBackend+"backend/api/line2",{
           user_id: this.userId,
@@ -419,22 +440,22 @@ class User extends React.Component {
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait cancelQueue={this.cancelQueue}/>
+        this.watingQueue= <Wait cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
       }
       else{
         this.watingQueue=null;
         clearInterval(this.timeoutId);
       }
       if(this.state.detailDriverAppear===1){
-        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue}/>
+        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
       }
       else if(this.state.detailDriverAppear===2){
         this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)}/> 
       }
       else{
         this.detailDriver=null;
-      }
-    
+      } 
+      
       //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>       
         <GoogleMap div id="con"
@@ -577,11 +598,11 @@ class User extends React.Component {
               
               options={
                 {
-                  strokeColor: "purple",
-                  strokeOpacity: 0.8,
-                  strokeWeight: 3,
-                  fillColor: "purple",
-                  fillOpacity: 0.35,
+                  strokeColor: "#d34052",
+                  strokeOpacity: 0.5,
+                  strokeWeight: 2,
+                  fillColor: "#d34052",
+                  fillOpacity: 0.3,
                 }
               }
           />
