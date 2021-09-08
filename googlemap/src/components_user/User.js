@@ -465,7 +465,7 @@ class User extends React.Component {
 
       }));
     }
-    n='1';
+    
     render(){
       
       if(!!this.state.waitingQueueAppear){
@@ -478,8 +478,8 @@ class User extends React.Component {
       if(this.state.detailDriverAppear===1){
         this.n=this.n+'1'
         this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
-        this.chatUser= <ChatUser key={this.n} conn={conn} driverId={this.driverId} />
-        console.log('---------',this.n)
+        this.chatUser= <ChatUser  conn={conn} driverId={this.driverId} />
+        
       }
       else if(this.state.detailDriverAppear===2){
         this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
