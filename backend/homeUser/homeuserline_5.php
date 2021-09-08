@@ -7,19 +7,11 @@ $user_id = $postdata->id;
 
 $statement = "DELETE FROM booking WHERE user_id = '$user_id' ";
 
-<<<<<<< HEAD
 if ($conn->query($statement) === TRUE) {
     echo "delete laew ja =] ";
 } else {
     echo "Error: " . $conn->error;
 }
-=======
- if($conn->query($statement) === TRUE){
-  echo "delete laew ja =] ";
- }
- else {
-  echo "Error: " . $conn->error;
- }
 
 
 //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣀⣤⣴⣶⣾⣆⠄⠄⠄⠄⠄
@@ -38,4 +30,3 @@ if ($conn->query($statement) === TRUE) {
 //⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣷⣦⣀⠉⠿⣿⡇⠄⣾⣿⣿⣿⣿⣿⣿⣿⣶⡀⠄
 //⠄⠄⠄⠄⠄⠄⢠⣾⣿⣿⣿⣿⣿⣿⣷⡄⠹⠇⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄
 //⠄⠄⠄⠄⠄⠄⣾⣿⣿⣿⣿⣿⣿⣿⡿⠋⠄⠄⠈⠙⠿⢿⣿⣿⣿⣿⣿⣿⣿⡇
->>>>>>> f2556964bdb2996aaeb3a3452524d4ac2ab0e827

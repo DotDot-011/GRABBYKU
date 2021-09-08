@@ -1,9 +1,10 @@
 <?php
 
-$name = $wsdata['arg1'];
-$user_id = $wsdata['arg2'];
-$driver_id = $wsdata['arg3'];
+$name = $wsdata['arg2'];
+$user_id = $wsdata['arg3'];
+$driver_id = $wsdata['arg1'];
 $name_and_id = $name . $user_id;
+$check = 1;
 
 $sql1 = "UPDATE `booking` SET `driver_id` = $driver_id WHERE `user_id` = $user_id";
 $sql2 = "UPDATE `driver` SET `status` = 2 WHERE `driver_id` = $driver_id";
@@ -46,3 +47,8 @@ if ($result = $conn->query($statement)) {
 } else {
     echo "error";
 }
+
+$sql = "UPDATE websocket SET on_service = 1 WHERE name = '$name_and_id'";
+$conn->query($sql);
+
+require "./deQueue.php";

@@ -20,7 +20,7 @@ while ($row = $result->fetch_assoc()) {
         if ($client->resourceId == $connection_id) {
             // send message
             $client->send(json_encode([
-                "message_code"=> "chat",
+                "message_code"=> $protocol,
                 "message"=> $message
             ]));
             break;

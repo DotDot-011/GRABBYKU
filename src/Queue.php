@@ -18,13 +18,14 @@ if ($result->num_rows > 0) {
         $data[$i]["time_stamp"] = $row['create_at'];
         $i++;
     }
-    $sql2 = "SELECT connection_id, on_service FROM websocket WHERE is_driver = 1";
+    $sql2 = "SELECT connection_id, on_service, in_queue FROM websocket WHERE is_driver = 1";
     $result2 = $conn->query($sql2);
     while ($row = $result2->fetch_assoc()) {
         $connection_id = $row['connection_id'];
         $on_service = $row['on_service'];
+        $in_queue = $row['in_queue'];
         $data["message_code"] = "queue";
-        if ($on_service == 0) {
+        if ($on_service == 0 && $in_queue == 1) {
             foreach ($this->clients as $client) {
                 if ($client->resourceId == $connection_id) {
                     $client->send($data);
