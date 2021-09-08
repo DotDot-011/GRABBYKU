@@ -31,6 +31,7 @@ $routes["/backend/api/postdriverinq"]["POST"] = "./homedriver/postdriverinq/post
 
 
 # driver - get queue
+$routes["/backend/api/test"]["GET"] = "./homedriver/getqueue/enterwebsocket.php";
 $routes["/backend/api/getqueue"]["GET"] = "./homedriver/getqueue/getqueue.php";
 
 # user - get user data
@@ -54,5 +55,14 @@ $routes["/backend/api/request_driver_info"]["POST"] = "./homeUser/homeuserline_4
 $routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/homeuserline_3.php";
 
 $routes["/backend/api/deletequeue"]["POST"] = "./homedriver/deleteQueue/deleteQueue.php";
+
+# websocket
+$routes["in"]["ws"] = "./src/UserIn.php";
+$routes["out"]["ws"] = "./src/UserOut.php";
+$routes["chat"]["ws"] = "./src/Chat.php";
+$routes["enqueue"]["ws"] = "./src/enQueue.php";
+$routes["dequeue"]["ws"] = "./src/deQueue.php";
+$routes["driver-accepted"]["ws"] = "./src/DriverAccepted.php";
+$routes["WorkFinished"]["ws"] = "./src/WorkFinished.php";
 
 ?>

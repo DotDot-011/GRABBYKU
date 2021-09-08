@@ -25,7 +25,7 @@ if ($result->num_rows == 1) {
                     "message" => true
                 ]);
             }
-        } elseif ($row1['status'] == 1) {
+        } elseif ($row1['status'] >= 1) {
             $sql2 = "UPDATE `user` SET `status` = 0 WHERE `username` = '$username'";
             if ($conn->query($sql2) == TRUE) {
                 echo json_encode([

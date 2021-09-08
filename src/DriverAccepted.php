@@ -1,7 +1,22 @@
 <?php
-$postdata = json_decode(file_get_contents("php://input"));
 
-$user_id = $postdata->id;
+$name = $wsdata['arg1'];
+$user_id = $wsdata['arg2'];
+$driver_id = $wsdata['arg3'];
+$name_and_id = $name . $user_id;
+
+$sql1 = "UPDATE `booking` SET `driver_id` = $driver_id WHERE `user_id` = $user_id";
+$sql2 = "UPDATE `driver` SET `status` = 2 WHERE `driver_id` = $driver_id";
+
+if($conn->query($sql1) == TRUE && $conn->query($sql2) == TRUE) {
+    echo json_encode([
+        "message"=> true
+    ]);
+} else {
+    echo json_encode([
+        "message"=> false
+    ]);
+}
 
 $statement = "SELECT * FROM booking WHERE user_id = '$user_id'";
 
@@ -19,6 +34,8 @@ if ($result = $conn->query($statement)) {
         $data['lng_des'] = $row['lng_des'];
         $data['lat_des'] = $row['lat_des'];
         echo json_encode($data);
+        $sql = "";
+        $conn->query($sql);
         if ($data['driver_id'] != NULL) {
             $sql = "UPDATE `user` SET `status` = 2 WHERE `user_id` = $user_id";
             $conn->query($sql);
@@ -29,5 +46,3 @@ if ($result = $conn->query($statement)) {
 } else {
     echo "error";
 }
-
-$conn->close();

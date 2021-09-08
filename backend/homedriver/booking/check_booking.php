@@ -13,8 +13,8 @@ if ($result->num_rows > 0) {
     $data["user_id"] = $row["user_id"];
     $data["lng_user"] = $row["lng_user"];
     $data["lat_user"] = $row["lat_user"];
-    $data["lng_dis"] = $row["lng_dis"];
-    $data["lat_dis"] = $row["lat_dis"];
+    $data["lng_des"] = $row["lng_des"];
+    $data["lat_des"] = $row["lat_des"];
     $data["driver_id"] = $driver_id;
     $data["message"] = TRUE;
     $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";

@@ -1,4 +1,5 @@
 <?php
+# user - post user's info
 
 $postData = json_decode(file_get_contents("php://input"));
 

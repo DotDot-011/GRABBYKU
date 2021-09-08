@@ -20,14 +20,13 @@ if ($result->num_rows == 1) {
         if ($result1->num_rows == 1) {
             $row1 = $result1->fetch_assoc();
             if ($row1['status'] == 0) {
-
                 $sql2 = "UPDATE `driver` SET `status` = 1 WHERE `username` = '$username'";
                 if ($conn->query($sql2)) {
                     echo json_encode([
                         "message" => TRUE
                     ]);
                 };
-            } elseif ($row1['status'] == 1) {
+            } elseif ($row1['status'] >= 1) {
                 $sql2 = "UPDATE `driver` SET `status` = 0 WHERE `username` = '$username'";
                 if ($conn->query($sql2) == TRUE) {
                     echo json_encode([
