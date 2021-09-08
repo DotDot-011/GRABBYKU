@@ -20,13 +20,13 @@ const labels = {
     5: 'สุดยอด',
   };
   
-  const useStyles = makeStyles({
-    root: {
-      width: 200,
-      display: 'flex',
-      alignItems: 'center',
+const useStyles = makeStyles({
+root: {
+    width: 200,
+    display: 'flex',
+    alignItems: 'center',
     },
-  });
+});
 
 
   
@@ -56,15 +56,14 @@ export default function CommentDriver(props){
                     />
                     {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
                 </Box>
-                <textarea name="comments" id="comments" ref={commentRef} value={commentRef.current.value} placeholder="ความคิดเห็นเพิ่มเติม" />
+                <textarea name="comments" id="comments" ref={commentRef}  placeholder="ความคิดเห็นเพิ่มเติม" />
                 <form>
                 {/* <TextField label="ความคิดเห็นเพิ่มเติม"  variant="filled" fullWidth /> */}
 
                 </form>
                 
-                
-                
             </div>
+            
             <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
             {close=>(
                 <div className="thankyou"> ขอบคุณที่ใช้บริการค่ะ

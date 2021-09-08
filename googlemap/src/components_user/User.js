@@ -19,9 +19,13 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { stack as Menu } from 'react-burger-menu'
 import CommentDriver from "./CommentDriver";
 import distance from 'google_directions';
+import mapStyle from "../mapStyle"
+import ChatUser from "./ChatUser";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
-
-
+let conn = new WebSocket('ws://6d96-2001-fb1-54-fe99-6c26-4520-3563-5341.ap.ngrok.io');
+conn.onopen = function(e) {
+  console.log("Connection established!");
+}
 
 class User extends React.Component {
     
@@ -60,7 +64,7 @@ class User extends React.Component {
     driverId=null;
     userId=null;
     fetchUserIdInterval=null;
-    
+    chatUser=null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -404,9 +408,18 @@ class User extends React.Component {
       })
     }
 
+    
+    
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
+
       axios.get( Url.LinkToBackend +"backend/api/bomb")
+      window.onbeforeunload =()=>{
+        conn.send(JSON.stringify({
+          protocol: "out",
+        }))
+      }
+      //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
         axios.post(Url.LinkToBackend+"backend/api/line1",{
           username: localStorage.getItem("username")
@@ -417,6 +430,14 @@ class User extends React.Component {
           this.setState({
             loadingState:1,
           })
+          console.log(res.data[0].fname, res.data[0].lname)
+          conn.send(JSON.stringify({
+            protocol: "in",
+            arg1: `${res.data[0].fname} ${res.data[0].lname}`, // name
+            arg2: "0",
+            arg3: `${res.data[0].user_id}`,
+          }));
+        
         })
         .catch(err=>{
           NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -436,6 +457,12 @@ class User extends React.Component {
       });
     
     }
+    componentWillUnmount(){
+      conn.send(JSON.stringify({
+        protocol: "out",
+
+      }));
+    }
     
     render(){
       
@@ -448,12 +475,15 @@ class User extends React.Component {
       }
       if(this.state.detailDriverAppear===1){
         this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
+        this.chatUser=<ChatUser conn={conn} driverId={this.driverId} />
       }
       else if(this.state.detailDriverAppear===2){
-        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)}/> 
+        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
+        
       }
       else{
         this.detailDriver=null;
+        this.chatUser=null;
       } 
       
       //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
@@ -483,6 +513,7 @@ class User extends React.Component {
               strictBounds:true,
               
             },
+            styles:mapStyle,
            }}
         >
           {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
@@ -612,6 +643,7 @@ class User extends React.Component {
       
 
       if (this.state.loadingState===0){
+        
         return <img src="../pictures/Loading.gif"/>
       }else{
       return(
@@ -624,7 +656,13 @@ class User extends React.Component {
             <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
             <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href="">ตั้งค่า</a>
-            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
+            <a id="contact" className="menu-item" onClick={()=>{ 
+              localStorage.clear() ; 
+              window.location.reload();
+              conn.send(JSON.stringify({
+                protocol: "out",
+              }));
+            }}>ออกจากระบบ</a>
           </Menu>
             
           
@@ -638,10 +676,11 @@ class User extends React.Component {
         <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
           // containerElement={<div id="map" style={{ height: `380px`}} />}
-          containerElement={<div id="mapbox" style={{ height: `360px`}} />}
+          containerElement={<div id="mapbox" style={{ height: `360px`} } />}
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
+        {this.chatUser}
         <NotificationContainer />
         
         </div>

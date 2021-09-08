@@ -45,7 +45,7 @@ export default function Wait(props){
             <div id="waiting-detail">
                 <div class="num-queue">จำนวนคิวที่รอ : $</div>
                 <div class="num-driver">จำนวนผู้ให้บริการ : $</div>
-                <div class="money-est">ค่าใช้จ่ายโดยประมาณ : {cost} บาท</div>
+                <div class="money-est">ค่าโดยสารโดยประมาณ : {cost} บาท</div>
             </div>
             {/* <button className="cancel-button" type="button" type="button" class="btn btn-primary" id="buttcancel" onClick={cancelQueue}>ยกเลิก</button> */}
             <Popup trigger={<button className="cancel-button" type="button" class="btn btn-primary" id="buttcancel"> ยกเลิก</button>} modal nested>

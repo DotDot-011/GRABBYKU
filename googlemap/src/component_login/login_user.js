@@ -21,8 +21,9 @@ function LoginUser() {
         axios.post(`${Url.LinkToBackend}backend/api/login_user`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
-            console.log(res.data);
+            console.log(res);
             if(res.data.message){
+                console.log('test');
                 document.getElementById('loginError').innerHTML=null;
                 setLoginSuccess(1);
             }else{

@@ -1,12 +1,31 @@
+import { useEffect } from 'react';
 import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
-export default function ChatDriver(){
-    
+export default function ChatDriver(props){
+    const { conn ,userId ,userFname , userLname} = props;
+    useEffect(()=>{
+        console.log('------------',userId,userFname)
+        conn.onmessage = function(e) {
+            let Message = JSON.parse(e.data)
+            addResponseMessage(Message.message)
+            console.log(Message);
+        };
+           
+    },[])
+
+
 
     function handleNewUserMessage(newMessage){
         
         // conn.send(newMessage)
-        console.log(`New message incomig! ${newMessage}`);
         // Now send the message throught the backend API
+        console.log(`New message incomig! ${newMessage}`);
+        conn.send(JSON.stringify({
+            protocol: "chat", // protocol
+            arg1: `${userFname} ${userLname}`, // name
+            arg2: newMessage,
+            arg3: `${userId}`
+        }));
+        
       }
     return(
         <Chat
