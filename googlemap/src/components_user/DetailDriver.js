@@ -53,9 +53,9 @@ export default function DetailDriver(props){
             <ChatUser/>
             <Popup trigger={<button className="cancel-button" type="button" class="btn btn-primary" id="buttcancel"> ยกเลิก</button>} modal nested>
             {close=>(
-                <div className="confirmCancel"> มิ้น แม่มึงเป็นไรมากปะ ?
-                    <button onClick={()=>{cancelQueue();close();}}>ตกลง</button>
-                    <button onClick={()=>{close();}}>ปฏิเสธ</button>
+                <div className="confirmCancel" id="confirmCancel"> <h1>มิ้น แม่มึงเป็นไรมากปะ ?</h1>
+                    <button id="don-cancel" onClick={()=>{cancelQueue();close();}}>ตกลง</button>
+                    <button id="not-cancel" onClick={()=>{close();}}>ปฏิเสธ</button>
                 </div>)
             }
             

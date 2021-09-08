@@ -40,7 +40,7 @@ export default function CommentDriver(props){
         <div className="comment-driver-container">
             <div>
                 <Box component="fieldset" mb={3} borderColor="transparent">
-                    <Typography component="legend">ให้คะแนน</Typography>
+                    <Typography id="commentH" component="legend">ให้คะแนน</Typography>
                     <Rating
                     name="simple-controlled"
                     value={value}
@@ -52,7 +52,7 @@ export default function CommentDriver(props){
                         setHover(newHover);
                       }}
                     />
-                    {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
+                    {value !== null && <Box id="rate-name" ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
                 </Box>
                 <textarea name="comments" id="comments" ref={commentRef} value={commentRef.current.value} placeholder="ความคิดเห็นเพิ่มเติม" />
                 <form>
@@ -65,8 +65,8 @@ export default function CommentDriver(props){
             </div>
             <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
             {close=>(
-                <div className="thankyou"> ขอบคุณที่ใช้บริการค่ะ
-                    <button onClick={()=>{props.handleForUpdate(null);}}> ปิด </button>
+                <div className="thankyou"> <h1>ขอบคุณที่ใช้บริการค่ะ</h1>
+                    <button id="thank-button" onClick={()=>{props.handleForUpdate(null);}}> ปิด </button>
 
                 </div>)
                 
