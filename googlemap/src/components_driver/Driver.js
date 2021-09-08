@@ -108,6 +108,7 @@ class Driver extends React.Component {
             queueDriverAppear:1,
             buttonAcceptCancelAppear:1,
           })
+          window.location.reload()
         }
       })
     }, 1500);
@@ -217,7 +218,7 @@ class Driver extends React.Component {
            
 
         if(this.state.queueDriverAppear === 1){
-          
+          clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
           this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId}/>
           this.userInfo = null;

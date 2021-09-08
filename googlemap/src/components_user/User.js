@@ -400,7 +400,9 @@ class User extends React.Component {
         this.setState({
           waitingQueueAppear:null,
           detailDriverAppear:null,
+          
     })
+    window.location.reload()
       })
       .catch(err=>{
         NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -463,7 +465,7 @@ class User extends React.Component {
 
       }));
     }
-    
+    n='1';
     render(){
       
       if(!!this.state.waitingQueueAppear){
@@ -474,8 +476,10 @@ class User extends React.Component {
         clearInterval(this.timeoutId);
       }
       if(this.state.detailDriverAppear===1){
+        this.n=this.n+'1'
         this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
-        this.chatUser=<ChatUser conn={conn} driverId={this.driverId} />
+        this.chatUser= <ChatUser key={this.n} conn={conn} driverId={this.driverId} />
+        console.log('---------',this.n)
       }
       else if(this.state.detailDriverAppear===2){
         this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
@@ -680,7 +684,7 @@ class User extends React.Component {
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
-        {this.chatUser}
+        {this.chatUser }
         <NotificationContainer />
         
         </div>

@@ -16,6 +16,8 @@ export default function ChatUser(props){
             addResponseMessage(Message.message)
             console.log(Message);
         };
+        return ()=>{
+        }
 
     },[])
 
@@ -44,11 +46,14 @@ export default function ChatUser(props){
         }));
     }
     return(
-        <Chat
-             handleNewUserMessage={handleNewUserMessage}
-             profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
-             title="Icezy"
-             subtitle="And my cool subtitle"
-        />
+        <div key={driverId}>
+            <Chat
+                
+                handleNewUserMessage={handleNewUserMessage}
+                profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+                title={first_name+' '+last_name}
+                subtitle="And my cool subtitle"
+            />
+        </div>
     );
 }
