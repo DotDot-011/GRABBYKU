@@ -50,4 +50,5 @@ if ($result = $conn->query($statement)) {
 $sql = "UPDATE websocket SET on_service = 1 WHERE name = '$name_and_id'";
 $conn->query($sql);
 
-require "./deQueue.php";
+require dirname(__DIR__) . "/src/deQueue.php";
+require dirname(__DIR__) . "/src/Booking.php";
