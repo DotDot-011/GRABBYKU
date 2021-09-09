@@ -465,7 +465,7 @@ class User extends React.Component {
            }}
         >
           {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
-          <Marker 
+          <Marker
             draggable={true}
             position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
             onDragEnd={this.onMarkerDragEnd}
@@ -488,7 +488,7 @@ class User extends React.Component {
             >  
           </Marker>
           <div class="locationbox">
-          <div id="inbutt">
+            <div id="inbutt">
           {/* ----------component กล่องค้นหาตำแหน่งเริ่มต้น--------- */}
           <Autocomplete id="input1"
             options={
@@ -515,7 +515,7 @@ class User extends React.Component {
           <button class="button-currentLocation" onClick={this.findMylocation}></button>
           </div>  
             {/* ----------component กล่องค้นหาตำแหน่งปลายทาง--------- */}
-          <Autocomplete id="input2"
+          <Autocomplete id="input2" 
             options={
               {
                 bounds:{
@@ -537,7 +537,7 @@ class User extends React.Component {
             />
           </div>
 
-          <Polygon
+          <Polygon 
             path={[
               {lat:13.855458118865057, lng:100.56596600925597},
               {lat:13.857277966250578, lng:100.57639848267323},
@@ -564,7 +564,7 @@ class User extends React.Component {
           <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
             {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
           </div>
-          <Polygon
+          <Polygon 
               path={[
                 {lat: 13.84680634471089,lng: 100.56479688230758},
                 {lat: 13.848348039187117, lng: 100.56569906630881},
@@ -589,9 +589,9 @@ class User extends React.Component {
         </GoogleMap>
       ));
       
-
+      //loading screen
       if (this.state.loadingState===0){
-        return <img src="../pictures/Loading.gif"/>
+        return <img id="loading" src="../pictures/load.gif"/>
       }else{
       return(
         <div>
@@ -614,12 +614,12 @@ class User extends React.Component {
         {this.detailDriver}
     
         
-        <MapWithAMarker 
+        <MapWithAMarker  
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
           // containerElement={<div id="map" style={{ height: `380px`}} />}
-          containerElement={<div id="mapbox" style={{ height: `360px`}} />}
+          containerElement={<div id="mapbox" style={{ height: `342px`}} />}
           loadingElement={<div style={{ height: `100%` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
+          mapElement={<div id="here"style={{ height: `100%` }} />}
         />
         <NotificationContainer />
         

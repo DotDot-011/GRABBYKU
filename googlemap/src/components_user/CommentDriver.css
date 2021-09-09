@@ -6,7 +6,9 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 620px;
+    /* height: 620px; */
+    height: 70%;
+    min-height: 530px;
     max-width: 560px;
     width: 90%;
     background-color: #62d2A2;

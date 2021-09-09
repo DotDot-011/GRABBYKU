@@ -263,7 +263,7 @@ class Driver extends React.Component {
     ));
 
     if (this.state.loadingState===0){
-      return <img src="../pictures/Loading.gif"/>
+      return <img id="loading" src="../pictures/load.gif"/>
     }else{
     return (
 
@@ -295,7 +295,7 @@ class Driver extends React.Component {
           <MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div id="map" style={{ height: `420px`}} />}
+                containerElement={<div id="map"  />}
                 mapElement={<div style={{ height: `100%` }} />}
                 // key={this.state.mapPosition.lat}
               /> 

@@ -8,12 +8,10 @@
     text-align: center;
     z-index: 1;
     max-width: 700px;
-    /* max-height: 800px; */
-    height: 630px;
+    /* height: 630px; */
+    height: 890%;
+    min-height: 530px;
     width: 100%;
-    /* height: 80%; */
-    /* width: 300px; */
-    /* background-color: #62d2A2; */
     background-color: white;
     border-radius: 20px;
     border-style: inset;

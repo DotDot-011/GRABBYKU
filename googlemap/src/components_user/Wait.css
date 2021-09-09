@@ -9,7 +9,8 @@
     z-index: 1;
     max-width: 560px;
     width: 90%;
-    height: 620px;
+    height: 70%;
+    min-height: 530px;
     background-color: #62d2A2;
     border-radius: 20px;
     border-style: inset;
