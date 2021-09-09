@@ -3,7 +3,12 @@
 $name = $wsdata['arg1'];
 $message = $wsdata['arg2'];
 $id = $wsdata['arg3'];
-$name_and_id = $name . $id;
+$is_driver = $wsdata['arg4'];
+if ($is_driver == 1) {
+    $name_and_id = $name . " " . $id;
+} else {
+    $name_and_id = $name . $id;
+}
 
 $sql = "SELECT connection_id FROM websocket WHERE name LIKE '$name_and_id'";
 echo "send message to " . $name_and_id . "\n";

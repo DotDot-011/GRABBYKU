@@ -1,5 +1,7 @@
 <?php
 
+$driver_id = $wsdata['arg1'];
+
 $sql = "SELECT * FROM queue";
 $result = $conn->query($sql);
 $data = [];
@@ -18,20 +20,38 @@ if ($result->num_rows > 0) {
         $data[$i]["time_stamp"] = $row['create_at'];
         $i++;
     }
-    $sql2 = "SELECT connection_id, on_service, in_queue FROM websocket WHERE is_driver = 1";
-    $result2 = $conn->query($sql2);
-    while ($row = $result2->fetch_assoc()) {
-        $connection_id = $row['connection_id'];
-        $on_service = $row['on_service'];
-        $in_queue = $row['in_queue'];
-        $data["message_code"] = "queue";
-        if ($on_service == 0 && $in_queue == 1) {
+    if ($protocol != 'getqueue') {
+        echo $protocol . "\n";
+        $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0";
+        $result2 = $conn->query($sql2);
+        while ($row = $result2->fetch_assoc()) {
+            $connection_id = $row['connection_id'];
+            $data["message_code"] = "queue";
             foreach ($this->clients as $client) {
                 if ($client->resourceId == $connection_id) {
-                    $client->send($data);
+                    $client->send(json_encode($data));
                     break;
                 }
             }
         }
+    } else {
+        $data["message_code"] = "queue";
+        $from->send(json_encode($data));
+        echo "sent data back to connection ", $from->resourceId, "\n";
     }
+} else {
+    echo $protocol . "\n";
+    $data["message_code"] = "empty_queue";
+    $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0";
+        $result2 = $conn->query($sql2);
+        while ($row = $result2->fetch_assoc()) {
+            $connection_id = $row['connection_id'];
+            $data["message_code"] = "queue";
+            foreach ($this->clients as $client) {
+                if ($client->resourceId == $connection_id) {
+                    $client->send(json_encode($data));
+                    break;
+                }
+            }
+        }
 }

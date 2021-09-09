@@ -4,7 +4,6 @@ $name = $wsdata['arg2'];
 $user_id = $wsdata['arg3'];
 $driver_id = $wsdata['arg1'];
 $name_and_id = $name . $user_id;
-$check = 1;
 
 $sql1 = "UPDATE `booking` SET `driver_id` = $driver_id WHERE `user_id` = $user_id";
 $sql2 = "UPDATE `driver` SET `status` = 2 WHERE `driver_id` = $driver_id";
