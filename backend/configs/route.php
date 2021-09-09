@@ -58,12 +58,12 @@ $routes["/backend/api/deletequeue"]["POST"] = "./homedriver/deleteQueue/deleteQu
 
 # websocket
 $routes["in"]["ws"] = "./src/UserIn.php";
-#$routes["out"]["ws"] = "./src/UserOut.php";
+// $routes["out"]["ws"] = "./src/UserOut.php";
 $routes["chat"]["ws"] = "./src/Chat.php";
 $routes["enqueue"]["ws"] = "./src/enQueue.php";
 $routes["dequeue"]["ws"] = "./src/deQueue.php";
 $routes["driver-accepted"]["ws"] = "./src/DriverAccepted.php";
-$routes["WorkFinished"]["ws"] = "./src/WorkFinished.php";
+$routes["work-finished"]["ws"] = "./src/WorkFinished.php";
 $routes["getqueue"]["ws"] = "./src/Queue.php";
 
 ?>

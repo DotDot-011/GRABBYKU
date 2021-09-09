@@ -12,7 +12,4 @@ echo $name_and_id . "\n";
 $sql = "INSERT INTO queue (status, driver_id) VALUES (0, '$driver_id')";
 $conn->query($sql);
 
-$sql = "UPDATE websocket SET in_queue = 1 WHERE name = '$name_and_id'";
-$conn->query($sql);
-
 require dirname(__DIR__) . "/src/Queue.php";

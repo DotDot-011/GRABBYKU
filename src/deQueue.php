@@ -16,7 +16,7 @@ if ($protocol == 'driver-accepted') {
     $on_service = 1;
 }
 
-$sql = "UPDATE websocket SET in_queue = 0, on_service = $on_service WHERE name LIKE '$name_and_id'";
+$sql = "UPDATE websocket SET on_service = $on_service WHERE name LIKE '$name_and_id'";
 $conn->query($sql);
 
 require dirname(__DIR__) . "/src/Queue.php";

@@ -23,12 +23,15 @@ class WebSocket implements MessageComponentInterface
     public function onMessage(ConnectionInterface $from, $msg)
     {
         // front send json {protocol, arg1, arg2, arg3, arg4}
+        # test แล้ว
         // protocol:in -> arg1:sender's name, arg2:is_driver? 1 : 0, arg3:sender's id
         // protocol:out -> nothing required
         // protocol:chat -> arg1:receiver's name, arg2:string, arg3:receiver's id, arg:is_driver? 1 : 0
         // protocol:enqueue -> arg1:driver's id
         // protocol:dequeue -> arg1:driver's id
         // protocol:getqueue -> arg1:driver's id
+        
+        # ยังไม่ได้ test
         // protocol:driver-accepted -> arg1:driver's id, arg2:user's name, arg3:user's id
         // protocol:work-finished -> arg1:driver's name, arg2:driver's id, arg3:user's name, arg4:user's id
         // protocol:user-cancel -> arg1:user's name, arg2:user's id
