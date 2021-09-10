@@ -600,10 +600,10 @@ class User extends React.Component {
           {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
           <Menu right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-            <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
-            <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href="">ตั้งค่า</a>
-            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
+            <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้ </a>
+            <a id="contact" className="menu-item" href="/contact"> <i class="fas fa-phone-alt"></i> ติดต่อ</a>
+            <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
+            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}> <i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
           </Menu>
             
           

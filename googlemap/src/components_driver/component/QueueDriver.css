@@ -87,7 +87,7 @@
 }
 @media only screen and (max-height: 725px) {
     .queue-container {
-        background-color: bisque;
+        /* background-color: bisque; */
         height: 890%;
         min-height: 530px;
     }

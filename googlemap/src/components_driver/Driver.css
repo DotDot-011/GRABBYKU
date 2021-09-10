@@ -246,7 +246,11 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .notification-message{
   font-size: 20px;
 }
-
+/* icon in menu */
+.far,.fas{
+  font-family: fontawesome !important;
+  font-style: normal;
+}
 /* .notification{ */
   /* width: 50px; */
 /* } */

@@ -228,7 +228,11 @@
   .notification{
     /* width: 50px; */
   }
-
+  /* icon in menu */
+  .far,.fas{
+    font-family: fontawesome !important;
+    font-style: normal;
+  }
   #loading{
     position: relative;
     top:30%;
