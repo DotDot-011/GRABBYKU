@@ -9,7 +9,7 @@
     z-index: 1;
     max-width: 700px;
     /* height: 630px; */
-    height: 890%;
+    height: 1090%;
     min-height: 530px;
     width: 100%;
     background-color: white;
@@ -85,3 +85,10 @@
     transform: translateY(1px);
     box-shadow: 0 4px 7px #555454;
 }
+@media only screen and (max-height: 725px) {
+    .queue-container {
+        background-color: bisque;
+        height: 890%;
+        min-height: 530px;
+    }
+  }

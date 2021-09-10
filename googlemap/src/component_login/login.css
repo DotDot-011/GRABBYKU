@@ -36,7 +36,8 @@
 }
 #driver_log{
     margin-left: 12px;
-    background-color: #616362;
+    /* background-color: #616362; */
+    background-color: #2c8081;
     border-radius: 3px 15px 15px 3px;
     border: none;
     color: white;
@@ -48,7 +49,7 @@
 }
 #driver_log:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-3px) translateX(10px);
-    background-color: #4f5050;
+    background-color: #22577A;
     box-shadow: 0 8px 13px #555454;
 }
 #driver_log:active {
@@ -104,7 +105,7 @@
 }
 #driver_reg:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-3px) translateX(10px);
-    background-color: #4f5050;
+    background-color: #22577A;
     color: white;
     box-shadow: 0 8px 13px #555454;
 }

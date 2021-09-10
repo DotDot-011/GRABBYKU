@@ -83,6 +83,20 @@
 
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
 
+.popup-overlay {
+    animation:fadein .4s;
+    background: rgb(0, 0, 0,0.4);
+    /* opacity: 50%; */
+}
+@keyframes fadein {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
+}
+
 #confirmCancel {
     /* margin: 0 auto; */
     padding: 20% 0;

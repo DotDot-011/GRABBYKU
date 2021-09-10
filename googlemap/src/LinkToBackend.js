@@ -1,1 +1,1 @@
-export const Url = { LinkToBackend: "http://3913-27-55-80-246.ngrok.io/"};
+export const Url = { LinkToBackend: "http://b384-27-55-66-73.ap.ngrok.io/"};
