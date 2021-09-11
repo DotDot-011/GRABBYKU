@@ -653,12 +653,7 @@ class User extends React.Component {
             <a id="contact" className="menu-item" href="/contact"> <i class="fas fa-phone-alt"></i> ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}> <i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
-              localStorage.clear() ; 
-              window.location.reload();
-              // conn.send(JSON.stringify({
-              //   protocol: "out",
-              // }));
-            }}>ออกจากระบบ</a>
+              
           </Menu>
             
           
