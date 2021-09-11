@@ -4,7 +4,7 @@ $driver_name = $wsdata['driver_name'];
 $driver_id = $wsdata['driver_id'];
 $user_name = $wsdata['user_name'];
 $user_id = $wsdata['user_id'];
-//$cost = $wsdata['cost'];
+$cost = $wsdata['cost'];
 $driver_name_and_id = $driver_name." ".$driver_id;
 $user_name_and_id = $user_name." ".$user_id;
 
@@ -30,9 +30,28 @@ if($result_for_trigger != NULL){
  }
 }
 
-//Delete booking when done
-$sql3 = "DELETE FROM booking WHERE driver_id = '$driver_id' ";
-$conn->query($sql3);
+//look for booking_info in booking table insert history and then delete it from booking
+$sql6 = "SELECT * FROM  booking WHERE user_id = '$user_id' AND driver_id = '$driver_id' ";
+$result_for_booking_id = $conn->query($sql6);
+if($result_for_booking_id != NULL){
+ $row_for_booking_id  = $result_for_booking_id->fetch_assoc();
+ $booking_id = $row_for_booking_id['booking_id'];
+ $date_booking = $row_for_booking_id['create_date'];
+ $lng_user = $row_for_booking_id['lng_user'];
+ $lat_user = $row_for_booking_id['lat_user'];
+ $lng_des = $row_for_booking_id['lng_des'];
+ $lat_des = $row_for_booking_id['lat_des'];
+
+ //insert history
+ $sql7 = "INSERT INTO history (history_id , driver_id , user_id , lng_user , lat_user , lng_des , lat_des , price , date)";
+ $sql7 = $sql7."VALUES('$booking_id' , '$driver_id' , '$user_id' , '$lng_user' , '$lat_user' , '$lng_des' , '$lat_des' ,'$cost' ,'$date_booking') ";
+ $conn->query($sql7);
+
+ //Delete booking when done
+ $sql3 = "DELETE FROM booking WHERE driver_id = '$driver_id' ";
+ $conn->query($sql3);
+}
+
 
 
 
