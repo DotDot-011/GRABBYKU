@@ -43,7 +43,7 @@ export default function QueueDriver(props) {
         let i=1;
         let queueList = document.querySelector('#queueList');
         document.getElementById('queueList').innerHTML='';
-        console.log(Message)
+        
         for (let key in Message) {
             
             if(key != 'message_code'){
@@ -55,7 +55,6 @@ export default function QueueDriver(props) {
                 queueList.appendChild(myEl);
                 
                 if(key==0 && Number(Message[key].driver_id) === props.driverId){
-                    
                     firstQueue();
                 }
                 // if (i==1 && val.driver_id==props.driverId){
@@ -74,8 +73,10 @@ export default function QueueDriver(props) {
     
     conn.onmessage = function(e) {
         let Message = JSON.parse(e.data)
+        console.log(Message)
         clearInterval(window.timeoutId1);
         // console.log(Message.message_code);
+       
         if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
             
             window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
@@ -103,7 +104,7 @@ export default function QueueDriver(props) {
         // setTimeout(()=>{},1000)
         conn.send(JSON.stringify({
             protocol: "getqueue", // protocol
-            arg1: `${props.driverId}`, // name
+            DriverID: `${props.driverId}`, // name
         }))
         
         return ()=>{
@@ -116,7 +117,7 @@ export default function QueueDriver(props) {
         
         conn.send(JSON.stringify({
             protocol: "enqueue", // protocol
-            arg1: `${props.driverId}`, // name
+            DriverID: `${props.driverId}`,
         }))
         
         // axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{

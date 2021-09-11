@@ -67,7 +67,7 @@ export default function CommentDriver(props){
             <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
             {close=>(
                 <div className="thankyou"> <h1>ขอบคุณที่ใช้บริการค่ะ</h1>
-                    <button id="thank-button" onClick={()=>{props.handleForUpdate(null);}}> ปิด </button>
+                    <button id="thank-button" onClick={()=>{props.handleForUpdate(null);window.location.reload()}}> ปิด </button>
 
                 </div>)
                 

@@ -6,7 +6,7 @@ export default function leaveQueue(driverId,conn) {
 
         conn.send(JSON.stringify({
                 protocol: "dequeue", // protocol
-                arg1: `${driverId}`, // name
+                DriverID: `${driverId}`,
             }))
         // axios.post(Url.LinkToBackend+"backend/api/deletequeue",{
         //         driver_id: driverId

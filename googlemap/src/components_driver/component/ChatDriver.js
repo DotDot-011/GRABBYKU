@@ -9,11 +9,9 @@ export default function ChatDriver(props){
         
         console.log('------------',userId,userFname)
         conn.onmessage = function(e) {
-            
-            
+
             let Message = JSON.parse(e.data)
             if(Message.message_code =='chat'){
-                
                 addResponseMessage(Message.message)
                 console.log(Message);
             }
@@ -30,17 +28,17 @@ export default function ChatDriver(props){
         console.log(`New message incomig! ${newMessage}`);
         conn.send(JSON.stringify({
             protocol: "chat", // protocol
-            arg1: `${userFname} ${userLname}`, // name
-            arg2: newMessage,
-            arg3: `${userId}`,
-            arg4: "0"
+            ReceiverName: `${userFname} ${userLname}`, // name
+            Message: newMessage,
+            ReceiverID: `${userId}`,
+            ReceiverMode: "0" // ระบุ customer หรือ driver (ไม่ใช่ของบุคคล)
         }));
         
       }
     return(
         <Chat
              handleNewUserMessage={handleNewUserMessage}
-             profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
+             profileAvatar="https://cdn.emojidex.com/emoji/seal/Tom_and_Jerry_meme.png?1533418242"
              title={userFname+' '+userLname}
              
             //  subtitle="And my cool subtitle"
