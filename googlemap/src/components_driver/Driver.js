@@ -25,9 +25,9 @@ import Countdown from "react-countdown"
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
-conn.onopen = function(e) {
-  console.log("Connection established!");
-};  
+// conn.onopen = function(e) {
+//   console.log("Connection established!");
+// }
 
 class Driver extends React.Component {
   
@@ -68,6 +68,8 @@ class Driver extends React.Component {
   driverTimeOut=0;
   chatDriver=null;
   countdown = null;
+  driverFname = null;
+  driverLname= null;
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
     clearTimeout(this.driverTimeOut)
@@ -99,9 +101,10 @@ class Driver extends React.Component {
         user_id : this.state.userId
       })
       .then(res=>{
-        console.log(res.data);
-        console.log(res.data.message);
+        console.log(res);
+        // console.log(res.data.message);
         if (!res.data.message){
+         
           clearInterval(this.cancelIntervalId);
           leaveQueue(this.state.driverId,conn);
           NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
@@ -168,10 +171,13 @@ class Driver extends React.Component {
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
     }
-    
-  
   }
-  
+
+  componentWillMount(){
+    conn.onopen = function(e) {
+      console.log("Connection established!");
+    }
+  }
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
     // axios.get( Url.LinkToBackend +"backend/api/bomb")
@@ -198,11 +204,17 @@ class Driver extends React.Component {
         console.log(res.data[0].fname, res.data[0].lname)
         conn.send(JSON.stringify({
           protocol: "in", // protocol
-          arg1: `${res.data[0].fname} ${res.data[0].lname}`, // name
-          arg2: "1",
-          arg3: `${res.data[0].driver_id}`,
-      }));  
-        
+          Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
+          Mode: "1",
+          ID: `${res.data[0].driver_id}`,
+        }));
+        this.driverFname = res.data[0].fname;
+        this.driverLname = res.data[0].lname;
+      })
+      .then(()=>{
+        this.setState({
+          loadingState:1,
+        })
       })
       .catch(err=>{
         NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -271,7 +283,8 @@ class Driver extends React.Component {
           
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
-                              <Receipt/>
+                              <Receipt driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
+                              userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={conn}/>
                             </div>
           this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname}/>
           this.countdown = null;

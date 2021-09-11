@@ -33,7 +33,7 @@ const labels = {
     },
   });
 export default function DetailDriver(props){
-    const { cancelQueue } = props;
+    const { cancelQueue,conn } = props;
     const [cost,setCost] = useState(0);
     const [estimatetime,setEstimatetime] = useState(0);
     //console.log(props.driverId);

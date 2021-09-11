@@ -22,12 +22,16 @@ import distance from 'google_directions';
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
+
+
 let conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
-conn.onopen = function(e) {
-  console.log("Connection established!");
-}
+// conn.onopen = function(e) {
+//   console.log("Connection established!");
+// }
+
 
 class User extends React.Component {
+    
     
     state = {
       address: '',
@@ -47,6 +51,10 @@ class User extends React.Component {
       markerDestinationPosition:{
           lat: 13.851130590990257,
           lng: 100.56743435031639,
+      },
+      markerPositionDriver: {
+        lat: 13.84267643846875,
+        lng: 100.5712702220572,
       },
       showPlaceHolder:'เลือกตำแหน่งของคุณ',
       showPlaceHolderDestination:'เลือกจุดหมาย',
@@ -165,6 +173,7 @@ class User extends React.Component {
             }
         }
     };   
+    
     
     //--------------------------function ถูกเรียกตอนวางMarkerสีเขียวปักลงในแผนที่  ------------------
     onMarkerDragEnd = (event)=>{
@@ -359,7 +368,7 @@ class User extends React.Component {
             axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
             {id: this.userId})
             .then(res=>{
-                                
+              console.log(res)        
               if(!!res.data.driver_id){                    
                 console.log(res);
                 console.log(res.data);   
@@ -368,8 +377,6 @@ class User extends React.Component {
                   waitingQueueAppear:null,
                   detailDriverAppear:1,
                 })
-              }else{
-                
               }
             })
           },1500)
@@ -410,12 +417,23 @@ class User extends React.Component {
       })
     }
 
+    componentWillMount(){
+      conn.onopen = function(e) {
+        console.log("Connection established!");
+      }
+      conn.onmessage = function(e) {
+        let Message = JSON.parse(e.data)
+        console.log(Message)
+        console.log('----------2');
+        // console.log(Message.message_code);
+      };
+    };
     
     
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
-
-      axios.get( Url.LinkToBackend +"backend/api/bomb")
+      
+      // axios.get( Url.LinkToBackend +"backend/api/bomb")
       
       //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
@@ -424,19 +442,22 @@ class User extends React.Component {
           username: localStorage.getItem("username")
         })
         .then(res=>{
+          
           clearInterval(this.fetchUserIdInterval)
           this.userId=res.data[0].user_id;
+          console.log(res.data[0].fname, res.data[0].lname)
+          
+          conn.send(JSON.stringify({
+            protocol: "in",
+            Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
+            Mode: "0",
+            ID: `${res.data[0].user_id}`,
+          }));
+        })
+        .then(()=>{
           this.setState({
             loadingState:1,
           })
-          console.log(res.data[0].fname, res.data[0].lname)
-          conn.send(JSON.stringify({
-            protocol: "in",
-            arg1: `${res.data[0].fname} ${res.data[0].lname}`, // name
-            arg2: "0",
-            arg3: `${res.data[0].user_id}`,
-          }));
-        
         })
         .catch(err=>{
           NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -468,9 +489,8 @@ class User extends React.Component {
         clearInterval(this.timeoutId);
       }
       if(this.state.detailDriverAppear===1){
-        this.n=this.n+'1'
-        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
-        this.chatUser= <ChatUser  conn={conn} driverId={this.driverId} />
+        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={conn}/>
+        this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={conn} driverId={this.driverId} />
         
       }
       else if(this.state.detailDriverAppear===2){
@@ -675,11 +695,7 @@ class User extends React.Component {
         <NotificationContainer />
         
         </div>
-          <button onClick={()=>{
-            this.setState({detailDriverAppear:2})
-          }} onDoubleClick={()=>{
-            this.setState({detailDriverAppear:null})
-          }}>sadasd</button>
+          
         </div>
         
       );
