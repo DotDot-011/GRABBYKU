@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Popup from 'reactjs-popup';
+import CloseButton from 'react-bootstrap/CloseButton'
 const labels = {
     // 0.5: 'Useless',
     1: 'ควรปรับปรุง',
@@ -19,13 +20,13 @@ const labels = {
     5: 'สุดยอด',
   };
   
-  const useStyles = makeStyles({
-    root: {
-      width: 200,
-      display: 'flex',
-      alignItems: 'center',
+const useStyles = makeStyles({
+root: {
+    width: 200,
+    display: 'flex',
+    alignItems: 'center',
     },
-  });
+});
 
 
   
@@ -38,7 +39,8 @@ export default function CommentDriver(props){
     const commentRef = useRef("");
     return(
         <div className="comment-driver-container">
-            <div>
+            <CloseButton onClick={()=>{props.handleForUpdate(null);}} />
+            <div>   
                 <Box component="fieldset" mb={3} borderColor="transparent">
                     <Typography id="commentH" component="legend">ให้คะแนน</Typography>
                     <Rating
@@ -54,15 +56,14 @@ export default function CommentDriver(props){
                     />
                     {value !== null && <Box id="rate-name" ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
                 </Box>
-                <textarea name="comments" id="comments" ref={commentRef} value={commentRef.current.value} placeholder="ความคิดเห็นเพิ่มเติม" />
+                <textarea name="comments" id="comments" ref={commentRef}  placeholder="ความคิดเห็นเพิ่มเติม" />
                 <form>
                 {/* <TextField label="ความคิดเห็นเพิ่มเติม"  variant="filled" fullWidth /> */}
 
                 </form>
                 
-                
-                
             </div>
+            
             <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
             {close=>(
                 <div className="thankyou"> <h1>ขอบคุณที่ใช้บริการค่ะ</h1>

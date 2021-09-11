@@ -12,15 +12,22 @@ import axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
 import UserInfo from "./component/userInfo";
-import { Url } from '../LinkToBackend';
+import { socketUrl, Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
 import ChatDriver from "./component/ChatDriver";
 import Receipt from "./component/Receipt";
-
+import Popup from 'reactjs-popup';
+import Penalty from "./component/Penalty";
+import mapStyle from "../mapStyle"
+import Countdown from "react-countdown"
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
+const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
+conn.onopen = function(e) {
+  console.log("Connection established!");
+};  
 
 class Driver extends React.Component {
   
@@ -51,16 +58,19 @@ class Driver extends React.Component {
     userFname:null,
     userLname:null,
     loadingState:0,
+    
   }
   queueDriver = null;
   buttonAcceptCancel = null;
   buttonDone = null;
   userInfo = null;
   fetchDriverIdInterval=null;
+  driverTimeOut=0;
   chatDriver=null;
-  
+  countdown = null;
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
+    clearTimeout(this.driverTimeOut)
     console.log(startLat,startLng)
     console.log(userFName,userLName)
     this.setState({
@@ -93,13 +103,14 @@ class Driver extends React.Component {
         console.log(res.data.message);
         if (!res.data.message){
           clearInterval(this.cancelIntervalId);
-          leaveQueue(this.state.driverId);
+          leaveQueue(this.state.driverId,conn);
           NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
           
           this.setState({
             queueDriverAppear:1,
             buttonAcceptCancelAppear:1,
           })
+          window.location.reload()
         }
       })
     }, 1500);
@@ -119,7 +130,7 @@ class Driver extends React.Component {
     .then(res=>{
       console.log(res.data.message);
       this.setState({
-        queueDriverAppear:1,
+        queueDriverAppear:2,
       });
     })
     .catch(err=>{
@@ -129,8 +140,8 @@ class Driver extends React.Component {
 
   // ------------------ driver กด ยอมรับงาน ------------------
   driverAccept = () =>{
-    
-    
+    console.log(typeof(this.driverTimeOut));
+    clearTimeout(this.driverTimeOut);
     axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
       driver_id: parseInt(this.state.driverId),
       user_id: parseInt(this.state.userId)
@@ -140,33 +151,57 @@ class Driver extends React.Component {
       this.setState({
         buttonAcceptCancelAppear: null,
       });
-      leaveQueue(this.state.driverId);
+      leaveQueue(this.state.driverId,conn);
     })
     .catch(err=>{
       NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-  })
-
-    
+    })
   }
-
   
+  // ------------------ นับถอยหลังกดรับงาน ------------------
+  PenaltyTimeOut=()=>{
+    this.driverTimeOut=setTimeout(()=>{
+      this.setState({queueDriverAppear:2})
+      // NotificationManager.error('ขออภัยในความไม่สะดวก','kokkak',1000);
+      leaveQueue(this.state.driverId,conn);
+    },20000)
+    if(!!!this.state.buttonAcceptCancelAppear){
+      clearTimeout(this.driverTimeOut);
+    }
+    
+  
+  }
   
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
-    // addResponseMessage("Welcome to this awesome chat!");
-    axios.get( Url.LinkToBackend +"backend/api/bomb")
+    // axios.get( Url.LinkToBackend +"backend/api/bomb")
+    // window.onbeforeunload =()=>{
+    //   conn.send(JSON.stringify({
+    //     protocol: "out",
+    //   }))
+    // }
+    //----------------------------------------------------
+    // axios.get( Url.LinkToBackend +"backend/api/bomb")
     this.fetchDriverIdInterval =setInterval(()=>{
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
         username: localStorage.getItem("username")
         // username : this.props.username
       })
       .then((res)=>{
+        //---------------------------------------------
         clearInterval(this.fetchDriverIdInterval);
         console.log(res.data);
         this.setState({
           driverId: parseInt(res.data[0].driver_id),
           loadingState:1,
         })
+        console.log(res.data[0].fname, res.data[0].lname)
+        conn.send(JSON.stringify({
+          protocol: "in", // protocol
+          arg1: `${res.data[0].fname} ${res.data[0].lname}`, // name
+          arg2: "1",
+          arg3: `${res.data[0].driver_id}`,
+      }));  
         
       })
       .catch(err=>{
@@ -177,35 +212,69 @@ class Driver extends React.Component {
       })
     },1000)
 
+
   }
+  
 
   render() {
-        
-        if(!!this.state.queueDriverAppear){
+           
+
+        if(this.state.queueDriverAppear === 1){
+          clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={conn}/>
           this.userInfo = null;
         }
-        else{
+        else if(this.state.queueDriverAppear === 2){
+          clearInterval(this.cancelIntervalId);
+          this.userInfo = null;
+          this.queueDriver = <Penalty/>
+          this.countdown = null;
+          setTimeout(() => {
+            this.setState({
+              queueDriverAppear:1
+            })
+          }, 10500);
+        }
+        else if(this.state.queueDriverAppear===0)
+        {
+          
           this.queueDriver= null;
+          clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId)
           this.cancelCase();
+          this.PenaltyTimeOut();
           this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
+          this.countdown= <Countdown date={Date.now() + 20000} renderer={({seconds, completed }) => {
+            
+              return (
+                <span style={{fontSize:'40px'}}>
+                  <b>กรุณาตอบรับภายใน</b> <br/>
+                  {seconds} วินาที
+                </span>
+              );
+            
+          }}> </Countdown>;
+          
         }
         if(!!this.state.buttonAcceptCancelAppear){
+
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
                                       <button className="accept-button" onClick={this.driverAccept}> ยอมรับ </button>
                                       <button className="cancel-button" onClick={this.driverCancel}> ปฏิเสธ </button>
                                     </div>
           this.buttonDone=null;
           this.chatDriver=null;
+          
         }
         else{
+          
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
                               <Receipt/>
                             </div>
-          this.chatDriver=<ChatDriver/>
+          this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname}/>
+          this.countdown = null;
         }
         
         //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
@@ -232,7 +301,9 @@ class Driver extends React.Component {
               },
               strictBounds: false,
             },
+            styles: mapStyle,
           }}
+          
           >
         {/* ----------componentของmarkerตำแหน่งที่ต้องไปรับ(สีเขียว) ----------*/}
         <Marker
@@ -274,6 +345,11 @@ class Driver extends React.Component {
             <a id="contact" className="menu-item" href="/contact"> <i class="fas fa-phone-alt"></i> ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}> <i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
+              localStorage.clear() ; window.location.reload();
+              // conn.send(JSON.stringify({
+              //   protocol: "out",
+              // }));
+              }}>ออกจากระบบ</a>
         </Menu>  
         
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
@@ -301,9 +377,11 @@ class Driver extends React.Component {
               /> 
           
         </div>
+        {this.alertPopup}
         {this.buttonAcceptCancel}
         {this.buttonDone}
         {this.chatDriver}
+        {this.countdown}
         <NotificationContainer />
         
       </section>

@@ -51,6 +51,9 @@ function RegisUser() {
             })
             .then(res=>{
                 console.log(res.data);
+                if(res.data === "New record created successfully"){
+                    setCount(1)
+                }
             })
             .catch(err=>{
                 NotificationManager.error(err.message,'Alert',3000);
