@@ -9,7 +9,8 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 620px;
+    height: 70%;
+    min-height: 530px;
     max-width: 560px;
     width: 90%;
     background-color: #62d2A2;
@@ -78,8 +79,68 @@
     border-radius: 20px;
     font-size: 22px;
 }
-.confirmCancel {
-    height: 250px;
-    width: 250px;
-    background-color:rgb(161, 161, 161);
+
+/*ส่วนของ pop-up ยืนยันการยกเลิก*/
+
+#confirmCancel {
+    /* margin: 0 auto; */
+    padding: 20% 0;
+    position:relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+    /* max-width: 560px; */
+    /* width: 90%; */
+    width: 320px;
+    height: 270px;
+    background-color: white;
+    border-radius: 20px;
+    border-style: inset;
+    border-width: 4px;
+    border-color:#137e63;
+}
+#confirmCancel h1{
+    font-size: 32px;
+    font-weight: bolder;
+    margin-bottom: 40px;
+}
+#don-cancel{
+    margin-right: 12px;
+    color: #ffffff;
+    background-color: #1a9274;
+    border-radius: 20px;
+    border: none;
+    width: 100px;
+    height: 45px;
+    font-size: 26px;
+    transition: 0.3s;
+}
+#don-cancel:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #10725a;
+    box-shadow: 0 8px 11px #115745;
+  }
+#don-cancel:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #115745;
+  }
+  #not-cancel{
+    margin-left: 12px;
+    color: #ffffff;
+    background-color: #4e4e4e;
+    border: none;
+    border-radius: 18px;
+    width: 85px;
+    height: 45px;
+    font-size: 26px;
+    transition: 0.3s;
+}
+#not-cancel:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #2b2b2b;
+    box-shadow: 0 8px 11px #555454;
+}
+#not-cancel:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #555454;
 }

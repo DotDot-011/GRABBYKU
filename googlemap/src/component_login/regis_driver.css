@@ -1,40 +1,50 @@
 
 #main_driverreg{
     margin: 0 auto;
-    padding: 5px;
+    padding: 2px;
     position: relative;
     display: block;
     align-items: center;
     text-align: center;
+    height: 100%;
 }
 #main_driverreg h1 {
-    margin-top: 2px;
-    margin-bottom: 5px;
-    font-size: 48px;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-size: 42px;
+}
+#driverreg{
+    height: 100%;
+    align-items: center;
+    text-align: center;
+    position: static;
+    height: 80%;
+    /* background-color: rgb(26, 157, 180); */
 }
 #boxinput-driver{
     margin: 0 auto;
-    padding: 0 auto;
     /* background-color: lavender; */
-    height: 37px;
-    width: 55%;
-    min-width: 365px;
+    height: auto;
+    width: 90%;
+    max-width: 600px;
+    height: 7.7%;
 }
 #driverreg label{
-    margin-left: 6px;
+    margin: 0 auto;
     float: left;
-    font-size: 22px;
+    position: static;
+    /* font-size: 23px; */
+    font-size: 20px;
+    /* font-size: 1.6vw; */
 }
 #driverreg input{
+    position: static;
     float: right;
-    transform: translateX(-14%);
-    /* margin-left: 15px; */
-    margin-right: 0px;
     font-size: 18px;
     width: 40%;
-    /* min-width: 200px */
     max-width: 300px;
-    height: 35px;
+    height: 80%;
+    max-height: 50px;
     border-style: solid;
     border-color: #12634f;
     border-radius: 5px;
@@ -42,16 +52,18 @@
 }
 #sum_driverreg{
     text-align: center;
-    margin-top: 15px;
+    margin-top: 9px;
     margin-right: 13px;
     background-color: #29967b;
     border-radius: 15px 3px 3px 15px;
     border: none;
     color: white;
-    font-size: 27px;
+    font-size: 26px;
     position: relative;
-    height: 53px;
-    width: 110px;
+    height: 7%;
+    min-height: 30px;
+    max-height: 50px;
+    width: 100px;
     transition: 0.3s;
 }
 #sum_driverreg:hover {
@@ -66,16 +78,18 @@
 
 #back_driverreg{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 9px;
     margin-left: 13px;
     background-color: #616362;
     border-radius: 3px 15px 15px 3px;
     border: none;
     color: white;
-    font-size: 27px;
+    font-size: 26px;
     position: relative;
-    height: 53px;
-    width: 110px;
+    height: 7%;
+    min-height: 30px;
+    max-height: 50px;
+    width: 100px;
     transition: 0.3s;
 }
 #back_driverreg:hover {

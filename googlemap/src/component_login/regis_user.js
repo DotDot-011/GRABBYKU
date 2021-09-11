@@ -74,7 +74,7 @@ function RegisUser() {
                     </div>
                     <div id="boxinput-user">
                         <label>ชื่อจริง</label>
-                        <input type="text" ref={fnameRef} value={fnameRef.current.value} placeholder="กรอกชื่อจริง" name="fname"/>
+                        <input type="text" ref={fnameRef} value={fnameRef.current.value} placeholder="กรอกชื่อจริง" name="fname"/>              
                     </div>
                     <div id="boxinput-user">
                         <label>นามสกุล</label>
@@ -110,7 +110,7 @@ function RegisUser() {
                     </div>
                 </form>
                 <button type="submit" id="sum_userreg" onClick={sendData}>ลงทะเบียน</button>
-                <button type="submit" id="back" onClick={() => setCount(1)}> กลับ </button>
+                <button type="submit" id="back" onClick={() => setCount(1)}>กลับ</button>
                 <NotificationContainer />
             </div>
         );
