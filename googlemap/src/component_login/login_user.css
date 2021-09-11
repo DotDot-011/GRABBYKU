@@ -11,13 +11,14 @@
     display:block;
 } */
 #main_userlog h1 {
-    margin-top: 100px;
-    margin-bottom: 0;
-    padding: 5px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    /* padding: 5px; */
     font-size: 55px;
 }
 #main_userlog h2 {
     font-size: 40px;
+    margin-bottom: 15px;
 }
 #userlog{
     margin: 0 auto;
@@ -48,7 +49,7 @@
 }
 #sum_user{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 30px;
     margin-right: 13px;
     background-color: #29967b;
     border-radius: 15px 3px 3px 15px;
@@ -72,7 +73,7 @@
 
 #back_user{
     text-align: center;
-    margin-top: 26px;
+    margin-top: 30px;
     margin-left: 13px;
     background-color: #616362;
     border-radius: 3px 15px 15px 3px;
