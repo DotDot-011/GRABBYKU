@@ -66,4 +66,7 @@ $routes["driver-accepted"]["ws"] = "./src/DriverAccepted.php";
 $routes["work-finished"]["ws"] = "./src/WorkFinished.php";
 $routes["getqueue"]["ws"] = "./src/Queue.php";
 
+
+#user report comment driver
+$routes["/backend/api/reporting"]["POST"] = "./homeUser/reporting.php";
 ?>
