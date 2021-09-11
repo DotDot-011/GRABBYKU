@@ -260,8 +260,12 @@ class Driver extends React.Component {
           this.countdown= <Countdown date={Date.now() + 20000} renderer={({seconds, completed }) => {
             
               return (
-                <span style={{fontSize:'40px'}}>
-                  <b>กรุณาตอบรับภายใน</b> <br/>
+                // <span id="accept-time" style={{fontSize:'40px'}}>
+                //   <b>กรุณาตอบรับภายใน</b> <br/>
+                //   {seconds} วินาที
+                // </span>
+                <span id="accept-time">
+                  <b>กรุณาตอบรับภายใน</b> &nbsp;
                   {seconds} วินาที
                 </span>
               );

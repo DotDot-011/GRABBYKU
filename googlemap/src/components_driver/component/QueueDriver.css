@@ -22,6 +22,7 @@
 .queue-container h4 {
     padding-top: 10px;
     font-size: 30px;
+    font-weight: bolder;
 }
 #queueList{
     margin: 20px auto;
