@@ -8,13 +8,19 @@ import { Url } from '../LinkToBackend';
 export default function ChatUser(props){
     const [first_name, setFirst_name] = useState("นายธนาคาร");
     const [last_name, setLast_name] = useState("หลักแหลม");
+    const [count,setCount] = useState(0);
     const { conn ,driverId} = props;
+    
     useEffect(()=>{
         console.log('--------------',driverId)
         conn.onmessage = function(e) {
+            
             let Message = JSON.parse(e.data)
-            addResponseMessage(Message.message)
-            console.log(Message);
+            if(Message.message_code =='chat'){
+                
+                addResponseMessage(Message.message)
+                console.log(Message);
+            }
         };
         return ()=>{
         }
@@ -54,6 +60,7 @@ export default function ChatUser(props){
                 profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
                 title={first_name+' '+last_name}
                 subtitle="And my cool subtitle"
+               
             />
         </div>
     );

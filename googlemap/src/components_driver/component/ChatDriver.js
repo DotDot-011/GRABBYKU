@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react';
 import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 export default function ChatDriver(props){
     const { conn ,userId ,userFname , userLname} = props;
-    
+    const [count,setCount] = useState(0);
     
     
     useEffect(()=>{
         
         console.log('------------',userId,userFname)
         conn.onmessage = function(e) {
-            ;
+            
+            
             let Message = JSON.parse(e.data)
             if(Message.message_code =='chat'){
+                
                 addResponseMessage(Message.message)
                 console.log(Message);
             }
@@ -40,6 +42,7 @@ export default function ChatDriver(props){
              handleNewUserMessage={handleNewUserMessage}
              profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
              title={userFname+' '+userLname}
+             
             //  subtitle="And my cool subtitle"
              
         />
