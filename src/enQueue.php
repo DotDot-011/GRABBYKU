@@ -1,6 +1,6 @@
 <?php
 
-$driver_id = $wsdata['arg1'];
+$driver_id = $wsdata['DriverID'];
 
 $sql = "SELECT fname, lname FROM driver WHERE driver_id = '$driver_id'";
 $result = $conn->query($sql);

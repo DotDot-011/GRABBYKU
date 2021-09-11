@@ -1,6 +1,6 @@
 <?php
 
-$driver_id = $wsdata['arg1'];
+$driver_id = $wsdata['DriverID'];
 
 $sql = "SELECT * FROM queue";
 $result = $conn->query($sql);

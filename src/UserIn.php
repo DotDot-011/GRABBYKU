@@ -1,14 +1,9 @@
 <?php
 
-$name = $wsdata['arg1'];
-$is_driver = $wsdata['arg2'];
-
-if ($is_driver == 1) {
-    $id = " " . $wsdata['arg3'];
-} else {
-    $id = $wsdata['arg3'];
-}
-$name_and_id = $name . $id;
+$name = $wsdata['Name'];
+$is_driver = $wsdata['Mode'];
+$id = $wsdata['ID'];
+$name_and_id = $name . " " . $id;
 
 $sql = "SELECT * FROM websocket WHERE name LIKE '$name_and_id'";
 $result = $conn->query($sql);

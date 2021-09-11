@@ -24,12 +24,12 @@ class WebSocket implements MessageComponentInterface
     {
         // front send json {protocol, arg1, arg2, arg3, arg4}
         # test แล้ว
-        // protocol:in -> arg1:sender's name, arg2:is_driver? 1 : 0, arg3:sender's id
+        // protocol:in -> Name:sender's name, Mode:is_driver? 1 : 0, ID:sender's id
         // protocol:out -> nothing required
-        // protocol:chat -> arg1:receiver's name, arg2:string, arg3:receiver's id, arg:is_driver? 1 : 0
-        // protocol:enqueue -> arg1:driver's id
-        // protocol:dequeue -> arg1:driver's id
-        // protocol:getqueue -> arg1:driver's id
+        // protocol:chat -> ReceiverName:receiver's name, Message:string, ReceiverID:receiver's id, Mode:is_driver? 1 : 0
+        // protocol:enqueue -> DriverID:driver's id
+        // protocol:dequeue -> DriverID:driver's id
+        // protocol:getqueue -> DriverID:driver's id
         
         # ยังไม่ได้ test
         // protocol:driver-accepted -> arg1:driver's id, arg2:user's name, arg3:user's id

@@ -1,16 +1,12 @@
 <?php
 
-$name = $wsdata['arg1'];
-$message = $wsdata['arg2'];
-$id = $wsdata['arg3'];
-$is_driver = $wsdata['arg4'];
-if ($is_driver == 1) {
-    $name_and_id = $name . " " . $id;
-} else {
-    $name_and_id = $name . $id;
-}
+$name = $wsdata['ReceiverName'];
+$message = $wsdata['Message'];
+$id = $wsdata['ReceiverID'];
+$is_driver = $wsdata['ReceiverMode'];
+$name_and_id = $name . " " . $id;
 
-$sql = "SELECT connection_id FROM websocket WHERE name LIKE '$name_and_id'";
+$sql = "SELECT connection_id FROM websocket WHERE name LIKE '$name_and_id' and is_driver = '$is_driver'";
 echo "send message to " . $name_and_id . "\n";
 $result = $conn->query($sql);
 
