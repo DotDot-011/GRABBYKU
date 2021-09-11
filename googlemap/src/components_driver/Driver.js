@@ -12,7 +12,7 @@ import axios from 'axios'
 import QueueDriver from "./component/QueueDriver";
 import leaveQueue from "./component/LeaveQueue";
 import UserInfo from "./component/userInfo";
-import { Url } from '../LinkToBackend';
+import { socketUrl, Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
@@ -21,9 +21,10 @@ import Receipt from "./component/Receipt";
 import Popup from 'reactjs-popup';
 import Penalty from "./component/Penalty";
 import mapStyle from "../mapStyle"
+import Countdown from "react-countdown"
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
-const conn = new WebSocket('ws://6d96-2001-fb1-54-fe99-6c26-4520-3563-5341.ap.ngrok.io')
+const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
 conn.onopen = function(e) {
   console.log("Connection established!");
 };  
@@ -66,6 +67,7 @@ class Driver extends React.Component {
   fetchDriverIdInterval=null;
   driverTimeOut=0;
   chatDriver=null;
+  countdown = null;
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
     clearTimeout(this.driverTimeOut)
@@ -101,7 +103,7 @@ class Driver extends React.Component {
         console.log(res.data.message);
         if (!res.data.message){
           clearInterval(this.cancelIntervalId);
-          leaveQueue(this.state.driverId);
+          leaveQueue(this.state.driverId,conn);
           NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
           
           this.setState({
@@ -149,7 +151,7 @@ class Driver extends React.Component {
       this.setState({
         buttonAcceptCancelAppear: null,
       });
-      leaveQueue(this.state.driverId);
+      leaveQueue(this.state.driverId,conn);
     })
     .catch(err=>{
       NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -161,8 +163,8 @@ class Driver extends React.Component {
     this.driverTimeOut=setTimeout(()=>{
       this.setState({queueDriverAppear:2})
       // NotificationManager.error('ขออภัยในความไม่สะดวก','kokkak',1000);
-      leaveQueue(this.state.driverId);
-    },5000)
+      leaveQueue(this.state.driverId,conn);
+    },20000)
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
     }
@@ -172,12 +174,12 @@ class Driver extends React.Component {
   
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
-    axios.get( Url.LinkToBackend +"backend/api/bomb")
-    window.onbeforeunload =()=>{
-      conn.send(JSON.stringify({
-        protocol: "out",
-      }))
-    }
+    // axios.get( Url.LinkToBackend +"backend/api/bomb")
+    // window.onbeforeunload =()=>{
+    //   conn.send(JSON.stringify({
+    //     protocol: "out",
+    //   }))
+    // }
     //----------------------------------------------------
     // axios.get( Url.LinkToBackend +"backend/api/bomb")
     this.fetchDriverIdInterval =setInterval(()=>{
@@ -220,13 +222,14 @@ class Driver extends React.Component {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={conn}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
           clearInterval(this.cancelIntervalId);
           this.userInfo = null;
           this.queueDriver = <Penalty/>
+          this.countdown = null;
           setTimeout(() => {
             this.setState({
               queueDriverAppear:1
@@ -242,7 +245,16 @@ class Driver extends React.Component {
           this.cancelCase();
           this.PenaltyTimeOut();
           this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
-          
+          this.countdown= <Countdown date={Date.now() + 20000} renderer={({seconds, completed }) => {
+            
+              return (
+                <span style={{fontSize:'40px'}}>
+                  <b>กรุณาตอบรับภายใน</b> <br/>
+                  {seconds} วินาที
+                </span>
+              );
+            
+          }}> </Countdown>;
           
         }
         if(!!this.state.buttonAcceptCancelAppear){
@@ -253,6 +265,7 @@ class Driver extends React.Component {
                                     </div>
           this.buttonDone=null;
           this.chatDriver=null;
+          
         }
         else{
           
@@ -261,6 +274,7 @@ class Driver extends React.Component {
                               <Receipt/>
                             </div>
           this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname}/>
+          this.countdown = null;
         }
         
         //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
@@ -332,9 +346,9 @@ class Driver extends React.Component {
             <a onClick={ this.showSettings } className="menu-item--small" href="">ตั้งค่า</a>
             <a id="contact" className="menu-item" onClick={()=>{ 
               localStorage.clear() ; window.location.reload();
-              conn.send(JSON.stringify({
-                protocol: "out",
-              }));
+              // conn.send(JSON.stringify({
+              //   protocol: "out",
+              // }));
               }}>ออกจากระบบ</a>
         </Menu>  
         
@@ -367,6 +381,7 @@ class Driver extends React.Component {
         {this.buttonAcceptCancel}
         {this.buttonDone}
         {this.chatDriver}
+        {this.countdown}
         <NotificationContainer />
         
       </section>

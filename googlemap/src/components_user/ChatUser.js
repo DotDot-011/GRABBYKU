@@ -42,7 +42,8 @@ export default function ChatUser(props){
             protocol: "chat", // protocol
             arg1: `${first_name} ${last_name}`, // name
             arg2: newMessage,
-            arg3: `${driverId}`
+            arg3: `${driverId}`,
+            arg4: `1`
         }));
     }
     return(

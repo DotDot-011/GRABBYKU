@@ -19,6 +19,7 @@
     "react-bootstrap": "^2.0.0-beta.6",
     "react-burger-menu": "^3.0.6",
     "react-chat-popup": "^1.1.2",
+    "react-countdown": "^2.3.2",
     "react-countdown-circle-timer": "^2.5.4",
     "react-dom": "^17.0.2",
     "react-geocode": "^0.2.3",

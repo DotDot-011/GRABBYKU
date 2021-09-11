@@ -13,7 +13,7 @@ import isPointInPolygon from "geolib/es/isPointInPolygon"
 import Wait from "./Wait";
 import DetailDriver from "./DetailDriver";
 import axios from "axios";
-import { Url } from '../LinkToBackend';
+import { socketUrl, Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
@@ -22,7 +22,7 @@ import distance from 'google_directions';
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
-let conn = new WebSocket('ws://6d96-2001-fb1-54-fe99-6c26-4520-3563-5341.ap.ngrok.io');
+let conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
 conn.onopen = function(e) {
   console.log("Connection established!");
 }
@@ -401,8 +401,8 @@ class User extends React.Component {
           waitingQueueAppear:null,
           detailDriverAppear:null,
           
-    })
-    window.location.reload()
+      })
+      window.location.reload()
       })
       .catch(err=>{
         NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -416,13 +416,10 @@ class User extends React.Component {
     componentDidMount(){
 
       axios.get( Url.LinkToBackend +"backend/api/bomb")
-      window.onbeforeunload =()=>{
-        conn.send(JSON.stringify({
-          protocol: "out",
-        }))
-      }
+      
       //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
+        
         axios.post(Url.LinkToBackend+"backend/api/line1",{
           username: localStorage.getItem("username")
         })
@@ -459,12 +456,7 @@ class User extends React.Component {
       });
     
     }
-    componentWillUnmount(){
-      conn.send(JSON.stringify({
-        protocol: "out",
-
-      }));
-    }
+    
     
     render(){
       
@@ -663,9 +655,9 @@ class User extends React.Component {
             <a id="contact" className="menu-item" onClick={()=>{ 
               localStorage.clear() ; 
               window.location.reload();
-              conn.send(JSON.stringify({
-                protocol: "out",
-              }));
+              // conn.send(JSON.stringify({
+              //   protocol: "out",
+              // }));
             }}>ออกจากระบบ</a>
           </Menu>
             

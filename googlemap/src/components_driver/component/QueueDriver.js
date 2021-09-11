@@ -7,7 +7,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 
 export default function QueueDriver(props) {
-    
+    const {conn} = props;
     // ------------------ฟังชันเมื่อ driver ถึง queue แรก------------------------
     function firstQueue() {
         
@@ -16,7 +16,7 @@ export default function QueueDriver(props) {
             driver_id : props.driverId
         })
         .then( res=>{
-            console.log(res.data);
+            // console.log(res.data);
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);
@@ -36,47 +36,76 @@ export default function QueueDriver(props) {
     }
 
     //--------------------------function แสดง queue ของ driver ทั้งหมด --------------------------
-    function showQueue(data){
+    function showQueue(Message){
         if( !!! document.getElementById('queueList')){
             return;
         }
         let i=1;
         let queueList = document.querySelector('#queueList');
         document.getElementById('queueList').innerHTML='';
-        if(typeof(data)=== 'object' ){
-            data.forEach(val => {
+        console.log(Message)
+        for (let key in Message) {
+            
+            if(key != 'message_code'){
+                // console.log(key)
+                // console.log(Message[key])
+                // console.log(props.driverId)
                 let myEl = document.createElement('span');
-                myEl.innerText = `${i} : ${val.driver_name}  \n`;
+                myEl.innerText = `${i} : ${Message[key].driver_name}  \n`;
                 queueList.appendChild(myEl);
-                if (i==1 && val.driver_id==props.driverId){
- 
+                
+                if(key==0 && Number(Message[key].driver_id) === props.driverId){
+                    
                     firstQueue();
                 }
-                else{
+                // if (i==1 && val.driver_id==props.driverId){
+ 
+                //     firstQueue();
+                // }
+                // else{
                     
-                }
+                // }
                 i++;
-            })
+            }
         }
-        else{
-            document.getElementById('queueList').innerHTML='';
-        }
+        
         
     }
     
-    useEffect(()=>{
+    conn.onmessage = function(e) {
+        let Message = JSON.parse(e.data)
         clearInterval(window.timeoutId1);
-        window.timeoutId1 = setInterval(()=>{
-            // console.log('check')
-            axios.get(Url.LinkToBackend+"backend/api/getqueue",{
-                driver_id: props.driverId
-              })
-              .then(res=>{
-                  console.log(res.data)
-                  showQueue(res.data);
-              });
+        // console.log(Message.message_code);
+        if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
+            
+            window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
+            
+            // console.log(sizeof(Message));
+        }
 
-            },1500)
+
+    };
+    
+
+    useEffect(()=>{
+        // clearInterval(window.timeoutId1);
+        // window.timeoutId1 = setInterval(()=>{
+        //     // console.log('check')
+        //     axios.get(Url.LinkToBackend+"backend/api/getqueue",{
+        //         driver_id: props.driverId
+        //       })
+        //       .then(res=>{
+        //           console.log(res.data)
+        //           showQueue(res.data);
+        //       });
+
+        //     },1500)
+        // setTimeout(()=>{},1000)
+        conn.send(JSON.stringify({
+            protocol: "getqueue", // protocol
+            arg1: `${props.driverId}`, // name
+        }))
+        
         return ()=>{
             clearInterval(window.timeoutId1);
         }
@@ -84,31 +113,21 @@ export default function QueueDriver(props) {
 
     // ------------------เมื่อdriverกดปุ่มเข้าคิว----------------------
     function enQueue() {
-        axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{
-            driver_id : props.driverId})
-        .then(res=>{
-            // console.log(res.data);
-        })
-        .catch(err=>{
-            NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        })
         
-
-
-        // window.timeoutId2=setInterval(()=>{
-        //     fetch("http://localhost:1236/location")
-        //         .then(response=> response.json())
-        //         .then(data => {
-                    
-        //             if(data[0].status ==='true'){
-        //                 clearInterval(window.timeoutId1);
-        //                 clearInterval(window.timeoutId2);
-        //                 props.handleForUpdate(data[0].latitudeStart, data[0].longtitudeStart , data[0].latitudeDestination ,data[0].longtitudeDestination ,null )
-        //         }
-        //     })
-        // }, 1500);
-        // axios.post(Url.LinkToBackend +"")
-        //---------------------------------------
+        conn.send(JSON.stringify({
+            protocol: "enqueue", // protocol
+            arg1: `${props.driverId}`, // name
+        }))
+        
+        // axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{
+        //     driver_id : props.driverId})
+        // .then(res=>{
+        //     // console.log(res.data);
+        // })
+        // .catch(err=>{
+        //     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+        // })
+        
     }
  
 
@@ -118,7 +137,7 @@ export default function QueueDriver(props) {
             <div className="queue-list" id="queueList"></div>
             <div className="button-queue">
                 <button className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
-                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId);}}> ออกคิว </button>
+                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId,conn); }}> ออกคิว </button>
             </div>
             
         </div>
