@@ -13,20 +13,22 @@ import isPointInPolygon from "geolib/es/isPointInPolygon"
 import Wait from "./Wait";
 import DetailDriver from "./DetailDriver";
 import axios from "axios";
-import { Url } from '../LinkToBackend';
+import { socketUrl, Url } from '../LinkToBackend';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
-import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
-// import { slide as Menu } from 'react-burger-menu'   เอาไปเล่นนะจ๊ะเด็กๆ <3
+import CommentDriver from "./CommentDriver";
+import distance from 'google_directions';
+import mapStyle from "../mapStyle"
+import ChatUser from "./ChatUser";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
-
-
-
-
+let conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
+conn.onopen = function(e) {
+  console.log("Connection established!");
+}
 
 class User extends React.Component {
-
+    
     state = {
       address: '',
       city: '',
@@ -52,7 +54,8 @@ class User extends React.Component {
       waitingQueueAppear:null,
       detailDriverAppear:null,
       locationList:[],
-      
+      loadingState:0,
+      travelDistance:0,
     }
     
     watingQueue=null;
@@ -61,7 +64,7 @@ class User extends React.Component {
     driverId=null;
     userId=null;
     fetchUserIdInterval=null;
-    
+    chatUser=null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -304,8 +307,31 @@ class User extends React.Component {
         {latitude:13.842952063786939, longitude:100.57158130599677},
         {latitude: 13.84680634471089,longitude: 100.56479688230758},
     ]
-    
+   
     //--------------functionถูกเรียกเมื่อ user กดปุ่มเริ่มต้น-------------------- 
+    getDistance = () => {
+        var params = {
+        // REQUIRED
+        origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
+        destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
+        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+    
+        // OPTIONAL
+        mode: "walking",
+        avoid: "",
+        language: "",
+        units: "",
+        region: "",
+      };
+      distance.getDirections(params, (err,data)=> {
+        this.setState ({
+          travelDistance: data.routes[0].legs[0].distance.value
+        })
+      })
+      
+      
+    }
+    
     addLocation = () =>{
       //-----------------เช็คตำแหน่งของทั้งสองmarkerว่าอยู่ในพื้นที่ให้บริการและอยู่นอก redzone หรือไม่-------------------
      if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
@@ -314,7 +340,7 @@ class User extends React.Component {
      isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
      isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
      {
-
+        this.getDistance()
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
         axios.post(Url.LinkToBackend+"backend/api/line2",{
           user_id: this.userId,
@@ -374,7 +400,9 @@ class User extends React.Component {
         this.setState({
           waitingQueueAppear:null,
           detailDriverAppear:null,
-    })
+          
+      })
+      window.location.reload()
       })
       .catch(err=>{
         NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -382,17 +410,33 @@ class User extends React.Component {
       })
     }
 
+    
+    
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
-      addResponseMessage("Welcome to this awesome chat!");
+
       axios.get( Url.LinkToBackend +"backend/api/bomb")
+      
+      //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
+        
         axios.post(Url.LinkToBackend+"backend/api/line1",{
           username: localStorage.getItem("username")
         })
         .then(res=>{
           clearInterval(this.fetchUserIdInterval)
           this.userId=res.data[0].user_id;
+          this.setState({
+            loadingState:1,
+          })
+          console.log(res.data[0].fname, res.data[0].lname)
+          conn.send(JSON.stringify({
+            protocol: "in",
+            arg1: `${res.data[0].fname} ${res.data[0].lname}`, // name
+            arg2: "0",
+            arg3: `${res.data[0].user_id}`,
+          }));
+        
         })
         .catch(err=>{
           NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -405,27 +449,39 @@ class User extends React.Component {
       
     }
 
-    handleNewUserMessage = (newMessage) => {
-      console.log(`New message incomig! ${newMessage}`);
-      // Now send the message throught the backend API
+    handleForUpdate(stateCommentPage){
+      
+      this.setState({
+        detailDriverAppear:stateCommentPage,
+      });
+    
     }
+    
     
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait cancelQueue={this.cancelQueue}/>
+        this.watingQueue= <Wait cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
       }
       else{
         this.watingQueue=null;
         clearInterval(this.timeoutId);
       }
-      if(!!this.state.detailDriverAppear){
-        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue}/>
+      if(this.state.detailDriverAppear===1){
+        this.n=this.n+'1'
+        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
+        this.chatUser= <ChatUser  conn={conn} driverId={this.driverId} />
+        
+      }
+      else if(this.state.detailDriverAppear===2){
+        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
+        
       }
       else{
         this.detailDriver=null;
-      }
-    
+        this.chatUser=null;
+      } 
+      
       //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
       const MapWithAMarker = withScriptjs(withGoogleMap(props =>       
         <GoogleMap div id="con"
@@ -453,6 +509,7 @@ class User extends React.Component {
               strictBounds:true,
               
             },
+            styles:mapStyle,
            }}
         >
           {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
@@ -568,11 +625,11 @@ class User extends React.Component {
               
               options={
                 {
-                  strokeColor: "purple",
-                  strokeOpacity: 0.8,
-                  strokeWeight: 3,
-                  fillColor: "purple",
-                  fillOpacity: 0.35,
+                  strokeColor: "#d34052",
+                  strokeOpacity: 0.5,
+                  strokeWeight: 2,
+                  fillColor: "#d34052",
+                  fillOpacity: 0.3,
                 }
               }
           />
@@ -580,6 +637,11 @@ class User extends React.Component {
         </GoogleMap>
       ));
       
+
+      if (this.state.loadingState===0){
+        
+        return <img src="../pictures/Loading.gif"/>
+      }else{
       return(
         <div>
 
@@ -590,7 +652,13 @@ class User extends React.Component {
             <a id="home" className="menu-item" href="/">ข้อมูลผู้ใช้</a>
             <a id="contact" className="menu-item" href="/contact">ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href="">ตั้งค่า</a>
-            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}>ออกจากระบบ</a>
+            <a id="contact" className="menu-item" onClick={()=>{ 
+              localStorage.clear() ; 
+              window.location.reload();
+              // conn.send(JSON.stringify({
+              //   protocol: "out",
+              // }));
+            }}>ออกจากระบบ</a>
           </Menu>
             
           
@@ -604,22 +672,23 @@ class User extends React.Component {
         <MapWithAMarker 
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
           // containerElement={<div id="map" style={{ height: `380px`}} />}
-          containerElement={<div id="mapbox" style={{ height: `360px`}} />}
+          containerElement={<div id="mapbox" style={{ height: `360px`} } />}
           loadingElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
+        {this.chatUser }
         <NotificationContainer />
-        <Chat
-          handleNewUserMessage={this.handleNewUserMessage}
-          profileAvatar="https://www.myskinrecipes.com/shop/1446-large/banana-flavor-%E0%B8%A3%E0%B8%AA%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2.jpg"
-          title="Icezy"
-          subtitle="And my cool subtitle"
-        />
-        </div>
         
+        </div>
+          <button onClick={()=>{
+            this.setState({detailDriverAppear:2})
+          }} onDoubleClick={()=>{
+            this.setState({detailDriverAppear:null})
+          }}>sadasd</button>
         </div>
         
       );
+      }
     }
 }
 

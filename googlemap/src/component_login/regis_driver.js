@@ -53,11 +53,14 @@ function RegisDriver() {
             })
             .then(res=>{
                 console.log(res.data);
+                if(res.data === "New record created successfully"){
+                    setCount(1)
+                }
             })
             .catch(err=>{
                 NotificationManager.error(err.message,'Alert',3000);
             })
-        }else if(passwordRef.current.value !== confirmPasswordRef.current.value & count === 13){
+        }else if(passwordRef.current.value !== confirmPasswordRef.current.value && count === 13){
             NotificationManager.warning('รหัสผ่านไม่ตรงกัน');
         }
     }
@@ -105,7 +108,7 @@ function RegisDriver() {
                     </div>
                     <div id="boxinput-driver">
                         <label>ยืนยันรหัสผ่าน</label>
-                        <input type="password" placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" name="confirmPassword" />
+                        <input type="password" ref={confirmPasswordRef} value={confirmPasswordRef.current.value} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" name="confirmPassword" />
                     </div>
                     <div id="boxinput-driver">
                         <label>หมายเลขวิน</label>

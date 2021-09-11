@@ -78,3 +78,8 @@
     border-radius: 20px;
     font-size: 22px;
 }
+.confirmCancel {
+    height: 250px;
+    width: 250px;
+    background-color:rgb(161, 161, 161);
+}
