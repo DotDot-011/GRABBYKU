@@ -247,7 +247,7 @@
     display: block;
     margin: 0 auto;
     /* margin-top: 50%; */
-    width: 150px;
+    width: 200px;
   }
   #here + div > div{
     background-color: burlywood;

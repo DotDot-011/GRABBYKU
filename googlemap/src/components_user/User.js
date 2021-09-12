@@ -659,7 +659,7 @@ class User extends React.Component {
       
       //loading screen
       if (this.state.loadingState===0){
-        return <img id="loading" src="../pictures/load.gif"/>
+        return <img id="loading" src="../pictures/logo512.gif"/>
       }else{
       return(
         <div>
