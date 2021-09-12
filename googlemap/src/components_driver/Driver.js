@@ -58,7 +58,8 @@ class Driver extends React.Component {
     userFname:null,
     userLname:null,
     loadingState:0,
-    
+    disableButton:false,
+    cancelState:false,
   }
   queueDriver = null;
   buttonAcceptCancel = null;
@@ -70,6 +71,7 @@ class Driver extends React.Component {
   countdown = null;
   driverFname = null;
   driverLname= null;
+  cancelBackground=null;
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
     clearTimeout(this.driverTimeOut)
@@ -108,12 +110,19 @@ class Driver extends React.Component {
           clearInterval(this.cancelIntervalId);
           leaveQueue(this.state.driverId,conn);
           NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
-          
           this.setState({
-            queueDriverAppear:1,
-            buttonAcceptCancelAppear:1,
+            queueDriverAppear:3,
+            disableButton:true,
+            
           })
-          window.location.reload()
+          setTimeout(()=>{
+            window.location.reload()
+          },5000)
+          // this.setState({
+          //   queueDriverAppear:1,
+          //   buttonAcceptCancelAppear:1,
+          // })
+         
         }
       })
     }, 1500);
@@ -123,22 +132,28 @@ class Driver extends React.Component {
   driverCancel = () =>{
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
-    
+    leaveQueue(this.state.driverId,conn);
+    this.setState({
+        queueDriverAppear:2,
+    });
     // leaveQueue(this.state.driverId);
     // document.location.reload();
-    axios.post(Url.LinkToBackend+"backend/api/driver_cancel",{
-      driver_id: parseInt(this.state.driverId),
-      user_id: parseInt(this.state.userId)
-    })
-    .then(res=>{
-      console.log(res.data.message);
-      this.setState({
-        queueDriverAppear:2,
-      });
-    })
-    .catch(err=>{
-      NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-  })
+    //--------------------------------------------
+  //   axios.post(Url.LinkToBackend+"backend/api/driver_cancel",{
+  //     driver_id: parseInt(this.state.driverId),
+  //     user_id: parseInt(this.state.userId)
+  //   })
+  //   .then(res=>{
+  //     console.log(res.data.message);
+  //     this.setState({
+  //       queueDriverAppear:2,
+  //     });
+  //   })
+  //   .catch(err=>{
+  //     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+  // })
+  //--------------------------------------------
+
   }
 
   // ------------------ driver กด ยอมรับงาน ------------------
@@ -229,8 +244,6 @@ class Driver extends React.Component {
   
 
   render() {
-           
-
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
@@ -250,7 +263,6 @@ class Driver extends React.Component {
         }
         else if(this.state.queueDriverAppear===0)
         {
-          
           this.queueDriver= null;
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId)
@@ -269,21 +281,34 @@ class Driver extends React.Component {
           }}> </Countdown>;
           
         }
+        else if(this.state.queueDriverAppear===3){
+          clearTimeout(this.driverTimeOut)
+          clearInterval(this.cancelIntervalId);
+          this.queueDriver=null;
+          this.countdown=null;
+          
+        }
         if(!!this.state.buttonAcceptCancelAppear){
-
+          
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
-                                      <button className="accept-button" onClick={this.driverAccept}> ยอมรับ </button>
-                                      <button className="cancel-button" onClick={this.driverCancel}> ปฏิเสธ </button>
+                                      <button className="accept-button" disabled={this.state.disableButton} onClick={this.driverAccept}> ยอมรับ </button>
+                                      <button className="cancel-button" disabled={this.state.disableButton} onClick={this.driverCancel}> ปฏิเสธ </button>
                                     </div>
           this.buttonDone=null;
+          this.chatDriver=null; 
+        }
+        else if(this.state.queueDriverAppear===3 && !!!this.state.buttonAcceptCancelAppear){
           this.chatDriver=null;
-          
+          this.buttonDone = <div className="button-accept-cancel-done">
+                              <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
+                              userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={conn}/>
+                            </div>
         }
         else{
           
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
-                              <Receipt driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
+                              <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
                               userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={conn}/>
                             </div>
           this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname}/>
@@ -346,9 +371,14 @@ class Driver extends React.Component {
       </GoogleMap>
     ));
 
+    
     if (this.state.loadingState===0){
+      console.log("here")
       return <img id="loading" src="../pictures/load.gif"/>
-    }else{
+    }
+    
+    
+    else{
     return (
 
       <section className="app-section">

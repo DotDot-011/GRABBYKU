@@ -13,7 +13,7 @@ function LoginUser() {
     const [loginSuccess, setLoginSuccess] = useState(0);
     
     function CheckUser() {
-        console.log(typeof(nameRef.current.value))
+        
         axios.post(`${Url.LinkToBackend}backend/api/login_driver`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {

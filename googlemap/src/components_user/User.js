@@ -52,7 +52,7 @@ class User extends React.Component {
           lat: 13.851130590990257,
           lng: 100.56743435031639,
       },
-      markerPositionDriver: {
+      DriverPosition: {
         lat: 13.84267643846875,
         lng: 100.5712702220572,
       },
@@ -64,6 +64,7 @@ class User extends React.Component {
       locationList:[],
       loadingState:0,
       travelDistance:0,
+      driverDistance:0,
     }
     
     watingQueue=null;
@@ -319,7 +320,7 @@ class User extends React.Component {
    
     //--------------functionถูกเรียกเมื่อ user กดปุ่มเริ่มต้น-------------------- 
     getDistance = () => {
-        var params = {
+        var params_farecost = {
         // REQUIRED
         origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
         destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
@@ -332,12 +333,31 @@ class User extends React.Component {
         units: "",
         region: "",
       };
-      distance.getDirections(params, (err,data)=> {
+      distance.getDirections(params_farecost, (err,data)=> {
         this.setState ({
           travelDistance: data.routes[0].legs[0].distance.value
         })
       })
       
+      //---------------------------------------------------------
+      var params_wait = {
+        // REQUIRED
+        origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
+        destination: `${this.state.markerPosition.lat} , ${this.state.markerPosition.lng}`,
+        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+    
+        // OPTIONAL
+        mode: "walking",
+        avoid: "",
+        language: "",
+        units: "",
+        region: "",
+      };
+      distance.getDirections(params_wait, (err,data)=> {
+        this.setState ({
+          driverDistance: data.routes[0].legs[0].distance.value
+        })
+      })
       
     }
     
@@ -350,6 +370,7 @@ class User extends React.Component {
      isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
      {
         this.getDistance()
+        
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
         axios.post(Url.LinkToBackend+"backend/api/line2",{
           user_id: this.userId,
@@ -489,7 +510,8 @@ class User extends React.Component {
         clearInterval(this.timeoutId);
       }
       if(this.state.detailDriverAppear===1){
-        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={conn}/>
+        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} 
+                            conn={conn}  driverDistance={this.state.driverDistance}/>
         this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={conn} driverId={this.driverId} />
         
       }

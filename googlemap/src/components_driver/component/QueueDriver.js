@@ -16,12 +16,12 @@ export default function QueueDriver(props) {
             driver_id : props.driverId
         })
         .then( res=>{
-            // console.log(res.data);
+            console.log(res.data);
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);
             if (res.data.message){
-                // clearInterval(window.timeoutId1);
+                clearInterval(window.timeoutId1);
                 // console.log(Number(res.data.lat_user));
                 props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
                  ,0 ,res.data.user_id, res.data.user_fname, res.data.user_lname);
@@ -137,7 +137,7 @@ export default function QueueDriver(props) {
             <h4>ตารางคิว</h4>
             <div className="queue-list" id="queueList"></div>
             <div className="button-queue">
-                <button className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
+                <button  className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
                 <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId,conn); }}> ออกคิว </button>
             </div>
             

@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React,{ useEffect , useState } from 'react';
 import LoginDriver from "./login_driver";
 import LoginUser from "./login_user";
 import RegisDriver from "./regis_driver";
 import RegisUser from "./regis_user";
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import './login.css'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 
 function Login() {
+
+    useEffect(()=>{
+        if(localStorage.getItem("regis_success")){
+            NotificationManager.success('ลงทะเบียนเสร็จสิ้น','',10000);
+            localStorage.clear();
+        }
+    },[]);
     
     const [count, setCount] = useState(0);
     if(count === 1) {        
@@ -26,9 +40,13 @@ function Login() {
                 <h4>Or Sign up As</h4>
                 <button classname="user_reg" id="user_reg" onClick={() => setCount(3)}>Customer</button>
                 <button classname="driver_reg" id="driver_reg" onClick={() => setCount(4)}>Driver</button>
+                <NotificationContainer />
+
             </div>
         );
     }
+
+
 }
 
 export default Login;

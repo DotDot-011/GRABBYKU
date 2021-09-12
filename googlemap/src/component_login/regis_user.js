@@ -52,6 +52,7 @@ function RegisUser() {
             .then(res=>{
                 console.log(res.data);
                 if(res.data === "New record created successfully"){
+                    localStorage.setItem("regis_success","success");
                     setCount(1)
                 }
             })
@@ -63,6 +64,8 @@ function RegisUser() {
         }
     }
     const [count, setCount] = useState(0);
+    
+    
     if(count === 0) {
         return (
             <div id="main_userreg">
@@ -115,6 +118,7 @@ function RegisUser() {
             </div>
         );
     }else {
+        
         return <Login/>
     }
 }
