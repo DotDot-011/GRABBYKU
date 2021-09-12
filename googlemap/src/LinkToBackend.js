@@ -1,6 +1,6 @@
 
 export const Url = { 
-    LinkToBackend: " http://e134-223-24-156-177.ngrok.io/",
+    LinkToBackend: "http://e134-223-24-156-177.ngrok.io/",
 };
 
 export const socketUrl = { 

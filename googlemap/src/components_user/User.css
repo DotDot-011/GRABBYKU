@@ -1,12 +1,12 @@
 #bottombutt{
   position:relative;
-  top: -80px;
+  top: -90px;
     /* margin: 20px; */
     /* background-color: burlywood; */
     text-align: center;
 }
 #buttstart{
-    background-color: #1a9274;
+    background-color: #167964;
     border-radius: 20px;
     /* border-color:#1FAB89; */
     border: none;
@@ -56,8 +56,9 @@
     position: relative;
     margin: 0 auto;
     text-align: center;
-    max-width: 560px;
-    width: 90%;
+    width: 80%;
+    min-width: 300px;
+    max-width: 550px;
     /* background-color: cornflowerblue; */
 }
 
@@ -112,7 +113,7 @@
 }
 /* map position */
 #mapbox{
-  /* height: 0px; */
+  height: 342px;
   top: 125px;
   position: relative;
   
@@ -208,8 +209,14 @@
     display: inline-block;
     color: white;
   }
+ 
   .bm-item:hover{
     color: black;
+    /* transform: scaleX(1.05) scaleY(1.05) translateY(-5px); */
+  }
+  #signout:hover{
+    color: red;
+    /* transform: scaleX(1.05) scaleY(1.05) translateY(-5px); */
   }
   
   /* Styling of overlay */
@@ -247,6 +254,57 @@
     height: 0px;
   }
 
-  @media only screen and (min-height: 500px) {
-    #mapbox {height: 340px;}
+  @media only screen and (max-height: 588px) and (max-height: 649px){
+    .bm-burger-bars {
+      /* background: #002df7; */
+    }
+    #mapbox {
+      top: 130px;
+      height: 300px;
+    }
+    .locationbox{
+      bottom: 420px;
+    }
+    #bottombutt{
+      top: -80px;
+    }
   }
+  @media only screen and (min-height: 650px) and (max-height: 799px){
+    .bm-burger-bars {
+      /* background: #ff0000; */
+    }
+    #mapbox {
+      top: 130px;
+      /* height: 370px; */
+      height: 380px;
+    }
+    .locationbox{
+      bottom: 500px;
+    }
+    #bottombutt{
+      top: -80px;
+    }
+  }
+  @media only screen and (min-height: 800px) {
+    .bm-burger-bars {
+      /* background: #0afd02; */
+    }
+    #mapbox {
+      top: 150px;
+      height: 400px;
+    }
+    .locationbox{
+      bottom: 530px;
+    }
+    #bottombutt{
+      top: -70px;
+    }
+  }
+  @media only screen and (min-width: 375px) {
+    .locationbox{
+      /* background-color: salmon; */
+      width: 90%;
+      min-width: 350px;
+    }
+  }
+

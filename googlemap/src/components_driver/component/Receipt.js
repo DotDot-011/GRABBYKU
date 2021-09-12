@@ -14,6 +14,7 @@ export default function Receipt(props){
             driver_id: `${driverId}`,
             user_name: `${userFname} ${userLname}`,
             user_id: `${userId}`,
+            cost: '20'
         }))
     }
     
@@ -23,7 +24,7 @@ export default function Receipt(props){
     
             {           
             close=>(
-                <div className="confirmCancel" id="confirmCancel"> <h1>ใส่จำนวนเงิน</h1>
+                <div className="confirmCancel" id="confirmCancel-money"><h1>ใส่จำนวนเงิน</h1>
                     <input id="input-mon" placeholder="ใส่จำนวนเงิน" type="number" />
                     <button id="sub-button" onClick={()=>{
                         sendData();

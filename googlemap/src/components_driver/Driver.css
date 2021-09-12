@@ -161,13 +161,18 @@ box-shadow: 0 4px 7px #115745;
   
 }
 #accept-time{
+  color: red;
   margin: 14px auto 0;
   display: block;
   position: relative;
-  font-size: 28px;
+  font-size: 32px;
+  font-weight: bold;
   text-align: center;
 }
-
+#should-black{
+  font-size: 28px;
+  color:black;
+}
 
 /* ส่วนนี้คือHamberger bar ขวา ถ้าจะปรับแต่งต้องดูRef */
 .menu{
@@ -270,4 +275,18 @@ Note: Beware of modifying this element as it can break the animations - you shou
   margin: 0 auto;
   /* margin-top: 50%; */
   width: 150px;
+}
+
+@media only screen and (max-height: 588px) and (max-height: 649px){
+  #map{
+    height: 300px;
+
+  }
+
+}
+@media only screen and (min-height: 650px) and (max-height: 799px){
+
+}
+@media only screen and (min-height: 800px) {
+
 }

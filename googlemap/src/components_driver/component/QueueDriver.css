@@ -9,8 +9,8 @@
     z-index: 1;
     max-width: 700px;
     /* height: 630px; */
-    height: 1090%;
-    min-height: 530px;
+    height: 890%;
+    min-height: 505px;
     width: 100%;
     background-color: white;
     border-radius: 20px;
@@ -35,7 +35,10 @@
     font-size: 30px;
 }
 .button-queue{
-    margin: 0 auto;
+    /* background-color: silver; */
+    position: relative;
+    top: -20px;
+    /* margin: 0 auto; */
 }
 .button-enQueue{
     background-color: #1FAb89;
@@ -86,10 +89,37 @@
     transform: translateY(1px);
     box-shadow: 0 4px 7px #555454;
 }
-@media only screen and (max-height: 725px) {
+
+@media only screen and (max-height: 588px) {
     .queue-container {
         /* background-color: bisque; */
-        height: 890%;
-        min-height: 530px;
+        max-height: 500px;
     }
-  }
+    .button-queue{
+        position: relative;
+        top: -20px;
+    }
+}
+@media only screen and (min-height: 720px) and (max-height: 749px){
+    .queue-container {
+        /* background-color: red; */
+        height: 990%;
+        min-height: 600px;
+    }
+    .button-queue{
+        position: relative;
+        top: 0px;
+    }
+}
+@media only screen and (min-height: 750px) {
+    .queue-container {
+        /* background-color: rgb(207, 196, 255); */
+        height: 1000%;
+        min-height: 620px;
+    }
+    .button-queue{
+        position: relative;
+        top: 0px;
+    }
+}
+  

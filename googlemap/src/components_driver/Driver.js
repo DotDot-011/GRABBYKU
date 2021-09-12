@@ -265,7 +265,7 @@ class Driver extends React.Component {
                 //   {seconds} วินาที
                 // </span>
                 <span id="accept-time">
-                  <b>กรุณาตอบรับภายใน</b> &nbsp;
+                  <b id="should-black">กรุณาตอบรับภายใน</b> &nbsp;
                   {seconds} วินาที
                 </span>
               );
@@ -359,9 +359,9 @@ class Driver extends React.Component {
         <Menu right>
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
             <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>
-            <a id="contact" className="menu-item" href="/contact"> <i class="fas fa-phone-alt"></i> ติดต่อ</a>
+            <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
-            <a id="contact" className="menu-item" onClick={()=>{ localStorage.clear() ; window.location.reload()}}> <i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
+            <a id="contact" className="menu-item" id="signout" onClick={()=>{ localStorage.clear() ; window.location.reload()}}><i class="fas fa-sign-out"></i>ออกจากระบบ</a>
               
              
               
