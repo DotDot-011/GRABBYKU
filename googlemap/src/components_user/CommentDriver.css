@@ -11,8 +11,8 @@
     min-height: 530px;
     max-width: 560px;
     width: 90%;
-    background-color: #62d2A2;
-    /* background-color: white; */
+    /* background-color: #62d2A2; */
+    background-color: white;
     border-radius: 20px;
     border-style: inset;
     border-width: 4px;
@@ -22,6 +22,7 @@
     font-size: 35px;
     font-weight: bolder;
     margin-bottom: 3%;
+    font-family: 'fc_minimalregular';
 }
 #rate-name{
     font-size: 28px;
@@ -36,6 +37,7 @@
     margin-bottom: 8%;
     border-style: solid;
     border-color: #137e63;;
+    border-width: 3px;
     border-radius: 10px;
 }
 .done-button{
@@ -101,3 +103,26 @@
     transform: translateY(1px);
     box-shadow: 0 4px 7px #115745;
 }
+@media only screen and (max-height: 588px) and (max-height: 649px){
+    .comment-driver-container {
+      /* background: #002df7; */
+      /* width: 89%; */
+      max-width: 500px;
+    max-height: 400px;
+    }
+
+  }
+  @media only screen and (min-height: 650px) and (max-height: 799px){
+    .comment-driver-container {
+      /* background: #ff0000; */
+      height: 80%;
+      min-height: 580px;
+    }
+  }
+  @media only screen and (min-height: 800px) {
+    .comment-driver-container {
+      /* background: #0afd02; */
+      height: 80%;
+      min-height: 650px;
+    }
+  }

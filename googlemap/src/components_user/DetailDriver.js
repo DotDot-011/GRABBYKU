@@ -124,7 +124,7 @@ export default function DetailDriver(props){
             <h4>กรุณารอ</h4>
             <h5>เวลาโดยประมาณ : {estimatetime} นาที</h5>
             <div class="driver-detail" >
-                <Box component="fieldset" mb={3} borderColor="transparent">
+                <Box id="starbox"component="fieldset" mb={3} borderColor="transparent">
                     <Rating name="half-rating-read" defaultValue={value} precision={1} readOnly />
                     
                 </Box>

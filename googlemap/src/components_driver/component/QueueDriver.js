@@ -75,7 +75,6 @@ export default function QueueDriver(props) {
         let Message = JSON.parse(e.data)
         // console.log(Message)
         clearInterval(window.timeoutId1);
-        
        
         if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
             // console.log(Message.message_code);

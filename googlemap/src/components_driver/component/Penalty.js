@@ -1,6 +1,6 @@
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-import './QueueDriver.css'
+import './Penalty.css'
 
 const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {
@@ -18,7 +18,7 @@ const renderTime = ({ remainingTime }) => {
 
 export default function Penalty(){
     return (
-        <div className="queue-container">
+        <div className="cooldown-container">
       <h1>
         เนื่องจากคุณได้ปฏิเสธลูกค้า 
       </h1>

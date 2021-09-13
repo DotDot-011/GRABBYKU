@@ -24,7 +24,6 @@ export default function Receipt(props){
 
     },[props.disableButton])
     return(
-
         <Popup trigger={<button className="done-button" disabled={props.disableButton} type="button" class="btn btn-primary" id="buttcancel" > เสร็จสิ้น </button>} modal nested>
     
             {           
@@ -34,7 +33,7 @@ export default function Receipt(props){
                     <button id="sub-button" disabled={props.disableButton} onClick={()=>{
                         sendData();
                         close();
-                        
+                       
                         }}> ยืนยัน </button>
                 </div>)
                 
@@ -42,4 +41,4 @@ export default function Receipt(props){
             
             </Popup>
     );    
-} 
+}
