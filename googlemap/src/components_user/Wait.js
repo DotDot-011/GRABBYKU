@@ -50,7 +50,7 @@ export default function Wait(props){
             {/* <button className="cancel-button" type="button" type="button" class="btn btn-primary" id="buttcancel" onClick={cancelQueue}>ยกเลิก</button> */}
             <Popup trigger={<button className="cancel-button" type="button" class="btn btn-primary" id="buttcancel"> ยกเลิก</button>} modal nested>
             {close=>(
-                <div className="confirmCancel" id="confirmCancel"> <h1>ยืนยันที่จะยกเลิก</h1>
+                <div className="confirmCancel" id="confirmCancel"> <h1>ยืนยันที่จะยกเลิกหรือไม่</h1>
                     <button id="don-cancel" onClick={()=>{cancelQueue();close();}}>ตกลง</button>
                     <button id="not-cancel" onClick={()=>{close();}}>ปฏิเสธ</button>
                 </div>)
