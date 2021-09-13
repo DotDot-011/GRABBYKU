@@ -48,7 +48,7 @@ export default function QueueDriver(props) {
             
             if(key != 'message_code'){
                 // console.log(key)
-                console.log(Message[key])
+                // console.log(Message[key])
                 // console.log(props.driverId)
                 let myEl = document.createElement('span');
                 myEl.innerText = `${i} : ${Message[key].driver_name}  \n`;
@@ -73,7 +73,7 @@ export default function QueueDriver(props) {
     
     conn.onmessage = function(e) {
         let Message = JSON.parse(e.data)
-        // console.log(Message)
+        console.log(Message)
         clearInterval(window.timeoutId1);
        
         if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){

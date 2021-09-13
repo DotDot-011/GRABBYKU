@@ -5,6 +5,8 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { useHistory } from "react-router-dom";
 import './regis_driver.css'
 import Login from "./login";
+import Resizer from "react-image-file-resizer";
+
 
 
 function RegisDriver() {
@@ -22,7 +24,49 @@ function RegisDriver() {
     const passwordRef = useRef("");
     const driver_noRef = useRef("");
     const confirmPasswordRef = useRef("");
+    const [file,setFile] = useState(null)
+    const [newFile,setNewFile] = useState(null)
+    
+    function uploadFile(){
+        axios.post(Url.LinkToBackend+"backend/api/image", {
+           image: file,
+           driver_id: 18,
+        }).then((res) => {
+        //   console.log(res.data)
+        //   fileChangedHandler(res.data)
+          setNewFile(res.data)
+        })
+      }
 
+    function fileChangedHandler(event) {
+        var fileInput = false;
+        if (event.target.files[0]) {
+          fileInput = true;
+        }
+        if (fileInput) {
+          try {
+            Resizer.imageFileResizer(
+              event.target.files[0],
+              125,
+              125,
+              "JPEG",
+              100,
+              0,
+              (uri) => {
+                // console.log(uri);
+                
+                setFile(uri)
+              },
+              "Blob",
+              100,
+              100
+            );
+          } catch (err) {
+            console.log(err);
+            
+          }
+        }
+      }
     function sendData(){
         var count = 0;
         (fnameRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อจริง');
@@ -73,6 +117,8 @@ function RegisDriver() {
     if(count === 0){
         return (
             <div id="main_driverreg">
+                <img src={newFile}/>
+
                 <h1>Register as Driver</h1>
                 <form classname="" id="driverreg" action="" method="post">
                     <div id="boxinput-driver">
@@ -125,11 +171,26 @@ function RegisDriver() {
                     </div>
                     <div id="boxinput-driver">
                         <label>ป้ายทะเบียนรถ</label>
-                        <input type="text" ref={plateRef} value={plateRef.current.value} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="plate" />
+                        <input type="text" ref={plateRef} value={plateRef.current.value} placeholder="กรอกป้ายทะเบียนรถ" name="plate" />
                     </div>
                 </form>
                 <button id="sum_driverreg" type="button" onClick={sendData}>ลงทะเบียน</button>
                 <button id="back_driverreg" type="submit" onClick={()=> {setCount(1)}}> กลับ </button>
+                <input name="csv" type="file" onChange={event=>{
+                    fileChangedHandler(event);
+                    // setFile(URL.createObjectURL(event.target.files[0]))
+                    // console.log(URL.createObjectURL(event.target.files[0]))
+                    
+                    
+                    }} />
+
+                {/* <input type="file" onChange={} /> */}
+                {/* <img src={newFile}/> */}
+                
+            <button onClick={()=>{
+                
+                uploadFile();
+            }}>กดค่ะ</button>
                 <NotificationContainer />
             </div>
         );

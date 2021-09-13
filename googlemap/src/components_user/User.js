@@ -73,6 +73,7 @@ class User extends React.Component {
     timeoutId = 0;
     driverId=null;
     userId=null;
+    bookingId=null;
     fetchUserIdInterval=null;
     chatUser=null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
@@ -385,6 +386,7 @@ class User extends React.Component {
           this.setState({
             waitingQueueAppear:1,
           })
+          
           this.timeoutId = setInterval(()=>{
             // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
             axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
@@ -395,6 +397,7 @@ class User extends React.Component {
                 console.log(res);
                 console.log(res.data);   
                 this.driverId=res.data.driver_id;
+                this.bookingId = res.data.booking_id;
                 this.setState({
                   waitingQueueAppear:null,
                   detailDriverAppear:1,
@@ -474,6 +477,7 @@ class User extends React.Component {
             Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
             Mode: "0",
             ID: `${res.data[0].user_id}`,
+            
           }));
         })
         .then(()=>{
@@ -517,7 +521,8 @@ class User extends React.Component {
         
       }
       else if(this.state.detailDriverAppear===2){
-        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
+        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn} driverId={this.driverId} 
+                      userId={this.userId} bookingId={this.bookingId}/>
         this.chatUser=null;
       }
       else{

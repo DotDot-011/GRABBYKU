@@ -7,6 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Popup from 'reactjs-popup';
 import CloseButton from 'react-bootstrap/CloseButton'
+import axios from 'axios';
+import { Url } from '../LinkToBackend';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 const labels = {
     // 0.5: 'Useless',
     1: 'ควรปรับปรุง',
@@ -37,6 +40,36 @@ export default function CommentDriver(props){
     const [hover, setHover] = React.useState(-1);
     const classes = useStyles();
     const commentRef = useRef("");
+    const fileRef = useRef(null);
+
+    function sendReport(){
+        let timeoutId = setInterval(()=>{
+            axios.post(Url.LinkToBackend +"backend/api/reporting", {
+                driver_id: props.driverId,
+                user_id: props.userId,
+                rating: value,
+                string_report: commentRef.current.value,
+                booking_id: props.bookingId,
+        
+            }).then((res)=>{
+                clearInterval(timeoutId)
+                console.log(res.data);
+                props.handleForUpdate(null);
+                window.location.reload()
+            }).catch(err=>{
+                NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+            })
+        },1000)
+        
+                // clearInterval(timeoutId);
+        
+            
+            
+        
+        
+        
+    };
+      
     return(
         <div className="comment-driver-container">
             <CloseButton onClick={()=>{props.handleForUpdate(null);}} />
@@ -65,9 +98,14 @@ export default function CommentDriver(props){
             </div>
             
             <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
-            {close=>(
-                <div className="thankyou"> <h1>ขอบคุณที่ใช้บริการค่ะ</h1>
-                    <button id="thank-button" onClick={()=>{props.handleForUpdate(null);window.location.reload()}}> ปิด </button>
+            { 
+            
+              
+            
+              close=>(
+                
+                <div className="thankyou"> <h1>ยืนยันที่จะส่งข้อมูล</h1>
+                    <button id="thank-button" onClick={sendReport}> ยืนยัน </button>
 
                 </div>)
                 
@@ -79,3 +117,6 @@ export default function CommentDriver(props){
         </div>
     );
 }
+
+
+

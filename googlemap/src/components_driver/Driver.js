@@ -28,7 +28,7 @@ const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
 // conn.onopen = function(e) {
 //   console.log("Connection established!");
 // }
-
+const timeCooldown=10000;
 class Driver extends React.Component {
   
   state = {
@@ -182,7 +182,7 @@ class Driver extends React.Component {
       this.setState({queueDriverAppear:2})
       // NotificationManager.error('ขออภัยในความไม่สะดวก','kokkak',1000);
       leaveQueue(this.state.driverId,conn);
-    },20000)
+    },timeCooldown)
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
     }
@@ -269,7 +269,7 @@ class Driver extends React.Component {
           this.cancelCase();
           this.PenaltyTimeOut();
           this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
-          this.countdown= <Countdown date={Date.now() + 20000} renderer={({seconds, completed }) => {
+          this.countdown= <Countdown date={Date.now() + timeCooldown} renderer={({seconds, completed }) => {
             
               return (
                 // <span id="accept-time" style={{fontSize:'40px'}}>

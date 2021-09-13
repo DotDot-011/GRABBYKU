@@ -37,15 +37,16 @@ export default function DetailDriver(props){
     const [cost,setCost] = useState(0);
     const [estimatetime,setEstimatetime] = useState(0);
     //console.log(props.driverId);
-
-    
     const [first_name, setFirst_name] = useState("นายธนาคาร");
     const [last_name, setLast_name] = useState("หลักแหลม");
     const [plate, setPlate] = useState("กอจ 666");
     const [driverNo, setdriverNo] = useState("47");
     const [driverPosition, setdriverPosition] = useState("ประตูนรก");
+    const [avatar,setAvatar] = useState(null)
+
     const [value, setValue] = useState(4);
     const [hover, setHover] = useState(-1);
+    
     // ------------------ คำนวณราคาค่ะ & เวลาค่ะ ------------------
     useEffect(()=>{
         // console.log(props.travelDistance);
@@ -112,6 +113,7 @@ export default function DetailDriver(props){
             setPlate(res.data.plate);
             setdriverNo(res.data.driver_no);
             setdriverPosition(res.data.win_name);
+            setAvatar(res.data.image)
         })
         .catch(err=>{
             NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -128,7 +130,9 @@ export default function DetailDriver(props){
                     <Rating name="half-rating-read" defaultValue={value} precision={1} readOnly />
                     
                 </Box>
-                <div class="image-driver"></div>
+                <div class="image-driver">
+                    <img src={avatar}/>
+                </div>
                 <div class="name-driver">{first_name} {last_name}</div>
                 <div class="name-license">ทะเบียนรถ : {plate}</div>
                 <div class="name-number">เลขประจำตัว : {driverNo}</div>
