@@ -517,7 +517,7 @@ class User extends React.Component {
       }
       else if(this.state.detailDriverAppear===2){
         this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
-        
+        this.chatUser=null;
       }
       else{
         this.detailDriver=null;
