@@ -33,7 +33,7 @@ const labels = {
     },
   });
 export default function DetailDriver(props){
-    const { cancelQueue } = props;
+    const { cancelQueue,conn } = props;
     const [cost,setCost] = useState(0);
     const [estimatetime,setEstimatetime] = useState(0);
     //console.log(props.driverId);
@@ -49,39 +49,58 @@ export default function DetailDriver(props){
     // ------------------ คำนวณราคาค่ะ & เวลาค่ะ ------------------
     useEffect(()=>{
         // console.log(props.travelDistance);
+        // --------------------------------------------- calculate cost ------------------------------------6789
         if (props.travelDistance <= 500 ) {
             setCost(10)
-            setEstimatetime(2) 
         }
         else if (props.travelDistance <= 1000 ) {
             setCost(15)
-            setEstimatetime(4)  
         }
         else if (props.travelDistance <= 1500 ) {
             setCost(20)
-            setEstimatetime(6)  
         }
         else if (props.travelDistance <= 2000 ) {
             setCost(25)
-            setEstimatetime(8)  
         }
         else if (props.travelDistance <= 2500 ) {
             setCost(30)
-            setEstimatetime(10)  
         }
         else if (props.travelDistance <= 3000 ) {
-            setCost(35)
-            setEstimatetime(12)  
+            setCost(35)    
         }
         else if (props.travelDistance <= 4000 ) {
-            setCost(40)
-            setEstimatetime(14)  
+            setCost(35)
         }
         else {
             setCost(50)
+        }
+        // --------------------------------------------- calculate distance ------------------------------------
+        
+        if (props.driverDistance <= 500 ) {
+            setEstimatetime(2) 
+        }
+        else if (props.driverDistance <= 1000 ) {
+            setEstimatetime(4)  
+        }
+        else if (props.driverDistance <= 1500 ) {
+            setEstimatetime(6)  
+        }
+        else if (props.driverDistance <= 2000 ) {
+            setEstimatetime(8)
+        }
+        else if (props.driverDistance <= 2500 ) {
+            setEstimatetime(10)
+        }
+        else if (props.driverDistance <= 3000 ) {
+            setEstimatetime(12)
+        }
+        else if (props.driverDistance<= 4000 ) {
+            setEstimatetime(14)   
+        }
+        else {
             setEstimatetime(16)
         }
-    },[props.travelDistance])
+    },[props.travelDistance,props.driverDistance])
     // ------------------ show ข้อมูลของ driver ที่ match ------------------
     useEffect(()=>{
         axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
@@ -105,7 +124,7 @@ export default function DetailDriver(props){
             <h4>กรุณารอ</h4>
             <h5>เวลาโดยประมาณ : {estimatetime} นาที</h5>
             <div class="driver-detail" >
-                <Box component="fieldset" mb={3} borderColor="transparent">
+                <Box id="starbox"component="fieldset" mb={3} borderColor="transparent">
                     <Rating name="half-rating-read" defaultValue={value} precision={1} readOnly />
                     
                 </Box>
@@ -120,7 +139,7 @@ export default function DetailDriver(props){
             
             <Popup trigger={<button className="cancel-button" type="button" class="btn btn-primary" id="buttcancel"> ยกเลิก</button>} modal nested>
             {close=>(
-                <div className="confirmCancel" id="confirmCancel"> <h1>ยืนยัน ยกเลิกใช่ไหม?</h1>
+                <div className="confirmCancel" id="confirmCancel"> <h1>ยืนยันที่จะยกเลิกหรือไม่</h1>
                     <button id="don-cancel" onClick={()=>{cancelQueue();close();}}>ตกลง</button>
                     <button id="not-cancel" onClick={()=>{close();}}>ปฏิเสธ</button>
                 </div>)

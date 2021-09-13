@@ -2,7 +2,7 @@ import React, { useRef, useState} from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-
+import { useHistory } from "react-router-dom";
 import './regis_driver.css'
 import Login from "./login";
 
@@ -40,7 +40,7 @@ function RegisDriver() {
         (win_nameRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อซุ้มวิน');
 
         if(passwordRef.current.value === confirmPasswordRef.current.value & count === 13) {
-            axios.post(Url.LinkToBackend +"backend/api/register_user",{
+            axios.post(Url.LinkToBackend +"backend/api/register_driver",{
                 fname: fnameRef.current.value,
                 lname: lnameRef.current.value,
                 birth_date: birth_dateRef.current.value,
@@ -50,10 +50,15 @@ function RegisDriver() {
                 id_no: citizenIdRef.current.value,
                 username: usernameRef.current.value,
                 password: passwordRef.current.value,
+                win_name:win_nameRef.current.value,
+                plate: plateRef.current.value,
+                driver_no: driver_noRef.current.value,
             })
             .then(res=>{
                 console.log(res.data);
+                // history.push("/");
                 if(res.data === "New record created successfully"){
+                    localStorage.setItem("regis_success","success");
                     setCount(1)
                 }
             })

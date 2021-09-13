@@ -1,8 +1,8 @@
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
 
-#confirmCancel {
+#confirmCancel-money{
     /* margin: 0 auto; */
-    padding: 15% 0;
+    padding: 50px 0;
     position:relative;
     display: block;
     align-items: center;
@@ -18,7 +18,7 @@
     border-color:#137e63;
 }
 #confirmCancel h1{
-    font-size: 32px;
+    font-size: 3px;
     font-weight: bolder;
     margin-bottom: 25px;
 }
