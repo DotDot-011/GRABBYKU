@@ -18,12 +18,13 @@ if ($result->num_rows > 0) {
     $data["driver_id"] = $driver_id;
     $data["message"] = TRUE;
     $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";
-    $sql3 = "SELECT `fname`,`lname` FROM `user` WHERE `user_id` = $user_id";
+    $sql3 = "SELECT `fname`, `lname`, `imageData` FROM `user` WHERE `user_id` = $user_id";
     $result2 = $conn->query($sql2);
     $result3 = $conn->query($sql3);
     $row3 = $result3->fetch_assoc();
     $data["user_fname"] = $row3["fname"];
     $data["user_lname"] = $row3["lname"];
+    $data["image"] = $row3["imageData"];
     echo json_encode($data, JSON_PRETTY_PRINT);
 } else {
     echo json_encode([
