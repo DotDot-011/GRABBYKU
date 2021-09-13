@@ -378,7 +378,7 @@ class Driver extends React.Component {
     
     if (this.state.loadingState===0){
       console.log("here")
-      return <img id="loading" src="../pictures/load.gif"/>
+      return <img id="loading" src="../pictures/logo512.gif"/>
     }
     else{
 
