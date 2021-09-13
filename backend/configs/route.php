@@ -69,4 +69,7 @@ $routes["getqueue"]["ws"] = "./src/Queue.php";
 
 #user report comment driver
 $routes["/backend/api/reporting"]["POST"] = "./homeUser/reporting.php";
+
+#test insert image
+$routes["/backend/api/image"]["POST"] = "./testImage.php";
 ?>

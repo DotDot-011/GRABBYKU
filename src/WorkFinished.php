@@ -1,17 +1,17 @@
 <?php
 
-$driver_name = $wsdata['DriverName'];
-$driver_id = $wsdata['DriverID'];
-$user_name = $wsdata['UserName'];
-$user_id = $wsdata['UserID'];
-$cost = $wsdata['Cost'];
+$driver_name = $wsdata['driver_name'];
+$driver_id = $wsdata['driver_id'];
+$user_name = $wsdata['user_name'];
+$user_id = $wsdata['user_id'];
+$cost = $wsdata['cost'];
 
 //Set on service in websocket of driver to 0
-$sql = "UPDATE websocket SET on_service = 0 WHERE name = '$driver_name' and id = '$id' or name = '$user_name' and id = '$id'";
+$sql = "UPDATE websocket SET on_service = 0 WHERE name = '$driver_name' and id = '$driver_id' or name = '$user_name' and id = '$user_id'";
 $conn->query($sql);
 
 //notify user arrive
-$sql2 = "SELECT * FROM websocket WHERE name LIKE '$user_name' and id = '$id'";
+$sql2 = "SELECT * FROM websocket WHERE name LIKE '$user_name' and id = '$user_id'";
 $result_for_trigger = $conn->query($sql2);
 if($result_for_trigger != NULL){
  $row=$result_for_trigger->fetch_assoc();
@@ -48,7 +48,7 @@ if($result_for_booking_id != NULL){
 }
 
 //notify driver "booking has been delete"
-$sql4 = "SELECT * FROM websocket WHERE name LIKE '$driver_name' and id = '$id'";
+$sql4 = "SELECT * FROM websocket WHERE name LIKE '$driver_name' and id = '$driver_id'";
 print($driver_name . " " . $id); 
 $result_for_answer = $conn->query($sql4);
 if($result_for_answer != NULL){

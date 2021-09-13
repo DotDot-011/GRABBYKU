@@ -1,13 +1,13 @@
 <?php
 
-$name = $wsdata['ReceiverName'];
+$ReceiverName = $wsdata['ReceiverName'];
 $message = $wsdata['Message'];
-$id = $wsdata['ReceiverID'];
+$ReceiverID = $wsdata['ReceiverID'];
 $is_driver = $wsdata['ReceiverMode'];
-$name_and_id = $name . " " . $id;
+$SenderID = $wsdata['SenderID'];
 
-$sql = "SELECT connection_id FROM websocket WHERE name LIKE '$name_and_id' and is_driver = '$is_driver'";
-echo "send message to " . $name_and_id . "\n";
+$sql = "SELECT connection_id FROM websocket WHERE name LIKE '$ReceiverName' and id = '$ReceiverID' and is_driver = '$is_driver'";
+echo "send message to " . $ReceiverName . "\n";
 $result = $conn->query($sql);
 
 if ($result === FALSE) {
@@ -28,3 +28,6 @@ while ($row = $result->fetch_assoc()) {
         }
     }
 }
+
+$sql = "INSERT INTO chat_history (sender, receiver, message) VALUES ('$SenderID', '$ReceiverID', '$message')";
+$conn->query($sql);
