@@ -27,12 +27,18 @@ function RegisDriver() {
     const [file,setFile] = useState(null)
     const [newFile,setNewFile] = useState(null)
     
-    function uploadFile(){
+    
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      }
+    async function uploadFile(){
+
         axios.post(Url.LinkToBackend+"backend/api/image", {
            image: file,
            driver_id: 18,
         }).then((res) => {
-        //   console.log(res.data)
+          console.log(res.data)
         //   fileChangedHandler(res.data)
           setNewFile(res.data)
         })
@@ -67,6 +73,8 @@ function RegisDriver() {
           }
         }
       }
+
+      
     function sendData(){
         var count = 0;
         (fnameRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อจริง');
@@ -83,7 +91,8 @@ function RegisDriver() {
         (plateRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกป้ายทะเบียน');
         (win_nameRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อซุ้มวิน');
 
-        if(passwordRef.current.value === confirmPasswordRef.current.value & count === 13) {
+        if(passwordRef.current.value === confirmPasswordRef.current.value & count === 13 & validateEmail(emailRef.current.value) 
+        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13 & !!file & phoneRef.current.value.length == 10) {
             axios.post(Url.LinkToBackend +"backend/api/register_driver",{
                 fname: fnameRef.current.value,
                 lname: lnameRef.current.value,
@@ -97,6 +106,7 @@ function RegisDriver() {
                 win_name:win_nameRef.current.value,
                 plate: plateRef.current.value,
                 driver_no: driver_noRef.current.value,
+                image: file,
             })
             .then(res=>{
                 console.log(res.data);
@@ -109,8 +119,27 @@ function RegisDriver() {
             .catch(err=>{
                 NotificationManager.error(err.message,'Alert',3000);
             })
-        }else if(passwordRef.current.value !== confirmPasswordRef.current.value && count === 13){
-            NotificationManager.warning('รหัสผ่านไม่ตรงกัน');
+        }
+        else {
+            if(passwordRef.current.value !== confirmPasswordRef.current.value ){
+                NotificationManager.warning('รหัสผ่านไม่ตรงกัน');
+            }
+            if(!validateEmail(emailRef.current.value)){
+                console.log(emailRef.current.value)
+                NotificationManager.warning('รูปแบบอีเมลล์ไม่ถูกต้อง');
+            }
+            if(passwordRef.current.value.length < 4 ){
+                NotificationManager.warning('รหัสผ่านสั้นเกินไป');
+            }
+            if(citizenIdRef.current.value.length != 13){
+                NotificationManager.warning('รหัสประจำตัวประชาชนไม่ถูกต้อง');
+            }
+            if(phoneRef.current.value.length != 10){
+                NotificationManager.warning('หมายเลขโทรศัพท์ไม่ถูกต้อง');   
+            }
+            if(!!!file){
+                NotificationManager.warning('กรุณาใส่รูปประจำตัว');
+            }
         }
     }
     const [count, setCount] = useState(0);
@@ -123,59 +152,60 @@ function RegisDriver() {
                 <form classname="" id="driverreg" action="" method="post">
                     <div id="boxinput-driver">
                         <label>ชื่อผู้ใช้</label>
-                        <input type="text" ref={usernameRef} value={usernameRef.current.value} placeholder="กรอกชื่อผู้ใช้" name="username"/>
+                        <input type="text" ref={usernameRef}  placeholder="กรอกชื่อผู้ใช้" name="username"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>ชื่อจริง</label>
-                        <input type="text" ref={fnameRef} value={fnameRef.current.value} placeholder="กรอกชื่อจริง" name="fname"/>
+                        <input type="text" ref={fnameRef}  placeholder="กรอกชื่อจริง" name="fname"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>นามสกุล</label>
-                        <input type="text" ref={lnameRef} value={lnameRef.current.value} placeholder="กรอกนามสกุล" name="lname"/>
+                        <input type="text" ref={lnameRef}  placeholder="กรอกนามสกุล" name="lname"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>วันเกิด</label>
-                        <input type="date" ref={birth_dateRef} value={birth_dateRef.current.value} placeholder="กรอกวันเกิด" name="birth_date"/>
+                        <input type="date" ref={birth_dateRef}  placeholder="กรอกวันเกิด" name="birth_date"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>อายุ</label>
-                        <input type="number" ref={ageRef} value={ageRef.current.value} placeholder="กรอกอายุ" name="age"/>
+                        <input type="number" ref={ageRef} placeholder="กรอกอายุ" name="age"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>อีเมลล์</label>
-                        <input type="email" ref={emailRef} value={emailRef.current.value} placeholder="กรอกอีเมลล์" name="email"/>
+                        <input type="email" ref={emailRef}  placeholder="กรอกอีเมลล์" name="email"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>หมายเลขโทรศัพท์</label>
-                        <input type="tel" ref={phoneRef} value={phoneRef.current.value} placeholder="กรอกหมายเลขโทรศัพท์" name="phone" />
+                        <input type="number" ref={phoneRef} placeholder="กรอกหมายเลขโทรศัพท์" name="phone" />
                     </div>
                     <div id="boxinput-driver">
                         <label>รหัสประจำตัวประชาชน</label>
-                        <input type="text" ref={citizenIdRef} value={citizenIdRef.current.value} placeholder="กรอกรหัสประจำตัวประชาชน" name="id_no" />
+                        <input type="text" ref={citizenIdRef} placeholder="กรอกรหัสประจำตัวประชาชน" name="id_no" />
                     </div>
                     <div id="boxinput-driver">
                         <label>รหัสผ่าน</label>
-                        <input type="password" ref={passwordRef} value={passwordRef.current.value} placeholder="กรอกรหัสผ่าน" name="password" />
+                        <input type="password" ref={passwordRef} placeholder="กรอกรหัสผ่าน" name="password" />
                     </div>
                     <div id="boxinput-driver">
                         <label>ยืนยันรหัสผ่าน</label>
-                        <input type="password" ref={confirmPasswordRef} value={confirmPasswordRef.current.value} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" name="confirmPassword" />
+                        <input type="password" ref={confirmPasswordRef} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" name="confirmPassword" />
                     </div>
                     <div id="boxinput-driver">
                         <label>หมายเลขวิน</label>
-                        <input type="number" ref={driver_noRef} value={driver_noRef.current.value} placeholder="กรอกหมายเลขวิน" name="driver_number"/>
+                        <input type="number" ref={driver_noRef} placeholder="กรอกหมายเลขวิน" name="driver_number"/>
                     </div>
                     <div id="boxinput-driver">
                         <label>ชื่อซุ้มวิน</label>
-                        <input type="text" ref={win_nameRef} value={win_nameRef.current.value} placeholder="กรอกชื่อซุ้ม" name="win_name" />
+                        <input type="text" ref={win_nameRef} placeholder="กรอกชื่อซุ้ม" name="win_name" />
                     </div>
                     <div id="boxinput-driver">
                         <label>ป้ายทะเบียนรถ</label>
-                        <input type="text" ref={plateRef} value={plateRef.current.value} placeholder="กรอกป้ายทะเบียนรถ" name="plate" />
+                        <input type="text" ref={plateRef} placeholder="กรอกป้ายทะเบียนรถ" name="plate" />
                     </div>
                 </form>
                 <button id="sum_driverreg" type="button" onClick={sendData}>ลงทะเบียน</button>
                 <button id="back_driverreg" type="submit" onClick={()=> {setCount(1)}}> กลับ </button>
+                <label>เลือกรูปประจำตัว</label>
                 <input name="csv" type="file" onChange={event=>{
                     fileChangedHandler(event);
                     // setFile(URL.createObjectURL(event.target.files[0]))

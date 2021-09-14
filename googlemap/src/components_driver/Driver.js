@@ -60,6 +60,7 @@ class Driver extends React.Component {
     loadingState:0,
     disableButton:false,
     cancelState:false,
+    file:null,
   }
   queueDriver = null;
   buttonAcceptCancel = null;
@@ -73,7 +74,7 @@ class Driver extends React.Component {
   driverLname= null;
   cancelBackground=null;
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
-  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
+  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
     clearTimeout(this.driverTimeOut)
     console.log(startLat,startLng)
     console.log(userFName,userLName)
@@ -90,6 +91,7 @@ class Driver extends React.Component {
       userId: idUser,
       userFname: userFName,
       userLname: userLName,
+      file:picture,
     });
   
   }
@@ -315,7 +317,7 @@ class Driver extends React.Component {
                               <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
                               userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={conn}/>
                             </div>
-          this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname}/>
+          this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname} file={this.state.file}/>
           this.countdown = null;
         }
         

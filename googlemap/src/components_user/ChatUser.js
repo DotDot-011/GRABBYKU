@@ -31,17 +31,22 @@ export default function ChatUser(props){
     },[])
 
     useEffect(()=>{
-        axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
-        driver_id: props.driverId})
-        .then(res=>{
-            // console.log(res.data)
-            setFirst_name(res.data.fname);
-            setLast_name(res.data.lname);
-            setAvatar(res.data.image)
-        })
-        .catch(err=>{
-            // NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        })
+        let intervalId = setInterval(()=>{
+            axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
+                driver_id: props.driverId})
+                .then(res=>{
+                    // console.log(res.data)
+                    clearInterval(intervalId);
+                    setFirst_name(res.data.fname);
+                    setLast_name(res.data.lname);
+                    setAvatar(res.data.image);
+                   
+                })
+                .catch(err=>{
+                    NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+                })
+        },1200)
+        
     },[])
     
     
