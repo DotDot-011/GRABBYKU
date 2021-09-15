@@ -55,10 +55,10 @@ $data = [];
 // }
 
 // echo $driver_id;
-$sql1 = "SELECT * FROM driver WHERE driver_id = '$driver_id'";
-$result1 = $conn->query($sql1);
-$row1 = $result1->fetch_assoc();
-$driver = $row1;
+// $sql1 = "SELECT * FROM driver WHERE driver_id = '$driver_id'";
+// $result1 = $conn->query($sql1);
+// $row1 = $result1->fetch_assoc();
+// $driver = $row1['driver_id'];
 
 $sql="SELECT connection_id FROM websocket WHERE name LIKE '$name' and id = '$user_id' and is_driver = 0";
 $result = $conn->query($sql);
@@ -70,7 +70,7 @@ while ($row = $result->fetch_assoc()) {
             // send message
             $client->send(json_encode([
                 "message_code"=> $protocol,
-                "data"=> $driver,
+                "driver_id"=> $driver_id,
                 "booking_id"=>$booking_id
             ]));
             // $b = $connection_id;
