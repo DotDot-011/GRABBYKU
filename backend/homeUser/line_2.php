@@ -18,4 +18,7 @@ $sql = "INSERT INTO booking (user_id, lat_user, lng_user, lat_des, lng_des)
 VALUES ('$user_id', '$lat_user', '$lng_user', '$lat_des', '$lng_des')";
 $result = $conn->query($sql);
 
+$sql = "SELECT * FROM booking";
+$result = $conn->query($sql);
+
 echo $result->num_rows;
