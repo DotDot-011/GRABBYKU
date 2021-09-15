@@ -71,20 +71,7 @@ export default function QueueDriver(props) {
         
     }
     
-    conn.onmessage = function(e) {
-        let Message = JSON.parse(e.data)
-        console.log(Message)
-        clearInterval(window.timeoutId1);
-       
-        if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
-            // console.log(Message.message_code);
-            window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
-            
-            // console.log(sizeof(Message));
-        }
-
-
-    };
+    
     
 
     useEffect(()=>{
@@ -105,6 +92,20 @@ export default function QueueDriver(props) {
             protocol: "getqueue", // protocol
             DriverID: `${props.driverId}`, // name
         }))
+        conn.onmessage = function(e) {
+            let Message = JSON.parse(e.data)
+            console.log(Message)
+            clearInterval(window.timeoutId1);
+           
+            if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
+                // console.log(Message.message_code);
+                window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
+                
+                // console.log(sizeof(Message));
+            }
+            
+    
+        };
         
         return ()=>{
             clearInterval(window.timeoutId1);

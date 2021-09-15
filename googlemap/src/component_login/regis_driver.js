@@ -32,18 +32,7 @@ function RegisDriver() {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
       }
-    async function uploadFile(){
-
-        axios.post(Url.LinkToBackend+"backend/api/image", {
-           image: file,
-           driver_id: 18,
-        }).then((res) => {
-          console.log(res.data)
-        //   fileChangedHandler(res.data)
-          setNewFile(res.data)
-        })
-      }
-
+    
     function fileChangedHandler(event) {
         var fileInput = false;
         if (event.target.files[0]) {
@@ -92,12 +81,13 @@ function RegisDriver() {
         (win_nameRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อซุ้มวิน');
 
         if(passwordRef.current.value === confirmPasswordRef.current.value & count === 13 & validateEmail(emailRef.current.value) 
-        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13 & !!file & phoneRef.current.value.length == 10) {
+        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13 & !!file & phoneRef.current.value.length == 10
+        && 2021 - birth_dateRef.current.value.split('-')[0] >=18) {
             axios.post(Url.LinkToBackend +"backend/api/register_driver",{
                 fname: fnameRef.current.value,
                 lname: lnameRef.current.value,
                 birth_date: birth_dateRef.current.value,
-                age: ageRef.current.value,
+                age: 0,
                 email: emailRef.current.value,
                 phone: phoneRef.current.value,
                 id_no: citizenIdRef.current.value,
@@ -140,6 +130,10 @@ function RegisDriver() {
             if(!!!file){
                 NotificationManager.warning('กรุณาใส่รูปประจำตัว');
             }
+            if(2021 - birth_dateRef.current.value.split('-')[0] <18){
+                NotificationManager.warning('อายุยังไม่ถึงเกณฑ์');
+            }
+            
         }
     }
     const [count, setCount] = useState(0);
@@ -166,10 +160,10 @@ function RegisDriver() {
                         <label>วันเกิด</label>
                         <input type="date" ref={birth_dateRef}  placeholder="กรอกวันเกิด" name="birth_date"/>
                     </div>
-                    <div id="boxinput-driver">
+                    {/* <div id="boxinput-driver">
                         <label>อายุ</label>
                         <input type="number" ref={ageRef} placeholder="กรอกอายุ" name="age"/>
-                    </div>
+                    </div> */}
                     <div id="boxinput-driver">
                         <label>อีเมลล์</label>
                         <input type="email" ref={emailRef}  placeholder="กรอกอีเมลล์" name="email"/>
@@ -218,8 +212,8 @@ function RegisDriver() {
                 {/* <img src={newFile}/> */}
                 
             <button onClick={()=>{
-                
-                uploadFile();
+                console.log(birth_dateRef.current.value.split('-')[0])
+                // uploadFile();
             }}>กดค่ะ</button>
                 <NotificationContainer />
             </div>

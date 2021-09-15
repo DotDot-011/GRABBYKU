@@ -96,7 +96,7 @@ function RegisUser() {
                 fname: fnameRef.current.value,
                 lname: lnameRef.current.value,
                 birth_date: birth_dateRef.current.value,
-                age: ageRef.current.value,
+                age: 0,
                 email: emailRef.current.value,
                 phone: phoneRef.current.value,
                 id_no: citizenIdRef.current.value,
@@ -161,11 +161,11 @@ function RegisUser() {
                         <input type="date" ref={birth_dateRef}  placeholder="กรอกวันเกิด" name="birth_date"/>
 
                     </div>
-                    <div id="boxinput-user">
+                    {/* <div id="boxinput-user">
                         <label>อายุ</label>
                         <input type="number" ref={ageRef}  placeholder="กรอกอายุ" name="age"/>
 
-                    </div>
+                    </div> */}
                     <div id="boxinput-user">
                         <label>อีเมลล์</label>
                         <input type="email" ref={emailRef}  placeholder="กรอกอีเมลล์" name="email"/>

@@ -9,11 +9,11 @@ export default function ChatDriver(props){
         
         console.log('------------',userId,userFname)
         conn.onmessage = function(e) {
-
+            console.log('--------------');
             let Message = JSON.parse(e.data)
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
-                console.log(Message);
+                // console.log(Message);
             }
         };
 
