@@ -72,7 +72,7 @@ export default function CommentDriver(props){
       
     return(
         <div className="comment-driver-container">
-            <CloseButton onClick={()=>{props.handleForUpdate(null);}} />
+            <CloseButton id="close-butt" onClick={()=>{props.handleForUpdate(null);}} />
             <div>   
                 <Box component="fieldset" mb={3} borderColor="transparent">
                     <Typography id="commentH" component="legend">ให้คะแนน</Typography>
@@ -99,11 +99,7 @@ export default function CommentDriver(props){
             
             <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
             { 
-            
-              
-            
               close=>(
-                
                 <div className="thankyou"> <h1>ยืนยันที่จะส่งข้อมูล</h1>
                     <button id="thank-button" onClick={sendReport}> ยืนยัน </button>
 

@@ -41,7 +41,7 @@
     /* margin: 0 auto; */
 }
 .button-enQueue{
-    background-color: #1FAb89;
+    background-color: #167964;
     border-radius: 20px;
     border: none;
     color: white;
@@ -55,7 +55,7 @@
 }
 .button-enQueue:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #10725a;
+    background-color: #105e4d;
     box-shadow: 0 8px 11px #115745;
 }
 .button-enQueue:active {
