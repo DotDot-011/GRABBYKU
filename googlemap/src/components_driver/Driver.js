@@ -24,11 +24,12 @@ import mapStyle from "../mapStyle"
 import Countdown from "react-countdown"
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
-const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
+// const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
 // conn.onopen = function(e) {
 //   console.log("Connection established!");
 // }
 
+const timeCooldown=40000;
 class Driver extends React.Component {
   
   state = {
@@ -60,8 +61,9 @@ class Driver extends React.Component {
     loadingState:0,
     disableButton:false,
     cancelState:false,
+    file:null,
   }
-  queueDriver = null;
+  queueDriver =null;
   buttonAcceptCancel = null;
   buttonDone = null;
   userInfo = null;
@@ -72,8 +74,9 @@ class Driver extends React.Component {
   driverFname = null;
   driverLname= null;
   cancelBackground=null;
+  conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
-  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName){
+  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
     clearTimeout(this.driverTimeOut)
     console.log(startLat,startLng)
     console.log(userFName,userLName)
@@ -90,6 +93,7 @@ class Driver extends React.Component {
       userId: idUser,
       userFname: userFName,
       userLname: userLName,
+      file:picture,
     });
   
   }
@@ -108,7 +112,7 @@ class Driver extends React.Component {
         if (!res.data.message){
          
           clearInterval(this.cancelIntervalId);
-          leaveQueue(this.state.driverId,conn);
+          leaveQueue(this.state.driverId,this.conn);
           NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
           this.setState({
             queueDriverAppear:3,
@@ -132,7 +136,7 @@ class Driver extends React.Component {
   driverCancel = () =>{
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
-    leaveQueue(this.state.driverId,conn);
+    leaveQueue(this.state.driverId,this.conn);
     this.setState({
         queueDriverAppear:2,
     });
@@ -158,22 +162,34 @@ class Driver extends React.Component {
 
   // ------------------ driver กด ยอมรับงาน ------------------
   driverAccept = () =>{
-    console.log(typeof(this.driverTimeOut));
-    clearTimeout(this.driverTimeOut);
-    axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
-      driver_id: parseInt(this.state.driverId),
-      user_id: parseInt(this.state.userId)
-    })
-    .then(res=>{
-      console.log(res.data.message);
-      this.setState({
-        buttonAcceptCancelAppear: null,
-      });
-      leaveQueue(this.state.driverId,conn);
-    })
-    .catch(err=>{
-      NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-    })
+    // console.log(typeof(this.driverTimeOut));
+    // clearTimeout(this.driverTimeOut);
+    // axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
+    //   driver_id: parseInt(this.state.driverId),
+    //   user_id: parseInt(this.state.userId)
+    // })
+    // .then(res=>{
+    //   console.log(res.data.message);
+    //   this.setState({
+    //     buttonAcceptCancelAppear: null,
+    //   });
+    //   leaveQueue(this.state.driverId,this.conn);
+    // })
+    // .catch(err=>{
+    //   NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+    // })
+    this.conn.send(JSON.stringify({
+      protocol: "driver-accepted", // protocol
+      DriverID: this.state.driverId, 
+      Name: `${this.state.userFname} ${this.state.userLname}`,
+      UserID: `${this.state.userId}`,
+      
+  }));
+  this.setState({
+    buttonAcceptCancelAppear: null,
+  });
+  leaveQueue(this.state.driverId,this.conn);
+    
   }
   
   // ------------------ นับถอยหลังกดรับงาน ------------------
@@ -181,17 +197,23 @@ class Driver extends React.Component {
     this.driverTimeOut=setTimeout(()=>{
       this.setState({queueDriverAppear:2})
       // NotificationManager.error('ขออภัยในความไม่สะดวก','kokkak',1000);
-      leaveQueue(this.state.driverId,conn);
-    },20000)
+      leaveQueue(this.state.driverId,this.conn);
+    },timeCooldown)
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
     }
   }
 
   componentWillMount(){
-    conn.onopen = function(e) {
+    this.conn.onopen = function(e) {
       console.log("Connection established!");
     }
+    this.conn.onmessage = function(e) {
+      let Message = JSON.parse(e.data)
+      console.log(Message)
+      console.log('----------2');
+      // console.log(Message.message_code);
+    };
   }
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
@@ -210,21 +232,25 @@ class Driver extends React.Component {
       })
       .then((res)=>{
         //---------------------------------------------
-        clearInterval(this.fetchDriverIdInterval);
-        console.log(res.data);
-        this.setState({
-          driverId: parseInt(res.data[0].driver_id),
-          loadingState:1,
-        })
-        console.log(res.data[0].fname, res.data[0].lname)
-        conn.send(JSON.stringify({
-          protocol: "in", // protocol
-          Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
-          Mode: "1",
-          ID: `${res.data[0].driver_id}`,
-        }));
-        this.driverFname = res.data[0].fname;
-        this.driverLname = res.data[0].lname;
+        
+          clearInterval(this.fetchDriverIdInterval);
+          console.log(res.data);
+          this.setState({
+            driverId: parseInt(res.data[0].driver_id),
+            
+          })
+          console.log(res.data[0].fname, res.data[0].lname)
+          
+          this.conn.send(JSON.stringify({
+            protocol: "in", // protocol
+            Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
+            Mode: "1",
+            ID: `${res.data[0].driver_id}`,
+          }));
+          this.driverFname = res.data[0].fname;
+          this.driverLname = res.data[0].lname;
+        
+        
       })
       .then(()=>{
         this.setState({
@@ -247,7 +273,7 @@ class Driver extends React.Component {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={conn}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
@@ -269,7 +295,7 @@ class Driver extends React.Component {
           this.cancelCase();
           this.PenaltyTimeOut();
           this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
-          this.countdown= <Countdown date={Date.now() + 20000} renderer={({seconds, completed }) => {
+          this.countdown= <Countdown date={Date.now() + timeCooldown} renderer={({seconds, completed }) => {
             
               return (
                 // <span id="accept-time" style={{fontSize:'40px'}}>
@@ -305,7 +331,7 @@ class Driver extends React.Component {
           this.chatDriver=null;
           this.buttonDone = <div className="button-accept-cancel-done">
                               <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
-                              userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={conn}/>
+                              userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={this.conn}/>
                             </div>
         }
         else{
@@ -313,9 +339,9 @@ class Driver extends React.Component {
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
                               <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
-                              userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={conn}/>
+                              userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={this.conn}/>
                             </div>
-          this.chatDriver=<ChatDriver conn={conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname}/>
+          this.chatDriver=<ChatDriver conn={this.conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname} file={this.state.file}/>
           this.countdown = null;
         }
         
@@ -398,7 +424,7 @@ class Driver extends React.Component {
         
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
           <div key={this.state.driverId} className="driver-detail-driv">
-            {this.queueDriver}
+            {this.queueDriver }
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>
           </div>

@@ -3,7 +3,7 @@ import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-
 import './ChatDriver.css'
 
 export default function ChatDriver(props){
-    const { conn ,userId ,userFname , userLname} = props;
+    const { conn ,userId ,userFname , userLname, file} = props;
     const [count,setCount] = useState(0);
     
     
@@ -11,14 +11,14 @@ export default function ChatDriver(props){
         
         console.log('------------',userId,userFname)
         conn.onmessage = function(e) {
-
+            console.log('--------------');
             let Message = JSON.parse(e.data)
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
-                console.log(Message);
+                // console.log(Message);
             }
         };
-           
+
     },[])
 
 
@@ -40,7 +40,7 @@ export default function ChatDriver(props){
     return(
         <Chat
              handleNewUserMessage={handleNewUserMessage}
-             profileAvatar="https://cdn.emojidex.com/emoji/seal/Tom_and_Jerry_meme.png?1533418242"
+             profileAvatar={file}
              title={userFname+' '+userLname}
              
             //  subtitle="And my cool subtitle"

@@ -24,7 +24,7 @@ import ChatUser from "./ChatUser";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
-let conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
+// const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
 // conn.onopen = function(e) {
 //   console.log("Connection established!");
 // }
@@ -67,12 +67,13 @@ class User extends React.Component {
       travelDistance:0,
       driverDistance:0,
     }
-    
+    conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
     watingQueue=null;
     detailDriver=null;
     timeoutId = 0;
     driverId=null;
     userId=null;
+    bookingId=null;
     fetchUserIdInterval=null;
     chatUser=null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
@@ -385,23 +386,25 @@ class User extends React.Component {
           this.setState({
             waitingQueueAppear:1,
           })
-          this.timeoutId = setInterval(()=>{
-            // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
-            axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
-            {id: this.userId})
-            .then(res=>{
-              console.log(res)        
-              if(!!res.data.driver_id){                    
-                console.log(res);
-                console.log(res.data);   
-                this.driverId=res.data.driver_id;
-                this.setState({
-                  waitingQueueAppear:null,
-                  detailDriverAppear:1,
-                })
-              }
-            })
-          },1500)
+          // --------------------- ไปอยู่ใน wait แล้วจ้า อีอ้วน ----------------------
+          // this.timeoutId = setInterval(()=>{
+          //   // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
+          //   axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
+          //   {id: this.userId})
+          //   .then(res=>{
+          //     console.log(res)        
+          //     if(!!res.data.driver_id){                    
+          //       console.log(res);
+          //       console.log(res.data);   
+          //       this.driverId=res.data.driver_id;
+          //       this.bookingId = res.data.booking_id;
+          //       this.setState({
+          //         waitingQueueAppear:null,
+          //         detailDriverAppear:1,
+          //       })
+          //     }
+          //   })
+          // },1500)
         })
         .catch(err=>{
           NotificationManager.error(err.message,'Alert',1000);
@@ -440,10 +443,10 @@ class User extends React.Component {
     }
 
     componentWillMount(){
-      conn.onopen = function(e) {
+      this.conn.onopen = function(e) {
         console.log("Connection established!");
       }
-      conn.onmessage = function(e) {
+      this.conn.onmessage = e=> {
         let Message = JSON.parse(e.data)
         console.log(Message)
         console.log('----------2');
@@ -454,7 +457,6 @@ class User extends React.Component {
     
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
-      
       // axios.get( Url.LinkToBackend +"backend/api/bomb")
       
       //--------------------------------
@@ -469,11 +471,12 @@ class User extends React.Component {
           this.userId=res.data[0].user_id;
           console.log(res.data[0].fname, res.data[0].lname)
           
-          conn.send(JSON.stringify({
+          this.conn.send(JSON.stringify({
             protocol: "in",
             Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
             Mode: "0",
             ID: `${res.data[0].user_id}`,
+            
           }));
         })
         .then(()=>{
@@ -499,12 +502,23 @@ class User extends React.Component {
       });
     
     }
+
+    handleForDriverAccept(showWaitingQueue,showDetailDriver,ID_Driver,ID_Booking){
+      this.driverId = ID_Driver;
+      this.bookingId = ID_Booking;
+      this.setState({
+        waitingQueueAppear:showWaitingQueue,
+        detailDriverAppear:showDetailDriver,
+      });
+    }
+
+    
     
     
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
+        this.watingQueue= <Wait cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}/>
       }
       else{
         this.watingQueue=null;
@@ -512,12 +526,13 @@ class User extends React.Component {
       }
       if(this.state.detailDriverAppear===1){
         this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} 
-                            conn={conn}  driverDistance={this.state.driverDistance}/>
-        this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={conn} driverId={this.driverId} />
+                            conn={this.conn}  driverDistance={this.state.driverDistance}/>
+        this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={this.conn} driverId={this.driverId} />
         
       }
       else if(this.state.detailDriverAppear===2){
-        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
+        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={this.conn} driverId={this.driverId} 
+                      userId={this.userId} bookingId={this.bookingId}/>
         this.chatUser=null;
       }
       else{

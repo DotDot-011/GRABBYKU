@@ -16,7 +16,7 @@ export default function QueueDriver(props) {
             driver_id : props.driverId
         })
         .then( res=>{
-            console.log(res.data);
+            // console.log(res.data);
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);
@@ -24,7 +24,7 @@ export default function QueueDriver(props) {
                 clearInterval(window.timeoutId1);
                 // console.log(Number(res.data.lat_user));
                 props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
-                 ,0 ,res.data.user_id, res.data.user_fname, res.data.user_lname);
+                 ,0 ,res.data.user_id, res.data.user_fname, res.data.user_lname,res.data.image);
             }
 
         })
@@ -48,7 +48,7 @@ export default function QueueDriver(props) {
             
             if(key != 'message_code'){
                 // console.log(key)
-                console.log(Message[key])
+                // console.log(Message[key])
                 // console.log(props.driverId)
                 let myEl = document.createElement('span');
                 myEl.innerText = `${i} : ${Message[key].driver_name}  \n`;
@@ -71,20 +71,7 @@ export default function QueueDriver(props) {
         
     }
     
-    conn.onmessage = function(e) {
-        let Message = JSON.parse(e.data)
-        // console.log(Message)
-        clearInterval(window.timeoutId1);
-       
-        if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
-            // console.log(Message.message_code);
-            window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
-            
-            // console.log(sizeof(Message));
-        }
-
-
-    };
+    
     
 
     useEffect(()=>{
@@ -105,6 +92,20 @@ export default function QueueDriver(props) {
             protocol: "getqueue", // protocol
             DriverID: `${props.driverId}`, // name
         }))
+        conn.onmessage = function(e) {
+            let Message = JSON.parse(e.data)
+            console.log(Message)
+            clearInterval(window.timeoutId1);
+           
+            if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
+                // console.log(Message.message_code);
+                window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
+                
+                // console.log(sizeof(Message));
+            }
+            
+    
+        };
         
         return ()=>{
             clearInterval(window.timeoutId1);
