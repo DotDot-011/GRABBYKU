@@ -22,8 +22,7 @@ $results = $conn->query($statement);
 $rows = $results->fetch_assoc();
 $booking_id = $rows["booking_id"];
 
-// $result = mysqli_query($statement); 
-//$result = mysqli_query($statement);
+
 $data = [];
 
 // if ($result = $conn->query($statement)) {
