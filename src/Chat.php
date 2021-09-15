@@ -7,7 +7,8 @@ $is_driver = $wsdata['ReceiverMode'];
 
 $sql = "SELECT id FROM websocket WHERE connection_id = '$from->resourceId'";
 $result = $conn->query($sql);
-$SenderID = $result->fetch_assoc();
+$row = $result->fetch_assoc();
+$SenderID = $row['id'];
 
 $sql = "SELECT connection_id FROM websocket WHERE name LIKE '$ReceiverName' and id = '$ReceiverID' and is_driver = '$is_driver'";
 echo "send message to " . $ReceiverName . "\n";
