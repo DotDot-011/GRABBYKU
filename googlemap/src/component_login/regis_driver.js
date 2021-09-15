@@ -209,12 +209,12 @@ function RegisDriver() {
                     }} />
 
                 {/* <input type="file" onChange={} /> */}
-                {/* <img src={newFile}/> */}
+                <img src={file}/>
                 
-            <button onClick={()=>{
+            {/* <button onClick={()=>{
                 console.log(birth_dateRef.current.value.split('-')[0])
                 // uploadFile();
-            }}>กดค่ะ</button>
+            }}>กดค่ะ</button> */}
                 <NotificationContainer />
             </div>
         );

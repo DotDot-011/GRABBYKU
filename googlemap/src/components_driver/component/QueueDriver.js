@@ -16,7 +16,7 @@ export default function QueueDriver(props) {
             driver_id : props.driverId
         })
         .then( res=>{
-            console.log(res.data);
+            // console.log(res.data);
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);

@@ -33,10 +33,9 @@ const labels = {
     },
   });
 export default function DetailDriver(props){
-    const { cancelQueue,conn } = props;
+    const { cancelQueue,conn ,driverId} = props;
     const [cost,setCost] = useState(0);
     const [estimatetime,setEstimatetime] = useState(0);
-    //console.log(props.driverId);
     const [first_name, setFirst_name] = useState("นายธนาคาร");
     const [last_name, setLast_name] = useState("หลักแหลม");
     const [plate, setPlate] = useState("กอจ 666");
@@ -105,7 +104,7 @@ export default function DetailDriver(props){
     // ------------------ show ข้อมูลของ driver ที่ match ------------------
     useEffect(()=>{
         axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
-        driver_id: props.driverId})
+        driver_id: driverId})
         .then(res=>{
             console.log(res.data)
             setFirst_name(res.data.fname);

@@ -162,22 +162,34 @@ class Driver extends React.Component {
 
   // ------------------ driver กด ยอมรับงาน ------------------
   driverAccept = () =>{
-    console.log(typeof(this.driverTimeOut));
-    clearTimeout(this.driverTimeOut);
-    axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
-      driver_id: parseInt(this.state.driverId),
-      user_id: parseInt(this.state.userId)
-    })
-    .then(res=>{
-      console.log(res.data.message);
-      this.setState({
-        buttonAcceptCancelAppear: null,
-      });
-      leaveQueue(this.state.driverId,this.conn);
-    })
-    .catch(err=>{
-      NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-    })
+    // console.log(typeof(this.driverTimeOut));
+    // clearTimeout(this.driverTimeOut);
+    // axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
+    //   driver_id: parseInt(this.state.driverId),
+    //   user_id: parseInt(this.state.userId)
+    // })
+    // .then(res=>{
+    //   console.log(res.data.message);
+    //   this.setState({
+    //     buttonAcceptCancelAppear: null,
+    //   });
+    //   leaveQueue(this.state.driverId,this.conn);
+    // })
+    // .catch(err=>{
+    //   NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+    // })
+    this.conn.send(JSON.stringify({
+      protocol: "driver-accepted", // protocol
+      DriverID: this.state.driverId, 
+      Name: `${this.state.userFname} ${this.state.userLname}`,
+      UserID: `${this.state.userId}`,
+      
+  }));
+  this.setState({
+    buttonAcceptCancelAppear: null,
+  });
+  leaveQueue(this.state.driverId,this.conn);
+    
   }
   
   // ------------------ นับถอยหลังกดรับงาน ------------------
@@ -213,7 +225,6 @@ class Driver extends React.Component {
     // }
     //----------------------------------------------------
     // axios.get( Url.LinkToBackend +"backend/api/bomb")
-    console.log('xxxxxx',this.queueDriver)
     this.fetchDriverIdInterval =setInterval(()=>{
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
         username: localStorage.getItem("username")
@@ -221,21 +232,25 @@ class Driver extends React.Component {
       })
       .then((res)=>{
         //---------------------------------------------
-        clearInterval(this.fetchDriverIdInterval);
-        console.log(res.data);
-        this.setState({
-          driverId: parseInt(res.data[0].driver_id),
-          loadingState:1,
-        })
-        console.log(res.data[0].fname, res.data[0].lname)
-        this.conn.send(JSON.stringify({
-          protocol: "in", // protocol
-          Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
-          Mode: "1",
-          ID: `${res.data[0].driver_id}`,
-        }));
-        this.driverFname = res.data[0].fname;
-        this.driverLname = res.data[0].lname;
+        
+          clearInterval(this.fetchDriverIdInterval);
+          console.log(res.data);
+          this.setState({
+            driverId: parseInt(res.data[0].driver_id),
+            
+          })
+          console.log(res.data[0].fname, res.data[0].lname)
+          
+          this.conn.send(JSON.stringify({
+            protocol: "in", // protocol
+            Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
+            Mode: "1",
+            ID: `${res.data[0].driver_id}`,
+          }));
+          this.driverFname = res.data[0].fname;
+          this.driverLname = res.data[0].lname;
+        
+        
       })
       .then(()=>{
         this.setState({
