@@ -20,7 +20,7 @@ if($conn->query($sql1) == TRUE && $conn->query($sql2) == TRUE) {
 
 $statement = "SELECT * FROM booking WHERE user_id = '$user_id'";
 
-//$result = mysqli_query($statement); 
+//$result = mysqli_query($statement);
 $data = [];
 
 if ($result = $conn->query($statement)) {

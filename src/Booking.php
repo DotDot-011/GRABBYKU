@@ -5,8 +5,9 @@ $result = $conn->query($sql);
 $user = [];
 $i = 0;
 while ($row = $result->fetch_assoc()) {
-    $user[$i]['name_and_id'] = $row['fname'] . " " . $row['lname'] . $row['user_id'];
-    $sql1 = "SELECT connection_id FROM websocket WHERE name LIKE '$user[$id]['name_and_id']'";
+    $user[$i]['name'] = $row['fname'] . " " . $row['lname'];
+    $user[$i]['id'] = $row['user_id'];
+    $sql1 = "SELECT connection_id FROM websocket WHERE name LIKE '$user[$i]['name']' and id = '$user[$i]['id']'";
     $result1 = $conn->query($sql1);
     $row1 = $result1->fetch_assoc();
     foreach ($this->clients as $client) {
@@ -15,8 +16,6 @@ while ($row = $result->fetch_assoc()) {
                 "message_code" => "your booking order",
                 "booking order" => $i + 1
             ]));
-            /* $user[$i]['client'] = $client;
-            $this->clients->detach($client); */
             break;
         }
     }
