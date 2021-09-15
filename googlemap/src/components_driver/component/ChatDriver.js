@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
+import './ChatDriver.css'
+
 export default function ChatDriver(props){
     const { conn ,userId ,userFname , userLname} = props;
     const [count,setCount] = useState(0);
