@@ -35,8 +35,8 @@ $routes["/backend/api/test"]["GET"] = "./homedriver/getqueue/enterwebsocket.php"
 $routes["/backend/api/getqueue"]["GET"] = "./homedriver/getqueue/getqueue.php";
 
 # user - get user data
-$routes["/backend/api/line1"]["POST"] = "./homeUser/line_1.php";
-$routes["/backend/api/line2"]["POST"] = "./homeUser/line_2.php";
+$routes["/backend/api/user_info"]["POST"] = "./homeUser/user_info.php";
+$routes["/backend/api/order_booking"]["POST"] = "./homeUser/order_booking.php";
 
 #insert user and driver to booking
 $routes["/backend/api/userdriver2book"]["POST"] = "./homedriver/userdriver2book/userdriver2book.php";
@@ -48,11 +48,11 @@ $routes["/backend/api/userdriverinbook"]["POST"] = "./homedriver/userdriverinboo
 $routes["/backend/api/checkuser"]["POST"] = "./homedriver/checkuser/checkuser.php";
 
 #cancel booking by user 
-$routes["/backend/api/cancelation"]["POST"] = "./homeUser/homeuserline_5.php";
+/* $routes["/backend/api/cancelation"]["POST"] = "./homeUser/cancel_booking.php"; */
 #when driver accept -> sent driver info to user =]
-$routes["/backend/api/request_driver_info"]["POST"] = "./homeUser/homeuserline_4.php";
+$routes["/backend/api/request_driver_info"]["POST"] = "./homeUser/driver_info.php";
 #user keep fetching his booking when queing =]
-$routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/homeuserline_3.php";
+/* $routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/booking_info.php"; */
 
 $routes["/backend/api/deletequeue"]["POST"] = "./homedriver/deleteQueue/deleteQueue.php";
 
@@ -65,6 +65,7 @@ $routes["dequeue"]["ws"] = "./src/deQueue.php";
 $routes["driver-accepted"]["ws"] = "./src/DriverAccepted.php";
 $routes["work-finished"]["ws"] = "./src/WorkFinished.php";
 $routes["getqueue"]["ws"] = "./src/Queue.php";
+$routes["user-cancel"]["ws"] = "./src/UserCanceled.php";
 
 
 #user report comment driver

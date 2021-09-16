@@ -21,4 +21,6 @@ $result = $conn->query($sql);
 $sql = "SELECT * FROM booking";
 $result = $conn->query($sql);
 
-echo $result->num_rows;
+echo json_encode([
+    "booking_order"=> $result->num_rows
+]);

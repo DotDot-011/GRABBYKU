@@ -25,7 +25,9 @@ if ($result->num_rows > 0) {
     $data["user_fname"] = $row3["fname"];
     $data["user_lname"] = $row3["lname"];
     $data["image"] = $row3["imageData"];
-    echo json_encode($data, JSON_PRETTY_PRINT);
+    echo json_encode($data);
+    $sql = "UPDATE booking SET driver_id = $driver_id WHERE user_id = $user_id";
+    $result = $conn->query($sql);
 } else {
     echo json_encode([
         "message"=> FALSE
