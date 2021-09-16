@@ -33,3 +33,5 @@ if ($conn->query($statement) === TRUE) {
 } else {
     echo "Error: " . $conn->error . "\n";
 }
+
+require dirname(__DIR__) . "/src/Booking.php";
