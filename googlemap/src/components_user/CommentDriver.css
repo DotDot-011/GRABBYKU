@@ -1,6 +1,6 @@
 .comment-driver-container{
     margin: auto;
-    padding: 60px 30px;
+    padding: 30px 30px;
     position: fixed;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,12 @@
     border-width: 4px;
     border-color:#137e63;
 }
+#close-butt{
+    float: right;
+    border-width: 2px;
+}
 #commentH{
+    margin-top: 35px;
     font-size: 35px;
     font-weight: bolder;
     margin-bottom: 3%;
@@ -40,31 +45,31 @@
     border-width: 3px;
     border-radius: 10px;
 }
-.done-button{
+#done-button-com{
     color: #ffffff;
-    background-color: #4e4e4e;
+    background-color: #167964;
     border: none;
     border-radius: 18px;
-    width: 85px;
+    width: 100px;
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
 }
-.done-button:hover {
+#done-button-com:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #2b2b2b;
-    box-shadow: 0 8px 11px #555454;
+    background-color: #105e4d;
+    box-shadow: 0 8px 11px #115745;
 }
-.done-button:active {
+#done-button-com:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 7px #555454;
+    box-shadow: 0 4px 7px #115745;
 }
 
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
 
 .thankyou {
     /* margin: 0 auto; */
-    padding: 20% 0;
+    padding: 25% 0;
     position:relative;
     display: block;
     align-items: center;
@@ -86,7 +91,7 @@
 }
 #thank-button{
     color: #ffffff;
-    background-color: #1a9274;
+    background-color: #167964;
     border-radius: 20px;
     border: none;
     width: 100px;
@@ -96,7 +101,7 @@
 }
 #thank-button:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #10725a;
+    background-color: #105e4d;
     box-shadow: 0 8px 11px #115745;
 }
 #thank-button:active {

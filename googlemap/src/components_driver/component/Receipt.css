@@ -1,8 +1,30 @@
+#done_button{
+    top: 10px;
+    background-color: #167964;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-size: 26px;
+    position: relative;
+    height: 45px;
+    width: 100px;
+    transition: 0.3s;
+}
+#done_button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #105e4d;
+  box-shadow: 0 8px 11px #115745;
+}
+#done_button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
+}
+
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
 
 #confirmCancel-money{
     /* margin: 0 auto; */
-    padding: 50px 0;
+    padding: 45px 0;
     position:relative;
     display: block;
     align-items: center;
@@ -17,8 +39,8 @@
     border-width: 4px;
     border-color:#137e63;
 }
-#confirmCancel h1{
-    font-size: 3px;
+#confirmCancel-money h1{
+    font-size: 32px;
     font-weight: bolder;
     margin-bottom: 25px;
 }
@@ -35,7 +57,7 @@
 }
 #sub-button{
     color: #ffffff;
-    background-color: #1a9274;
+    background-color: #167964;
     border-radius: 20px;
     border: none;
     width: 100px;
@@ -45,7 +67,7 @@
 }
 #sub-button:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #10725a;
+    background-color: #105e4d;
     box-shadow: 0 8px 11px #115745;
 }
 #sub-button:active {
