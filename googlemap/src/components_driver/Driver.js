@@ -22,6 +22,7 @@ import Popup from 'reactjs-popup';
 import Penalty from "./component/Penalty";
 import mapStyle from "../mapStyle"
 import Countdown from "react-countdown"
+import getCookie from "../getCookie";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 // const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
@@ -102,52 +103,19 @@ class Driver extends React.Component {
   // ------------------ เช็คว่า user cancel หรือยัง ------------------
   cancelIntervalId=0;
 
-  // handleForCancelCase(showQueueDriver,DisableButton){
-  //   NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
-  //   this.setState({
-  //     queueDriverAppear:3,
-  //     disableButton:true,
-  //   })
-  // }
+  
   cancelCase=()=>{
-    console.log('pppppp')
-    leaveQueue(this.state.driverId,this.conn);
-    NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
-    this.setState({
-      queueDriverAppear:3,
-      disableButton:true,
-    })
-    setTimeout(()=>{
-      window.location.reload()
-    },5000)
-    // this.cancelIntervalId=setInterval(()=>{
-    //   axios.post(Url.LinkToBackend + "backend/api/check_user_cancel",{
-    //     user_id : this.state.userId
-    //   })
-    //   .then(res=>{
-    //     console.log(res);
-    //     // console.log(res.data.message);
-    //     if (!res.data.message){
-         
-    //       clearInterval(this.cancelIntervalId);
-    //       leaveQueue(this.state.driverId,this.conn);
-    //       NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
-    //       this.setState({
-    //         queueDriverAppear:3,
-    //         disableButton:true,
-            
-    //       })
-    //       setTimeout(()=>{
-    //         window.location.reload()
-    //       },5000)
-    //       // this.setState({
-    //       //   queueDriverAppear:1,
-    //       //   buttonAcceptCancelAppear:1,
-    //       // })
-         
-    //     }
-    //   })
-    // }, 1500);
+    if(this.state.queueDriverAppear!==2){
+      leaveQueue(this.state.driverId,this.conn);
+      NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
+      this.setState({
+        queueDriverAppear:3,
+        disableButton:true,
+      })
+      setTimeout(()=>{
+        window.location.reload()
+      },5000)
+    }
   }
 
   // ------------------ driver กด ปฏิเสธไม่รับงาน ------------------
@@ -161,41 +129,11 @@ class Driver extends React.Component {
     // leaveQueue(this.state.driverId);
     // document.location.reload();
     //--------------------------------------------
-  //   axios.post(Url.LinkToBackend+"backend/api/driver_cancel",{
-  //     driver_id: parseInt(this.state.driverId),
-  //     user_id: parseInt(this.state.userId)
-  //   })
-  //   .then(res=>{
-  //     console.log(res.data.message);
-  //     this.setState({
-  //       queueDriverAppear:2,
-  //     });
-  //   })
-  //   .catch(err=>{
-  //     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-  // })
-  //--------------------------------------------
 
   }
 
   // ------------------ driver กด ยอมรับงาน ------------------
   driverAccept = () =>{
-    // console.log(typeof(this.driverTimeOut));
-    // clearTimeout(this.driverTimeOut);
-    // axios.post(Url.LinkToBackend+"backend/api/driver_accept",{
-    //   driver_id: parseInt(this.state.driverId),
-    //   user_id: parseInt(this.state.userId)
-    // })
-    // .then(res=>{
-    //   console.log(res.data.message);
-    //   this.setState({
-    //     buttonAcceptCancelAppear: null,
-    //   });
-    //   leaveQueue(this.state.driverId,this.conn);
-    // })
-    // .catch(err=>{
-    //   NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-    // })
     this.conn.send(JSON.stringify({
       protocol: "driver-accepted", // protocol
       DriverID: this.state.driverId, 
@@ -235,24 +173,24 @@ class Driver extends React.Component {
   }
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
-    // axios.get( Url.LinkToBackend +"backend/api/bomb")
     // window.onbeforeunload =()=>{
     //   conn.send(JSON.stringify({
     //     protocol: "out",
     //   }))
     // }
+    // console.log('ooooooo',getCookie('token'))
     //----------------------------------------------------
-    // axios.get( Url.LinkToBackend +"backend/api/bomb")
+    axios.get( Url.LinkToBackend +"backend/api/bomb")
     this.fetchDriverIdInterval =setInterval(()=>{
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
-        username: localStorage.getItem("username")
-        // username : this.props.username
+        // JWT :`${getCookie('token')}` 
+        username : this.props.username
       })
       .then((res)=>{
         //---------------------------------------------
-        
+          
           clearInterval(this.fetchDriverIdInterval);
-          console.log(res.data);
+          // console.log('[[[[[[',res.data);
           this.setState({
             driverId: parseInt(res.data[0].driver_id),
             
@@ -315,10 +253,6 @@ class Driver extends React.Component {
           this.countdown= <Countdown date={Date.now() + timeCooldown} renderer={({seconds, completed }) => {
             
               return (
-                // <span id="accept-time" style={{fontSize:'40px'}}>
-                //   <b>กรุณาตอบรับภายใน</b> <br/>
-                //   {seconds} วินาที
-                // </span>
                 <span id="accept-time">
                   <b id="should-black">กรุณาตอบรับภายใน</b> &nbsp;
                   {seconds} วินาที

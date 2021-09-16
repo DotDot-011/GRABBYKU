@@ -21,6 +21,7 @@ import CommentDriver from "./CommentDriver";
 import distance from 'google_directions';
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
+import getCookie from "../getCookie";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -391,25 +392,6 @@ class User extends React.Component {
             waitingQueueAppear:1,
           })
           
-          // --------------------- ไปอยู่ใน wait แล้วจ้า อีอ้วน ----------------------
-          // this.timeoutId = setInterval(()=>{
-          //   // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
-          //   axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
-          //   {id: this.userId})
-          //   .then(res=>{
-          //     console.log(res)        
-          //     if(!!res.data.driver_id){                    
-          //       console.log(res);
-          //       console.log(res.data);   
-          //       this.driverId=res.data.driver_id;
-          //       this.bookingId = res.data.booking_id;
-          //       this.setState({
-          //         waitingQueueAppear:null,
-          //         detailDriverAppear:1,
-          //       })
-          //     }
-          //   })
-          // },1500)
         })
         .catch(err=>{
           NotificationManager.error(err.message,'Alert',1000);
@@ -428,24 +410,6 @@ class User extends React.Component {
     
     // ------------------ check user cancel ในทุกกรณี ------------------
     cancelQueue=async()=>{
-      // clearInterval(this.timeoutId);
-      // axios.post(Url.LinkToBackend +"backend/api/cancelation",{
-      //   id: this.userId
-      // })
-      // .then( res=>{
-      //   console.log(res.data);
-      //   this.setState({
-      //     waitingQueueAppear:null,
-      //     detailDriverAppear:null,
-          
-      // })
-      // window.location.reload()
-      // })
-      // .catch(err=>{
-      //   NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        
-      // })
-
       await this.conn.send(JSON.stringify({
         protocol: "user-cancel", // protocol
         // user_name: this.state.us, 
@@ -471,15 +435,16 @@ class User extends React.Component {
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
       // axios.get( Url.LinkToBackend +"backend/api/bomb")
-      
+      // console.log('eeeeee',getCookie('token'))
       //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
         
         axios.post(Url.LinkToBackend+"backend/api/user_info",{
           username: localStorage.getItem("username")
+          // JWT :`${getCookie('token')}`
         })
         .then(res=>{
-          
+          console.log(res)
           clearInterval(this.fetchUserIdInterval)
           this.userId=res.data[0].user_id;
           console.log(res.data[0].fname, res.data[0].lname)

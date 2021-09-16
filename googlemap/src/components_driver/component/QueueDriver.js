@@ -75,19 +75,6 @@ export default function QueueDriver(props) {
     
 
     useEffect(()=>{
-        // clearInterval(window.timeoutId1);
-        // window.timeoutId1 = setInterval(()=>{
-        //     // console.log('check')
-        //     axios.get(Url.LinkToBackend+"backend/api/getqueue",{
-        //         driver_id: props.driverId
-        //       })
-        //       .then(res=>{
-        //           console.log(res.data)
-        //           showQueue(res.data);
-        //       });
-
-        //     },1500)
-        // setTimeout(()=>{},1000)
         conn.send(JSON.stringify({
             protocol: "getqueue", // protocol
             DriverID: `${props.driverId}`, // name
@@ -123,15 +110,6 @@ export default function QueueDriver(props) {
             protocol: "enqueue", // protocol
             DriverID: `${props.driverId}`,
         }))
-        
-        // axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{
-        //     driver_id : props.driverId})
-        // .then(res=>{
-        //     // console.log(res.data);
-        // })
-        // .catch(err=>{
-        //     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        // })
         
     }
  
