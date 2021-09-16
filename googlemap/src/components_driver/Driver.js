@@ -101,35 +101,53 @@ class Driver extends React.Component {
   
   // ------------------ เช็คว่า user cancel หรือยัง ------------------
   cancelIntervalId=0;
+
+  // handleForCancelCase(showQueueDriver,DisableButton){
+  //   NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
+  //   this.setState({
+  //     queueDriverAppear:3,
+  //     disableButton:true,
+  //   })
+  // }
   cancelCase=()=>{
-    this.cancelIntervalId=setInterval(()=>{
-      axios.post(Url.LinkToBackend + "backend/api/check_user_cancel",{
-        user_id : this.state.userId
-      })
-      .then(res=>{
-        console.log(res);
-        // console.log(res.data.message);
-        if (!res.data.message){
+    console.log('pppppp')
+    leaveQueue(this.state.driverId,this.conn);
+    NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
+    this.setState({
+      queueDriverAppear:3,
+      disableButton:true,
+    })
+    setTimeout(()=>{
+      window.location.reload()
+    },5000)
+    // this.cancelIntervalId=setInterval(()=>{
+    //   axios.post(Url.LinkToBackend + "backend/api/check_user_cancel",{
+    //     user_id : this.state.userId
+    //   })
+    //   .then(res=>{
+    //     console.log(res);
+    //     // console.log(res.data.message);
+    //     if (!res.data.message){
          
-          clearInterval(this.cancelIntervalId);
-          leaveQueue(this.state.driverId,this.conn);
-          NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
-          this.setState({
-            queueDriverAppear:3,
-            disableButton:true,
+    //       clearInterval(this.cancelIntervalId);
+    //       leaveQueue(this.state.driverId,this.conn);
+    //       NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
+    //       this.setState({
+    //         queueDriverAppear:3,
+    //         disableButton:true,
             
-          })
-          setTimeout(()=>{
-            window.location.reload()
-          },5000)
-          // this.setState({
-          //   queueDriverAppear:1,
-          //   buttonAcceptCancelAppear:1,
-          // })
+    //       })
+    //       setTimeout(()=>{
+    //         window.location.reload()
+    //       },5000)
+    //       // this.setState({
+    //       //   queueDriverAppear:1,
+    //       //   buttonAcceptCancelAppear:1,
+    //       // })
          
-        }
-      })
-    }, 1500);
+    //     }
+    //   })
+    // }, 1500);
   }
 
   // ------------------ driver กด ปฏิเสธไม่รับงาน ------------------
@@ -273,7 +291,7 @@ class Driver extends React.Component {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
@@ -292,7 +310,6 @@ class Driver extends React.Component {
           this.queueDriver= null;
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId)
-          this.cancelCase();
           this.PenaltyTimeOut();
           this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
           this.countdown= <Countdown date={Date.now() + timeCooldown} renderer={({seconds, completed }) => {
@@ -341,7 +358,7 @@ class Driver extends React.Component {
                               <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
                               userFname={this.state.userFname} userLname={this.state.userLname} userId={this.state.userId} conn={this.conn}/>
                             </div>
-          this.chatDriver=<ChatDriver conn={this.conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname} file={this.state.file}/>
+          this.chatDriver=<ChatDriver conn={this.conn} userId={this.state.userId}  userFname={this.state.userFname} userLname={this.state.userLname} file={this.state.file} cancelCase={this.cancelCase}/>
           this.countdown = null;
         }
         

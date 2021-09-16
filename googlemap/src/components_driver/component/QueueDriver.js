@@ -7,7 +7,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 
 export default function QueueDriver(props) {
-    const {conn} = props;
+    const {conn } = props;
     // ------------------ฟังชันเมื่อ driver ถึง queue แรก------------------------
     function firstQueue() {
         
@@ -102,6 +102,10 @@ export default function QueueDriver(props) {
                 window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
                 
                 // console.log(sizeof(Message));
+            }
+            if(Message.message_code ==='user-cancel'){
+                console.log(Message.message_code)
+                props.cancelCase();
             }
             
     

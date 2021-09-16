@@ -76,6 +76,8 @@ class User extends React.Component {
     bookingId=null;
     fetchUserIdInterval=null;
     chatUser=null;
+    queueUser=null;
+   
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -374,7 +376,7 @@ class User extends React.Component {
         this.getDistance()
         
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
-        axios.post(Url.LinkToBackend+"backend/api/line2",{
+        axios.post(Url.LinkToBackend+"backend/api/order_booking",{
           user_id: this.userId,
           latitudeStart: this.state.markerPosition.lat,
           longtitudeStart: this.state.markerPosition.lng,
@@ -382,10 +384,13 @@ class User extends React.Component {
           longtitudeDestination: this.state.markerDestinationPosition.lng
         })
         .then(res=>{
-          console.log(res.data);
+          // console.log(res.data);
+          this.queueUser=res.data.booking_order
+          console.log('---------',this.queueUser)
           this.setState({
             waitingQueueAppear:1,
           })
+          
           // --------------------- ไปอยู่ใน wait แล้วจ้า อีอ้วน ----------------------
           // this.timeoutId = setInterval(()=>{
           //   // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
@@ -422,24 +427,32 @@ class User extends React.Component {
     
     
     // ------------------ check user cancel ในทุกกรณี ------------------
-    cancelQueue = ()=>{
-      clearInterval(this.timeoutId);
-      axios.post(Url.LinkToBackend +"backend/api/cancelation",{
-        id: this.userId
-      })
-      .then( res=>{
-        console.log(res.data);
-        this.setState({
-          waitingQueueAppear:null,
-          detailDriverAppear:null,
+    cancelQueue=async()=>{
+      // clearInterval(this.timeoutId);
+      // axios.post(Url.LinkToBackend +"backend/api/cancelation",{
+      //   id: this.userId
+      // })
+      // .then( res=>{
+      //   console.log(res.data);
+      //   this.setState({
+      //     waitingQueueAppear:null,
+      //     detailDriverAppear:null,
           
-      })
-      window.location.reload()
-      })
-      .catch(err=>{
-        NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+      // })
+      // window.location.reload()
+      // })
+      // .catch(err=>{
+      //   NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
         
-      })
+      // })
+
+      await this.conn.send(JSON.stringify({
+        protocol: "user-cancel", // protocol
+        // user_name: this.state.us, 
+        user_id: `${this.userId}`,
+        })
+      );
+      window.location.reload()
     }
 
     componentWillMount(){
@@ -462,7 +475,7 @@ class User extends React.Component {
       //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
         
-        axios.post(Url.LinkToBackend+"backend/api/line1",{
+        axios.post(Url.LinkToBackend+"backend/api/user_info",{
           username: localStorage.getItem("username")
         })
         .then(res=>{
@@ -518,7 +531,7 @@ class User extends React.Component {
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}/>
+        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}/>
       }
       else{
         this.watingQueue=null;

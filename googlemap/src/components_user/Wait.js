@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export default function Wait(props){
     const { cancelQueue ,conn, handleForDriverAccept } = props; 
     const [cost,setCost] = useState(0);
-    const [queue,setQueue] = useState(0);
+    const [queue,setQueue] = useState(props.queueUser);
     // function calculateCost(){
     //     return 10+props.travelDistance/1000;
     // }
@@ -23,6 +23,7 @@ export default function Wait(props){
             else if(Message.message_code ==="your booking order"){
                 setQueue(Message.booking_order);
             }
+            
         }
     },[])
     // ------------------ คำนวณราคาค่ะ ------------------
