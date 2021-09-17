@@ -17,10 +17,10 @@ function LoginUser() {
         axios.post(`${Url.LinkToBackend}backend/api/login_driver`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
-            console.log(JSON.parse(res));
+            // console.log(res);
             if(res.data.message){
                 document.getElementById('loginError').innerHTML=null;
-                // document.cookie = `token=${res.data.auth}`;
+                document.cookie = `token=${res.data.auth}`;
                 setLoginSuccess(1);
             }else{
                 setLoginSuccess(0);

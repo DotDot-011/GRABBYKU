@@ -180,17 +180,17 @@ class Driver extends React.Component {
     // }
     // console.log('ooooooo',getCookie('token'))
     //----------------------------------------------------
-    axios.get( Url.LinkToBackend +"backend/api/bomb")
+    // axios.get( Url.LinkToBackend +"backend/api/bomb")
     this.fetchDriverIdInterval =setInterval(()=>{
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
-        // JWT :`${getCookie('token')}` 
-        username : this.props.username
+        JWT :`${getCookie('token')}`, 
+        // username : this.props.username
       })
       .then((res)=>{
         //---------------------------------------------
           
           clearInterval(this.fetchDriverIdInterval);
-          // console.log('[[[[[[',res.data);
+          console.log('[[[[[[',res);
           this.setState({
             driverId: parseInt(res.data[0].driver_id),
             
@@ -367,7 +367,17 @@ class Driver extends React.Component {
             <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>
             <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
-            <a id="contact" className="menu-item" id="signout" onClick={()=>{ localStorage.clear() ; window.location.reload()}}><i class="fas fa-sign-out"></i>ออกจากระบบ</a>
+            <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
+              axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                driver_id: this.state.driverId
+              })
+              .then(res=>{
+                localStorage.clear(); 
+                window.location.reload();
+              }).catch(err=>{
+                NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+              });
+            }}><i class="fas fa-sign-out"></i>ออกจากระบบ</a>
               
              
               

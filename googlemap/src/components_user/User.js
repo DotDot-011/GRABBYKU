@@ -378,16 +378,17 @@ class User extends React.Component {
         
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
         axios.post(Url.LinkToBackend+"backend/api/order_booking",{
-          user_id: this.userId,
+          JWT :`${getCookie('token')}`,
           latitudeStart: this.state.markerPosition.lat,
           longtitudeStart: this.state.markerPosition.lng,
           latitudeDestination: this.state.markerDestinationPosition.lat,
           longtitudeDestination: this.state.markerDestinationPosition.lng
         })
         .then(res=>{
-          // console.log(res.data);
+          console.log(res.data);
+          // console.log(getCookie("token"));
           this.queueUser=res.data.booking_order
-          console.log('---------',this.queueUser)
+          // console.log('---------',this.queueUser)
           this.setState({
             waitingQueueAppear:1,
           })
@@ -440,8 +441,8 @@ class User extends React.Component {
       this.fetchUserIdInterval=setInterval(()=>{
         
         axios.post(Url.LinkToBackend+"backend/api/user_info",{
-          username: localStorage.getItem("username")
-          // JWT :`${getCookie('token')}`
+          // username: localStorage.getItem("username")
+          JWT :`${getCookie('token')}`
         })
         .then(res=>{
           console.log(res)
@@ -557,6 +558,10 @@ class User extends React.Component {
               url:"../pictures/markgreen.png",
               scaledSize:{height: 40 , width: 25},
             }}
+            animation={4}
+            // options={{
+
+            // }}
             >  
           </Marker>
             {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
@@ -567,7 +572,7 @@ class User extends React.Component {
               url:"../pictures/markred.png",
               scaledSize:{height: 40 , width: 25},
             }}
-          
+            animation={4}
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>
@@ -688,7 +693,18 @@ class User extends React.Component {
             <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้ </a>
             <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
-            <a id="contact" className="menu-item" id="signout" onClick={()=>{ localStorage.clear() ; window.location.reload()}}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
+            <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
+              axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+                user_id: this.userId
+              }).then(res=>{
+                localStorage.clear() ; 
+                window.location.reload()
+              }).catch(err=>{
+                NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+              });
+    
+              
+            }}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
               
           </Menu>
             

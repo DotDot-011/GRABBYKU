@@ -4,6 +4,7 @@ import leaveQueue from './LeaveQueue';
 import axios from 'axios';
 import { Url } from '../../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import getCookie from '../../getCookie';
 
 
 export default function QueueDriver(props) {
@@ -13,10 +14,11 @@ export default function QueueDriver(props) {
         
         //  ------------------ driver เอาข้อมูลของ user ผ่าน api check_booking--------------------
         axios.post(Url.LinkToBackend +"backend/api/check_booking",{
-            driver_id : props.driverId
+            // driver_id : props.driverId,
+            JWT :`${getCookie('token')}`
         })
         .then( res=>{
-            // console.log(res.data);
+            console.log(res.data);
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);

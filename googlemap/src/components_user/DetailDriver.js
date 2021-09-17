@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import getCookie from '../getCookie';
 
 const labels = {
     // 0.5: 'Useless',
@@ -105,8 +106,10 @@ export default function DetailDriver(props){
     useEffect(()=>{
         let timeoutId = setInterval(() => {
             axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
-                driver_id: driverId})
-                .then(res=>{
+                driver_id: driverId,
+                JWT :`${getCookie('token')}`
+            })
+            .then(res=>{
                     clearInterval(timeoutId)
                     console.log(res.data)
                     setFirst_name(res.data.fname);

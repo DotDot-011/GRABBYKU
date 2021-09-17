@@ -23,11 +23,11 @@ function LoginUser() {
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
              
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.message){
                 console.log('test');
                 document.getElementById('loginError').innerHTML=null;
-                // document.cookie = `token=${res.data.auth}`;
+                document.cookie = `token=${res.data.auth}`;
                 // console.log(res.data.auth)
                 setLoginSuccess(1);
             }else{
