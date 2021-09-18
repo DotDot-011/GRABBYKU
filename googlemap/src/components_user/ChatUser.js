@@ -3,6 +3,7 @@ import axios from "axios";
 import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { Url } from '../LinkToBackend';
+import getCookie from '../getCookie';
 
 
 export default function ChatUser(props){
@@ -33,7 +34,10 @@ export default function ChatUser(props){
     useEffect(()=>{
         let intervalId = setInterval(()=>{
             axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
-                driver_id: props.driverId})
+                driver_id: props.driverId,
+                JWT :`${getCookie('token')}`
+            
+            })
                 .then(res=>{
                     // console.log(res.data)
                     clearInterval(intervalId);

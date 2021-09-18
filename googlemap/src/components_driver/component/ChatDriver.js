@@ -17,7 +17,12 @@ export default function ChatDriver(props){
                 addResponseMessage(Message.message)
                 // console.log(Message);
             }
+            else if(Message.message_code ==='user-cancel'){
+                console.log(Message.message_code)
+                props.cancelCase();
+            }
         };
+        
 
     },[])
 

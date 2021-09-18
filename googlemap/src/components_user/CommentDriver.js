@@ -10,6 +10,7 @@ import CloseButton from 'react-bootstrap/CloseButton'
 import axios from 'axios';
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import getCookie from '../getCookie';
 const labels = {
     // 0.5: 'Useless',
     1: 'ควรปรับปรุง',
@@ -46,7 +47,7 @@ export default function CommentDriver(props){
         let timeoutId = setInterval(()=>{
             axios.post(Url.LinkToBackend +"backend/api/reporting", {
                 driver_id: props.driverId,
-                user_id: props.userId,
+                JWT :`${getCookie('token')}`,
                 rating: value,
                 string_report: commentRef.current.value,
                 booking_id: props.bookingId,

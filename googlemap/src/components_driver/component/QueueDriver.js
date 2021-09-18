@@ -4,19 +4,21 @@ import leaveQueue from './LeaveQueue';
 import axios from 'axios';
 import { Url } from '../../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import getCookie from '../../getCookie';
 
 
 export default function QueueDriver(props) {
-    const {conn} = props;
+    const {conn } = props;
     // ------------------ฟังชันเมื่อ driver ถึง queue แรก------------------------
     function firstQueue() {
         
         //  ------------------ driver เอาข้อมูลของ user ผ่าน api check_booking--------------------
         axios.post(Url.LinkToBackend +"backend/api/check_booking",{
-            driver_id : props.driverId
+            // driver_id : props.driverId,
+            JWT :`${getCookie('token')}`
         })
         .then( res=>{
-            // console.log(res.data);
+            console.log(res.data);
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);
@@ -75,19 +77,6 @@ export default function QueueDriver(props) {
     
 
     useEffect(()=>{
-        // clearInterval(window.timeoutId1);
-        // window.timeoutId1 = setInterval(()=>{
-        //     // console.log('check')
-        //     axios.get(Url.LinkToBackend+"backend/api/getqueue",{
-        //         driver_id: props.driverId
-        //       })
-        //       .then(res=>{
-        //           console.log(res.data)
-        //           showQueue(res.data);
-        //       });
-
-        //     },1500)
-        // setTimeout(()=>{},1000)
         conn.send(JSON.stringify({
             protocol: "getqueue", // protocol
             DriverID: `${props.driverId}`, // name
@@ -102,6 +91,10 @@ export default function QueueDriver(props) {
                 window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
                 
                 // console.log(sizeof(Message));
+            }
+            if(Message.message_code ==='user-cancel'){
+                console.log(Message.message_code)
+                props.cancelCase();
             }
             
     
@@ -119,15 +112,6 @@ export default function QueueDriver(props) {
             protocol: "enqueue", // protocol
             DriverID: `${props.driverId}`,
         }))
-        
-        // axios.post(Url.LinkToBackend+"backend/api/postdriverinq",{
-        //     driver_id : props.driverId})
-        // .then(res=>{
-        //     // console.log(res.data);
-        // })
-        // .catch(err=>{
-        //     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        // })
         
     }
  

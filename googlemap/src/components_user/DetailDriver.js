@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import getCookie from '../getCookie';
 
 const labels = {
     // 0.5: 'Useless',
@@ -36,11 +37,11 @@ export default function DetailDriver(props){
     const { cancelQueue,conn ,driverId} = props;
     const [cost,setCost] = useState(0);
     const [estimatetime,setEstimatetime] = useState(0);
-    const [first_name, setFirst_name] = useState("นายธนาคาร");
-    const [last_name, setLast_name] = useState("หลักแหลม");
-    const [plate, setPlate] = useState("กอจ 666");
-    const [driverNo, setdriverNo] = useState("47");
-    const [driverPosition, setdriverPosition] = useState("ประตูนรก");
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
+    const [plate, setPlate] = useState("");
+    const [driverNo, setdriverNo] = useState("");
+    const [driverPosition, setdriverPosition] = useState("");
     const [avatar,setAvatar] = useState(null)
 
     const [value, setValue] = useState(4);
@@ -103,20 +104,26 @@ export default function DetailDriver(props){
     },[props.travelDistance,props.driverDistance])
     // ------------------ show ข้อมูลของ driver ที่ match ------------------
     useEffect(()=>{
-        axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
-        driver_id: driverId})
-        .then(res=>{
-            console.log(res.data)
-            setFirst_name(res.data.fname);
-            setLast_name(res.data.lname);
-            setPlate(res.data.plate);
-            setdriverNo(res.data.driver_no);
-            setdriverPosition(res.data.win_name);
-            setAvatar(res.data.image)
-        })
-        .catch(err=>{
-            NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        })
+        let timeoutId = setInterval(() => {
+            axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
+                driver_id: driverId,
+                JWT :`${getCookie('token')}`
+            })
+            .then(res=>{
+                    clearInterval(timeoutId)
+                    console.log(res.data)
+                    setFirst_name(res.data.fname);
+                    setLast_name(res.data.lname);
+                    setPlate(res.data.plate);
+                    setdriverNo(res.data.driver_no);
+                    setdriverPosition(res.data.win_name);
+                    setAvatar(res.data.image)
+                })
+                .catch(err=>{
+                    NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+                })
+        }, 800);
+        
     },[])
     
 

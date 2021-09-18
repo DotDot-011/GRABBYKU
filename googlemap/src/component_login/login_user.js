@@ -8,6 +8,8 @@ import './login_user.css'
 import Login from "./login";
 
 
+
+
 function LoginUser() {
     const nameRef = useRef("");
     const passwordRef = useRef("");
@@ -16,15 +18,17 @@ function LoginUser() {
     //console.log(Url.LinkToBackend);
     //console.log(typeof(Url.LinkToBackend));
     //console.log(`${Url.LinkToBackend}backend/api/login_user`);
-    
     function CheckUser() {
         axios.post(`${Url.LinkToBackend}backend/api/login_user`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
-            console.log(res);
+             
+            // console.log(res.data);
             if(res.data.message){
                 console.log('test');
                 document.getElementById('loginError').innerHTML=null;
+                document.cookie = `token=${res.data.auth}`;
+                // console.log(res.data.auth)
                 setLoginSuccess(1);
             }else{
                 setLoginSuccess(0);
