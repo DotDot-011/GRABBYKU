@@ -3,12 +3,29 @@ import Popup from 'reactjs-popup';
 import { useEffect, useState } from 'react';
 // ------------------ user รอ match กับ driver ------------------
 export default function Wait(props){
-    const { cancelQueue } = props; 
+    const { cancelQueue ,conn, handleForDriverAccept } = props; 
     const [cost,setCost] = useState(0);
+    const [queue,setQueue] = useState(props.queueUser);
     // function calculateCost(){
     //     return 10+props.travelDistance/1000;
     // }
-    
+    useEffect(()=>{
+        
+        conn.onmessage = function(e){
+            let Message = JSON.parse(e.data)
+            console.log(Message)
+            console.log('----------5');
+            if(Message.message_code==="driver-accepted"){
+                console.log('driver_id : ',Message.driver_id , 'booking_id : ' ,Message.booking_id);
+                handleForDriverAccept(null, 1,Number( Message.driver_id ), Number( Message.booking_id ));
+                // setQueue()
+            }
+            else if(Message.message_code ==="your booking order"){
+                setQueue(Message.booking_order);
+            }
+            
+        }
+    },[])
     // ------------------ คำนวณราคาค่ะ ------------------
     useEffect(()=>{
         console.log(props.travelDistance);
@@ -43,7 +60,7 @@ export default function Wait(props){
             <h4>กรุณารอ</h4>
             <h5>'-เวลาโดยประมาณ-'</h5>
             <div id="waiting-detail">
-                <div class="num-queue">จำนวนคิวที่รอ : $</div>
+                <div class="num-queue">จำนวนคิวที่รอ : {queue}</div>
                 <div class="num-driver">จำนวนผู้ให้บริการ : $</div>
                 <div class="money-est">ราคาโดยประมาณ : {cost} บาท</div>
             </div>

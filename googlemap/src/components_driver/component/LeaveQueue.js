@@ -8,16 +8,4 @@ export default function leaveQueue(driverId,conn) {
                 protocol: "dequeue", // protocol
                 DriverID: `${driverId}`,
             }))
-        // axios.post(Url.LinkToBackend+"backend/api/deletequeue",{
-        //         driver_id: driverId
-        // })
-        // .then(res=>{
-        //         console.log(typeof(driverId));
-        //         console.log(res.data);
-                
-        // })
-        // .catch(err=>{
-        //         NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-
-        // })
 }

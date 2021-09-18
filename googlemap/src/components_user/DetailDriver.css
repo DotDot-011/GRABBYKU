@@ -51,11 +51,10 @@
     background-color: white;
     border-radius: 20px;
     padding: 15px 0px 12px 0px;
-    
 }
 .driver-detail .image-driver{
     position: absolute;
-    background-color: rgb(99, 99, 99);
+    /* background-color: rgb(148, 106, 106); */
     /* background-image: url('../search_icon.png'); */
     border-radius: 10px;
     width: 110px;
@@ -108,7 +107,7 @@
 #don-cancel{
     margin-right: 12px;
     color: #ffffff;
-    background-color: #1a9274;
+    background-color: #167964;
     border-radius: 20px;
     border: none;
     width: 100px;
@@ -118,27 +117,27 @@
 }
 #don-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #10725a;
+    background-color: #105e4d;
     box-shadow: 0 8px 11px #115745;
   }
 #don-cancel:active {
     transform: translateY(1px);
     box-shadow: 0 4px 7px #115745;
   }
-  #not-cancel{
+#not-cancel{
     margin-left: 12px;
     color: #ffffff;
-    background-color: #4e4e4e;
+    background-color: #575757;
     border: none;
     border-radius: 18px;
-    width: 85px;
+    width: 100px;
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
 }
 #not-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #2b2b2b;
+    background-color: #424242;
     box-shadow: 0 8px 11px #555454;
 }
 #not-cancel:active {

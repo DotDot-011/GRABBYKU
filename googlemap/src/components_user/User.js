@@ -21,10 +21,11 @@ import CommentDriver from "./CommentDriver";
 import distance from 'google_directions';
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
+import getCookie from "../getCookie";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
-let conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
+// const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
 // conn.onopen = function(e) {
 //   console.log("Connection established!");
 // }
@@ -67,14 +68,17 @@ class User extends React.Component {
       travelDistance:0,
       driverDistance:0,
     }
-    
+    conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
     watingQueue=null;
     detailDriver=null;
     timeoutId = 0;
     driverId=null;
     userId=null;
+    bookingId=null;
     fetchUserIdInterval=null;
     chatUser=null;
+    queueUser=null;
+   
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -373,8 +377,8 @@ class User extends React.Component {
         this.getDistance()
         
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
-        axios.post(Url.LinkToBackend+"backend/api/line2",{
-          user_id: this.userId,
+        axios.post(Url.LinkToBackend+"backend/api/order_booking",{
+          JWT :`${getCookie('token')}`,
           latitudeStart: this.state.markerPosition.lat,
           longtitudeStart: this.state.markerPosition.lng,
           latitudeDestination: this.state.markerDestinationPosition.lat,
@@ -382,26 +386,13 @@ class User extends React.Component {
         })
         .then(res=>{
           console.log(res.data);
+          // console.log(getCookie("token"));
+          this.queueUser=res.data.booking_order
+          // console.log('---------',this.queueUser)
           this.setState({
             waitingQueueAppear:1,
           })
-          this.timeoutId = setInterval(()=>{
-            // ------------------ user match กับ driver แล้ว (ยังไม่กดยอมรับ หรือ ปฏิเสธ) ------------------
-            axios.post(Url.LinkToBackend +"backend/api/homeuser_line3", 
-            {id: this.userId})
-            .then(res=>{
-              console.log(res)        
-              if(!!res.data.driver_id){                    
-                console.log(res);
-                console.log(res.data);   
-                this.driverId=res.data.driver_id;
-                this.setState({
-                  waitingQueueAppear:null,
-                  detailDriverAppear:1,
-                })
-              }
-            })
-          },1500)
+          
         })
         .catch(err=>{
           NotificationManager.error(err.message,'Alert',1000);
@@ -419,31 +410,21 @@ class User extends React.Component {
     
     
     // ------------------ check user cancel ในทุกกรณี ------------------
-    cancelQueue = ()=>{
-      clearInterval(this.timeoutId);
-      axios.post(Url.LinkToBackend +"backend/api/cancelation",{
-        id: this.userId
-      })
-      .then( res=>{
-        console.log(res.data);
-        this.setState({
-          waitingQueueAppear:null,
-          detailDriverAppear:null,
-          
-      })
+    cancelQueue=async()=>{
+      await this.conn.send(JSON.stringify({
+        protocol: "user-cancel", // protocol
+        // user_name: this.state.us, 
+        user_id: `${this.userId}`,
+        })
+      );
       window.location.reload()
-      })
-      .catch(err=>{
-        NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-        
-      })
     }
 
     componentWillMount(){
-      conn.onopen = function(e) {
+      this.conn.onopen = function(e) {
         console.log("Connection established!");
       }
-      conn.onmessage = function(e) {
+      this.conn.onmessage = e=> {
         let Message = JSON.parse(e.data)
         console.log(Message)
         console.log('----------2');
@@ -454,26 +435,27 @@ class User extends React.Component {
     
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
-      
       // axios.get( Url.LinkToBackend +"backend/api/bomb")
-      
+      // console.log('eeeeee',getCookie('token'))
       //--------------------------------
       this.fetchUserIdInterval=setInterval(()=>{
         
-        axios.post(Url.LinkToBackend+"backend/api/line1",{
-          username: localStorage.getItem("username")
+        axios.post(Url.LinkToBackend+"backend/api/user_info",{
+          // username: localStorage.getItem("username")
+          JWT :`${getCookie('token')}`
         })
         .then(res=>{
-          
+          console.log(res)
           clearInterval(this.fetchUserIdInterval)
           this.userId=res.data[0].user_id;
           console.log(res.data[0].fname, res.data[0].lname)
           
-          conn.send(JSON.stringify({
+          this.conn.send(JSON.stringify({
             protocol: "in",
             Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
             Mode: "0",
             ID: `${res.data[0].user_id}`,
+            
           }));
         })
         .then(()=>{
@@ -499,12 +481,23 @@ class User extends React.Component {
       });
     
     }
+
+    handleForDriverAccept(showWaitingQueue,showDetailDriver,ID_Driver,ID_Booking){
+      this.driverId = ID_Driver;
+      this.bookingId = ID_Booking;
+      this.setState({
+        waitingQueueAppear:showWaitingQueue,
+        detailDriverAppear:showDetailDriver,
+      });
+    }
+
+    
     
     
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance}/>
+        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}/>
       }
       else{
         this.watingQueue=null;
@@ -512,12 +505,13 @@ class User extends React.Component {
       }
       if(this.state.detailDriverAppear===1){
         this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} 
-                            conn={conn}  driverDistance={this.state.driverDistance}/>
-        this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={conn} driverId={this.driverId} />
+                            conn={this.conn}  driverDistance={this.state.driverDistance}/>
+        this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={this.conn} driverId={this.driverId} />
         
       }
       else if(this.state.detailDriverAppear===2){
-        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={conn}/>
+        this.detailDriver = <CommentDriver handleForUpdate = {this.handleForUpdate.bind(this)} conn={this.conn} driverId={this.driverId} 
+                      userId={this.userId} bookingId={this.bookingId}/>
         this.chatUser=null;
       }
       else{
@@ -564,6 +558,10 @@ class User extends React.Component {
               url:"../pictures/markgreen.png",
               scaledSize:{height: 40 , width: 25},
             }}
+            animation={4}
+            // options={{
+
+            // }}
             >  
           </Marker>
             {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
@@ -574,7 +572,7 @@ class User extends React.Component {
               url:"../pictures/markred.png",
               scaledSize:{height: 40 , width: 25},
             }}
-          
+            animation={4}
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>
@@ -695,7 +693,18 @@ class User extends React.Component {
             <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้ </a>
             <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
-            <a id="contact" className="menu-item" id="signout" onClick={()=>{ localStorage.clear() ; window.location.reload()}}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
+            <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
+              axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+                user_id: this.userId
+              }).then(res=>{
+                localStorage.clear() ; 
+                window.location.reload()
+              }).catch(err=>{
+                NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+              });
+    
+              
+            }}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
               
           </Menu>
             

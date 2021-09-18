@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Popup from 'reactjs-popup';
-import '../Driver.css';
+// import '../Driver.css';
 import './Receipt.css'
 
 export default function Receipt(props){
@@ -24,11 +24,11 @@ export default function Receipt(props){
 
     },[props.disableButton])
     return(
-        <Popup trigger={<button className="done-button" disabled={props.disableButton} type="button" class="btn btn-primary" id="buttcancel" > เสร็จสิ้น </button>} modal nested>
+        <Popup trigger={<button className="done_button" disabled={props.disableButton} type="button" class="btn btn-primary" id="done_button" > เสร็จสิ้น </button>} modal nested>
     
             {           
             close=>(
-                <div className="confirmCancel" id="confirmCancel"> <h1>ใส่จำนวนเงิน</h1>
+                <div className="confirmCancel-money" id="confirmCancel-money"> <h1>ใส่จำนวนเงิน</h1>
                     <input id="input-mon" placeholder="ใส่จำนวนเงิน" type="number" ref={costRef}/>
                     <button id="sub-button" disabled={props.disableButton} onClick={()=>{
                         sendData();

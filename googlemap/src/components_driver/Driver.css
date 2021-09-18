@@ -82,7 +82,7 @@ font-size: 22px;
 .accept-button{
   top: 5px;
   right: 30px;
-  background-color: #1FAb89;
+  background-color: #167964;;
   border-radius: 20px;
   border: none;
   color: white;
@@ -96,7 +96,7 @@ font-size: 22px;
 }
 .accept-button:hover {
 transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-background-color: #10725a;
+background-color: #105e4d;
 box-shadow: 0 8px 11px #115745;
 }
 .accept-button:active {
@@ -129,27 +129,7 @@ box-shadow: 0 8px 11px #555454;
 transform: translateY(1px);
 box-shadow: 0 4px 7px #555454;
 }
-.done-button{
-  top: 10px;
-  background-color: #1FAb89;
-  border-radius: 20px;
-  border: none;
-  color: white;
-  font-size: 26px;
-  position: relative;
-  height: 42px;
-  width: 100px;
-  transition: 0.3s;
-}
-.done-button:hover {
-transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-background-color: #10725a;
-box-shadow: 0 8px 11px #115745;
-}
-.done-button:active {
-transform: translateY(1px);
-box-shadow: 0 4px 7px #115745;
-}
+
 #map{
   height: 315px;
   /* height: 350px; */
