@@ -26,14 +26,14 @@ if ($result->num_rows == 1) {
                 $sql = "SELECT * FROM user WHERE username = '$username'";
                 $result = $conn->query($sql);
                 $row = $result->fetch_assoc();
-                $auth_a = generate_JWT($row,$key);
-		echo json_encode([
+                $auth_a = generate_JWT($row, $key);
+                echo json_encode([
                     "message" => true,
                     "auth" => $auth_a
-                ]); 
+                ]);
                 //$data = [];
                 //$data['message'] = TRUE; 
-   		//$data['auth'] = generate_JWT($row,$key);
+                //$data['auth'] = generate_JWT($row,$key);
                 //echo json_encode($data);
             }
         } elseif ($row1['status'] >= 1) {

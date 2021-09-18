@@ -41,6 +41,7 @@ class WebSocket implements MessageComponentInterface
         require dirname(__DIR__) . "/backend/configs/route.php";
         require dirname(__DIR__) . "/backend/configs/need_authorize.php";
         require dirname(__DIR__) . "/backend/configs/JWT_key.php";
+        require dirname(__DIR__) . "/src/isAuth.php";
 
         $wsdata = json_decode($msg, true);
         echo "front send " . $msg . " connection_id = ", $from->resourceId, "\n";
@@ -48,24 +49,15 @@ class WebSocket implements MessageComponentInterface
 
         if (isset($routes[$protocol]['ws'])) {
             if ($need_authorize[$protocol]['ws']) {
-                $jwt_user = $wsdata['JWT'];
-                $isAuth = TRUE;
-                try {
-                    JWT::decode(
-                        $jwt_user,
-                        $key,
-                        array('HS256')
-                    );
-                } catch (Exception $e) {
-                    $isAuth = FALSE;
-                    $err_message = $e->getMessage();
-                }
+                $isAuth = isAuth($wsdata['JWT'], $key);
                 if ($isAuth) {
+                    echo "authorized\n";
                     $from->send(json_encode([
                         "message" => "authorized"
                     ]));
                     require $routes[$protocol]['ws'];
                 } else {
+                    echo $err_message . "\n";
                     $from->send(json_encode([
                         "message" => $err_message
                     ]));
