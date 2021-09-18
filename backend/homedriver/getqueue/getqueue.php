@@ -1,10 +1,6 @@
 <?php
-
-// file_put_contents("./registerUser/test.txt", $postData);
-
 $sql = "SELECT * FROM queue";
 $result = $conn->query($sql);
-$data = [];
 
 if ($result->num_rows > 0) {
     $i = 0;
@@ -21,12 +17,11 @@ if ($result->num_rows > 0) {
         $data[$i]["time_stamp"] = $row['create_at'];
         $i++;
     }
-    echo json_encode($data, JSON_PRETTY_PRINT);
 } else {
-    echo "0 results";
+    $data['message_code'] =  "0 results";
 }
 
-$conn->close();
+ $conn->close();
 
 // ▒▒▒▒▒▒▒▒▄▄▄▄▄▄▄▄▒▒▒▒▒▒▒▒
 // ▒▒▒▒▒▄█▀▀░░░░░░▀▀█▄▒▒▒▒▒

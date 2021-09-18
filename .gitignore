@@ -1,5 +1,6 @@
-#test_ratchet
 /node_modules
 /vendor
-composer.json
-composer.lock
+/backend/data
+test*
+hello.php
+composer.*

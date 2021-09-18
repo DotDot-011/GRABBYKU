@@ -1,23 +1,17 @@
 <?php
-$post_data = json_decode(file_get_contents("php://input"));
-
-$driver_id = $post_data->driver_id;
-$user_id = $post_data->user_id;
-$rating = $post_data->rating;
-$string_report = $post_data->string_report;
-$booking_id = $post_data->booking_id;
+$driver_id = $postData['driver_id'];
+$user_id = $postData['user_id'];
+$rating = $postData['rating'];
+$string_report = $postData['string_report'];
+$booking_id = $postData['booking_id'];
 $statement = "UPDATE history SET rating = '$rating' ";
-
-
-//if user has a comment on driver 
+ //if user has a comment on driver 
 if($string_report != "NULL"){
  $statement = $statement . ", comment_report = '$string_report' ";
-} 
-
+}
+ 
 $statement = $statement . "WHERE history_id = '$booking_id' ";
-//echo($statement);
 $conn->query($statement);
-
 
 // this part calculate driver rating
 
@@ -32,6 +26,5 @@ if(!(($string_report == "NULL") && ($rating == 0))){
  $statement3 = "UPDATE driver SET rating = '$new_rating' , report_count = report_count+1 WHERE driver_id = '$driver_id' "; 
  $conn->query($statement3);
 }
-$conn->close();
-
-echo("done");
+$conn->close(); 
+$data['message_code'] = "done";

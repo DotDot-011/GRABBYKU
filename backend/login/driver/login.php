@@ -1,12 +1,13 @@
 <?php
 
 $postData = json_decode(file_get_contents("php://input"));
-
+require dirname(__DIR__) . "/driver/generate_jwt_driver.php";
+require dirname(__DIR__, 2) . "/configs/JWT_key.php";
 $username = $postData->username;
 $password = $postData->password;
 // file_put_contents("./registerUser/test.txt", $postData);
 
-$sql = "SELECT `password` FROM `driver` WHERE `username` = '$username'";
+$sql = "SELECT * FROM `driver` WHERE `username` = '$username'";
 
 $result = $conn->query($sql);
 
@@ -23,20 +24,21 @@ if ($result->num_rows == 1) {
                 $sql2 = "UPDATE `driver` SET `status` = 1 WHERE `username` = '$username'";
                 if ($conn->query($sql2)) {
                     echo json_encode([
-                        "message" => TRUE
+			"message" => true,
+                        "auth" => generate_JWT_driver($row,$key)
                     ]);
-                };
+                }
             } elseif ($row1['status'] >= 1) {
                 $sql2 = "UPDATE `driver` SET `status` = 0 WHERE `username` = '$username'";
                 if ($conn->query($sql2) == TRUE) {
                     echo json_encode([
-                        "message" => "this driver is already logged in",
+                        "message" => false,
                         "error_code" => 1
                     ]);
                 }
             } else {
                 echo json_encode([
-                    "message" => "this driver is currently on a service",
+                    "message" => false,
                     "error_code" => 2
                 ]);
             }

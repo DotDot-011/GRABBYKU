@@ -1,13 +1,7 @@
 <?php
-$postdata = json_decode(file_get_contents("php://input"));
-
-$user_id = $postdata->id;
-
+$user_id = $postData['user_id'];
+$JWT = $postData['JWT'];
 $statement = "SELECT * FROM booking WHERE user_id = '$user_id'";
-
-//$result = mysqli_query($statement); 
-$data = [];
-
 if ($result = $conn->query($statement)) {
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
@@ -21,13 +15,11 @@ if ($result = $conn->query($statement)) {
         echo json_encode($data);
         if ($data['driver_id'] != NULL) {
             $sql = "UPDATE `user` SET `status` = 2 WHERE `user_id` = $user_id";
-            $conn->query($sql);
         }
     } else {
-        echo "there are more than one booking for this user or there is no booking match";
+        $data['message_code'] = "there are more than one booking for this user or there is no booking match";
     }
 } else {
-    echo "error";
+    $data['message_code'] = "error";
 }
-
 $conn->close();

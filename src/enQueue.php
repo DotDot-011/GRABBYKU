@@ -1,5 +1,7 @@
 <?php
 
+echo $protocol;
+
 $driver_id = $wsdata['DriverID'];
 
 $sql = "SELECT fname, lname FROM driver WHERE driver_id = '$driver_id'";

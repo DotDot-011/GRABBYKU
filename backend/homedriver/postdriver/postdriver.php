@@ -1,14 +1,7 @@
 <?php
-
-$postData = json_decode(file_get_contents("php://input"));
-
-$username = $postData->username;
-
-// file_put_contents("./registerUser/test.txt", $postData);
-
+$username = $postData['username'];
 $sql = "SELECT * FROM driver WHERE username = '$username'";
 $result = $conn->query($sql);
-$data = [];
 
 if ($result->num_rows > 0) {
     $i = 0;
@@ -28,9 +21,7 @@ if ($result->num_rows > 0) {
         $data[$i]["password"] = $row['password'];
         $i++;
     }
-    echo json_encode($data, JSON_PRETTY_PRINT);
 } else {
-    echo "0 results";
-}
-
+    $data['message_code'] =  "0 results";
+} 
 $conn->close();

@@ -1,16 +1,12 @@
 <?php
-$postdata = json_decode(file_get_contents("php://input"));;
-
-$driver_id = $postdata->driver_id;
-// sql to delete a record
+$driver_id = $postData['driver_id'];
 $sql = "DELETE FROM queue WHERE driver_id = '$driver_id'";
 
 if ($conn->query($sql) === TRUE) {
-  echo "Record deleted successfully";
+  $data['message_code'] = "Record deleted successfully";
 } else {
-  echo "Error deleting record: " . $conn->error;
+  $data['message_code'] =  "Error deleting record: " . $conn->error;
 }
-
 $conn->close();
 ?>
 

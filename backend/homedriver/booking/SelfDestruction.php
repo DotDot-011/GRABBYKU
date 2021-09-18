@@ -4,4 +4,4 @@ $sql = "DELETE FROM `booking`";
 $conn->query($sql);
 $sql = "DELETE FROM `queue`";
 $conn->query($sql);
-echo "bomb has been planted.";
+$data['message_code'] = "bomb has been planted.";

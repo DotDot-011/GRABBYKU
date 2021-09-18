@@ -48,29 +48,28 @@ $routes["/backend/api/userdriverinbook"]["POST"] = "./homedriver/userdriverinboo
 $routes["/backend/api/checkuser"]["POST"] = "./homedriver/checkuser/checkuser.php";
 
 #cancel booking by user 
-/* $routes["/backend/api/cancelation"]["POST"] = "./homeUser/cancel_booking.php"; */
+$routes["/backend/api/cancelation"]["POST"] = "./homeUser/cancel_booking.php";
 #when driver accept -> sent driver info to user =]
 $routes["/backend/api/request_driver_info"]["POST"] = "./homeUser/driver_info.php";
 #user keep fetching his booking when queing =]
-/* $routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/booking_info.php"; */
+//$routes["/backend/api/homeuser_line3"]["POST"] = "./homeUser/homeuserline_3.php";
 
 $routes["/backend/api/deletequeue"]["POST"] = "./homedriver/deleteQueue/deleteQueue.php";
 
-# websocket
-$routes["in"]["ws"] = "./src/UserIn.php";
-// $routes["out"]["ws"] = "./src/UserOut.php";
-$routes["chat"]["ws"] = "./src/Chat.php";
-$routes["enqueue"]["ws"] = "./src/enQueue.php";
-$routes["dequeue"]["ws"] = "./src/deQueue.php";
-$routes["driver-accepted"]["ws"] = "./src/DriverAccepted.php";
-$routes["work-finished"]["ws"] = "./src/WorkFinished.php";
-$routes["getqueue"]["ws"] = "./src/Queue.php";
-$routes["user-cancel"]["ws"] = "./src/UserCanceled.php";
-
-
-#user report comment driver
 $routes["/backend/api/reporting"]["POST"] = "./homeUser/reporting.php";
 
-#test insert image
-$routes["/backend/api/image"]["POST"] = "./testImage.php";
+# websocket
+$routes["in"]["ws"] = dirname(__DIR__, 2) . "/src/UserIn.php";
+// $routes["out"]["ws"] = dirname(__DIR__, 2) . "/src/UserOut.php";
+$routes["chat"]["ws"] = dirname(__DIR__, 2) . "/src/Chat.php";
+$routes["enqueue"]["ws"] = dirname(__DIR__, 2) . "/src/enQueue.php";
+$routes["dequeue"]["ws"] = dirname(__DIR__, 2) . "/src/deQueue.php";
+$routes["driver-accepted"]["ws"] = dirname(__DIR__, 2) . "/src/DriverAccepted.php";
+$routes["work-finished"]["ws"] = dirname(__DIR__, 2) . "/src/WorkFinished.php";
+$routes["getqueue"]["ws"] = dirname(__DIR__, 2) . "/src/Queue.php";
+$routes["user-cancel"]["ws"] = dirname(__DIR__, 2) . "/src/UserCanceled.php";
+
+# waiting to test
+$routes['/backend/api/get_auth_question']['POST'] = "./random_question.php";
+
 ?>

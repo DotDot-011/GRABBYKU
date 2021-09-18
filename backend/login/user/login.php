@@ -1,6 +1,8 @@
 <?php
 
 $postData = json_decode(file_get_contents("php://input"));
+require dirname(__DIR__) . "/user/generate_JWT.php";
+require dirname(__DIR__, 2) . "/configs/JWT_key.php";
 
 $username = $postData->username;
 $password = $postData->password;
@@ -21,21 +23,30 @@ if ($result->num_rows == 1) {
         if ($row1['status'] == 0) {
             $sql2 = "UPDATE `user` SET `status` = 1 WHERE `username` = '$username'";
             if ($conn->query($sql2) == TRUE) {
-                echo json_encode([
-                    "message" => true
-                ]);
+                $sql = "SELECT * FROM user WHERE username = '$username'";
+                $result = $conn->query($sql);
+                $row = $result->fetch_assoc();
+                $auth_a = generate_JWT($row,$key);
+		echo json_encode([
+                    "message" => true,
+                    "auth" => $auth_a
+                ]); 
+                //$data = [];
+                //$data['message'] = TRUE; 
+   		//$data['auth'] = generate_JWT($row,$key);
+                //echo json_encode($data);
             }
         } elseif ($row1['status'] >= 1) {
             $sql2 = "UPDATE `user` SET `status` = 0 WHERE `username` = '$username'";
             if ($conn->query($sql2) == TRUE) {
                 echo json_encode([
-                    "message" => "this user is already logged in",
+                    "message" => false,
                     "error_code" => 1
                 ]);
             }
         } else {
             echo json_encode([
-                "message" => "this user is currently using a service",
+                "message" => false,
                 "error_code" => 2
             ]);
         }

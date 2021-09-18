@@ -1,37 +1,34 @@
 <?php
 
-$postData = json_decode(file_get_contents("php://input"));
-$driver_id = $postData->driver_id;
-
+$driver_id = $postData['driver_id'];
 $sql = "SELECT * FROM `booking` WHERE `driver_id` IS NULL ORDER BY `booking_id`";
 $result = $conn->query($sql);
-
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $user_id = $row["user_id"];
-    $data = [];
-    $data["user_id"] = $row["user_id"];
+    //$data = [];
+    $data['user_id'] = $row["user_id"];
     $data["lng_user"] = $row["lng_user"];
     $data["lat_user"] = $row["lat_user"];
     $data["lng_des"] = $row["lng_des"];
     $data["lat_des"] = $row["lat_des"];
     $data["driver_id"] = $driver_id;
-    $data["message"] = TRUE;
+    $data['message'] = TRUE;
     $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";
-    $sql3 = "SELECT `fname`, `lname`, `imageData` FROM `user` WHERE `user_id` = $user_id";
+    $sql3 = "SELECT `fname`,`lname`, imageData FROM `user` WHERE `user_id` = $user_id";
     $result2 = $conn->query($sql2);
     $result3 = $conn->query($sql3);
     $row3 = $result3->fetch_assoc();
     $data["user_fname"] = $row3["fname"];
     $data["user_lname"] = $row3["lname"];
     $data["image"] = $row3["imageData"];
-    echo json_encode($data);
+    // echo json_encode($data);
     $sql = "UPDATE booking SET driver_id = $driver_id WHERE user_id = $user_id";
     $result = $conn->query($sql);
 } else {
-    echo json_encode([
-        "message"=> FALSE
-    ]);
+  
+   $data['message']=FALSE;
+
 }
 
 //                                                            ,1,

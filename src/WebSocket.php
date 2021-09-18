@@ -2,8 +2,10 @@
 
 namespace MyApp;
 
+use Exception;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use Firebase\JWT\JWT;
 
 class WebSocket implements MessageComponentInterface
 {
@@ -22,34 +24,64 @@ class WebSocket implements MessageComponentInterface
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        // front send json {protocol, arg1, arg2, arg3, arg4}
-        # test แล้ว
-        // protocol:in -> Name:sender's name, Mode:is_driver? 1 : 0, ID:sender's id
+        // front send json {protocol, arg1, arg2, arg3,...}
+
+        // protocol:in -> Name:sender's name, Mode:is_driver? 1 : 0, ID:sender's id, JWT: Auth Token
         // protocol:out -> nothing required
         // protocol:chat -> ReceiverName:receiver's name, Message:string, ReceiverID:receiver's id, Mode:is_driver? 1 : 0
         // protocol:enqueue -> DriverID:driver's id
         // protocol:dequeue -> DriverID:driver's id
         // protocol:getqueue -> DriverID:driver's id
-        // protocol:driver-accepted -> DriverId:driver's id, Name:user's name,UserId:user's id 
-        
-        # ยังไม่ได้ test
-        // protocol:work-finished -> arg1:driver's name, arg2:driver's id, arg3:user's name, arg4:user's id
-        // protocol:user-cancel -> arg1:user's name, arg2:user's id
+        // protocol:driver-accepted -> DriverId:driver's id, Name:user's name, UserId:user's id 
+        // protocol:work-finished -> DriverName:driver's name, DrierID:driver's id, UserName:user's name, UserID:user's id, Cost:service's fee
+        // protocol:user-cancel -> user_id:user's id
+
         $routes = [];
         require dirname(__DIR__) . "/backend/configs/database.php";
         require dirname(__DIR__) . "/backend/configs/route.php";
+        require dirname(__DIR__) . "/backend/configs/need_authorize.php";
+        require dirname(__DIR__) . "/backend/configs/JWT_key.php";
 
         $wsdata = json_decode($msg, true);
-        echo "front send " . $msg . " connection_id = " , $from->resourceId , "\n";
+        echo "front send " . $msg . " connection_id = ", $from->resourceId, "\n";
         $protocol = $wsdata['protocol'];
 
         if (isset($routes[$protocol]['ws'])) {
-            require $routes[$protocol]['ws'];
+            if ($need_authorize[$protocol]['ws']) {
+                $jwt_user = $wsdata['JWT'];
+                $isAuth = TRUE;
+                try {
+                    JWT::decode(
+                        $jwt_user,
+                        $key,
+                        array('HS256')
+                    );
+                } catch (Exception $e) {
+                    $isAuth = FALSE;
+                    $err_message = $e->getMessage();
+                }
+                if ($isAuth) {
+                    $from->send(json_encode([
+                        "message" => "authorized"
+                    ]));
+                    require $routes[$protocol]['ws'];
+                } else {
+                    $from->send(json_encode([
+                        "message" => $err_message
+                    ]));
+                    $from->close();
+                }
+            } else {
+                $sql = "SELECT * FROM websocket WHERE connection_id = $from->resourceId";
+                $result = $conn->query($sql);
+                if ($result->num_rows == 1) {
+                    require $routes[$protocol]['ws'];
+                }
+            }
         } else {
-            echo "this protocol is not available";
+            echo "this protocol is not available\n";
             $from->send("this protocol is not available");
         }
-
         $conn->close();
     }
 
