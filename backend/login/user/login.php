@@ -1,7 +1,7 @@
 <?php
 
 $postData = json_decode(file_get_contents("php://input"));
-require dirname(__DIR__) . "/user/generate_JWT.php";
+require dirname(__DIR__, 2) . "/generate_JWT.php";
 require dirname(__DIR__, 2) . "/configs/JWT_key.php";
 
 $username = $postData->username;

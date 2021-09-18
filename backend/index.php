@@ -12,18 +12,18 @@ require "configs/need_authorize.php";
 //require "/Users/kx/Documents/Work/soft-eng/GRABBYKU_B/GRABBYKU/backend/login/user/generate_JWT.php";
 //use Firebase\JWT\JWT;
 
-if(isset($routes[$route][$method])) {
- if($need_authorize[$route][$method]){
-    require "./authorize.php";
-    if($data['auth_code']){
-     require $routes[$route][$method];
-    }
-    echo json_encode($data);
- }else{
-  require $routes[$route][$method];
-  //echo json_encode($data);
- }
-}else {
- $data['message_code'] = "this routes is not route.php";
- echo json_encode($data);
+if (isset($routes[$route][$method])) {
+   if ($need_authorize[$route][$method]) {
+      require "./authorize.php";
+      if ($data['auth_code']) {
+         require $routes[$route][$method];
+         echo json_encode($data);
+      }
+   } else {
+      require $routes[$route][$method];
+      //echo json_encode($data);
+   }
+} else {
+   $data['message_code'] = "this routes is not route.php";
+   echo json_encode($data);
 }

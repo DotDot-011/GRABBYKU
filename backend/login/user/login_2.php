@@ -25,7 +25,7 @@ if($row != NULL){
   //check password+question == answer for granting access
   $real_answer = hash('md5',$password.$question,false);
   if($real_answer == $auth_answer){
-   echo(generate_JWT($row,$key));
+   echo(generate_JWT($row, $key, 0));
   }
   else{
    echo "access-denined";

@@ -1,7 +1,7 @@
 <?php
 
 $postData = json_decode(file_get_contents("php://input"));
-require dirname(__DIR__) . "/driver/generate_jwt_driver.php";
+require dirname(__DIR__, 2) . "/generate_jwt_driver.php";
 require dirname(__DIR__, 2) . "/configs/JWT_key.php";
 $username = $postData->username;
 $password = $postData->password;
@@ -24,8 +24,8 @@ if ($result->num_rows == 1) {
                 $sql2 = "UPDATE `driver` SET `status` = 1 WHERE `username` = '$username'";
                 if ($conn->query($sql2)) {
                     echo json_encode([
-			"message" => true,
-                        "auth" => generate_JWT_driver($row,$key)
+                        "message" => true,
+                        "auth" => generate_JWT_driver($row, $key)
                     ]);
                 }
             } elseif ($row1['status'] >= 1) {
