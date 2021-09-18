@@ -4,7 +4,12 @@ require dirname(__DIR__, 2) . "/generate_jwt_driver.php";
 require dirname(__DIR__, 2) . "/configs/JWT_key.php";
 
 $postData = json_decode(file_get_contents("php://input"));
-$driver_id = $postData->driver_id;
+$username = $postData->username;
+
+$sql = "SELECT driver_id FROM driver WHERE username = '$username'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$driver_id = $row['driver_id'];
  
  $sql1 = "DELETE FROM `queue` WHERE `driver_id` = $driver_id";
  $sql2 = "UPDATE `driver` SET `status` = 0 WHERE `driver_id` = $driver_id";

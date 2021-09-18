@@ -15,13 +15,15 @@ if ($result->num_rows > 0) {
     $data["driver_id"] = $driver_id;
     $data['message'] = TRUE;
     $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";
-    $sql3 = "SELECT `fname`,`lname`, imageData FROM `user` WHERE `user_id` = $user_id";
+    $sql3 = "SELECT fname,lname, imageData, success_count, cancel_count FROM `user` WHERE user_id = $user_id";
     $result2 = $conn->query($sql2);
     $result3 = $conn->query($sql3);
     $row3 = $result3->fetch_assoc();
     $data["user_fname"] = $row3["fname"];
     $data["user_lname"] = $row3["lname"];
     $data["image"] = $row3["imageData"];
+    $data['success_count'] = $row3['success_count'];
+    $data['cancel_count'] = $row3['cancel_count'];
     // echo json_encode($data);
     $sql = "UPDATE booking SET driver_id = $driver_id WHERE user_id = $user_id";
     $result = $conn->query($sql);

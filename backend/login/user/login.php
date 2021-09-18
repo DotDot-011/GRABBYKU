@@ -26,7 +26,7 @@ if ($result->num_rows == 1) {
                 $sql = "SELECT * FROM user WHERE username = '$username'";
                 $result = $conn->query($sql);
                 $row = $result->fetch_assoc();
-                $auth_a = generate_JWT($row, $key);
+                $auth_a = generate_JWT($row, $key, 0);
                 echo json_encode([
                     "message" => true,
                     "auth" => $auth_a

@@ -22,6 +22,7 @@ if ($result->num_rows == 1) {
                 "message_code"=> $protocol,
                 "message"=> "Canceled"
             ]));
+            break;
         }
     }
 }
@@ -35,3 +36,6 @@ if ($conn->query($statement) === TRUE) {
 }
 
 require dirname(__DIR__) . "/src/Booking.php";
+
+$sql = "UPDATE user SET cancel_count = cancel_count + 1 WHERE user_id = $user_id";
+$result = $conn->query($sql);

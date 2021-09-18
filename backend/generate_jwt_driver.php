@@ -1,5 +1,5 @@
 <?php
-require dirname(__DIR__, 3) . "/vendor/firebase/php-jwt/src/JWT.php";
+require dirname(__DIR__) . "/vendor/firebase/php-jwt/src/JWT.php";
 
 use Firebase\JWT\JWT;
 

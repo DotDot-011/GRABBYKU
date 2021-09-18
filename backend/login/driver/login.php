@@ -25,7 +25,7 @@ if ($result->num_rows == 1) {
                 if ($conn->query($sql2)) {
                     echo json_encode([
                         "message" => true,
-                        "auth" => generate_JWT_driver($row, $key)
+                        "auth" => generate_JWT_driver($row, $key, 0)
                     ]);
                 }
             } elseif ($row1['status'] >= 1) {

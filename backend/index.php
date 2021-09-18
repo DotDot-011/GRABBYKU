@@ -17,8 +17,8 @@ if (isset($routes[$route][$method])) {
       require "./authorize.php";
       if ($data['auth_code']) {
          require $routes[$route][$method];
-         echo json_encode($data);
       }
+      echo json_encode($data);
    } else {
       require $routes[$route][$method];
       //echo json_encode($data);

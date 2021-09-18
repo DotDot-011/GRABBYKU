@@ -2,10 +2,9 @@
 
 namespace MyApp;
 
-use Exception;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use Firebase\JWT\JWT;
+require dirname(__DIR__) . "/src/isAuth.php";
 
 class WebSocket implements MessageComponentInterface
 {
@@ -41,7 +40,7 @@ class WebSocket implements MessageComponentInterface
         require dirname(__DIR__) . "/backend/configs/route.php";
         require dirname(__DIR__) . "/backend/configs/need_authorize.php";
         require dirname(__DIR__) . "/backend/configs/JWT_key.php";
-        require dirname(__DIR__) . "/src/isAuth.php";
+        
 
         $wsdata = json_decode($msg, true);
         echo "front send " . $msg . " connection_id = ", $from->resourceId, "\n";
