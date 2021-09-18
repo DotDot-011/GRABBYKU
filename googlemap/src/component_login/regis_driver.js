@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, { useCallback, useRef, useState} from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import './regis_driver.css'
 import Login from "./login";
 import Resizer from "react-image-file-resizer";
+
+
 
 
 
@@ -25,8 +27,11 @@ function RegisDriver() {
     const driver_noRef = useRef("");
     const confirmPasswordRef = useRef("");
     const [file,setFile] = useState(null)
+    const [count, setCount] = useState(0);
     const [newFile,setNewFile] = useState(null)
-    
+
+
+
     
     function validateEmail(email) {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -136,7 +141,6 @@ function RegisDriver() {
             
         }
     }
-    const [count, setCount] = useState(0);
     if(count === 0){
         return (
             <div id="main_driverreg">
@@ -202,6 +206,7 @@ function RegisDriver() {
                 <label>เลือกรูปประจำตัว</label>
                 <input name="csv" type="file" onChange={event=>{
                     fileChangedHandler(event);
+                    
                     // setFile(URL.createObjectURL(event.target.files[0]))
                     // console.log(URL.createObjectURL(event.target.files[0]))
                     
@@ -211,12 +216,15 @@ function RegisDriver() {
                 {/* <input type="file" onChange={} /> */}
                 <img src={file}/>
                 
+                
             {/* <button onClick={()=>{
                 console.log(birth_dateRef.current.value.split('-')[0])
                 // uploadFile();
             }}>กดค่ะ</button> */}
                 <NotificationContainer />
             </div>
+             
+            
         );
     }
     else {

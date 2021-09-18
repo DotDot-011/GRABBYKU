@@ -18,8 +18,11 @@ function Login() {
     useEffect(()=>{
         if(localStorage.getItem("regis_success")){
             NotificationManager.success('ลงทะเบียนเสร็จสิ้น','',10000);
-            localStorage.clear();
         }
+        if(localStorage.getItem("Auth") === "failed"){
+            NotificationManager.error('หมดเวลาการเชื่อมต่อ','',10000);
+        }
+        localStorage.clear();
     },[]);
     
     const [count, setCount] = useState(0);
