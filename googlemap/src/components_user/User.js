@@ -434,12 +434,7 @@ class User extends React.Component {
       this.conn.onopen = function(e) {
         console.log("Connection established!");
       }
-      this.conn.onmessage = e=> {
-        let Message = JSON.parse(e.data)
-        console.log(Message)
-        console.log('----------2');
-        // console.log(Message.message_code);
-      };
+      
     };
     
     
@@ -448,6 +443,23 @@ class User extends React.Component {
       // axios.get( Url.LinkToBackend +"backend/api/bomb")
       // console.log('eeeeee',getCookie('token'))
       //--------------------------------
+      this.conn.onmessage = e=> {
+        let Message = JSON.parse(e.data)
+        console.log(Message)
+        console.log('----------2');
+        if(Message.message_code ==="multiple login"){
+          axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+            username: localStorage.getItem("username")
+          }).then(()=>{
+            localStorage.clear();
+            localStorage.setItem("Auth","Multiple_Login");
+            window.location.reload();
+          })
+        }
+        // console.log(Message.message_code);
+      };
+
+
       this.fetchUserIdInterval=setInterval(()=>{
         
         axios.post(Url.LinkToBackend+"backend/api/user_info",{

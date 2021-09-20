@@ -123,16 +123,17 @@ class Driver extends React.Component {
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
     leaveQueue(this.state.driverId,this.conn);
-    axios.post(Url.LinkToBackend + "backend/api/driver_cancel",{
-      JWT :`${getCookie('token')}`,
-      driver_id : this.state.driverId
-    })
-    .then(res=>{
-      console.log(res);
-      this.setState({
+    this.setState({
           queueDriverAppear:2,
-      });
-    })
+    });
+    // axios.post(Url.LinkToBackend + "backend/api/driver_cancel",{
+    //   JWT :`${getCookie('token')}`,
+    //   driver_id : this.state.driverId
+    // })
+    // .then(res=>{
+    //   console.log(res);
+    
+    // })
     
     // leaveQueue(this.state.driverId);
     // document.location.reload();
@@ -145,14 +146,15 @@ class Driver extends React.Component {
     this.conn.send(JSON.stringify({
       protocol: "driver-accepted", // protocol
       DriverID: this.state.driverId, 
-      Name: `${this.state.userFname} ${this.state.userLname}`,
+      DriverName: `${this.state.userFname} ${this.state.userLname}`,
       UserID: `${this.state.userId}`,
+      UserName:`${this.state.userFname} ${this.state.userLname}`
       
-  }));
+    }));
   this.setState({
     buttonAcceptCancelAppear: null,
   });
-  leaveQueue(this.state.driverId,this.conn);
+  // leaveQueue(this.state.driverId,this.conn);
     
   }
   
@@ -166,6 +168,7 @@ class Driver extends React.Component {
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
     }
+    
   }
 
   componentWillMount(){
@@ -245,10 +248,11 @@ class Driver extends React.Component {
         }
         else if(this.state.queueDriverAppear === 2){
           clearInterval(this.cancelIntervalId);
+          clearTimeout(this.driverTimeOut);
           this.userInfo = null;
-          this.queueDriver = <Penalty/>
           this.countdown = null;
-          setTimeout(() => {
+          this.queueDriver = <Penalty/>
+          this.driverTimeOut=setTimeout(() => {
             this.setState({
               queueDriverAppear:1
             })

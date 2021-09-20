@@ -5,6 +5,7 @@ import RegisDriver from "./regis_driver";
 import RegisUser from "./regis_user";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import './login.css'
+import History from '../components_driver/component/booking_history';
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,6 +22,9 @@ function Login() {
         }
         if(localStorage.getItem("Auth") === "failed"){
             NotificationManager.error('หมดเวลาการเชื่อมต่อ','',10000);
+        }
+        if(localStorage.getItem("Auth") ==="Multiple_Login"){
+            NotificationManager.error('มีผู้การเข้าสู่ระบบจากอุปกรณ์อื่น','',10000);
         }
         localStorage.clear();
     },[]);
@@ -44,7 +48,7 @@ function Login() {
                 <button classname="user_reg" id="user_reg" onClick={() => setCount(3)}>Customer</button>
                 <button classname="driver_reg" id="driver_reg" onClick={() => setCount(4)}>Driver</button>
                 <NotificationContainer />
-
+                <History/>
             </div>
         );
     }

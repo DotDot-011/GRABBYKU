@@ -14,7 +14,7 @@ export default function QueueDriver(props) {
         
         //  ------------------ driver เอาข้อมูลของ user ผ่าน api check_booking--------------------
         axios.post(Url.LinkToBackend +"backend/api/check_booking",{
-            // driver_id : props.driverId,
+            driver_id : props.driverId,
             JWT :`${getCookie('token')}`
         })
         .then( res=>{
@@ -33,6 +33,7 @@ export default function QueueDriver(props) {
               }
             else{
                 if (res.data.message){
+                    console.log(res.data.message_code);
                     clearInterval(window.timeoutId1);
                     // console.log(Number(res.data.lat_user));
                     props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
@@ -96,10 +97,19 @@ export default function QueueDriver(props) {
             let Message = JSON.parse(e.data)
             console.log(Message)
             clearInterval(window.timeoutId1);
-           
+            if(Message.message_code ==="multiple login"){
+                axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                  username: localStorage.getItem("username")
+                }).then(()=>{
+                  localStorage.clear();
+                  localStorage.setItem("Auth","Multiple_Login");
+                  window.location.reload();
+                })
+              }
+
             if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
                 // console.log(Message.message_code);
-                window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
+                window.timeoutId1 = setInterval(()=>{showQueue(Message);},500)
                 
                 // console.log(sizeof(Message));
             }
@@ -107,6 +117,8 @@ export default function QueueDriver(props) {
                 console.log(Message.message_code)
                 props.cancelCase();
             }
+
+
             
     
         };
@@ -123,7 +135,10 @@ export default function QueueDriver(props) {
             protocol: "enqueue", // protocol
             DriverID: `${props.driverId}`,
         }))
-        
+        conn.onerror = (e) =>{
+            console.log(e)
+        }
+
     }
  
 
