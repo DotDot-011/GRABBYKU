@@ -149,58 +149,70 @@ function RegisDriver() {
                 <h1>Register as Driver</h1>
                 <form classname="" id="driverreg" action="" method="post">
                     <div id="boxinput-driver">
-                        <label>ชื่อผู้ใช้</label>
-                        <input type="text" ref={usernameRef}  placeholder="กรอกชื่อผู้ใช้" name="username"/>
+                        <label id="label-input">ชื่อผู้ใช้</label>
+                        <input id="input-normal" type="text" ref={usernameRef}  placeholder="กรอกชื่อผู้ใช้" name="username"/>
                     </div>
                     <div id="boxinput-driver">
-                        <label>ชื่อจริง</label>
-                        <input type="text" ref={fnameRef}  placeholder="กรอกชื่อจริง" name="fname"/>
+                        <label id="label-input">ชื่อจริง </label>
+                        <input id="input-normal" type="text" ref={fnameRef}  placeholder="กรอกชื่อจริง" name="fname"/>
                     </div>
                     <div id="boxinput-driver">
-                        <label>นามสกุล</label>
-                        <input type="text" ref={lnameRef}  placeholder="กรอกนามสกุล" name="lname"/>
+                        <label id="label-input">นามสกุล</label>
+                        <input id="input-normal" type="text" ref={lnameRef}  placeholder="กรอกนามสกุล" name="lname"/>
                     </div>
                     <div id="boxinput-driver">
-                        <label>วันเกิด</label>
-                        <input type="date" ref={birth_dateRef}  placeholder="กรอกวันเกิด" name="birth_date"/>
+                        <label id="label-input">วันเกิด</label>
+                        <input id="input-normal" type="date" ref={birth_dateRef}  placeholder="กรอกวันเกิด" name="birth_date"/>
                     </div>
                     {/* <div id="boxinput-driver">
                         <label>อายุ</label>
                         <input type="number" ref={ageRef} placeholder="กรอกอายุ" name="age"/>
                     </div> */}
                     <div id="boxinput-driver">
-                        <label>อีเมลล์</label>
-                        <input type="email" ref={emailRef}  placeholder="กรอกอีเมลล์" name="email"/>
+                        <label id="label-input">อีเมลล์</label>
+                        <input id="input-normal" type="email" ref={emailRef}  placeholder="กรอกอีเมลล์" name="email"/>
                     </div>
                     <div id="boxinput-driver">
-                        <label>หมายเลขโทรศัพท์</label>
-                        <input type="number" ref={phoneRef} placeholder="กรอกหมายเลขโทรศัพท์" name="phone" />
+                        <label id="label-input">หมายเลขโทรศัพท์</label>
+                        <input id="input-normal" type="number" ref={phoneRef} placeholder="กรอกหมายเลขโทรศัพท์" name="phone" />
                     </div>
                     <div id="boxinput-driver">
-                        <label>รหัสประจำตัวประชาชน</label>
-                        <input type="text" ref={citizenIdRef} placeholder="กรอกรหัสประจำตัวประชาชน" name="id_no" />
+                        <label id="label-input">รหัสประจำตัวประชาชน</label>
+                        <input id="input-normal" type="text" ref={citizenIdRef} placeholder="กรอกรหัสประจำตัวประชาชน" name="id_no" />
                     </div>
                     <div id="boxinput-driver">
-                        <label>รหัสผ่าน</label>
-                        <input type="password" ref={passwordRef} placeholder="กรอกรหัสผ่าน" name="password" />
+                        <label id="label-input">รหัสผ่าน</label>
+                        <input id="input-normal" type="password" ref={passwordRef} placeholder="กรอกรหัสผ่าน" name="password" />
                     </div>
                     <div id="boxinput-driver">
-                        <label>ยืนยันรหัสผ่าน</label>
-                        <input type="password" ref={confirmPasswordRef} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" name="confirmPassword" />
+                        <label id="label-input">ยืนยันรหัสผ่าน</label>
+                        <input id="input-normal" type="password" ref={confirmPasswordRef} placeholder="กรอกเพื่อยืนยันรหัสผ่าน" name="confirm_password" name="confirmPassword" />
                     </div>
                     <div id="boxinput-driver">
-                        <label>หมายเลขวิน</label>
-                        <input type="number" ref={driver_noRef} placeholder="กรอกหมายเลขวิน" name="driver_number"/>
+                        <label id="label-input">ชื่อซุ้มวิน</label>
+                        <input id="input-normal" type="text" ref={win_nameRef} placeholder="กรอกชื่อซุ้ม" name="win_name" />
                     </div>
-                    <div id="boxinput-driver">
-                        <label>ชื่อซุ้มวิน</label>
-                        <input type="text" ref={win_nameRef} placeholder="กรอกชื่อซุ้ม" name="win_name" />
+                    <div id="boxinput-driver2">
+                        <label id="label-input">หมายเลขวิน</label>
+                        <input id="input-short" type="number" ref={driver_noRef} placeholder="กรอกหมายเลขวิน" name="driver_number"/>
+                        <img id="img-driver" src={file}/>
                     </div>
-                    <div id="boxinput-driver">
-                        <label>ป้ายทะเบียนรถ</label>
-                        <input type="text" ref={plateRef} placeholder="กรอกป้ายทะเบียนรถ" name="plate" />
+                    <div id="boxinput-driver2">
+                        <label id="label-input">ป้ายทะเบียนรถ</label>
+                        <input id="input-short" type="text" ref={plateRef} placeholder="กรอกป้ายทะเบียนรถ" name="plate" />
                     </div>
+                    <div id="boxinput-driver2"> 
+
+                        <label id="label-input">เลือกรูปประจำตัว</label>
+
+                        <label for="img-input" id="img-box">เลือกไฟล์</label>
+                        <input type="file" id="img-input" name="csv" onChange={event=>{
+                        fileChangedHandler(event);
+                        }} />
+                    </div>
+
                 </form>
+                {/* <label>เลือกรูปประจำตัว</label> */}
                 <button id="sum_driverreg" type="button" onClick={sendData}>ลงทะเบียน</button>
                 <button id="back_driverreg" type="submit" onClick={()=> {setCount(1)}}> กลับ </button>
                 <label>เลือกรูปประจำตัว</label>
@@ -214,7 +226,6 @@ function RegisDriver() {
                     }} />
 
                 {/* <input type="file" onChange={} /> */}
-                <img src={file}/>
                 
                 
             {/* <button onClick={()=>{
