@@ -54,20 +54,27 @@
 }
 .driver-detail .image-driver{
     position: absolute;
+    /* background-color: rgb(241, 240, 240); */
     /* background-color: rgb(148, 106, 106); */
     /* background-image: url('../search_icon.png'); */
     border-radius: 10px;
-    width: 110px;
+    width: 122px;
     height: 140px;
     margin-left: 4%;
+}
+.driver-detail .image-driver img{
+    min-width: 100px;
+    min-height: 122px;
+    max-width: 120px;
+    max-height: 140px;
+    border-radius: 10px;
 }
 .driver-detail .name-driver ,.name-license ,.name-number ,.name-position{
     text-align: left;
     /* top right bott left   */
-    margin: 0px 0px 4px 45%;
+    margin: 0px 0px 4px 47%;
     font-size: 22px;
 }
-
 .money-div{
     margin: 20px auto;
     padding: 15px;
