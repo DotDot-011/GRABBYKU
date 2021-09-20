@@ -123,13 +123,21 @@ class Driver extends React.Component {
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
     leaveQueue(this.state.driverId,this.conn);
-    this.setState({
-        queueDriverAppear:2,
-    });
+    axios.post(Url.LinkToBackend + "backend/api/driver_cancel",{
+      JWT :`${getCookie('token')}`,
+      driver_id : this.state.driverId
+    })
+    .then(res=>{
+      console.log(res);
+      this.setState({
+          queueDriverAppear:2,
+      });
+    })
+    
     // leaveQueue(this.state.driverId);
     // document.location.reload();
     //--------------------------------------------
-
+    
   }
 
   // ------------------ driver กด ยอมรับงาน ------------------
