@@ -33,5 +33,5 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-$sql = "INSERT INTO chat_history (sender, receiver, message) VALUES ('$SenderID', '$ReceiverID', '$message')";
+$sql = "INSERT INTO chat_history (sender_id, receiver_id, receiver_mode, message) VALUES ($SenderID, $ReceiverID, $is_driver, '$message')";
 $conn->query($sql);
