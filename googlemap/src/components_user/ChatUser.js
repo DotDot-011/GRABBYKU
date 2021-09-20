@@ -7,8 +7,8 @@ import getCookie from '../getCookie';
 
 
 export default function ChatUser(props){
-    const [first_name, setFirst_name] = useState("นายธนาคาร");
-    const [last_name, setLast_name] = useState("หลักแหลม");
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
     const [avatar,setAvatar] = useState(null)
     const [count,setCount] = useState(0);
     const { conn ,driverId} = props;

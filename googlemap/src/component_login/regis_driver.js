@@ -206,7 +206,7 @@ function RegisDriver() {
                         <label id="label-input">เลือกรูปประจำตัว</label>
 
                         <label for="img-input" id="img-box">เลือกไฟล์</label>
-                        <input type="file" id="img-input" name="csv" onChange={event=>{
+                        <input type="file" id="img-input" name="csv" accept=".jpg, .png, .jpeg," onChange={event=>{
                         fileChangedHandler(event);
                         }} />
                     </div>
@@ -215,16 +215,6 @@ function RegisDriver() {
                 {/* <label>เลือกรูปประจำตัว</label> */}
                 <button id="sum_driverreg" type="button" onClick={sendData}>ลงทะเบียน</button>
                 <button id="back_driverreg" type="submit" onClick={()=> {setCount(1)}}> กลับ </button>
-                <label>เลือกรูปประจำตัว</label>
-                <input name="csv" type="file" onChange={event=>{
-                    fileChangedHandler(event);
-                    
-                    // setFile(URL.createObjectURL(event.target.files[0]))
-                    // console.log(URL.createObjectURL(event.target.files[0]))
-                    
-                    
-                    }} />
-
                 {/* <input type="file" onChange={} /> */}
                 
                 
