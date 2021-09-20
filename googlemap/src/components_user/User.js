@@ -22,6 +22,7 @@ import distance from 'google_directions';
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
 import getCookie from "../getCookie";
+import { pathPosition, WinZone } from "./WinZone";
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -302,15 +303,15 @@ class User extends React.Component {
     }
     
     //---------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ให้บริการ---------
-    greenZonePath = [
-      {latitude:13.855458118865057, longitude:100.56596600925597},
-      {latitude:13.857277966250578, longitude:100.57639848267323},
-      {latitude:13.857659300458918, longitude:100.58083861265405},
-      {latitude:13.850487798245787, longitude:100.5815458679391},
-      {latitude:13.836416483501072, longitude:100.57339372833995},
-      {latitude:13.842558941191157, longitude:100.5590814720114},
-      {latitude:13.855458118865057, longitude:100.56596600925597},
-    ]
+    // greenZonePath = [
+    //   {latitude:13.855458118865057, longitude:100.56596600925597},
+    //   {latitude:13.857277966250578, longitude:100.57639848267323},
+    //   {latitude:13.857659300458918, longitude:100.58083861265405},
+    //   {latitude:13.850487798245787, longitude:100.5815458679391},
+    //   {latitude:13.836416483501072, longitude:100.57339372833995},
+    //   {latitude:13.842558941191157, longitude:100.5590814720114},
+    //   {latitude:13.855458118865057, longitude:100.56596600925597},
+    // ]
 
     //--------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ห้ามวินผ่าน----------
     redZonePath = [
@@ -366,14 +367,67 @@ class User extends React.Component {
       
     }
     
-    addLocation = () =>{
+    addLocation = async() =>{
+      
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_1 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_2 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_3 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_4 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_5 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_6 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_7 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_8 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_9 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_10 ))
+
+      // for (let item in WinZone){
+      //   console.log(`obj.${item} = ${WinZone[item]}`);
+      //   console.log(typeof( WinZone[item] ));
+      // }
+
       //-----------------เช็คตำแหน่งของทั้งสองmarkerว่าอยู่ในพื้นที่ให้บริการและอยู่นอก redzone หรือไม่-------------------
-     if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
-     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
-     
-     isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
-     isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
+     if(
+     (!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
+     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath)) &&
+    
+      (
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_1 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_2 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_3 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_4 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_5 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_6 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_7 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_8 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_9 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_10 ) 
+      )&&
+      (
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_1 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_2 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_3 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_4 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_5 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_6 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_7 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_8 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_9 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_10 ) 
+      )
+    )
      {
+       
+       for (let item in WinZone) {
+          if(isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone[item] )){
+            await this.setState({
+               DriverPosition: {
+                lat: pathPosition[item].latitude,
+                lng: pathPosition[item].longitude
+              },
+            })
+          }
+        }
+        // console.log('++++++++++',this.state.DriverPosition.lat, this.state.DriverPosition.lng)
         this.getDistance()
         
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
@@ -660,7 +714,7 @@ class User extends React.Component {
             />
           </div>
 
-          <Polygon 
+          {/* <Polygon 
             path={[
               {lat:13.855458118865057, lng:100.56596600925597},
               {lat:13.857277966250578, lng:100.57639848267323},
@@ -680,7 +734,7 @@ class User extends React.Component {
                 fillOpacity: 0,
               }
             }
-          />
+          /> */}
 
           {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
           <div id="bottombutt">

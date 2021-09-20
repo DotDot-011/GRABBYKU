@@ -1,5 +1,5 @@
 import React,{ useEffect , useState } from 'react';
-
+import './QueueDriver.css'
 
 export default function History(props){
 
@@ -31,6 +31,7 @@ export default function History(props){
 
 
     useEffect(()=>{
+        props.closeMenu();
         const test = [
             {
                 "booking_id": 1,
@@ -53,11 +54,11 @@ export default function History(props){
 
 
     return(
-        <div>
-            <div classname="history_list" id="history_list" >
-                {/* <h2> ประวัติรายได้ </h2>  */}
+        <div className="queue-container">
+             <div classname="history_list" id="history_list" >
+                                         {/* <h2> ประวัติรายได้ </h2>  */}
             </div>        
-        </div>
+        </div> 
     )
 }
 

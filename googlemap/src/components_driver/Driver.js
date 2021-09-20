@@ -23,6 +23,9 @@ import Penalty from "./component/Penalty";
 import mapStyle from "../mapStyle"
 import Countdown from "react-countdown"
 import getCookie from "../getCookie";
+import History from "./component/booking_history";
+
+
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 // const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
@@ -63,6 +66,7 @@ class Driver extends React.Component {
     disableButton:false,
     cancelState:false,
     file:null,
+    menuOpen: false
   }
   queueDriver =null;
   buttonAcceptCancel = null;
@@ -237,8 +241,12 @@ class Driver extends React.Component {
 
 
   }
-  
-
+  handleStateChange (state) {
+    this.setState({menuOpen: state.isOpen})  
+  }
+  closeMenu =()=> {
+    this.setState({menuOpen: false})
+  }
   render() {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
@@ -284,6 +292,7 @@ class Driver extends React.Component {
           this.countdown=null;
           
         }
+
         if(!!this.state.buttonAcceptCancelAppear){
           
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
@@ -377,11 +386,20 @@ class Driver extends React.Component {
     return (
 
       <section className="app-section">
-        <Menu right>
+        <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
+          
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-            <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>
-            <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
+            <a  id="home" className="menu-item" onClick={() => this.setState({menuOpen:false})} ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>
+            
+            <a><Popup trigger={<a id="home" ><i ></i> ประวัติการให้บริการ</a>} modal nested>
+                    {           
+                      close=>(
+                          <History closeMenu={this.closeMenu}/>
+                    )}
+                 </Popup>
+                 </a>
+            <a id="contact" className="menu-item" ><i class="fas fa-phone"></i> ติดต่อ</a>
+            <a onClick={ this.showSettings } className="menu-item--small" ><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
                 username: localStorage.getItem("username")
