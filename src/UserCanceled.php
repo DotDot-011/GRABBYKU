@@ -14,15 +14,17 @@ if ($result->num_rows == 1) {
     $driver_name = $row['fname'] . " " . $row['lname'];
     $sql = "SELECT connection_id FROM websocket WHERE name = '$driver_name' and id = '$driver_id' and is_driver = 1";
     $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    $connection_id = $row['connection_id'];
-    foreach ($this->clients as $client) {
-        if ($client->resourceId == $connection_id) {
-            $client->send(json_encode([
-                "message_code"=> $protocol,
-                "message"=> "Canceled"
-            ]));
-            break;
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $connection_id = $row['connection_id'];
+        foreach ($this->clients as $client) {
+            if ($client->resourceId == $connection_id) {
+                $client->send(json_encode([
+                    "message_code" => $protocol,
+                    "message" => "Canceled"
+                ]));
+                break;
+            }
         }
     }
 }

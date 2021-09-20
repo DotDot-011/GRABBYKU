@@ -11,11 +11,17 @@ $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $user_id = $row['user_id'];
 
+$sql = "SELECT on_service FROM websocket WHERE id = '$user_id' and is_driver = 0";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$on_service = $row['on_service'];
+if ($on_service == 0) {
+    $sql = "DELETE FROM booking WHERE user_id = '$user_id'";
+    $conn->query($sql);
+}
 
-
-$sql1 = "DELETE FROM `booking` WHERE `user_id` = $user_id";
 $sql2 = "UPDATE `user` SET `status` = 0 WHERE `user_id` = $user_id";
-if ($conn->query($sql1) == TRUE && $conn->query($sql2) == TRUE) {
+if ($conn->query($sql2) == TRUE) {
     $sql = "SELECT * FROM user WHERE user_id = $user_id";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();

@@ -43,6 +43,7 @@ class WebSocket implements MessageComponentInterface
         
 
         $wsdata = json_decode($msg, true);
+        echo date('d-m-Y') . "\n";
         echo "front send " . $msg . " connection_id = ", $from->resourceId, "\n";
         $protocol = $wsdata['protocol'];
 
@@ -74,6 +75,7 @@ class WebSocket implements MessageComponentInterface
             $from->send("this protocol is not available");
         }
         $conn->close();
+        echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n";
     }
 
     public function onClose(ConnectionInterface $from)

@@ -60,7 +60,7 @@ $routes["/backend/api/reporting"]["POST"] = "./homeUser/reporting.php";
 
 # websocket
 $routes["in"]["ws"] = dirname(__DIR__, 2) . "/src/UserIn.php";
-// $routes["out"]["ws"] = dirname(__DIR__, 2) . "/src/UserOut.php";
+$routes["out"]["ws"] = dirname(__DIR__, 2) . "/src/UserOut.php";
 $routes["chat"]["ws"] = dirname(__DIR__, 2) . "/src/Chat.php";
 $routes["enqueue"]["ws"] = dirname(__DIR__, 2) . "/src/enQueue.php";
 $routes["dequeue"]["ws"] = dirname(__DIR__, 2) . "/src/deQueue.php";

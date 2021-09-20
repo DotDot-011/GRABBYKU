@@ -6,7 +6,6 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $user_id = $row["user_id"];
-    //$data = [];
     $data['user_id'] = $row["user_id"];
     $data["lng_user"] = $row["lng_user"];
     $data["lat_user"] = $row["lat_user"];
@@ -15,7 +14,7 @@ if ($result->num_rows > 0) {
     $data["driver_id"] = $driver_id;
     $data['message'] = TRUE;
     $sql2 = "UPDATE `queue` SET `status` = 'waiting' WHERE `driver_id` = '$driver_id'";
-    $sql3 = "SELECT fname,lname, imageData, success_count, cancel_count FROM `user` WHERE user_id = $user_id";
+    $sql3 = "SELECT fname, lname, imageData, success_count, cancel_count FROM `user` WHERE user_id = $user_id";
     $result2 = $conn->query($sql2);
     $result3 = $conn->query($sql3);
     $row3 = $result3->fetch_assoc();
@@ -25,12 +24,12 @@ if ($result->num_rows > 0) {
     $data['success_count'] = $row3['success_count'];
     $data['cancel_count'] = $row3['cancel_count'];
     // echo json_encode($data);
-    $sql = "UPDATE booking SET driver_id = $driver_id WHERE user_id = $user_id";
+    $sql = "UPDATE booking SET driver_id = '$driver_id' WHERE user_id = '$user_id'";
     $result = $conn->query($sql);
+    $sql = "UPDATE websocket SET on_service = 1 WHERE id = '$driver_id' and is_driver = 1";
+    $conn->query($sql);
 } else {
-  
-   $data['message']=FALSE;
-
+    $data['message'] = FALSE;
 }
 
 //                                                            ,1,
@@ -62,4 +61,3 @@ if ($result->num_rows > 0) {
 //                     :,...........   ....:,...,.
 //                     ,,............. ...,1;,,,,.
 //                                         ..
-

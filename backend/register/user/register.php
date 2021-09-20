@@ -11,10 +11,11 @@ $phone = $postData->phone;
 $id_no = $postData->id_no; 
 $username = $postData->username; 
 $password = $postData->password;
+$imageData = $postData->image;
 // file_put_contents("./registerUser/test.txt", $postData);
 
-$sql = "INSERT INTO user (fname, lname, birth_date, age, email, phone, id_no, username, password)
-VALUES ('$fname','$lname','$birth_date','$age','$email','$phone','$id_no','$username','$password')";
+$sql = "INSERT INTO user (fname, lname, birth_date, age, email, phone, id_no, username, password, imageData)
+VALUES ('$fname','$lname','$birth_date','$age','$email','$phone','$id_no','$username','$password', '$imageData')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";

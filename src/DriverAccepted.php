@@ -1,6 +1,7 @@
 <?php
 
-$name = $wsdata['Name'];
+$DriverName = $wsdata['DriverName'];
+$UserName = $wsdata['UserName'];
 $user_id = $wsdata['UserID'];
 $driver_id = $wsdata['DriverID'];
 
@@ -11,7 +12,7 @@ $results = $conn->query($statement);
 $rows = $results->fetch_assoc();
 $booking_id = $rows["booking_id"];
 
-$sql="SELECT connection_id FROM websocket WHERE name LIKE '$name' and id = '$user_id' and is_driver = 0";
+$sql="SELECT connection_id FROM websocket WHERE name LIKE '$DriverName' and id = '$user_id' and is_driver = 0";
 $result = $conn->query($sql);
 
 while ($row = $result->fetch_assoc()) {
@@ -29,7 +30,9 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-$sql = "UPDATE websocket SET on_service = 1 WHERE name = '$name' AND id = '$driver_id' AND is_driver = 1";
+$sql = "UPDATE websocket SET on_service = 1 WHERE name = '$DriverName' AND id = '$driver_id' AND is_driver = 1";
+$conn->query($sql);
+$sql = "UPDATE websocket SET on_service = 1 WHERE name = '$UserName' and id = '$user_id' and is_driver = 0";
 $conn->query($sql);
 
 require dirname(__DIR__) . "/src/deQueue.php";

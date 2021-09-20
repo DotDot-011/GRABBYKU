@@ -26,5 +26,9 @@ if(!(($string_report == "NULL") && ($rating == 0))){
  $statement3 = "UPDATE driver SET rating = '$new_rating' , report_count = report_count+1 WHERE driver_id = '$driver_id' "; 
  $conn->query($statement3);
 }
-$conn->close(); 
 $data['message_code'] = "done";
+
+$sql = "UPDATE user SET status = 0 WHERE user_id = $user_id";
+$conn->query($sql);
+
+$conn->close();
