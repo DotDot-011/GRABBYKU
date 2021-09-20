@@ -206,7 +206,7 @@ function RegisDriver() {
                         <label id="label-input">เลือกรูปประจำตัว</label>
 
                         <label for="img-input" id="img-box">เลือกไฟล์</label>
-                        <input type="file" id="img-input" name="csv" onChange={event=>{
+                        <input type="file" id="img-input" name="csv" accept=".jpg, .png, .jpeg," onChange={event=>{
                         fileChangedHandler(event);
                         }} />
                     </div>
