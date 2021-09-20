@@ -30,7 +30,7 @@ Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 //   console.log("Connection established!");
 // }
 
-const timeCooldown=40000;
+const timeCooldown=10000;
 class Driver extends React.Component {
   
   state = {
@@ -123,13 +123,21 @@ class Driver extends React.Component {
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
     leaveQueue(this.state.driverId,this.conn);
-    this.setState({
-        queueDriverAppear:2,
-    });
+    axios.post(Url.LinkToBackend + "backend/api/driver_cancel",{
+      JWT :`${getCookie('token')}`,
+      driver_id : this.state.driverId
+    })
+    .then(res=>{
+      console.log(res);
+      this.setState({
+          queueDriverAppear:2,
+      });
+    })
+    
     // leaveQueue(this.state.driverId);
     // document.location.reload();
     //--------------------------------------------
-
+    
   }
 
   // ------------------ driver กด ยอมรับงาน ------------------
@@ -173,13 +181,6 @@ class Driver extends React.Component {
   }
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
-    // window.onbeforeunload =()=>{
-    //   conn.send(JSON.stringify({
-    //     protocol: "out",
-    //   }))
-    // }
-    // console.log('ooooooo',getCookie('token'))
-    //----------------------------------------------------
     // axios.get( Url.LinkToBackend +"backend/api/bomb")
     this.fetchDriverIdInterval =setInterval(()=>{
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
@@ -188,25 +189,35 @@ class Driver extends React.Component {
       })
       .then((res)=>{
         //---------------------------------------------
-          
-          clearInterval(this.fetchDriverIdInterval);
-          console.log('[[[[[[',res);
-          this.setState({
-            driverId: parseInt(res.data[0].driver_id),
+          if(res.data.auth_code === false){
+            axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+              username: localStorage.getItem("username")
+            }).then(()=>{
+              localStorage.clear();
+              localStorage.setItem("Auth","failed");
+              window.location.reload();
+            })
+          }
+          else{
+            clearInterval(this.fetchDriverIdInterval);
+            console.log('[[[[[[',res);
+            this.setState({
+              driverId: parseInt(res.data[0].driver_id),
+              
+            })
+            console.log(res.data[0].fname, res.data[0].lname)
             
-          })
-          console.log(res.data[0].fname, res.data[0].lname)
-          
-          this.conn.send(JSON.stringify({
-            protocol: "in", // protocol
-            Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
-            Mode: "1",
-            ID: `${res.data[0].driver_id}`,
-          }));
-          this.driverFname = res.data[0].fname;
-          this.driverLname = res.data[0].lname;
+            this.conn.send(JSON.stringify({
+              protocol: "in", // protocol
+              Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
+              Mode: "1",
+              ID: `${res.data[0].driver_id}`,
+              JWT: `${getCookie('token')}`
+            }));
+            this.driverFname = res.data[0].fname;
+            this.driverLname = res.data[0].lname;
         
-        
+          }
       })
       .then(()=>{
         this.setState({
@@ -333,7 +344,7 @@ class Driver extends React.Component {
             url:"/pictures/markgreen.png",
             scaledSize:{height: 40 , width: 25},
           }}
-
+          animation={4}
         >
         </Marker>
 
@@ -345,7 +356,7 @@ class Driver extends React.Component {
             }}
             
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}
-            
+            animation={4}
             >  
           </Marker>
 
@@ -369,7 +380,7 @@ class Driver extends React.Component {
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
-                driver_id: this.state.driverId
+                username: localStorage.getItem("username")
               })
               .then(res=>{
                 localStorage.clear(); 

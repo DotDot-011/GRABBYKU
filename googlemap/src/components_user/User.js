@@ -386,13 +386,23 @@ class User extends React.Component {
         })
         .then(res=>{
           console.log(res.data);
-          // console.log(getCookie("token"));
-          this.queueUser=res.data.booking_order
-          // console.log('---------',this.queueUser)
-          this.setState({
-            waitingQueueAppear:1,
-          })
-          
+          if(res.data.auth_code === false){
+            axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+              username: localStorage.getItem("username")
+            }).then(res=>{
+              localStorage.clear();
+              localStorage.setItem("Auth","failed");
+              window.location.reload();
+            })
+          }
+          else{
+            // console.log(getCookie("token"));
+            this.queueUser=res.data.booking_order
+            // console.log('---------',this.queueUser)
+            this.setState({
+              waitingQueueAppear:1,
+            })
+          }
         })
         .catch(err=>{
           NotificationManager.error(err.message,'Alert',1000);
@@ -445,20 +455,32 @@ class User extends React.Component {
           JWT :`${getCookie('token')}`
         })
         .then(res=>{
-          console.log(res)
-          clearInterval(this.fetchUserIdInterval)
-          this.userId=res.data[0].user_id;
-          console.log(res.data[0].fname, res.data[0].lname)
           
-          this.conn.send(JSON.stringify({
-            protocol: "in",
-            Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
-            Mode: "0",
-            ID: `${res.data[0].user_id}`,
-            
-          }));
+          if(res.data.auth_code === false){
+            axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+              username: localStorage.getItem("username")
+            }).then(()=>{
+              localStorage.clear();
+              localStorage.setItem("Auth","failed");
+              window.location.reload();
+            })
+          }
+          else{
+            this.userId=res.data[0].user_id;
+            console.log(res)
+            clearInterval(this.fetchUserIdInterval)
+            console.log(res.data[0].fname, res.data[0].lname)
+            this.conn.send(JSON.stringify({
+              protocol: "in",
+              Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
+              Mode: "0",
+              ID: `${res.data[0].user_id}`,
+              JWT: `${getCookie('token')}`
+            }));
+          }
         })
         .then(()=>{
+          
           this.setState({
             loadingState:1,
           })
@@ -695,9 +717,9 @@ class User extends React.Component {
             <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_user",{
-                user_id: this.userId
+                username: localStorage.getItem("username")
               }).then(res=>{
-                localStorage.clear() ; 
+                localStorage.clear(); 
                 window.location.reload()
               }).catch(err=>{
                 NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);

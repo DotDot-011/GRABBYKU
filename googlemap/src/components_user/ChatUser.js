@@ -7,8 +7,8 @@ import getCookie from '../getCookie';
 
 
 export default function ChatUser(props){
-    const [first_name, setFirst_name] = useState("นายธนาคาร");
-    const [last_name, setLast_name] = useState("หลักแหลม");
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
     const [avatar,setAvatar] = useState(null)
     const [count,setCount] = useState(0);
     const { conn ,driverId} = props;
@@ -39,12 +39,22 @@ export default function ChatUser(props){
             
             })
                 .then(res=>{
-                    // console.log(res.data)
-                    clearInterval(intervalId);
-                    setFirst_name(res.data.fname);
-                    setLast_name(res.data.lname);
-                    setAvatar(res.data.image);
-                   
+                    if(res.data.auth_code === false){
+                        axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+                          username: localStorage.getItem("username")
+                        }).then(()=>{
+                          localStorage.clear();
+                          localStorage.setItem("Auth","failed");
+                          window.location.reload();
+                        })
+                    }
+                    else{
+                        // console.log(res.data)
+                        clearInterval(intervalId);
+                        setFirst_name(res.data.fname);
+                        setLast_name(res.data.lname);
+                        setAvatar(res.data.image);
+                    }
                 })
                 .catch(err=>{
                     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);

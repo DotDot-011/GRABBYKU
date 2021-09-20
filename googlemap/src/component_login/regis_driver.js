@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, { useCallback, useRef, useState} from "react";
 import axios from "axios";
 import { Url } from '../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import './regis_driver.css'
 import Login from "./login";
 import Resizer from "react-image-file-resizer";
+
+
 
 
 
@@ -25,8 +27,11 @@ function RegisDriver() {
     const driver_noRef = useRef("");
     const confirmPasswordRef = useRef("");
     const [file,setFile] = useState(null)
+    const [count, setCount] = useState(0);
     const [newFile,setNewFile] = useState(null)
-    
+
+
+
     
     function validateEmail(email) {
         const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -136,7 +141,6 @@ function RegisDriver() {
             
         }
     }
-    const [count, setCount] = useState(0);
     if(count === 0){
         return (
             <div id="main_driverreg">
@@ -202,7 +206,7 @@ function RegisDriver() {
                         <label id="label-input">เลือกรูปประจำตัว</label>
 
                         <label for="img-input" id="img-box">เลือกไฟล์</label>
-                        <input type="file" id="img-input" name="csv" onChange={event=>{
+                        <input type="file" id="img-input" name="csv" accept=".jpg, .png, .jpeg," onChange={event=>{
                         fileChangedHandler(event);
                         }} />
                     </div>
@@ -211,8 +215,8 @@ function RegisDriver() {
                 {/* <label>เลือกรูปประจำตัว</label> */}
                 <button id="sum_driverreg" type="button" onClick={sendData}>ลงทะเบียน</button>
                 <button id="back_driverreg" type="submit" onClick={()=> {setCount(1)}}> กลับ </button>
-
                 {/* <input type="file" onChange={} /> */}
+                
                 
             {/* <button onClick={()=>{
                 console.log(birth_dateRef.current.value.split('-')[0])
@@ -220,6 +224,8 @@ function RegisDriver() {
             }}>กดค่ะ</button> */}
                 <NotificationContainer />
             </div>
+             
+            
         );
     }
     else {

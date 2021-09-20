@@ -44,7 +44,7 @@ export default function DetailDriver(props){
     const [driverPosition, setdriverPosition] = useState("");
     const [avatar,setAvatar] = useState(null)
 
-    const [value, setValue] = useState(4);
+    const [value, setValue] = useState(0);
     const [hover, setHover] = useState(-1);
     
     // ------------------ คำนวณราคาค่ะ & เวลาค่ะ ------------------
@@ -110,14 +110,26 @@ export default function DetailDriver(props){
                 JWT :`${getCookie('token')}`
             })
             .then(res=>{
-                    clearInterval(timeoutId)
-                    console.log(res.data)
+                if(res.data.auth_code === false){
+                    axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+                      username: localStorage.getItem("username")
+                    }).then(()=>{
+                      localStorage.clear();
+                      localStorage.setItem("Auth","failed");
+                      window.location.reload();
+                    })
+                }
+                else{
+                    clearInterval(timeoutId);
+                    console.log(res.data);
                     setFirst_name(res.data.fname);
                     setLast_name(res.data.lname);
                     setPlate(res.data.plate);
                     setdriverNo(res.data.driver_no);
                     setdriverPosition(res.data.win_name);
                     setAvatar(res.data.image)
+                    setValue(res.data.rating);
+                }
                 })
                 .catch(err=>{
                     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
@@ -133,7 +145,7 @@ export default function DetailDriver(props){
             <h5>เวลาโดยประมาณ : {estimatetime} นาที</h5>
             <div class="driver-detail" >
                 <Box id="starbox"component="fieldset" mb={3} borderColor="transparent">
-                    <Rating name="half-rating-read" defaultValue={value} precision={1} readOnly />
+                    <Rating name="half-rating-read" value={value} precision={1} readOnly />
                     
                 </Box>
                 <div class="image-driver">
