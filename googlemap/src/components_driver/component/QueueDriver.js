@@ -22,11 +22,22 @@ export default function QueueDriver(props) {
             // console.log(typeof(res.data.message));
             
             // console.log(res.data.message);
-            if (res.data.message){
-                clearInterval(window.timeoutId1);
-                // console.log(Number(res.data.lat_user));
-                props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
-                 ,0 ,res.data.user_id, res.data.user_fname, res.data.user_lname,res.data.image);
+            if(res.data.auth_code === false){
+                axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                  username: localStorage.getItem("username")
+                }).then(()=>{
+                  localStorage.clear();
+                  localStorage.setItem("Auth","failed");
+                  window.location.reload();
+                })
+              }
+            else{
+                if (res.data.message){
+                    clearInterval(window.timeoutId1);
+                    // console.log(Number(res.data.lat_user));
+                    props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
+                    ,0 ,res.data.user_id, res.data.user_fname, res.data.user_lname,res.data.image);
+                }
             }
 
         })

@@ -53,10 +53,21 @@ export default function CommentDriver(props){
                 booking_id: props.bookingId,
         
             }).then((res)=>{
-                clearInterval(timeoutId)
-                console.log(res.data);
-                props.handleForUpdate(null);
-                window.location.reload()
+                if(res.data.auth_code === false){
+                    axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+                      username: localStorage.getItem("username")
+                    }).then(()=>{
+                      localStorage.clear();
+                      localStorage.setItem("Auth","failed");
+                      window.location.reload();
+                    })
+                }
+                else{
+                    clearInterval(timeoutId)
+                    console.log(res.data);
+                    props.handleForUpdate(null);
+                    window.location.reload()
+                  }
             }).catch(err=>{
                 NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
             })
