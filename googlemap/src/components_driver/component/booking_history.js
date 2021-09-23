@@ -1,5 +1,5 @@
 import React,{ useEffect , useState } from 'react';
-import './QueueDriver.css'
+import './booking_history.css'
 
 export default function History(props){
 
@@ -10,22 +10,17 @@ export default function History(props){
 
 
     function show_history(history_array){
-        let historyList = document.querySelector("#history_list");
-        document.getElementById('history_list').innerHTML='<h3>ประวัติรายได้</h3>';
-        // let i=0;
+        let historyList = document.querySelector("#history-list");                  //ยัดข้อมูลลงหน้าประวัติ
+        document.getElementById('history-list').innerHTML='<h3>ประวัติรายได้</h3>';
         console.log()
         for (let item in history_array) {
-            // console.log("here ",item);
-            let blocking = document.createElement("span");
-            // blocking.innerText='ประวัติรายได้'
+            let blocking = document.createElement("div");
+            blocking.className = "history-container";                               //classnameของก้อนHistoryแต่ละอัน
             blocking.innerText=`Booking#${item+1}
-            Booking ID: ${history_array[item]["booking_id"]} 
             วันที่: ${history_array[item]["date"]}
-            ชื่อลูกค้า: ${history_array[item]["Fname"]} ${history_array[item]["Lname"]}
             รายรับ: ${history_array[item]["income"]}
             `  
             historyList.appendChild(blocking);
-            // i+=1;
         }
     }
 
@@ -40,9 +35,15 @@ export default function History(props){
                 "Lname":"แม่มึงเป็นไรมากปะ",
                 "income":"20บาท",
             },
-
             {
                 "booking_id": 2,
+                "date":"20/1/21",
+                "Fname":"ABC",
+                "Lname":"DEควาย",
+                "income":"30บาท",
+            },
+            {
+                "booking_id": 3,
                 "date":"20/1/21",
                 "Fname":"ABC",
                 "Lname":"DEควาย",
@@ -54,8 +55,8 @@ export default function History(props){
 
 
     return(
-        <div className="queue-container">
-             <div classname="history_list" id="history_list" >
+        <div className="history-page">
+             <div classname="history-list" id="history-list" >
                                          {/* <h2> ประวัติรายได้ </h2>  */}
             </div>        
         </div> 

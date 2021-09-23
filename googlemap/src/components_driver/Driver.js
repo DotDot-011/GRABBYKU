@@ -24,6 +24,7 @@ import mapStyle from "../mapStyle"
 import Countdown from "react-countdown"
 import getCookie from "../getCookie";
 import History from "./component/booking_history";
+import ProfileDriver from "./component/ProfileDriver";
 
 
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
@@ -79,6 +80,13 @@ class Driver extends React.Component {
   driverFname = null;
   driverLname= null;
   cancelBackground=null;
+  citizenId=null;
+  birthDate=null;
+  phone=null;
+  plate=null;
+  winNo=1;
+  profilepicture=null;
+  passwd = null;
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
@@ -207,12 +215,11 @@ class Driver extends React.Component {
           }
           else{
             clearInterval(this.fetchDriverIdInterval);
-            console.log('[[[[[[',res);
             this.setState({
               driverId: parseInt(res.data[0].driver_id),
               
             })
-            console.log(res.data[0].fname, res.data[0].lname)
+            console.log('eeeeeee',res.data)
             
             this.conn.send(JSON.stringify({
               protocol: "in", // protocol
@@ -223,7 +230,12 @@ class Driver extends React.Component {
             }));
             this.driverFname = res.data[0].fname;
             this.driverLname = res.data[0].lname;
-        
+            this.citizenId = res.data[0].id_no;
+            this.birthDate = res.data[0].birth_date;
+            this.phone = res.data[0].phone;
+            this.plate = res.data[0].plate;
+            this.winNo = "อีอ้วน";
+            this.passwd = res.data[0].password;
           }
       })
       .then(()=>{
@@ -389,7 +401,25 @@ class Driver extends React.Component {
         <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
           
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-            <a  id="home" className="menu-item" onClick={() => this.setState({menuOpen:false})} ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>
+          <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
+                    {           
+                      close=>(
+                          <ProfileDriver 
+                            closeMenu={this.closeMenu} 
+                            citizenId={this.citizenId} 
+                            Fname={this.driverFname} Lname={this.driverLname} 
+                            birthDate={this.birthDate} 
+                            phone={this.phone}
+                            plate={this.plate}
+                            winNo={this.winNo}
+                            profilepicture={this.profilepicture}
+                            passwd = {this.passwd}
+                          />
+                    )}
+                 </Popup>
+                 </a>
+
+            
             
             <a><Popup trigger={<a id="home" ><i ></i> ประวัติการให้บริการ</a>} modal nested>
                     {           
@@ -399,7 +429,6 @@ class Driver extends React.Component {
                  </Popup>
                  </a>
             <a id="contact" className="menu-item" ><i class="fas fa-phone"></i> ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" ><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
                 username: localStorage.getItem("username")

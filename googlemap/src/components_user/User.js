@@ -23,6 +23,8 @@ import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
 import getCookie from "../getCookie";
 import { pathPosition, WinZone } from "./WinZone";
+import ProfileUser from "./ProfileUser";
+import Popup from 'reactjs-popup';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -68,6 +70,7 @@ class User extends React.Component {
       loadingState:0,
       travelDistance:0,
       driverDistance:0,
+      menuOpen:false,
     }
     conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
     watingQueue=null;
@@ -79,7 +82,13 @@ class User extends React.Component {
     fetchUserIdInterval=null;
     chatUser=null;
     queueUser=null;
-   
+    userFname=null;
+    userLname=null;
+    citizenId=null;
+    birthDate=null;
+    phone=null;
+    profilepicture=null;
+    passwd = null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -543,6 +552,12 @@ class User extends React.Component {
               ID: `${res.data[0].user_id}`,
               JWT: `${getCookie('token')}`
             }));
+            this.userFname = res.data[0].fname;
+            this.userLname = res.data[0].lname;
+            this.citizenId = res.data[0].id_no;
+            this.birthDate = res.data[0].birth_date;
+            this.phone = res.data[0].phone;
+            this.passwd = res.data[0].password;
           }
         })
         .then(()=>{
@@ -578,7 +593,12 @@ class User extends React.Component {
         detailDriverAppear:showDetailDriver,
       });
     }
-
+    handleStateChange (state) {
+      this.setState({menuOpen: state.isOpen})  
+    }
+    closeMenu =()=> {
+      this.setState({menuOpen: false})
+    }
     
     
     
@@ -775,12 +795,23 @@ class User extends React.Component {
 
 
           {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
-          <Menu right>   
+          <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
 
-            <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้ </a>
+          <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
+                    {           
+                      close=>(
+                          <ProfileUser closeMenu={this.closeMenu} 
+                            citizenId={this.citizenId} 
+                            Fname={this.userFname} Lname={this.userLname} 
+                            birthDate={this.birthDate} 
+                            phone={this.phone}
+                            profilepicture={this.profilepicture}
+                            passwd = {this.passwd}/>
+                    )}
+                 </Popup>
+                 </a>
             <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_user",{
                 username: localStorage.getItem("username")
