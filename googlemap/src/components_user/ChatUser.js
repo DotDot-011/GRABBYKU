@@ -15,6 +15,9 @@ export default function ChatUser(props){
     
     useEffect(()=>{
         console.log('--------------',driverId)
+        conn.onclose = function(e) {
+            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+        };
         conn.onmessage = function(e) {
             
             let Message = JSON.parse(e.data)

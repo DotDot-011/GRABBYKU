@@ -89,6 +89,7 @@ class User extends React.Component {
     phone=null;
     profilepicture=null;
     passwd = null;
+    winId = null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -432,8 +433,11 @@ class User extends React.Component {
                DriverPosition: {
                 lat: pathPosition[item].latitude,
                 lng: pathPosition[item].longitude
+                
               },
             })
+            this.winId = item.slice(5);
+            console.log('winId:',this.winId);
           }
         }
         // console.log('++++++++++',this.state.DriverPosition.lat, this.state.DriverPosition.lng)
@@ -445,7 +449,8 @@ class User extends React.Component {
           latitudeStart: this.state.markerPosition.lat,
           longtitudeStart: this.state.markerPosition.lng,
           latitudeDestination: this.state.markerDestinationPosition.lat,
-          longtitudeDestination: this.state.markerDestinationPosition.lng
+          longtitudeDestination: this.state.markerDestinationPosition.lng,
+          win_id : this.winId 
         })
         .then(res=>{
           console.log(res.data);
@@ -488,6 +493,7 @@ class User extends React.Component {
         protocol: "user-cancel", // protocol
         // user_name: this.state.us, 
         user_id: `${this.userId}`,
+        win_id:`${this.winId}`
         })
       );
       window.location.reload()

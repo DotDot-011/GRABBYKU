@@ -19,7 +19,7 @@ function RegisDriver() {
     const birth_dateRef = useRef("");
     const ageRef = useRef("");
     const plateRef = useRef("");
-    const win_nameRef = useRef("");
+    const win_idRef = useRef("");
     const emailRef = useRef("");
     const phoneRef = useRef("");
     const citizenIdRef = useRef("");
@@ -83,7 +83,7 @@ function RegisDriver() {
         (confirmPasswordRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกยืนยันรหัสผ่าน');
         (driver_noRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกหมายเลขวิน');
         (plateRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกป้ายทะเบียน');
-        (win_nameRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อซุ้มวิน');
+        (win_idRef.current.value != '') ? count++ : NotificationManager.warning('กรุณากรอกชื่อซุ้มวิน');
 
         if(passwordRef.current.value === confirmPasswordRef.current.value & count === 13 & validateEmail(emailRef.current.value) 
         & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13 & !!file & phoneRef.current.value.length == 10
@@ -98,7 +98,7 @@ function RegisDriver() {
                 id_no: citizenIdRef.current.value,
                 username: usernameRef.current.value,
                 password: passwordRef.current.value,
-                win_name:win_nameRef.current.value,
+                win_id:win_idRef.current.value,
                 plate: plateRef.current.value,
                 driver_no: driver_noRef.current.value,
                 image: file,
@@ -190,11 +190,25 @@ function RegisDriver() {
                     </div>
                     <div id="boxinput-driver">
                         <label id="label-input">ชื่อซุ้มวิน</label>
-                        <input id="input-normal" type="text" ref={win_nameRef} placeholder="กรอกชื่อซุ้ม" name="win_name" />
+                        {/* <input id="input-normal" type="text" ref={win_idRef} placeholder="กรอกชื่อซุ้ม" name="win_name" /> */}
+                        <select  ref={win_idRef} >
+                            <option  value="1">1</option>
+                            <option  value="2">2</option>
+                            <option  value="3">3</option>
+                            <option  value="4">4</option>
+                            <option  value="5">5</option>
+                            <option  value="6">6</option>
+                            <option  value="7">7</option>
+                            <option  value="8">8</option>
+                            <option  value="9">9</option>
+                            <option  value="10">10</option>
+                        </select>
                     </div>
                     <div id="boxinput-driver2">
                         <label id="label-input">หมายเลขวิน</label>
                         <input id="input-short" type="number" ref={driver_noRef} placeholder="กรอกหมายเลขวิน" name="driver_number"/>
+                        
+                        
                         <img id="img-driver" src={file}/>
                     </div>
                     <div id="boxinput-driver2">

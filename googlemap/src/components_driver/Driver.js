@@ -84,9 +84,12 @@ class Driver extends React.Component {
   birthDate=null;
   phone=null;
   plate=null;
-  winNo=1;
+  winNo=null;
+  winId=null;
+  winName=null;
   profilepicture=null;
   passwd = null;
+
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
@@ -118,7 +121,7 @@ class Driver extends React.Component {
   
   cancelCase=()=>{
     if(this.state.queueDriverAppear!==2){
-      leaveQueue(this.state.driverId,this.conn);
+      leaveQueue(this.state.driverId,this.conn,this.winId);
       NotificationManager.error('คำขอบริการถูกยกเลิก','Alert',10000);
       this.setState({
         queueDriverAppear:3,
@@ -134,7 +137,7 @@ class Driver extends React.Component {
   driverCancel = () =>{
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
-    leaveQueue(this.state.driverId,this.conn);
+    leaveQueue(this.state.driverId,this.conn,this.winId);
     this.setState({
           queueDriverAppear:2,
     });
@@ -155,13 +158,14 @@ class Driver extends React.Component {
 
   // ------------------ driver กด ยอมรับงาน ------------------
   driverAccept = () =>{
+    console.log('win_id :', this.winId)
     this.conn.send(JSON.stringify({
       protocol: "driver-accepted", // protocol
       DriverID: this.state.driverId, 
       DriverName: `${this.state.userFname} ${this.state.userLname}`,
       UserID: `${this.state.userId}`,
-      UserName:`${this.state.userFname} ${this.state.userLname}`
-      
+      UserName:`${this.state.userFname} ${this.state.userLname}`,
+      win_id:`${this.winId}`
     }));
   this.setState({
     buttonAcceptCancelAppear: null,
@@ -175,7 +179,7 @@ class Driver extends React.Component {
     this.driverTimeOut=setTimeout(()=>{
       this.setState({queueDriverAppear:2})
       // NotificationManager.error('ขออภัยในความไม่สะดวก','kokkak',1000);
-      leaveQueue(this.state.driverId,this.conn);
+      leaveQueue(this.state.driverId,this.conn,this.winId);
     },timeCooldown)
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
@@ -234,8 +238,10 @@ class Driver extends React.Component {
             this.birthDate = res.data[0].birth_date;
             this.phone = res.data[0].phone;
             this.plate = res.data[0].plate;
-            this.winNo = "อีอ้วน";
+            this.winId = res.data[0].win_id;
             this.passwd = res.data[0].password;
+            this.winName = res.data[0].win_name;
+            this.winNo = res.data[0].driver_no;
           }
       })
       .then(()=>{
@@ -263,7 +269,7 @@ class Driver extends React.Component {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
@@ -412,8 +418,10 @@ class Driver extends React.Component {
                             phone={this.phone}
                             plate={this.plate}
                             winNo={this.winNo}
+                            winName = {this.winName}
                             profilepicture={this.profilepicture}
                             passwd = {this.passwd}
+
                           />
                     )}
                  </Popup>
