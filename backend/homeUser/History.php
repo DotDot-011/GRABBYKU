@@ -35,7 +35,7 @@ if($result->num_rows > 0){
    $data[$i]['names_driver'] = $row2['fname']." ".$row2['lname'];
   } else {
    $data[$i]['names_driver'] = $postData['fname']." ".$postData['lname'];
-   $u_id = $row['driver_id'];
+   $u_id = $row['user_id'];
    $sql2 = "SELECT * FROM user WHERE user_id = '$u_id' ";
    $result2 = $conn->query($sql2);   
    $row2 = $result2->fetch_assoc();
