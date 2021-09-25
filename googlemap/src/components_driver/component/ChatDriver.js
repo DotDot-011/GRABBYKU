@@ -13,6 +13,7 @@ export default function ChatDriver(props){
         conn.onmessage = function(e) {
             console.log('--------------');
             let Message = JSON.parse(e.data)
+            console.log(Message)
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
                 // console.log(Message);

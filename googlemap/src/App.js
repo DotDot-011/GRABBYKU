@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { Url } from './LinkToBackend';
 import Login from './component_login/login';

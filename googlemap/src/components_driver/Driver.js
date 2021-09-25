@@ -23,6 +23,10 @@ import Penalty from "./component/Penalty";
 import mapStyle from "../mapStyle"
 import Countdown from "react-countdown"
 import getCookie from "../getCookie";
+import History from "./component/booking_history";
+import ProfileDriver from "./component/ProfileDriver";
+
+
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 // const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
@@ -63,6 +67,7 @@ class Driver extends React.Component {
     disableButton:false,
     cancelState:false,
     file:null,
+    menuOpen: false
   }
   queueDriver =null;
   buttonAcceptCancel = null;
@@ -75,6 +80,13 @@ class Driver extends React.Component {
   driverFname = null;
   driverLname= null;
   cancelBackground=null;
+  citizenId=null;
+  birthDate=null;
+  phone=null;
+  plate=null;
+  winNo=1;
+  profilepicture=null;
+  passwd = null;
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
   handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
@@ -123,16 +135,17 @@ class Driver extends React.Component {
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
     leaveQueue(this.state.driverId,this.conn);
-    axios.post(Url.LinkToBackend + "backend/api/driver_cancel",{
-      JWT :`${getCookie('token')}`,
-      driver_id : this.state.driverId
-    })
-    .then(res=>{
-      console.log(res);
-      this.setState({
+    this.setState({
           queueDriverAppear:2,
-      });
-    })
+    });
+    // axios.post(Url.LinkToBackend + "backend/api/driver_cancel",{
+    //   JWT :`${getCookie('token')}`,
+    //   driver_id : this.state.driverId
+    // })
+    // .then(res=>{
+    //   console.log(res);
+    
+    // })
     
     // leaveQueue(this.state.driverId);
     // document.location.reload();
@@ -145,14 +158,15 @@ class Driver extends React.Component {
     this.conn.send(JSON.stringify({
       protocol: "driver-accepted", // protocol
       DriverID: this.state.driverId, 
-      Name: `${this.state.userFname} ${this.state.userLname}`,
+      DriverName: `${this.state.userFname} ${this.state.userLname}`,
       UserID: `${this.state.userId}`,
+      UserName:`${this.state.userFname} ${this.state.userLname}`
       
-  }));
+    }));
   this.setState({
     buttonAcceptCancelAppear: null,
   });
-  leaveQueue(this.state.driverId,this.conn);
+  // leaveQueue(this.state.driverId,this.conn);
     
   }
   
@@ -166,6 +180,7 @@ class Driver extends React.Component {
     if(!!!this.state.buttonAcceptCancelAppear){
       clearTimeout(this.driverTimeOut);
     }
+    
   }
 
   componentWillMount(){
@@ -200,12 +215,11 @@ class Driver extends React.Component {
           }
           else{
             clearInterval(this.fetchDriverIdInterval);
-            console.log('[[[[[[',res);
             this.setState({
               driverId: parseInt(res.data[0].driver_id),
               
             })
-            console.log(res.data[0].fname, res.data[0].lname)
+            console.log('eeeeeee',res.data)
             
             this.conn.send(JSON.stringify({
               protocol: "in", // protocol
@@ -216,7 +230,12 @@ class Driver extends React.Component {
             }));
             this.driverFname = res.data[0].fname;
             this.driverLname = res.data[0].lname;
-        
+            this.citizenId = res.data[0].id_no;
+            this.birthDate = res.data[0].birth_date;
+            this.phone = res.data[0].phone;
+            this.plate = res.data[0].plate;
+            this.winNo = "อีอ้วน";
+            this.passwd = res.data[0].password;
           }
       })
       .then(()=>{
@@ -234,8 +253,12 @@ class Driver extends React.Component {
 
 
   }
-  
-
+  handleStateChange (state) {
+    this.setState({menuOpen: state.isOpen})  
+  }
+  closeMenu =()=> {
+    this.setState({menuOpen: false})
+  }
   render() {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
@@ -245,10 +268,11 @@ class Driver extends React.Component {
         }
         else if(this.state.queueDriverAppear === 2){
           clearInterval(this.cancelIntervalId);
+          clearTimeout(this.driverTimeOut);
           this.userInfo = null;
-          this.queueDriver = <Penalty/>
           this.countdown = null;
-          setTimeout(() => {
+          this.queueDriver = <Penalty/>
+          this.driverTimeOut=setTimeout(() => {
             this.setState({
               queueDriverAppear:1
             })
@@ -280,6 +304,7 @@ class Driver extends React.Component {
           this.countdown=null;
           
         }
+
         if(!!this.state.buttonAcceptCancelAppear){
           
           this.buttonAcceptCancel = <div className="button-accept-cancel-done">
@@ -373,11 +398,37 @@ class Driver extends React.Component {
     return (
 
       <section className="app-section">
-        <Menu right>
+        <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
+          
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-            <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>
-            <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
+          <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
+                    {           
+                      close=>(
+                          <ProfileDriver 
+                            closeMenu={this.closeMenu} 
+                            citizenId={this.citizenId} 
+                            Fname={this.driverFname} Lname={this.driverLname} 
+                            birthDate={this.birthDate} 
+                            phone={this.phone}
+                            plate={this.plate}
+                            winNo={this.winNo}
+                            profilepicture={this.profilepicture}
+                            passwd = {this.passwd}
+                          />
+                    )}
+                 </Popup>
+                 </a>
+
+            
+            
+            <a><Popup trigger={<a id="home" ><i ></i> ประวัติการให้บริการ</a>} modal nested>
+                    {           
+                      close=>(
+                          <History closeMenu={this.closeMenu}/>
+                    )}
+                 </Popup>
+                 </a>
+            <a id="contact" className="menu-item" ><i class="fas fa-phone"></i> ติดต่อ</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
                 username: localStorage.getItem("username")
