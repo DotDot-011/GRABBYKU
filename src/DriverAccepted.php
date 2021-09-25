@@ -7,7 +7,7 @@ $driver_id = $wsdata['DriverID'];
 $win_id = $wsdata['win_id'];
 $sql2 = "UPDATE `driver` SET `status` = 2 WHERE `driver_id` = $driver_id";
 
-$statement = "SELECT booking_id FROM booking WHERE user_id = '$user_id'AND win_id = '$win_id'";
+$statement = "SELECT booking_id FROM booking WHERE user_id = '$user_id' AND win_id = '$win_id'";
 $results = $conn->query($statement);
 $rows = $results->fetch_assoc();
 $booking_id = $rows["booking_id"];

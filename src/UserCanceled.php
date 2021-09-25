@@ -1,6 +1,7 @@
 <?php
 
 $user_id = $wsdata['user_id'];
+$win_id = $wsdata['win_id'];
 
 $sql = "SELECT driver_id FROM booking WHERE user_id = '$user_id' and driver_id IS NOT NULL";
 $result = $conn->query($sql);

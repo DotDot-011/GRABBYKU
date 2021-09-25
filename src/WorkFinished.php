@@ -49,7 +49,7 @@ if ($result_for_booking_id != NULL) {
 
 //notify driver "booking has been delete"
 $sql4 = "SELECT * FROM websocket WHERE name LIKE '$driver_name' and id = '$driver_id'";
-print($driver_name . " " . $id);
+//print($driver_name . " " . $id);
 $result_for_answer = $conn->query($sql4);
 if ($result_for_answer != NULL) {
     print(" try answer \n");

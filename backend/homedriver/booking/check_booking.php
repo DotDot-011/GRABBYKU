@@ -1,7 +1,8 @@
 <?php
 
 $driver_id = $postData['driver_id'];
-$sql = "SELECT * FROM `booking` WHERE `driver_id` IS NULL ORDER BY `booking_id`";
+$win_id = $postData['win_id'];
+$sql = "SELECT * FROM `booking` WHERE `driver_id` IS NULL AND win_id = '$win_id' ORDER BY `booking_id`";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();

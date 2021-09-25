@@ -15,7 +15,9 @@ if ($result->num_rows > 0) {
         $data[$i]["plate"] = $row['plate'];
         $data[$i]["phone"] = $row['phone'];
         $data[$i]["id_no"] = $row['id_no'];
-        $data[$i]["win_name"] = $row['win_name'];
+        $data[$i]['driver_no'] = $row['driver_no'];
+        $data[$i]['win_id'] = $row['win_id'];
+        $data[$i]['win_name'] = $row['win_name'];
         $data[$i]["status"] = $row['status'];
         $data[$i]["username"] = $row['username'];
         $data[$i]["password"] = $row['password'];

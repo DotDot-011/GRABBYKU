@@ -32,7 +32,7 @@ try {
 //give front end authorize result
 $data['auth_code'] = $authorize_code;
 //just set a normal message code
-$data['message_code'] = "IHERETOO";
+$data['message_code'] = "default";
 
 $postData['authorize_code'] = $authorize_code;
 if ($authorize_code == True) {

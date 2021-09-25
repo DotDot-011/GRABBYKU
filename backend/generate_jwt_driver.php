@@ -16,6 +16,7 @@ function generate_JWT_driver($info, $key, $notAvailable)
         "fname" => $info['fname'],
         "lname" => $info['lname'],
         "mode" => "driver",
+        "win_id" => $info['win_id'],
         "exp" => $expirationTime
     );
     $jwt = JWT::encode($payload, $key);

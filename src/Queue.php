@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
     }
     if ($protocol != 'getqueue') {
         echo $protocol . "\n";
-        $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0";
+        $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0 and win_id = '$win_id'";
         $result2 = $conn->query($sql2);
         while ($row = $result2->fetch_assoc()) {
             $connection_id = $row['connection_id'];
@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
 } else {
     echo $protocol . "\n";
     $data["message_code"] = "empty_queue";
-    $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0";
+    $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0 and win_id = '$win_id'";
         $result2 = $conn->query($sql2);
         while ($row = $result2->fetch_assoc()) {
             $connection_id = $row['connection_id'];

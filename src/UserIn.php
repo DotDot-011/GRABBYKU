@@ -4,11 +4,20 @@ $name = $wsdata['Name'];
 $is_driver = $wsdata['Mode'];
 $id = $wsdata['ID'];
 
+if ($is_driver == 1) {
+    $sql = "SELECT win_id FROM driver WHERE driver_id = '$id'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    $win_id = $row['win_id'];
+} else {
+    $win_id = -1;
+}
+
 $sql = "SELECT connection_id, on_service FROM websocket WHERE name LIKE '$name' and id = '$id' and is_driver = '$is_driver'";
 $result = $conn->query($sql);
 
 if ($result->num_rows == 0) {
-    $sql = "INSERT INTO websocket (name, id, connection_id, is_driver) VALUES ('$name', '$id', '$from->resourceId', '$is_driver')";
+    $sql = "INSERT INTO websocket (name, id, connection_id, is_driver, win_id) VALUES ('$name', '$id', '$from->resourceId', '$is_driver', '$win_id')";
     $conn->query($sql);
 } else {
     $row = $result->fetch_assoc();
