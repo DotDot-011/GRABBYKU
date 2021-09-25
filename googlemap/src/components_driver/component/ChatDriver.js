@@ -34,6 +34,9 @@ export default function ChatDriver(props){
         // conn.send(newMessage)
         // Now send the message throught the backend API
         console.log(`New message incomig! ${newMessage}`);
+        conn.onclose = function(e) {
+            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+        };
         conn.send(JSON.stringify({
             protocol: "chat", // protocol
             ReceiverName: `${userFname} ${userLname}`, // name
