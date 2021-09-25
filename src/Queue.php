@@ -3,13 +3,14 @@
 $driver_id = $wsdata['DriverID'];
 
 if ($protocol == 'getqueue') {
-    $sql = "SELECT fname, lname FROM driver WHERE driver_id = '$driver_id'";
+    $sql = "SELECT fname, lname, win_id FROM driver WHERE driver_id = '$driver_id'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     $driver_name = $row['fname'] . " " . $row['lname'];
+    $win_id = $row['win_id'];
 }
 
-$sql = "SELECT * FROM queue";
+$sql = "SELECT * FROM queue where win_id = '$win_id'";
 $result = $conn->query($sql);
 $data = [];
 
@@ -19,6 +20,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $data[$i]["id"] = $row['queue_id'];
         $data[$i]["driver_id"] = $row['driver_id'];
+        $data[$i]["win_id"] = $row['win_id'];
         $driver_id = $row['driver_id'];
         $sql1 = "SELECT fname,lname FROM driver WHERE driver_id = '$driver_id'";
         $result1 = $conn->query($sql1);
