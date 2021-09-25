@@ -73,5 +73,5 @@ $need_authorize["user-cancel"]["ws"] = false;
 $need_authorize['/backend/api/get_auth_question']['POST'] = false;
 
 $need_authorize['/backend/api/editProfile']['POST'] = TRUE;
-
+$need_authorize['/backend/api/history']['POST'] = TRUE;
 ?>
