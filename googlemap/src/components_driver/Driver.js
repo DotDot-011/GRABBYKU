@@ -265,6 +265,10 @@ class Driver extends React.Component {
   closeMenu =()=> {
     this.setState({menuOpen: false})
   }
+  handleForChangeProfile(Phone,Passwd){
+    this.phone=Phone;
+    this.passwd=Passwd;
+  }
   render() {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
@@ -421,7 +425,7 @@ class Driver extends React.Component {
                             winName = {this.winName}
                             profilepicture={this.profilepicture}
                             passwd = {this.passwd}
-
+                            handleForChangeProfile={this.handleForChangeProfile.bind(this)}
                           />
                     )}
                  </Popup>

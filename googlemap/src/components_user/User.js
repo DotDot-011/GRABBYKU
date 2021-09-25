@@ -506,7 +506,6 @@ class User extends React.Component {
       
     };
     
-    
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
       // axios.get( Url.LinkToBackend +"backend/api/bomb")
@@ -556,7 +555,8 @@ class User extends React.Component {
               Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
               Mode: "0",
               ID: `${res.data[0].user_id}`,
-              JWT: `${getCookie('token')}`
+              JWT: `${getCookie('token')}`,
+              reconnect: '0',
             }));
             this.userFname = res.data[0].fname;
             this.userLname = res.data[0].lname;
@@ -602,6 +602,10 @@ class User extends React.Component {
     handleStateChange (state) {
       this.setState({menuOpen: state.isOpen})  
     }
+    handleForChangeProfile(Phone,Passwd){
+      this.phone=Phone;
+      this.passwd=Passwd;
+    }
     closeMenu =()=> {
       this.setState({menuOpen: false})
     }
@@ -611,7 +615,8 @@ class User extends React.Component {
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}/>
+        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}
+        userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect}/>
       }
       else{
         this.watingQueue=null;
@@ -771,10 +776,13 @@ class User extends React.Component {
               path={[
                 {lat: 13.84680634471089,lng: 100.56479688230758},
                 {lat: 13.848348039187117, lng: 100.56569906630881},
-                {lat:13.850380257189924, lng:100.56586145942902},
-                {lat:13.850240104794747, lng:100.57237522791787},
-                {lat:13.844213471850779, lng:100.57230305319777},
-                {lat:13.842952063786939, lng:100.57158130599677},
+                {lat:13.850380257189924, lng:100.56586145942902},           // ซ้ายบน
+                {lat:13.85035863118457, lng:100.57246193775138},            // ขวาบน
+                {lat:13.844138264502986, lng:100.57239696593405},
+                {lat:13.842717700160385, lng:100.57165572383603},
+                // {lat:13.850240104794747, lng:100.57237522791787},
+                // {lat:13.844213471850779, lng:100.57230305319777},
+                // {lat:13.842952063786939, lng:100.57158130599677},
                 {lat: 13.84680634471089,lng: 100.56479688230758},
               ]}
               
@@ -813,7 +821,9 @@ class User extends React.Component {
                             birthDate={this.birthDate} 
                             phone={this.phone}
                             profilepicture={this.profilepicture}
-                            passwd = {this.passwd}/>
+                            passwd = {this.passwd}
+                            handleForChangeProfile={this.handleForChangeProfile.bind(this)}/>
+                            
                     )}
                  </Popup>
                  </a>

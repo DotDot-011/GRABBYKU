@@ -90,9 +90,6 @@ export default function QueueDriver(props) {
     
 
     useEffect(()=>{
-        conn.onclose = function(e) {
-            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
-        };
         conn.send(JSON.stringify({
             protocol: "getqueue", // protocol
             DriverID: `${props.driverId}`, // name

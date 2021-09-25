@@ -1,18 +1,20 @@
 import './Wait.css'
 import Popup from 'reactjs-popup';
 import { useEffect, useState } from 'react';
+import { socketUrl, Url } from '../LinkToBackend';
+import getCookie from "../getCookie";
 // ------------------ user รอ match กับ driver ------------------
 export default function Wait(props){
-    const { cancelQueue ,conn, handleForDriverAccept } = props; 
+    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId } = props; 
     const [cost,setCost] = useState(0);
     const [queue,setQueue] = useState(props.queueUser);
+    
     // function calculateCost(){
     //     return 10+props.travelDistance/1000;
     // }
+    
+    
     useEffect(()=>{
-        conn.onclose = function(e) {
-            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
-          };
         conn.onmessage = function(e){
             let Message = JSON.parse(e.data)
             console.log(Message)
