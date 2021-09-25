@@ -12,7 +12,7 @@ $results = $conn->query($statement);
 $rows = $results->fetch_assoc();
 $booking_id = $rows["booking_id"];
 
-$sql="SELECT connection_id FROM websocket WHERE name LIKE '$DriverName' and id = '$user_id' and is_driver = 0";
+$sql="SELECT connection_id FROM websocket WHERE name LIKE '$UserName' and id = '$user_id' and is_driver = 0";
 $result = $conn->query($sql);
 
 while ($row = $result->fetch_assoc()) {

@@ -72,4 +72,6 @@ $routes["user-cancel"]["ws"] = dirname(__DIR__, 2) . "/src/UserCanceled.php";
 # waiting to test
 $routes['/backend/api/get_auth_question']['POST'] = "./random_question.php";
 
+$routes['/backend/api/editProfil']['POST'] = "./editProfile.php";
+
 ?>
