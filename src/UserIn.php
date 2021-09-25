@@ -3,6 +3,7 @@
 $name = $wsdata['Name'];
 $is_driver = $wsdata['Mode'];
 $id = $wsdata['ID'];
+$reconnect = $wsdata['reconnect'];
 
 if ($is_driver == 1) {
     $sql = "SELECT win_id FROM driver WHERE driver_id = '$id'";
@@ -23,7 +24,10 @@ if ($result->num_rows == 0) {
     $row = $result->fetch_assoc();
     $connection_id = $row['connection_id'];
     $on_service = $row['on_service'];
-    if ($on_service == 0) {
+    if ($reconnect) {
+        $sql = "UPDATE websocket SET connection_id = '$from->resourceId', on_service = 0  WHERE name = '$name' and id = '$id' and is_driver = '$is_driver'";
+        $conn->query($sql);
+    } else if ($on_service == 0) {
         foreach ($this->clients as $client) {
             if ($client->resourceId == $connection_id || $client->resourceId == $from->resourceId) {
                 $client->send(json_encode([
@@ -45,7 +49,20 @@ if ($result->num_rows == 0) {
             }
         }
     }
+}
 
-    /* $sql = "UPDATE websocket SET connection_id = '$from->resourceId', on_service = 0  WHERE name = '$name' and id = '$id' and is_driver = '$is_driver'";
-    $conn->query($sql); */
+if ($is_driver) {
+    $sql = "SELECT * FROM booking WHERE driver_id = '$id'";
+    if ($result = $conn->query($sql)) {
+        $row = $result->fetch_assoc();
+        $row['message_code'] = 'booking info';
+        $from->send(json_encode($row));
+    }
+} else {
+    $sql = "SELECT * FROM booking WHERE user_id = '$id'";
+    if ($result = $conn->query($sql)) {
+        $row = $result->fetch_assoc();
+        $row['message_code'] = 'booking info';
+        $from->send(json_encode($row));
+    }
 }
