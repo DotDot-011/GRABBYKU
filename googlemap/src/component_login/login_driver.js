@@ -17,7 +17,7 @@ function LoginUser() {
         axios.post(`${Url.LinkToBackend}backend/api/login_driver`, 
         {username: nameRef.current.value, password:passwordRef.current.value })
         .then(res => {
-            // console.log(res);
+            console.log(res);
             if(res.data.message){
                 document.getElementById('loginError').innerHTML=null;
                 document.cookie = `token=${res.data.auth}`;

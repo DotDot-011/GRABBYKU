@@ -88,7 +88,6 @@ class Driver extends React.Component {
   winId=null;
   winName=null;
   profilepicture=null;
-  passwd = null;
 
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
   //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
@@ -239,9 +238,9 @@ class Driver extends React.Component {
             this.phone = res.data[0].phone;
             this.plate = res.data[0].plate;
             this.winId = res.data[0].win_id;
-            this.passwd = res.data[0].password;
             this.winName = res.data[0].win_name;
             this.winNo = res.data[0].driver_no;
+            this.profilepicture = res.data[0].imageData;
           }
       })
       .then(()=>{
@@ -265,9 +264,8 @@ class Driver extends React.Component {
   closeMenu =()=> {
     this.setState({menuOpen: false})
   }
-  handleForChangeProfile(Phone,Passwd){
+  handleForChangeProfile(Phone){
     this.phone=Phone;
-    this.passwd=Passwd;
   }
   render() {
         if(this.state.queueDriverAppear === 1){
@@ -424,7 +422,6 @@ class Driver extends React.Component {
                             winNo={this.winNo}
                             winName = {this.winName}
                             profilepicture={this.profilepicture}
-                            passwd = {this.passwd}
                             handleForChangeProfile={this.handleForChangeProfile.bind(this)}
                           />
                     )}

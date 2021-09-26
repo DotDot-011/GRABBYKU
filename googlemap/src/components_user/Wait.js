@@ -5,8 +5,8 @@ import { socketUrl, Url } from '../LinkToBackend';
 import getCookie from "../getCookie";
 // ------------------ user รอ match กับ driver ------------------
 export default function Wait(props){
-    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId } = props; 
-    const [cost,setCost] = useState(0);
+    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId ,availableDriver} = props; 
+    const [cost,setCost] = useState('');
     const [queue,setQueue] = useState(props.queueUser);
     
     // function calculateCost(){
@@ -32,30 +32,33 @@ export default function Wait(props){
     },[])
     // ------------------ คำนวณราคาค่ะ ------------------
     useEffect(()=>{
+        
         console.log(props.travelDistance);
-        if (props.travelDistance <= 500 ) {
-            setCost(10) 
-        }
-        else if (props.travelDistance <= 1000 ) {
-            setCost(15)  
-        }
-        else if (props.travelDistance <= 1500 ) {
-            setCost(20)  
-        }
-        else if (props.travelDistance <= 2000 ) {
-            setCost(25)  
-        }
-        else if (props.travelDistance <= 2500 ) {
-            setCost(30)  
-        }
-        else if (props.travelDistance <= 3000 ) {
-            setCost(35)  
-        }
-        else if (props.travelDistance <= 4000 ) {
-            setCost(40)  
-        }
-        else {
-            setCost(50)
+        if(props.travelDistance !==0){
+            if (props.travelDistance <= 500) {
+                setCost(10) 
+            }
+            else if (props.travelDistance <= 1000 ) {
+                setCost(15)  
+            }
+            else if (props.travelDistance <= 1500 ) {
+                setCost(20)  
+            }
+            else if (props.travelDistance <= 2000 ) {
+                setCost(25)  
+            }
+            else if (props.travelDistance <= 2500 ) {
+                setCost(30)  
+            }
+            else if (props.travelDistance <= 3000 ) {
+                setCost(35)  
+            }
+            else if (props.travelDistance <= 4000 ) {
+                setCost(40)  
+            }
+            else {
+                setCost(50)
+            }
         }
         // setCost(10+Math.ceil(props.travelDistance/170))
     },[props.travelDistance])
@@ -65,7 +68,7 @@ export default function Wait(props){
             <h5>'-เวลาโดยประมาณ-'</h5>
             <div id="waiting-detail">
                 <div class="num-queue">จำนวนคิวที่รอ : {queue}</div>
-                <div class="num-driver">จำนวนผู้ให้บริการ : $</div>
+                <div class="num-driver">จำนวนผู้ให้บริการ : {availableDriver} คน</div>
                 <div class="money-est">ราคาโดยประมาณ : {cost} บาท</div>
             </div>
             {/* <button className="cancel-button" type="button" type="button" class="btn btn-primary" id="buttcancel" onClick={cancelQueue}>ยกเลิก</button> */}

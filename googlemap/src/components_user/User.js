@@ -18,13 +18,14 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
 import CommentDriver from "./CommentDriver";
-import distance from 'google_directions';
+
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
 import getCookie from "../getCookie";
 import { pathPosition, WinZone } from "./WinZone";
 import ProfileUser from "./ProfileUser";
 import Popup from 'reactjs-popup';
+import distance from 'google_directions';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -88,7 +89,7 @@ class User extends React.Component {
     birthDate=null;
     phone=null;
     profilepicture=null;
-    passwd = null;
+    availableDriver = null; 
     winId = null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
@@ -341,7 +342,7 @@ class User extends React.Component {
         origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
         destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
         key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
-    
+        
         // OPTIONAL
         mode: "walking",
         avoid: "",
@@ -361,7 +362,7 @@ class User extends React.Component {
         origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
         destination: `${this.state.markerPosition.lat} , ${this.state.markerPosition.lng}`,
         key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
-    
+        
         // OPTIONAL
         mode: "walking",
         avoid: "",
@@ -467,6 +468,7 @@ class User extends React.Component {
             // console.log(getCookie("token"));
             this.queueUser=res.data.booking_order
             // console.log('---------',this.queueUser)
+            this.availableDriver = res.data.driver_online
             this.setState({
               waitingQueueAppear:1,
             })
@@ -563,7 +565,7 @@ class User extends React.Component {
             this.citizenId = res.data[0].id_no;
             this.birthDate = res.data[0].birth_date;
             this.phone = res.data[0].phone;
-            this.passwd = res.data[0].password;
+            this.profilepicture = res.data[0].imageData;
           }
         })
         .then(()=>{
@@ -602,9 +604,8 @@ class User extends React.Component {
     handleStateChange (state) {
       this.setState({menuOpen: state.isOpen})  
     }
-    handleForChangeProfile(Phone,Passwd){
+    handleForChangeProfile(Phone){
       this.phone=Phone;
-      this.passwd=Passwd;
     }
     closeMenu =()=> {
       this.setState({menuOpen: false})
@@ -616,7 +617,7 @@ class User extends React.Component {
       
       if(!!this.state.waitingQueueAppear){
         this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}
-        userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect}/>
+        userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect} availableDriver = {this.availableDriver}/>
       }
       else{
         this.watingQueue=null;
@@ -821,7 +822,6 @@ class User extends React.Component {
                             birthDate={this.birthDate} 
                             phone={this.phone}
                             profilepicture={this.profilepicture}
-                            passwd = {this.passwd}
                             handleForChangeProfile={this.handleForChangeProfile.bind(this)}/>
                             
                     )}
