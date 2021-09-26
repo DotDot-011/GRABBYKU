@@ -10,7 +10,7 @@ $email = $postData->email;
 $phone = $postData->phone; 
 $id_no = $postData->id_no; 
 $username = $postData->username; 
-$password = $postData->password;
+$password = password_hash($postData->password, PASSWORD_DEFAULT);
 $imageData = $postData->image;
 // file_put_contents("./registerUser/test.txt", $postData);
 
@@ -20,5 +20,5 @@ VALUES ('$fname','$lname','$birth_date','$age','$email','$phone','$id_no','$user
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
-    echo "Error: " . $conn->error;
+    echo FALSE;
 }

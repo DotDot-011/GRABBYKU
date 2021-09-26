@@ -20,7 +20,6 @@ if ($result->num_rows > 0) {
         $data[$i]['win_name'] = $row['win_name'];
         $data[$i]["status"] = $row['status'];
         $data[$i]["username"] = $row['username'];
-        $data[$i]["password"] = $row['password'];
         $i++;
     }
 } else {

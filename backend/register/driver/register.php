@@ -12,7 +12,7 @@ $id_no = $postData->id_no;
 $driver_no = $postData->driver_no;
 $win_id = $postData->win_id;
 $username = $postData->username; 
-$password = $postData->password;
+$password = password_hash($postData->password, PASSWORD_DEFAULT);
 $imageData = $postData->image;
 
 $sql = "SELECT win_name FROM win WHERE win_id = '$win_id'";

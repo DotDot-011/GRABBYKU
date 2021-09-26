@@ -1,13 +1,41 @@
 <?php
 
-$phone = $postData['phone'];
-$password = $postData['password'];
 
-if ($postData['mode'] == 'driver') {
-    $driver_id = $postData['driver_id'];
-    $sql = "UPDATE driver SET fname = '$fname', lname = '$lname', phone = '$phone', birth_date = '$birth_date', password = '$password', imageData = '$imageData' WHERE driver_id = '$driver_id'";
-} else {
-    $user_id = $postData['user_id'];
-    $sql = "UPDATE user SET fname = '$fname', lname = '$lname', phone = '$phone', birth_date = '$birth_date', password = '$password', imageData = '$imageData' WHERE user_id = '$user_id'";
+$password = $postData['password'];
+$mode = $postData['mode'];
+$mode_id = $mode . "_id";
+$id = $postData[$mode_id];
+
+$sql = "UPDATE $mode SET ";
+
+$state = 0;
+
+if ($postData['phone'] != NULL) {
+    $phone = $postData['phone'];
+    $sql = $sql . "phone = '$phone' ";
+    $state = 1;
 }
-$conn->query($sql);
+
+if ($postData['new_password'] != NULL && $postData['password'] != NULL) {
+    $sql1 = "SELECT password FROM $mode WHERE $mode_id = '$id'";
+    $result1 = $conn->query($sql1);
+    $row1 = $result1->fetch_assoc();
+    $verify = password_verify($password, $row1['password']);
+    if ($verify) {
+        if ($state) {
+            $sql = $sql . ", ";
+        }
+        $new_password = password_hash($postData['new_password'], PASSWORD_DEFAULT);
+        $sql = $sql . "password = '$new_password' ";
+    } else {
+        $data['message'] = "Wrong password";
+    }
+}
+
+$sql = $sql . "WHERE $mode_id = '$id'";
+if ($conn->query($sql)) {
+    $data['message_code'] = TRUE;
+} else {
+    $data['message_code'] = FALSE;
+    $data['message'] = $conn->err;
+}

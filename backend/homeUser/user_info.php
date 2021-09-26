@@ -17,7 +17,6 @@ if ($result->num_rows > 0) {
         $data[$i]["phone"] = $row['phone'];
         $data[$i]["id_no"] = $row['id_no'];
         $data[$i]["username"] = $row['username'];
-        $data[$i]["password"] = $row['password'];
         $i++;
     }
 } else {

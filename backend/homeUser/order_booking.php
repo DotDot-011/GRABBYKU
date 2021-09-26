@@ -16,7 +16,8 @@ $lng_des = $postData['longtitudeDestination'];
 
 // file_put_contents("./registerUser/test.txt", $postData);
 
-
+$sql = "DELETE FROM booking WHERE user_id = '$user_id'";
+$conn->query($sql);
 
 $sql = "INSERT INTO booking (user_id, win_id, lat_user, lng_user, lat_des, lng_des)
 VALUES ('$user_id', '$win_id', '$lat_user', '$lng_user', '$lat_des', '$lng_des')";
