@@ -54,29 +54,49 @@ export default function ProfileDriver(props){
             </div>
             <form role="form">
                 <br styles="" />
-                <div className="">
-                    เลขบัตรประชาชน
-                    <input disabled  type="text"  className="citizen-id" value={citizenId.substring(0, citizenId.length - 3)+"xxx"} />
-                    ชื่อ นามสกุล
-                    <input disabled  type="text"  className="name" value={Fname +' '+ Lname}  />
-                    วันเกิด
-                    <input disabled  type="text"  className="birthday" value={birthDate}  />
-                    หมายเลขโทรศัพท์
-                    <input   type="text" ref={phoneRef}  className="phone" placeholder={phone} />
-                    ทะเบียนรถ
-                    <input disabled  type="text"  className="plate" value={plate}  />
-                    ชื่อซุ้มวิน
-                    <input disabled  type="text"  className="winName" value={winName} />
-                    หมายเลขวิน
-                    <input disabled  type="text"  className="winNo" value={winNo}  />
-                    <h4> สำหรับการแก้ไขรหัสผ่าน </h4>
-                    รหัสผ่านใหม่
-                    <input type="password" ref={NewPasswdRef}  className="password" placeholder=""  />
-                    รหัสผ่านปัจจุบัน
-                    <input type="password" required ref={OldPasswdRef}  className="password" placeholder=""  />
+                <div className="driver-info">
+                    <div id="boxinfo-driver">
+                        <label>ชื่อ นามสกุล</label>
+                        <input disabled  type="text"  className="name" value={Fname +' '+ Lname}  />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>วันเกิด</label>
+                        <input disabled  type="text"  className="birthday" value={birthDate}  />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>เลขบัตรประชาชน</label>
+                        <input disabled  type="text"  className="citizen-id" value={citizenId.substring(0, citizenId.length - 3)+"xxx"} />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>หมายเลขโทรศัพท์</label>
+                        <input   type="text" ref={phoneRef}  className="phone" placeholder={phone} />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>ชื่อซุ้มวิน</label>
+                        <input disabled  type="text"  className="winName" value={winName} />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>หมายเลขวิน</label>
+                        <input disabled  type="text"  className="winNo" value={winNo}  />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>ทะเบียนรถ</label>
+                        <input disabled  type="text"  className="plate" value={plate}  />
+                    </div>
+                    <div id="boxinfo-driver">
+                        <h4>สำหรับการแก้ไขรหัสผ่าน</h4>
+                    </div>
+                    <div id="boxinfo-driver">
+                        <label>รหัสผ่านปัจจุบัน</label>
+                        <input type="password" required ref={OldPasswdRef}  className="password" placeholder=""  />
+                    </div> 
+                    <div id="boxinfo-driver">
+                        <label>รหัสผ่านใหม่</label>
+                        <input type="password" ref={NewPasswdRef}  className="password" placeholder=""  />
+                    </div>
                 </div>
                 {/* <input type="submit" id="submit" name="submit" onClick={sendData}  value="Update"/> */}
-                <button type="button"  id="submit" name="submit" className="" onClick={sendData}>Update</button>
+                <button type="button"  id="submit" name="submit" className="updateinfo-driver" onClick={sendData}>Update</button>
             </form>
             <NotificationContainer />
 

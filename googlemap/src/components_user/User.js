@@ -556,7 +556,8 @@ class User extends React.Component {
               Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
               Mode: "0",
               ID: `${res.data[0].user_id}`,
-              JWT: `${getCookie('token')}`
+              JWT: `${getCookie('token')}`,
+              reconnect: false
             }));
             this.userFname = res.data[0].fname;
             this.userLname = res.data[0].lname;
