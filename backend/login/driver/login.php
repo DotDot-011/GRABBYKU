@@ -5,7 +5,6 @@ require dirname(__DIR__, 2) . "/generate_jwt_driver.php";
 require dirname(__DIR__, 2) . "/configs/JWT_key.php";
 $username = $postData->username;
 $password = $postData->password;
-$password = password_hash($password, PASSWORD_DEFAULT);
 // file_put_contents("./registerUser/test.txt", $postData);
 
 $sql = "SELECT * FROM `driver` WHERE `username` = '$username'";

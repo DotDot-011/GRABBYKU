@@ -4,7 +4,11 @@
 $password = $postData['password'];
 $mode = $postData['mode'];
 $mode_id = $mode . "_id";
-$id = $postData[$mode_id];
+if ($mode == 'driver') {
+    $id = $postData['driver_id'];
+} else {
+    $id = $postData['user_id'];
+}
 
 $sql = "UPDATE $mode SET ";
 
@@ -33,6 +37,7 @@ if ($postData['new_password'] != NULL && $postData['password'] != NULL) {
 }
 
 $sql = $sql . "WHERE $mode_id = '$id'";
+$data['sql'] = $sql;
 if ($conn->query($sql)) {
     $data['message_code'] = TRUE;
 } else {

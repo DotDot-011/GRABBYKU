@@ -8,21 +8,18 @@ $username = $postData->username;
 $password = $postData->password;
 // file_put_contents("./registerUser/test.txt", $postData);
 
-$sql = "SELECT password FROM user WHERE username = '$username'";
+$sql = "SELECT * FROM user WHERE username = '$username'";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
     $p_check = $row['password'];
-    $verify = password_verify($password, $p_check);
+    $verify = password_verify($password, $row['password']);
     // echo json_encode($p_check);
     if ($verify) {
         $sql2 = "UPDATE `user` SET `status` = 1 WHERE `username` = '$username'";
         if ($conn->query($sql2) == TRUE) {
-            $sql = "SELECT * FROM user WHERE username = '$username'";
-            $result = $conn->query($sql);
-            $row = $result->fetch_assoc();
             $auth_a = generate_JWT($row, $key, 0);
             echo json_encode([
                 "message" => true,
@@ -35,8 +32,6 @@ if ($result->num_rows == 1) {
         }
     } else {
         echo json_encode([
-            "database_password"=> $p_check,
-            "sent_password"=> $password,
             "message"=> FALSE
         ]);
     }
