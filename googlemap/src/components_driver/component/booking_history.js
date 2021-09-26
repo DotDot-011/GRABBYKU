@@ -33,21 +33,21 @@ export default function History(props){
                 "date":"16/12/21",
                 "Fname":"มิ้น",
                 "Lname":"แม่มึงเป็นไรมากปะ",
-                "income":"20บาท",
+                "income":"20 บาท",
             },
             {
                 "booking_id": 2,
                 "date":"20/1/21",
                 "Fname":"ABC",
                 "Lname":"DEควาย",
-                "income":"30บาท",
+                "income":"30 บาท",
             },
             {
                 "booking_id": 3,
                 "date":"20/1/21",
                 "Fname":"ABC",
                 "Lname":"DEควาย",
-                "income":"30บาท",
+                "income":"30 บาท",
             }
         ]
         show_history(test);

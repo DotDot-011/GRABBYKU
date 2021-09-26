@@ -430,7 +430,7 @@ class Driver extends React.Component {
 
             
             
-            <a><Popup trigger={<a id="home" ><i ></i> ประวัติการให้บริการ</a>} modal nested>
+            <a><Popup trigger={<a id="home" ><i class="fas fa-history"></i> ประวัติการให้บริการ</a>} modal nested>
                     {           
                       close=>(
                           <History closeMenu={this.closeMenu}/>

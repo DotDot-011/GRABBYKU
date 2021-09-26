@@ -203,13 +203,12 @@ function RegisDriver() {
                             <option  value="9">9</option>
                             <option  value="10">10</option>
                         </select>
+                        <img id="img-driver" src={file}/>
                     </div>
                     <div id="boxinput-driver2">
                         <label id="label-input">หมายเลขวิน</label>
                         <input id="input-short" type="number" ref={driver_noRef} placeholder="กรอกหมายเลขวิน" name="driver_number"/>
-                        
-                        
-                        <img id="img-driver" src={file}/>
+                        {/* <img id="img-driver" src={file}/> */}
                     </div>
                     <div id="boxinput-driver2">
                         <label id="label-input">ป้ายทะเบียนรถ</label>
