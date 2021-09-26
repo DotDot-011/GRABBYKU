@@ -3,7 +3,13 @@
 $name = $wsdata['Name'];
 $is_driver = $wsdata['Mode'];
 $id = $wsdata['ID'];
-$reconnect = $wsdata['reconnect'];
+
+
+if (isset($wsdata['reconnect'])) {
+    $reconnect = $wsdata['reconnect'];
+} else {
+    $reconnect = 0;
+}
 
 if ($is_driver == 1) {
     $sql = "SELECT win_id FROM driver WHERE driver_id = '$id'";

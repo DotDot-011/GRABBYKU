@@ -17,9 +17,14 @@ if ($result->num_rows > 0) {
         $data[$i]["id_no"] = $row['id_no'];
         $data[$i]['driver_no'] = $row['driver_no'];
         $data[$i]['win_id'] = $row['win_id'];
-        $data[$i]['win_name'] = $row['win_name'];
+        $win_id = $row['win_id'];
+        $sql1 = "SELECT win_name FROM win WHERE win_id = '$win_id'";
+        $result1 = $conn->query($sql1);
+        $row1 = $result1->fetch_assoc();
+        $data[$i]['win_name'] = $row1['win_name'];
         $data[$i]["status"] = $row['status'];
         $data[$i]["username"] = $row['username'];
+        $data[$i]['imageData'] = $row['imageData'];
         $i++;
     }
 } else {

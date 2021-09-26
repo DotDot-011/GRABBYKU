@@ -17,8 +17,13 @@ if ($result->num_rows == 1) {
     $verify = password_verify($password, $p_check);
     // echo json_encode($p_check);
     if ($verify) {
+        $sql1 = "SELECT win_id FROM driver WHERE username = '$username'";
+        $result1 = $conn->query($sql);
+        $row1 = $result1->fetch_assoc();
+        $win_id = $row1['win_id'];
         $sql2 = "UPDATE `driver` SET `status` = 1 WHERE `username` = '$username'";
-        if ($conn->query($sql2)) {
+        $sql3 = "UPDATE win SET driver_online = driver_online + 1 WHERE win_id = '$win_id'";
+        if ($conn->query($sql2) && $conn->query($sql3)) {
             echo json_encode([
                 "message" => true,
                 "auth" => generate_JWT_driver($row, $key, 0)

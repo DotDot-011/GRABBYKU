@@ -4,6 +4,9 @@ namespace MyApp;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+
+use function PHPSTORM_META\type;
+
 require dirname(__DIR__) . "/src/isAuth.php";
 
 class WebSocket implements MessageComponentInterface
@@ -82,11 +85,6 @@ class WebSocket implements MessageComponentInterface
     {
         // The connection is closed, remove it, as we can no longer send it messages
         require dirname(__DIR__) . "/backend/configs/database.php";
-        $sql = "SELECT id, is_driver FROM websocket WHERE connection_id = '$from->resourceId'";
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
-        $id = $row['id'];
-        $is_driver = $row['is_driver'];
         $sql = "DELETE FROM websocket WHERE connection_id = '$from->resourceId'";
         $conn->query($sql);
 
