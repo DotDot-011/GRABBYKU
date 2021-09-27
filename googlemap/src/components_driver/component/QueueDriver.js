@@ -8,14 +8,15 @@ import getCookie from '../../getCookie';
 
 
 export default function QueueDriver(props) {
-    const {conn } = props;
+    const {conn ,winId} = props;
     // ------------------ฟังชันเมื่อ driver ถึง queue แรก------------------------
     function firstQueue() {
         
         //  ------------------ driver เอาข้อมูลของ user ผ่าน api check_booking--------------------
         axios.post(Url.LinkToBackend +"backend/api/check_booking",{
-            // driver_id : props.driverId,
-            JWT :`${getCookie('token')}`
+            driver_id : props.driverId,
+            JWT :`${getCookie('token')}`,
+            win_id : winId
         })
         .then( res=>{
             console.log(res.data);
@@ -33,6 +34,7 @@ export default function QueueDriver(props) {
               }
             else{
                 if (res.data.message){
+                    console.log(res.data.message_code);
                     clearInterval(window.timeoutId1);
                     // console.log(Number(res.data.lat_user));
                     props.handleForUpdate(Number(res.data.lat_user), Number(res.data.lng_user),Number(res.data.lat_des) ,Number(res.data.lng_des)
@@ -91,22 +93,36 @@ export default function QueueDriver(props) {
         conn.send(JSON.stringify({
             protocol: "getqueue", // protocol
             DriverID: `${props.driverId}`, // name
+            win_id:`${winId}`
         }))
+        
         conn.onmessage = function(e) {
             let Message = JSON.parse(e.data)
             console.log(Message)
             clearInterval(window.timeoutId1);
-           
+            if(Message.message_code ==="multiple login"){
+                axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                  username: localStorage.getItem("username")
+                }).then(()=>{
+                  localStorage.clear();
+                  localStorage.setItem("Auth","Multiple_Login");
+                  window.location.reload();
+                })
+              }
+
             if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
                 // console.log(Message.message_code);
-                window.timeoutId1 = setInterval(()=>{showQueue(Message);},1000)
+                console.log(Message);
+                window.timeoutId1 = setInterval(()=>{showQueue(Message);},500)
                 
-                // console.log(sizeof(Message));
+                
             }
             if(Message.message_code ==='user-cancel'){
                 console.log(Message.message_code)
                 props.cancelCase();
             }
+
+
             
     
         };
@@ -122,8 +138,12 @@ export default function QueueDriver(props) {
         conn.send(JSON.stringify({
             protocol: "enqueue", // protocol
             DriverID: `${props.driverId}`,
+            win_id:`${winId}`
         }))
-        
+        conn.onerror = (e) =>{
+            console.log(e)
+        }
+
     }
  
 
@@ -133,7 +153,7 @@ export default function QueueDriver(props) {
             <div className="queue-list" id="queueList"></div>
             <div className="button-queue">
                 <button  className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
-                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId,conn); }}> ออกคิว </button>
+                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId,conn,winId); }}> ออกคิว </button>
             </div>
             
         </div>

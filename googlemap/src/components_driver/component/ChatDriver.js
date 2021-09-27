@@ -13,6 +13,7 @@ export default function ChatDriver(props){
         conn.onmessage = function(e) {
             console.log('--------------');
             let Message = JSON.parse(e.data)
+            console.log(Message)
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
                 // console.log(Message);
@@ -33,6 +34,9 @@ export default function ChatDriver(props){
         // conn.send(newMessage)
         // Now send the message throught the backend API
         console.log(`New message incomig! ${newMessage}`);
+        conn.onclose = function(e) {
+            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+        };
         conn.send(JSON.stringify({
             protocol: "chat", // protocol
             ReceiverName: `${userFname} ${userLname}`, // name

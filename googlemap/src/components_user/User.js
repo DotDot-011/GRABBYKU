@@ -18,10 +18,14 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
 import CommentDriver from "./CommentDriver";
-import distance from 'google_directions';
+
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
 import getCookie from "../getCookie";
+import { pathPosition, WinZone } from "./WinZone";
+import ProfileUser from "./ProfileUser";
+import Popup from 'reactjs-popup';
+import distance from 'google_directions';
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
 
@@ -67,6 +71,7 @@ class User extends React.Component {
       loadingState:0,
       travelDistance:0,
       driverDistance:0,
+      menuOpen:false,
     }
     conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
     watingQueue=null;
@@ -78,7 +83,14 @@ class User extends React.Component {
     fetchUserIdInterval=null;
     chatUser=null;
     queueUser=null;
-   
+    userFname=null;
+    userLname=null;
+    citizenId=null;
+    birthDate=null;
+    phone=null;
+    profilepicture=null;
+    availableDriver = null; 
+    winId = null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -302,15 +314,15 @@ class User extends React.Component {
     }
     
     //---------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ให้บริการ---------
-    greenZonePath = [
-      {latitude:13.855458118865057, longitude:100.56596600925597},
-      {latitude:13.857277966250578, longitude:100.57639848267323},
-      {latitude:13.857659300458918, longitude:100.58083861265405},
-      {latitude:13.850487798245787, longitude:100.5815458679391},
-      {latitude:13.836416483501072, longitude:100.57339372833995},
-      {latitude:13.842558941191157, longitude:100.5590814720114},
-      {latitude:13.855458118865057, longitude:100.56596600925597},
-    ]
+    // greenZonePath = [
+    //   {latitude:13.855458118865057, longitude:100.56596600925597},
+    //   {latitude:13.857277966250578, longitude:100.57639848267323},
+    //   {latitude:13.857659300458918, longitude:100.58083861265405},
+    //   {latitude:13.850487798245787, longitude:100.5815458679391},
+    //   {latitude:13.836416483501072, longitude:100.57339372833995},
+    //   {latitude:13.842558941191157, longitude:100.5590814720114},
+    //   {latitude:13.855458118865057, longitude:100.56596600925597},
+    // ]
 
     //--------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ห้ามวินผ่าน----------
     redZonePath = [
@@ -330,7 +342,7 @@ class User extends React.Component {
         origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
         destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
         key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
-    
+        
         // OPTIONAL
         mode: "walking",
         avoid: "",
@@ -350,7 +362,7 @@ class User extends React.Component {
         origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
         destination: `${this.state.markerPosition.lat} , ${this.state.markerPosition.lng}`,
         key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
-    
+        
         // OPTIONAL
         mode: "walking",
         avoid: "",
@@ -366,14 +378,70 @@ class User extends React.Component {
       
     }
     
-    addLocation = () =>{
+    addLocation = async() =>{
+      
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_1 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_2 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_3 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_4 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_5 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_6 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_7 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_8 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_9 ))
+      // console.log('--------',isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_10 ))
+
+      // for (let item in WinZone){
+      //   console.log(`obj.${item} = ${WinZone[item]}`);
+      //   console.log(typeof( WinZone[item] ));
+      // }
+
       //-----------------เช็คตำแหน่งของทั้งสองmarkerว่าอยู่ในพื้นที่ให้บริการและอยู่นอก redzone หรือไม่-------------------
-     if(!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
-     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath) &&
-     
-     isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.greenZonePath) &&
-     isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.greenZonePath))
+     if(
+     (!isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},this.redZonePath) && 
+     !isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},this.redZonePath)) &&
+    
+      (
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_1 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_2 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_3 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_4 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_5 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_6 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_7 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_8 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_9 ) ||
+        isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone.path_10 ) 
+      )&&
+      (
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_1 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_2 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_3 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_4 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_5 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_6 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_7 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_8 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_9 ) ||
+        isPointInPolygon({latitude: this.state.markerDestinationPosition.lat, longitude: this.state.markerDestinationPosition.lng},WinZone.path_10 ) 
+      )
+    )
      {
+       
+       for (let item in WinZone) {
+          if(isPointInPolygon({latitude: this.state.markerPosition.lat, longitude: this.state.markerPosition.lng},WinZone[item] )){
+            await this.setState({
+               DriverPosition: {
+                lat: pathPosition[item].latitude,
+                lng: pathPosition[item].longitude
+                
+              },
+            })
+            this.winId = item.slice(5);
+            console.log('winId:',this.winId);
+          }
+        }
+        // console.log('++++++++++',this.state.DriverPosition.lat, this.state.DriverPosition.lng)
         this.getDistance()
         
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
@@ -382,7 +450,8 @@ class User extends React.Component {
           latitudeStart: this.state.markerPosition.lat,
           longtitudeStart: this.state.markerPosition.lng,
           latitudeDestination: this.state.markerDestinationPosition.lat,
-          longtitudeDestination: this.state.markerDestinationPosition.lng
+          longtitudeDestination: this.state.markerDestinationPosition.lng,
+          win_id : this.winId 
         })
         .then(res=>{
           console.log(res.data);
@@ -399,6 +468,7 @@ class User extends React.Component {
             // console.log(getCookie("token"));
             this.queueUser=res.data.booking_order
             // console.log('---------',this.queueUser)
+            this.availableDriver = res.data.driver_online
             this.setState({
               waitingQueueAppear:1,
             })
@@ -425,6 +495,7 @@ class User extends React.Component {
         protocol: "user-cancel", // protocol
         // user_name: this.state.us, 
         user_id: `${this.userId}`,
+        win_id:`${this.winId}`
         })
       );
       window.location.reload()
@@ -434,20 +505,31 @@ class User extends React.Component {
       this.conn.onopen = function(e) {
         console.log("Connection established!");
       }
-      this.conn.onmessage = e=> {
-        let Message = JSON.parse(e.data)
-        console.log(Message)
-        console.log('----------2');
-        // console.log(Message.message_code);
-      };
+      
     };
-    
     
     // ------------------ ส่ง user id ของ user ไปใช้ทำอย่างอื่น ------------------
     componentDidMount(){
       // axios.get( Url.LinkToBackend +"backend/api/bomb")
       // console.log('eeeeee',getCookie('token'))
       //--------------------------------
+      this.conn.onmessage = e=> {
+        let Message = JSON.parse(e.data)
+        console.log(Message)
+        console.log('----------2');
+        if(Message.message_code ==="multiple login"){
+          axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+            username: localStorage.getItem("username")
+          }).then(()=>{
+            localStorage.clear();
+            localStorage.setItem("Auth","Multiple_Login");
+            window.location.reload();
+          })
+        }
+        // console.log(Message.message_code);
+      };
+
+
       this.fetchUserIdInterval=setInterval(()=>{
         
         axios.post(Url.LinkToBackend+"backend/api/user_info",{
@@ -475,8 +557,15 @@ class User extends React.Component {
               Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
               Mode: "0",
               ID: `${res.data[0].user_id}`,
-              JWT: `${getCookie('token')}`
+              JWT: `${getCookie('token')}`,
+              reconnect: '0',
             }));
+            this.userFname = res.data[0].fname;
+            this.userLname = res.data[0].lname;
+            this.citizenId = res.data[0].id_no;
+            this.birthDate = res.data[0].birth_date;
+            this.phone = res.data[0].phone;
+            this.profilepicture = res.data[0].imageData;
           }
         })
         .then(()=>{
@@ -512,14 +601,23 @@ class User extends React.Component {
         detailDriverAppear:showDetailDriver,
       });
     }
-
+    handleStateChange (state) {
+      this.setState({menuOpen: state.isOpen})  
+    }
+    handleForChangeProfile(Phone){
+      this.phone=Phone;
+    }
+    closeMenu =()=> {
+      this.setState({menuOpen: false})
+    }
     
     
     
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}/>
+        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}
+        userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect} availableDriver = {this.availableDriver}/>
       }
       else{
         this.watingQueue=null;
@@ -648,7 +746,7 @@ class User extends React.Component {
             />
           </div>
 
-          <Polygon 
+          {/* <Polygon 
             path={[
               {lat:13.855458118865057, lng:100.56596600925597},
               {lat:13.857277966250578, lng:100.57639848267323},
@@ -668,7 +766,7 @@ class User extends React.Component {
                 fillOpacity: 0,
               }
             }
-          />
+          /> */}
 
           {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
           <div id="bottombutt">
@@ -679,10 +777,13 @@ class User extends React.Component {
               path={[
                 {lat: 13.84680634471089,lng: 100.56479688230758},
                 {lat: 13.848348039187117, lng: 100.56569906630881},
-                {lat:13.850380257189924, lng:100.56586145942902},
-                {lat:13.850240104794747, lng:100.57237522791787},
-                {lat:13.844213471850779, lng:100.57230305319777},
-                {lat:13.842952063786939, lng:100.57158130599677},
+                {lat:13.850380257189924, lng:100.56586145942902},           // ซ้ายบน
+                {lat:13.85035863118457, lng:100.57246193775138},            // ขวาบน
+                {lat:13.844138264502986, lng:100.57239696593405},
+                {lat:13.842717700160385, lng:100.57165572383603},
+                // {lat:13.850240104794747, lng:100.57237522791787},
+                // {lat:13.844213471850779, lng:100.57230305319777},
+                // {lat:13.842952063786939, lng:100.57158130599677},
                 {lat: 13.84680634471089,lng: 100.56479688230758},
               ]}
               
@@ -709,12 +810,24 @@ class User extends React.Component {
 
 
           {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
-          <Menu right>   
+          <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
 
-            <a id="home" className="menu-item" href="/"><i class="far fa-user"></i> ข้อมูลผู้ใช้ </a>
+          <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
+                    {           
+                      close=>(
+                          <ProfileUser closeMenu={this.closeMenu} 
+                            citizenId={this.citizenId} 
+                            Fname={this.userFname} Lname={this.userLname} 
+                            birthDate={this.birthDate} 
+                            phone={this.phone}
+                            profilepicture={this.profilepicture}
+                            handleForChangeProfile={this.handleForChangeProfile.bind(this)}/>
+                            
+                    )}
+                 </Popup>
+                 </a>
             <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
-            <a onClick={ this.showSettings } className="menu-item--small" href=""><i class="fas fa-cog"></i> ตั้งค่า</a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_user",{
                 username: localStorage.getItem("username")
