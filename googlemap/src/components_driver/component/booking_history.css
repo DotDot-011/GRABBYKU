@@ -1,17 +1,46 @@
 .history-page{
-    background-color: greenyellow;
-    width: 400px;
+    margin: auto;
+    padding: 20px 20px;
+    text-align: center;
+    margin-top: 8%;
+    /* top: 8%; */
+    height: 640px;
+    width: 350px;
+    background-color: #ffffff;
+    /* background-color: white; */
     border-radius: 20px;
+    border-style: inset;
+    border-width: 4px;
+    border-color:#137e63;
 }
-
+.history-page h3 {
+    padding-top: 10px;
+    font-size: 30px;
+    font-weight: bolder;
+}
 
 .history-list{
     
 }
 
-
 .history-container{
-    background-color: aquamarine;
+    margin: 10px 0px 10px 0px;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-    padding-top: 10px;
+    padding: 10px;
+}
+
+@media only screen and (min-width: 540px) {
+    .history-page{
+        width: 525px;
+        background-color: #ffffff;
+    }
+}
+
+@media only screen and (max-height: 670px) {
+    .history-page{
+        height: 500px;
+        background-color: #ffffff;
+    }
 }

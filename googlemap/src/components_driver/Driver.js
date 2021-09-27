@@ -229,7 +229,8 @@ class Driver extends React.Component {
               Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
               Mode: "1",
               ID: `${res.data[0].driver_id}`,
-              JWT: `${getCookie('token')}`
+              JWT: `${getCookie('token')}`,
+              reconnect: false
             }));
             this.driverFname = res.data[0].fname;
             this.driverLname = res.data[0].lname;
@@ -271,7 +272,7 @@ class Driver extends React.Component {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId} winName ={this.winName}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
@@ -407,7 +408,7 @@ class Driver extends React.Component {
 
       <section className="app-section">
         <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
-          
+          <h4>{localStorage.getItem("username")}</h4>
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
           <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
@@ -430,7 +431,7 @@ class Driver extends React.Component {
 
             
             
-            <a><Popup trigger={<a id="home" ><i ></i> ประวัติการให้บริการ</a>} modal nested>
+            <a><Popup trigger={<a id="home" ><i class="fas fa-history"></i> ประวัติการให้บริการ</a>} modal nested>
                     {           
                       close=>(
                           <History closeMenu={this.closeMenu}/>
