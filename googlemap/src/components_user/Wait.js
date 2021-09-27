@@ -5,10 +5,10 @@ import { socketUrl, Url } from '../LinkToBackend';
 import getCookie from "../getCookie";
 // ------------------ user รอ match กับ driver ------------------
 export default function Wait(props){
-    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId ,availableDriver} = props; 
+    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId  , winName} = props; 
     const [cost,setCost] = useState('');
     const [queue,setQueue] = useState(props.queueUser);
-    
+    const [availableDriver,setAvailableDriver] = useState(props.availableDriver)
     // function calculateCost(){
     //     return 10+props.travelDistance/1000;
     // }
@@ -26,7 +26,9 @@ export default function Wait(props){
             }
             else if(Message.message_code ==="your booking order"){
                 setQueue(Message.booking_order);
+                setAvailableDriver(Message.driver_online);
             }
+            
             
         }
     },[])
@@ -69,6 +71,7 @@ export default function Wait(props){
             <div id="waiting-detail">
                 <div class="num-queue">จำนวนคิวที่รอ : {queue}</div>
                 <div class="num-driver">จำนวนผู้ให้บริการ : {availableDriver} คน</div>
+                <div class="num-win">ประจำจุด : {winName}</div>
                 <div class="money-est">ราคาโดยประมาณ : {cost} บาท</div>
             </div>
             {/* <button className="cancel-button" type="button" type="button" class="btn btn-primary" id="buttcancel" onClick={cancelQueue}>ยกเลิก</button> */}

@@ -6,7 +6,6 @@ import RegisUser from "./regis_user";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import './login.css'
 
-
 function Login() {
 
     useEffect(()=>{
@@ -41,8 +40,12 @@ function Login() {
                 <button classname="user_reg" id="user_reg" onClick={() => setCount(3)}>Customer</button>
                 <button classname="driver_reg" id="driver_reg" onClick={() => setCount(4)}>Driver</button>
                 <NotificationContainer />
+
+                
                 
             </div>
+            
+            
         );
     }
 

@@ -13,10 +13,24 @@ export default function ChatUser(props){
     const [count,setCount] = useState(0);
     const { conn ,driverId} = props;
     
+    function showPreviousChat(Message){
+        console.log(Message[0])
+        for(let i in Message){
+            if(Message[i]!== 'chat info'){
+                if(Message[i].receiver_mode ==='1'){
+                    addUserMessage(Message[i].message);
+                }
+                else{
+                    addResponseMessage(Message[i].message);
+                }
+            }
+        }
+    }
+
     useEffect(()=>{
         console.log('--------------',driverId)
         conn.onmessage = function(e) {
-            
+            // addUserMessage('ห๊ะ')
             let Message = JSON.parse(e.data)
             console.log(Message)
             if(Message.message_code =='chat'){
@@ -24,6 +38,9 @@ export default function ChatUser(props){
             }
             else if(Message.message_code == 'arrive'){
                 props.handleForUpdate(2);
+            }
+            else if(Message.message_code ==='chat info'){
+                showPreviousChat(Message)
             }
         };
         return ()=>{
