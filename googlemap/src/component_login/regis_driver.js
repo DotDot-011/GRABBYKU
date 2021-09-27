@@ -192,16 +192,16 @@ function RegisDriver() {
                         <label id="label-input">ชื่อซุ้มวิน</label>
                         {/* <input id="input-normal" type="text" ref={win_idRef} placeholder="กรอกชื่อซุ้ม" name="win_name" /> */}
                         <select  ref={win_idRef} >
-                            <option  value="1">1</option>
-                            <option  value="2">2</option>
-                            <option  value="3">3</option>
-                            <option  value="4">4</option>
-                            <option  value="5">5</option>
-                            <option  value="6">6</option>
-                            <option  value="7">7</option>
-                            <option  value="8">8</option>
-                            <option  value="9">9</option>
-                            <option  value="10">10</option>
+                            <option  value="1">ตึกนิเทศ</option>
+                            <option  value="2">ประตูวิภา</option>
+                            <option  value="3">ประตูงาม3</option>
+                            <option  value="4">ประตูงาม1</option>
+                            <option  value="5">ประตูพหล</option>
+                            <option  value="6">BTS เกษตร</option>
+                            <option  value="7">คณะประมง</option>
+                            <option  value="8">หอในนอก</option>
+                            <option  value="9">สระว่ายน้ำ</option>
+                            <option  value="10">starbuck</option>
                         </select>
                         <img id="img-driver" src={file}/>
                     </div>

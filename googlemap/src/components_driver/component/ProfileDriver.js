@@ -119,7 +119,7 @@ export default function ProfileDriver(props){
                     </div>
                     <div id="boxinfo-driver">
                         <label>หมายเลขโทรศัพท์</label>
-                        <input   type="text" ref={phoneRef}  className="phone" placeholder={showPhone} />
+                        <input   type="number" ref={phoneRef}  className="phone" placeholder={showPhone} />
                     </div>
                     <div id="boxinfo-driver">
                         <label>ชื่อซุ้มวิน</label>

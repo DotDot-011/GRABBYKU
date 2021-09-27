@@ -149,7 +149,8 @@ export default function QueueDriver(props) {
 
     return(
         <div className="queue-container">
-            <h4>ตารางคิว</h4>
+            <h4>ตารางคิว </h4>
+            <h3>ประจำจุด : {props.winName}</h3>
             <div className="queue-list" id="queueList"></div>
             <div className="button-queue">
                 <button  className="button-enQueue" onClick={enQueue}> เข้าคิว </button>

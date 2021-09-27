@@ -812,7 +812,7 @@ class User extends React.Component {
           {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
           <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-
+          <h4>{localStorage.getItem("username")}</h4>
           <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
                       close=>(

@@ -125,7 +125,7 @@ export default function ProfileUser(props){
                     </div>
                     <div id="boxinfo-user">
                         <label>หมายเลขโทรศัพท์</label>
-                        <input   type="text" ref={phoneRef}  className="phone" placeholder={showPhone} />
+                        <input   type="number" ref={phoneRef}  className="phone" placeholder={showPhone} />
                     </div>  
                     <div id="boxinfo-user">
                         <h4>สำหรับการแก้ไขรหัสผ่าน</h4>
