@@ -18,6 +18,8 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { stack as Menu } from 'react-burger-menu'
 import CommentDriver from "./CommentDriver";
+import Contact from '../contact';
+
 
 import mapStyle from "../mapStyle"
 import ChatUser from "./ChatUser";
@@ -69,8 +71,8 @@ class User extends React.Component {
       detailDriverAppear:null,
       locationList:[],
       loadingState:0,
-      travelDistance:0,
-      driverDistance:0,
+      // travelDistance:0,
+      // driverDistance:0,
       menuOpen:false,
     }
     conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
@@ -91,6 +93,9 @@ class User extends React.Component {
     profilepicture=null;
     availableDriver = null; 
     winId = null;
+    travelDistance=0
+    driverDistance=0
+    winName=null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -336,45 +341,78 @@ class User extends React.Component {
     ]
    
     //--------------functionถูกเรียกเมื่อ user กดปุ่มเริ่มต้น-------------------- 
-    getDistance = () => {
-        var params_farecost = {
-        // REQUIRED
-        origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
-        destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
-        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+    getDistance = async() => {
+      //   var params_farecost = {
+      //   // REQUIRED
+      //   origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
+      //   destination: `${this.state.markerDestinationPosition.lat} , ${this.state.markerDestinationPosition.lng}`,
+      //   key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
         
-        // OPTIONAL
+      //   // OPTIONAL
+      //   mode: "walking",
+      //   avoid: "",
+      //   language: "",
+      //   units: "",
+      //   region: "",
+      // };
+      await axios.post(Url.LinkToBackend+"backend/api/getDistance",{
+        origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
+        destination: `${this.state.markerDestinationPosition.lat},${this.state.markerDestinationPosition.lng}`,
+        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
         mode: "walking",
-        avoid: "",
-        language: "",
-        units: "",
-        region: "",
-      };
-      distance.getDirections(params_farecost, (err,data)=> {
-        this.setState ({
-          travelDistance: data.routes[0].legs[0].distance.value
-        })
+        
       })
+      .then(res=>{
+        console.log('distance: ',res.data.routes[0].legs[0].distance.value)
+        this.travelDistance=res.data.routes[0].legs[0].distance.value;
+        // this.setState ({
+        //   travelDistance: res.data.routes[0].legs[0].distance.value
+        // })
+      })
+      .catch(err=>{
+        NotificationManager.error(err.message,'Alert',1000);
+      })
+      // distance.getDirections(params_farecost, (err,data)=> {
+      //   this.setState ({
+      //     travelDistance: data.routes[0].legs[0].distance.value
+      //   })
+      // })
       
       //---------------------------------------------------------
-      var params_wait = {
-        // REQUIRED
-        origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
-        destination: `${this.state.markerPosition.lat} , ${this.state.markerPosition.lng}`,
-        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+      // var params_wait = {
+      //   // REQUIRED
+      //   origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
+      //   destination: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
+      //   key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
         
-        // OPTIONAL
+      //   // OPTIONAL
+      //   mode: "walking",
+      //   avoid: "",
+      //   language: "",
+      //   units: "",
+      //   region: "",
+      // };
+      await axios.post(Url.LinkToBackend+"backend/api/getDistance",{
+        origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
+        destination: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
+        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
         mode: "walking",
-        avoid: "",
-        language: "",
-        units: "",
-        region: "",
-      };
-      distance.getDirections(params_wait, (err,data)=> {
-        this.setState ({
-          driverDistance: data.routes[0].legs[0].distance.value
-        })
+        
       })
+      .then(res=>{
+        this.driverDistance=res.data.routes[0].legs[0].distance.value;
+        // this.setState ({
+        //   driverDistance: res.data.routes[0].legs[0].distance.value
+        // })
+      })
+      .catch(err=>{
+        NotificationManager.error(err.message,'Alert',1000);
+      })
+      // distance.getDirections(params_wait, (err,data)=> {
+      //   this.setState ({
+      //     driverDistance: data.routes[0].legs[0].distance.value
+      //   })
+      // })
       
     }
     
@@ -442,16 +480,16 @@ class User extends React.Component {
           }
         }
         // console.log('++++++++++',this.state.DriverPosition.lat, this.state.DriverPosition.lng)
-        this.getDistance()
+        await this.getDistance()
         
         // ------------------ user เลือกตำแหน่งเสร็จแล้ว ส่งตำแหน่งที่เลือกไปให้ driver ที่ match ------------------
-        axios.post(Url.LinkToBackend+"backend/api/order_booking",{
+        await axios.post(Url.LinkToBackend+"backend/api/order_booking",{
           JWT :`${getCookie('token')}`,
           latitudeStart: this.state.markerPosition.lat,
           longtitudeStart: this.state.markerPosition.lng,
           latitudeDestination: this.state.markerDestinationPosition.lat,
           longtitudeDestination: this.state.markerDestinationPosition.lng,
-          win_id : this.winId 
+          win_id : this.winId, 
         })
         .then(res=>{
           console.log(res.data);
@@ -465,7 +503,8 @@ class User extends React.Component {
             })
           }
           else{
-            // console.log(getCookie("token"));
+            
+            this.winName = res.data.win_name;
             this.queueUser=res.data.booking_order
             // console.log('---------',this.queueUser)
             this.availableDriver = res.data.driver_online
@@ -525,6 +564,13 @@ class User extends React.Component {
             localStorage.setItem("Auth","Multiple_Login");
             window.location.reload();
           })
+        }
+        else if(Message.message_code ==="booking info"){
+          this.driverId = Message.driver_id;
+          this.winId = Message.win_id;
+          this.setState({
+            detailDriverAppear:1,
+          });
         }
         // console.log(Message.message_code);
       };
@@ -616,7 +662,7 @@ class User extends React.Component {
     render(){
       
       if(!!this.state.waitingQueueAppear){
-        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} conn={this.conn} handleForDriverAccept={this.handleForDriverAccept.bind(this)}
+        this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.travelDistance} conn={this.conn} winName={this.winName} handleForDriverAccept={this.handleForDriverAccept.bind(this)}
         userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect} availableDriver = {this.availableDriver}/>
       }
       else{
@@ -624,8 +670,8 @@ class User extends React.Component {
         clearInterval(this.timeoutId);
       }
       if(this.state.detailDriverAppear===1){
-        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.state.travelDistance} 
-                            conn={this.conn}  driverDistance={this.state.driverDistance}/>
+        this.detailDriver = <DetailDriver driverId={this.driverId} cancelQueue={this.cancelQueue} travelDistance={this.travelDistance} 
+                            conn={this.conn}  driverDistance={this.driverDistance}/>
         this.chatUser= <ChatUser handleForUpdate = {this.handleForUpdate.bind(this)}  conn={this.conn} driverId={this.driverId} />
         
       }
@@ -827,13 +873,26 @@ class User extends React.Component {
                     )}
                  </Popup>
                  </a>
-            <a id="contact" className="menu-item" href="/contact"><i class="fas fa-phone"></i> ติดต่อ</a>
-            <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
-              axios.post(Url.LinkToBackend+"backend/api/logout_user",{
+            <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
+            {           
+                    close=>(
+                        <Contact closeMenu={this.closeMenu}/>
+                    )}
+                </Popup>
+            </a>
+            <a id="contact" className="menu-item" id="signout" onClick={async()=>{
+              await this.conn.send(JSON.stringify({
+                protocol: "user-cancel", // protocol
+                // user_name: this.state.us, 
+                user_id: `${this.userId}`,
+                win_id:`${this.winId}`
+                })
+              );
+              await axios.post(Url.LinkToBackend+"backend/api/logout_user",{
                 username: localStorage.getItem("username")
               }).then(res=>{
-                localStorage.clear(); 
-                window.location.reload()
+                localStorage.clear();
+                window.location.reload(); 
               }).catch(err=>{
                 NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
               });
