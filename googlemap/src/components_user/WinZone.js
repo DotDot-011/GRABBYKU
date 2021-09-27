@@ -9,22 +9,23 @@ export const WinZone ={
         //     {latitude:13.855458118865057, longitude:100.56596600925597},
         // ],
         
-        paths : [
-            { latitude: 13.851, longitude: 100.5639 },
-            { latitude: 13.847, longitude: 100.571 },
-            { latitude: 13.844, longitude: 100.57767 },
-            { latitude: 13.85, longitude: 100.57157 }
-        ],
+        // paths : [
+        //     { latitude: 13.851, longitude: 100.5639 },
+        //     { latitude: 13.847, longitude: 100.571 },
+        //     { latitude: 13.844, longitude: 100.57767 },
+        //     { latitude: 13.85, longitude: 100.57157 }
+        // ],
         path_1 : [//ตึกนิเทศ
-            { latitude: 13.852463, longitude: 100.568767 },
-            { latitude: 13.853566, longitude: 100.567298 },
-            { latitude: 13.854361, longitude: 100.569359 },
-            { latitude: 13.854773, longitude: 100.570771 },
-            { latitude: 13.856955584118865, longitude: 100.57454697785533 },
-            { latitude: 13.848558, longitude: 100.576650 },
-            { latitude: 13.848736055696225, longitude: 100.5724073072333 },
-            { latitude: 13.852420, longitude: 100.572460 },
-            { latitude: 13.852463, longitude: 100.568767 }
+            { lat: 13.852463, lng: 100.568767 },
+            { lat: 13.853566, lng: 100.567298 },
+            { lat: 13.854361, lng: 100.569359 },
+            { lat: 13.854773, lng: 100.570771 },
+            { lat: 13.856955584118865, lng: 100.57454697785533 },
+            { lat: 13.848558, lng: 100.576650 },
+            { lat: 13.848736055696225, lng: 100.5724073072333 },
+            { lat: 13.850322, lng: 100.569682 },
+            // { lat: 13.852420, lng: 100.572460 },
+            { lat: 13.852463, lng: 100.568767 }
         ],
         path_2 : [//ประตูวิภา
             { latitude: 13.855429, longitude: 100.566592 },
