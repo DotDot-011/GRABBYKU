@@ -229,7 +229,8 @@ class Driver extends React.Component {
               Name: `${res.data[0].fname} ${res.data[0].lname}`, // name
               Mode: "1",
               ID: `${res.data[0].driver_id}`,
-              JWT: `${getCookie('token')}`
+              JWT: `${getCookie('token')}`,
+              reconnect: false
             }));
             this.driverFname = res.data[0].fname;
             this.driverLname = res.data[0].lname;
@@ -430,7 +431,7 @@ class Driver extends React.Component {
 
             
             
-            <a><Popup trigger={<a id="home" ><i ></i> ประวัติการให้บริการ</a>} modal nested>
+            <a><Popup trigger={<a id="home" ><i class="fas fa-history"></i> ประวัติการให้บริการ</a>} modal nested>
                     {           
                       close=>(
                           <History closeMenu={this.closeMenu}/>
