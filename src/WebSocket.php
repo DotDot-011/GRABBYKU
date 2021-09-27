@@ -43,7 +43,6 @@ class WebSocket implements MessageComponentInterface
         require dirname(__DIR__) . "/backend/configs/route.php";
         require dirname(__DIR__) . "/backend/configs/need_authorize.php";
         require dirname(__DIR__) . "/backend/configs/JWT_key.php";
-        
 
         $wsdata = json_decode($msg, true);
         echo date('d-m-Y') . "\n";
@@ -85,10 +84,35 @@ class WebSocket implements MessageComponentInterface
     {
         // The connection is closed, remove it, as we can no longer send it messages
         require dirname(__DIR__) . "/backend/configs/database.php";
+
+        $sql = "SELECT id, is_driver, on_service, win_id FROM websocket WHERE connection_id = '$from->resourceId'";
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $ID = $row['id'];
+            $is_driver = $row['is_driver'];
+            $on_service = $row['on_service'];
+            $win_id = $row['win_id'];
+            if ($is_driver == '1') {
+                $protocol = 'close';
+                $driver_id = $ID;
+                $sql = "UPDATE win SET driver_online = driver_online - 1 WHERE win_id = '$win_id'";
+                $conn->query($sql);
+                require dirname(__DIR__) . "/src/Booking.php";
+                $sql = "SELECT * FROM queue WHERE driver_id = '$driver_id'";
+                $result = $conn->query($sql);
+                if ($result->num_rows == 1) {
+                    require dirname(__DIR__) . "/src/deQueue.php";
+                }
+            } else {
+                $sql = "DELETE FROM booking WHERE user_id = '$ID' AND driver_id is NULL";
+                $conn->query($sql);
+            }
+        }
         $sql = "DELETE FROM websocket WHERE connection_id = '$from->resourceId'";
         $conn->query($sql);
 
-        echo "Connection {$from->resourceId} has disconnected\n";
+        echo "Connection {$from->resourceId} has disconnected\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n";
         $this->clients->detach($from);
     }
 

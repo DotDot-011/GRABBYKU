@@ -1,6 +1,8 @@
 <?php
 
-$driver_id = $wsdata['DriverID'];
+if ($protocol != 'close') {
+    $driver_id = $wsdata['DriverID'];
+}
 
 if ($protocol == 'getqueue') {
     $sql = "SELECT fname, lname, win_id FROM driver WHERE driver_id = '$driver_id'";
@@ -51,15 +53,15 @@ if ($result->num_rows > 0) {
     echo $protocol . "\n";
     $data["message_code"] = "empty_queue";
     $sql2 = "SELECT connection_id FROM websocket WHERE is_driver = 1 and on_service = 0 and win_id = '$win_id'";
-        $result2 = $conn->query($sql2);
-        while ($row = $result2->fetch_assoc()) {
-            $connection_id = $row['connection_id'];
-            $data["message_code"] = "queue";
-            foreach ($this->clients as $client) {
-                if ($client->resourceId == $connection_id) {
-                    $client->send(json_encode($data));
-                    break;
-                }
+    $result2 = $conn->query($sql2);
+    while ($row = $result2->fetch_assoc()) {
+        $connection_id = $row['connection_id'];
+        $data["message_code"] = "queue";
+        foreach ($this->clients as $client) {
+            if ($client->resourceId == $connection_id) {
+                $client->send(json_encode($data));
+                break;
             }
         }
+    }
 }

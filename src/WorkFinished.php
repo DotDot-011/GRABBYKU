@@ -67,5 +67,5 @@ if ($result_for_answer != NULL) {
 $sql5 = "UPDATE user Set success_count = success_count + 1 WHERE user_id = '$user_id' ";
 $conn->query($sql5);
 
-$sql = "UPDATE driver SET status = 0 WHERE driver_id = $driver_id";
+$sql = "UPDATE driver SET status = 1 WHERE driver_id = $driver_id";
 $conn->query($sql);

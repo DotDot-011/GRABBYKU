@@ -28,9 +28,10 @@ $result = $conn->query($sql);
 
 $data['booking_order'] = $result->num_rows;
 
-$sql = "SELECT driver_online FROM win WHERE win_id = '$win_id'";
+$sql = "SELECT win_name, driver_online FROM win WHERE win_id = '$win_id'";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
+$data['win_name'] = $row['win_name'];
 $data['driver_online'] = $row['driver_online'];
 
 $sql = "UPDATE websocket SET on_service = 1 WHERE id = '$user_id' and is_driver = 0";

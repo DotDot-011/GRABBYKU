@@ -33,5 +33,14 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-$sql = "INSERT INTO chat_history (sender_id, receiver_id, receiver_mode, message) VALUES ($SenderID, $ReceiverID, $is_driver, '$message')";
+if ($is_driver == '1') {
+    $sql = "SELECT booking_id FROM booking WHERE driver_id = '$ReceiverID'";
+} else {
+    $sql = "SELECT booking_id FROM booking WHERE user_id = '$ReceiverID'";
+}
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+$booking_id = $row['booking_id'];
+
+$sql = "INSERT INTO chat_history (booking_id, sender_id, receiver_id, receiver_mode, message) VALUES ($booking_id, $SenderID, $ReceiverID, $is_driver, '$message')";
 $conn->query($sql);

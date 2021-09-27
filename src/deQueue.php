@@ -1,6 +1,8 @@
 <?php
 
-$driver_id = $wsdata['DriverID'];
+if ($protocol != 'close') {
+    $driver_id = $wsdata['DriverID'];
+}
 $sql = "SELECT fname, lname, win_id FROM driver WHERE driver_id = '$driver_id'";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();

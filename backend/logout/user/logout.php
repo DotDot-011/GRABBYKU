@@ -23,7 +23,8 @@ if ($result->num_rows == 1) {
 }
 
 $sql2 = "UPDATE `user` SET `status` = 0 WHERE `user_id` = $user_id";
-if ($conn->query($sql2) == TRUE) {
+$sql3 = "DELETE FROM booking WHERE user_id = $user_id";
+if ($conn->query($sql2) == TRUE && $conn->query($sql3)) {
     $sql = "SELECT * FROM user WHERE user_id = $user_id";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
