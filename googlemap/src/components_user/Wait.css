@@ -35,10 +35,11 @@
 #waiting-detail{
     margin: 50px auto;
     position: relative;
-    min-width: 250px;
+    min-width: 260px;
     width: 55%;
+    min-height: 230px;
     height: 30%;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 20px;
     /* top right bott left   */
     padding: 15px 0px 15px 0px;

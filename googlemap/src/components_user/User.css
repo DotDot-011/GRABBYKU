@@ -194,7 +194,6 @@
   
   /* Wrapper for item list */
   .bm-item-list {
-
     color: #ffffff;
     padding: 1em;
   }
@@ -207,7 +206,13 @@
     border-color: chartreuse; */
     margin-top: 20px;
     display: inline-block;
-    color: white;
+    color: rgb(255, 255, 255);
+  }
+  #user-info{
+    position: relative;
+    /* left: 50px; */
+    font-size: 40px;
+    color: rgb(255, 255, 255);
   }
  
   .bm-item:hover{

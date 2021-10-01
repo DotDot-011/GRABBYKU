@@ -12,6 +12,8 @@
     border-style: inset;
     border-width: 4px;
     border-color:#137e63;
+    overflow: auto;
+
 }
 .history-page h3 {
     padding-top: 10px;
@@ -20,7 +22,7 @@
 }
 
 .history-list{
-    
+    /* overflow: scroll; */
 }
 
 .history-container{

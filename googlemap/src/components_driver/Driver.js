@@ -211,7 +211,7 @@ class Driver extends React.Component {
               Mode: "1",
               ID: `${res.data[0].driver_id}`,
               JWT: `${getCookie('token')}`,
-              reconnect: false
+              reconnect: '0',
             }));
             this.driverFname = res.data[0].fname;
             this.driverLname = res.data[0].lname;
