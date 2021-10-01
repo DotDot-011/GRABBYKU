@@ -9,7 +9,7 @@
     z-index: 1;
     max-width: 700px;
     /* height: 630px; */
-    height: 890%;
+    height: 90%;
     min-height: 505px;
     width: 100%;
     background-color: white;
@@ -25,19 +25,19 @@
     font-weight: bolder;
 }
 #queueList{
-    margin: 20px auto;
-    padding: 20px;
+    margin: 15px auto;
+    padding: 15px;
     position: relative;
     /* min-width: 350px; */
     /* max-height: 6000px; */
     width: 80%;
-    height: 70%;
+    height: 65%;
     font-size: 30px;
 }
 .button-queue{
     /* background-color: silver; */
     position: relative;
-    top: -20px;
+    top: 3px;
     /* margin: 0 auto; */
 }
 .button-enQueue{
@@ -50,7 +50,7 @@
     height: 42px;
     width: 100px;
     right: 19px;
-    top: 20px;
+    /* top: 5px; */
     transition: 0.3s;
 }
 .button-enQueue:hover {
@@ -75,7 +75,7 @@
     height: 42px;
     width: 100px;
     left: 26px;
-    top: 20px;
+    /* top: 5px; */
     transition: 0.3s;
 
 }
