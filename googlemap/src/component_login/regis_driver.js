@@ -110,6 +110,23 @@ function RegisDriver() {
                     localStorage.setItem("regis_success","success");
                     setCount(1)
                 }
+                else{
+                    if(res.data.indexOf("'username'")!== -1){
+                        NotificationManager.warning('username นี้ถูกใช้แล้ว');
+                    }
+                    if(res.data.indexOf("'email'")!== -1){
+                        NotificationManager.warning('email นี้ถูกใช้แล้ว');
+                    }
+                    if(res.data.indexOf("'id_no'")!== -1){
+                        NotificationManager.warning('รหัสประจำตัวประชาชนนี้ถูกใช้แล้ว');
+                    }
+                    if(res.data.indexOf("'driver_no'")!== -1){
+                        NotificationManager.warning('หมายเลขวินนี้ถูกใช้แล้ว');
+                    }
+                    if(res.data.indexOf("'plate'")!== -1){
+                        NotificationManager.warning('ป้ายทะเบียนนี้ถูกใช้แล้ว');
+                    }
+                }
             })
             .catch(err=>{
                 NotificationManager.error(err.message,'Alert',3000);

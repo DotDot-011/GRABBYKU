@@ -89,7 +89,7 @@ class Driver extends React.Component {
   winId=null;
   winName=null;
   profilepicture=null;
-
+  penaltyTime=null;
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
   
   
@@ -116,7 +116,7 @@ class Driver extends React.Component {
   driverCancel = () =>{
     console.log(parseInt(this.state.driverId));
     console.log(parseInt(this.state.userId));
-    leaveQueue(this.state.driverId,this.conn,this.winId);
+    leaveQueue(this.state.driverId,this.conn,this.winId,1);
     this.setState({
           queueDriverAppear:2,
     });
@@ -203,7 +203,7 @@ class Driver extends React.Component {
               driverId: parseInt(res.data[0].driver_id),
               
             })
-            // console.log('eeeeeee',res.data[0].imageData)
+            console.log('eeeeeee',res.data[0])
             
             this.conn.send(JSON.stringify({
               protocol: "in", // protocol
@@ -223,6 +223,7 @@ class Driver extends React.Component {
             this.winName = res.data[0].win_name;
             this.winNo = res.data[0].driver_no;
             this.profilepicture = res.data[0].imageData;
+            this.penaltyTime = res.data[0].penalty;
           }
       })
       .then(()=>{
@@ -297,8 +298,8 @@ class Driver extends React.Component {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}  handleForDriverReconnect = {this.handleForDriverReconnect.bind(this)}
-          driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId} winName ={this.winName}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}  handleForDriverReconnect = {this.handleForDriverReconnect.bind(this) } 
+          driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId} winName ={this.winName} penaltyTime={this.penaltyTime}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
