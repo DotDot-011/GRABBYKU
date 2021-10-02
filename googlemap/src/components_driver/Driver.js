@@ -25,6 +25,7 @@ import Countdown from "react-countdown"
 import getCookie from "../getCookie";
 import History from "./component/booking_history";
 import ProfileDriver from "./component/ProfileDriver";
+import Contact from '../contact';
 
 
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
@@ -90,28 +91,7 @@ class Driver extends React.Component {
   profilepicture=null;
 
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
-  //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
-  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
-    clearTimeout(this.driverTimeOut)
-    console.log(startLat,startLng)
-    console.log(userFName,userLName)
-    this.setState({
-      markerPosition: {
-        lat: startLat,
-        lng: startLng,
-      },
-      markerDestinationPosition:{
-        lat: DestinationLat, 
-        lng: DestinationLng,
-      },
-      queueDriverAppear: queuePageStatus,
-      userId: idUser,
-      userFname: userFName,
-      userLname: userLName,
-      file:picture,
-    });
   
-  }
   
   
   // ------------------ เช็คว่า user cancel หรือยัง ------------------
@@ -200,6 +180,7 @@ class Driver extends React.Component {
   // ------------------ เอา driver id ไปใช้ในที่อื่นๆ ------------------
   componentDidMount(){
     // axios.get( Url.LinkToBackend +"backend/api/bomb")
+    
     this.fetchDriverIdInterval =setInterval(()=>{
     axios.post(Url.LinkToBackend+"backend/api/postdriver",{
         JWT :`${getCookie('token')}`, 
@@ -222,7 +203,7 @@ class Driver extends React.Component {
               driverId: parseInt(res.data[0].driver_id),
               
             })
-            console.log('eeeeeee',res.data)
+            // console.log('eeeeeee',res.data[0].imageData)
             
             this.conn.send(JSON.stringify({
               protocol: "in", // protocol
@@ -230,7 +211,7 @@ class Driver extends React.Component {
               Mode: "1",
               ID: `${res.data[0].driver_id}`,
               JWT: `${getCookie('token')}`,
-              reconnect: false
+              reconnect: '0',
             }));
             this.driverFname = res.data[0].fname;
             this.driverLname = res.data[0].lname;
@@ -268,11 +249,56 @@ class Driver extends React.Component {
   handleForChangeProfile(Phone){
     this.phone=Phone;
   }
+  //--------------------------------------ทำหน้าที่ในการจัดการการอัพเดทเวลามีค่าต่างๆเปลี่ยนแปลง------
+  handleForUpdate(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
+    clearTimeout(this.driverTimeOut)
+    console.log(startLat,startLng)
+    console.log(userFName,userLName)
+    this.setState({
+      markerPosition: {
+        lat: startLat,
+        lng: startLng,
+      },
+      markerDestinationPosition:{
+        lat: DestinationLat, 
+        lng: DestinationLng,
+      },
+      queueDriverAppear: queuePageStatus,
+      userId: idUser,
+      userFname: userFName,
+      userLname: userLName,
+      file:picture,
+    });
+  
+  }
+  handleForDriverReconnect(startLat,startLng,DestinationLat,DestinationLng ,queuePageStatus, idUser, userFName, userLName,picture){
+    clearTimeout(this.driverTimeOut)
+    console.log(startLat,startLng)
+    console.log(userFName,userLName)
+    this.setState({
+      markerPosition: {
+        lat: startLat,
+        lng: startLng,
+      },
+      markerDestinationPosition:{
+        lat: DestinationLat, 
+        lng: DestinationLng,
+      },
+      queueDriverAppear: queuePageStatus,
+      userId: idUser,
+      userFname: userFName,
+      userLname: userLName,
+      file:picture,
+      buttonAcceptCancelAppear: null,
+    });
+  }
+
   render() {
         if(this.state.queueDriverAppear === 1){
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId);
-          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)} driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId} winName ={this.winName}/>
+          this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}  handleForDriverReconnect = {this.handleForDriverReconnect.bind(this)}
+          driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId} winName ={this.winName}/>
           this.userInfo = null;
         }
         else if(this.state.queueDriverAppear === 2){
@@ -408,7 +434,7 @@ class Driver extends React.Component {
 
       <section className="app-section">
         <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
-          <h4>{localStorage.getItem("username")}</h4>
+        <a id="user-info"><i class="far fa-address-card"></i> : {localStorage.getItem("username")}</a>
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
           <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
@@ -438,7 +464,13 @@ class Driver extends React.Component {
                     )}
                  </Popup>
                  </a>
-            <a id="contact" className="menu-item" ><i class="fas fa-phone"></i> ติดต่อ</a>
+            <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
+            {           
+                    close=>(
+                        <Contact closeMenu={this.closeMenu}/>
+                    )}
+                </Popup>
+            </a>
             <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
               axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
                 username: localStorage.getItem("username")

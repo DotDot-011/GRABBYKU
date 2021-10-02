@@ -1,0 +1,30 @@
+.contact-page{
+    margin: auto;
+    padding: 30px 30px;
+    text-align: center;
+    z-index: 1;
+    height: 70%;
+    width: 90%;
+    min-height: 440px;
+    min-width: 350px;
+    max-width: 500px;
+    background-color: #62d2A2;
+    background-color: white;
+    border-radius: 20px;
+    border-style: inset;
+    border-width: 4px;
+    border-color:#137e63;
+}
+.contact-page img{
+    min-width: 120px;
+    min-height: 160px;
+}
+.contact-page h2{
+    margin-top: 25px;
+    font-size: 26px;
+    font-weight: bolder;
+}
+.contact-page p{
+    margin-top: 15px;
+    font-size: 20px;
+}

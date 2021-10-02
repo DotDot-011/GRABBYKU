@@ -5,7 +5,19 @@ import './ChatDriver.css'
 export default function ChatDriver(props){
     const { conn ,userId ,userFname , userLname, file} = props;
     const [count,setCount] = useState(0);
-    
+    function showPreviousChat(Message){
+        console.log(Message[0])
+        for(let i in Message){
+            if(Message[i]!== 'chat info'){
+                if(Message[i].receiver_mode ==='0'){
+                    addUserMessage(Message[i].message);
+                }
+                else{
+                    addResponseMessage(Message[i].message);
+                }
+            }
+        }
+    }
     
     useEffect(()=>{
         
@@ -21,6 +33,9 @@ export default function ChatDriver(props){
             else if(Message.message_code ==='user-cancel'){
                 console.log(Message.message_code)
                 props.cancelCase();
+            }
+            else if(Message.message_code ==='chat info'){
+                showPreviousChat(Message)
             }
         };
         

@@ -98,16 +98,17 @@ export default function QueueDriver(props) {
         
         conn.onmessage = function(e) {
             let Message = JSON.parse(e.data)
-            console.log(Message)
+            console.log('Message 000: ',Message)
+            
             clearInterval(window.timeoutId1);
             if(Message.message_code ==="multiple login"){
-                axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
-                  username: localStorage.getItem("username")
-                }).then(()=>{
-                  localStorage.clear();
-                  localStorage.setItem("Auth","Multiple_Login");
-                  window.location.reload();
-                })
+                // axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                //   username: localStorage.getItem("username")
+                // }).then(()=>{
+                //   localStorage.clear();
+                //   localStorage.setItem("Auth","Multiple_Login");
+                //   window.location.reload();
+                // })
               }
 
             if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
@@ -121,7 +122,11 @@ export default function QueueDriver(props) {
                 console.log(Message.message_code)
                 props.cancelCase();
             }
-
+            
+            if(Message.message_code ==="booking info"){
+                props.handleForDriverReconnect(Number(Message.lat_user), Number(Message.lng_user),Number(Message.lat_des) ,Number(Message.lng_des)
+                ,0 ,Message.user_id, Message.user_fname, Message.user_lname,Message.image)
+            }
 
             
     
