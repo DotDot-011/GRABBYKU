@@ -25,6 +25,7 @@ if ($result->num_rows > 0) {
         $data[$i]["status"] = $row['status'];
         $data[$i]["username"] = $row['username'];
         $data[$i]['imageData'] = $row['imageData'];
+        $data[$i]['penalty'] = $row['penalty'];
         $i++;
     }
 } else {
