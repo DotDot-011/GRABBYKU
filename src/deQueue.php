@@ -9,6 +9,14 @@ $row = $result->fetch_assoc();
 $driver_name = $row['fname'] . " " . $row['lname'];
 $win_id = $row['win_id'];
 
+$is_penalty = $wsdata['is_penalty'];
+if ($is_penalty) {
+    $penalty = time() + 10;
+    $sql = "UPDATE driver SET penalty = '$penalty' WHERE driver_id = '$driver_id'";
+    $conn->query($sql);
+}
+
+
 $sql = "DELETE FROM queue WHERE driver_id = '$driver_id'";
 $conn->query($sql);
 
