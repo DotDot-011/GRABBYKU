@@ -109,7 +109,6 @@ export default function QueueDriver(props) {
                 //   localStorage.setItem("Auth","Multiple_Login");
                 //   window.location.reload();
                 // })
-                console.log('ควย น่าหี เย็ดเเม่ ง่วงนอน')
               }
 
             if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){

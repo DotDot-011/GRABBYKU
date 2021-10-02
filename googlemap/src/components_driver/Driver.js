@@ -434,7 +434,7 @@ class Driver extends React.Component {
 
       <section className="app-section">
         <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
-          <h4>{localStorage.getItem("username")}</h4>
+        <a id="user-info"><i class="far fa-address-card"></i> : {localStorage.getItem("username")}</a>
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
           <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           

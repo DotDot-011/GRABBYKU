@@ -859,7 +859,7 @@ class User extends React.Component {
           <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
           {/* <h1>{localStorage.getItem("username")}</h1> */}
-          <a id="user-info">{localStorage.getItem("username")}</a>
+          <a id="user-info"><i class="far fa-address-card"></i> : {localStorage.getItem("username")}</a>
           <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
                       close=>(
