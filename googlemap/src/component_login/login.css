@@ -1,17 +1,35 @@
+.main{
+    position: relative;
+    margin: 0 auto;
+    top: 15%;
+    width: 800px;
+    height: 400px;
+    display: flex;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+.main_map{
+    float: left;
+    /* position: relative; */
+    background-image: url("./pictures/map.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: whitesmoke;
+    border-radius: 20px 0px 0px 20px;
+    width: 50%;
+}
 .main_log{
     background-color: rgba(255, 255, 255, 0.45);
-    width: 25%;
-    min-width: 320px;
-    max-width: 400px;
-    margin: 0 auto;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    width: 50%;
+    min-width: 280px;
+    padding-top: 30px;
     position: relative;
-    top: 10%;
     display: block;
     align-items: center;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 0px 20px 20px 0px;
+
 }
 .main_log h1 {
     margin-top: 0px;
@@ -126,4 +144,22 @@
 #driver_reg:active {
     transform: translateY(1px);
     box-shadow: 0 4px 9px #555454;
+}
+@media only screen and (max-width: 840px) {
+    .main{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0);
+
+    }
+    .main_log{
+        background-color: rgba(255, 255, 255, 0.45);
+        border-radius: 20px;
+        box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+        /* box-shadow: 12px 12px 20px rgba(5, 40, 20, 0.705); */
+    }
+    .main_map{
+        width: 0;
+    }
 }

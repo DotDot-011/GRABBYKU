@@ -102,13 +102,13 @@ export default function QueueDriver(props) {
             
             clearInterval(window.timeoutId1);
             if(Message.message_code ==="multiple login"){
-                axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
-                  username: localStorage.getItem("username")
-                }).then(()=>{
-                  localStorage.clear();
-                  localStorage.setItem("Auth","Multiple_Login");
-                  window.location.reload();
-                })
+                // axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                //   username: localStorage.getItem("username")
+                // }).then(()=>{
+                //   localStorage.clear();
+                //   localStorage.setItem("Auth","Multiple_Login");
+                //   window.location.reload();
+                // })
               }
 
             if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){

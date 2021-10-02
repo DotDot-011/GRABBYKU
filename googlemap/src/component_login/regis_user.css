@@ -8,12 +8,11 @@
     height: 92%;
 }
 #main_userreg h1 {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    font-size: 55px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    font-size: 42px;
 }
 #userreg{
-    height: 100%;
     align-items: center;
     text-align: center;
     position: static;
@@ -21,7 +20,7 @@
     /* background-color: rgb(26, 157, 180); */
 }
 #boxinput-user{
-    margin: 0 auto;
+    margin: 0px auto;
     /* background-color: lavender; */
     height: auto;
     width: 90%;
@@ -50,7 +49,7 @@
 
 #sum_userreg{
     text-align: center;
-    margin-top: 20px;
+    margin-top: -20px;
     margin-right: 13px;
     background-color: #29967b;
     border-radius: 15px 3px 3px 15px;
@@ -76,7 +75,7 @@
 
 #back{
     text-align: center;
-    margin-top: 20px;
+    margin-top: -20px;
     margin-left: 13px;
     background-color: #616362;
     border-radius: 3px 15px 15px 3px;
