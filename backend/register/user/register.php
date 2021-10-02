@@ -20,5 +20,5 @@ VALUES ('$fname','$lname','$birth_date','$age','$email','$phone','$id_no','$user
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
-    echo FALSE;
+    echo $conn->error;
 }

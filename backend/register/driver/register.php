@@ -4,6 +4,7 @@ $postData = json_decode(file_get_contents("php://input"));
 
 $fname = $postData->fname; 
 $lname = $postData->lname; 
+$email = $postData->email;
 $birth_date = $postData->birth_date; 
 $age = $postData->age; 
 $plate = $postData->plate;
@@ -20,11 +21,11 @@ $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $win_name = $row['win_name'];
 
-$sql = "INSERT INTO driver (fname, lname, birth_date, age, plate, phone, id_no, driver_no, win_id, win_name, username, password, imageData)
-VALUES ('$fname','$lname','$birth_date','$age','$plate','$phone','$id_no','$driver_no','$win_id','$win_name','$username','$password','$imageData')";
+$sql = "INSERT INTO driver (fname, lname, email, birth_date, age, plate, phone, id_no, driver_no, win_id, win_name, username, password, imageData)
+VALUES ('$fname','$lname','$email','$birth_date','$age','$plate','$phone','$id_no','$driver_no','$win_id','$win_name','$username','$password','$imageData')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
-    echo FALSE;
+    echo $conn->error;
 }
