@@ -102,9 +102,10 @@
     height: 270px;
     background-color: white;
     border-radius: 20px;
-    border-style: inset;
-    border-width: 4px;
-    border-color:#137e63;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
 }
 #confirmCancel h1{
     font-size: 32px;
