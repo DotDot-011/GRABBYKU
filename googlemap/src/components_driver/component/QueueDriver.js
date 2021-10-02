@@ -8,7 +8,7 @@ import getCookie from '../../getCookie';
 
 
 export default function QueueDriver(props) {
-    const {conn ,winId} = props;
+    const {conn ,winId ,penaltyTime} = props;
     // ------------------ฟังชันเมื่อ driver ถึง queue แรก------------------------
     function firstQueue() {
         
@@ -102,13 +102,13 @@ export default function QueueDriver(props) {
             
             clearInterval(window.timeoutId1);
             if(Message.message_code ==="multiple login"){
-                // axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
-                //   username: localStorage.getItem("username")
-                // }).then(()=>{
-                //   localStorage.clear();
-                //   localStorage.setItem("Auth","Multiple_Login");
-                //   window.location.reload();
-                // })
+                axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+                  username: localStorage.getItem("username")
+                }).then(()=>{
+                  localStorage.clear();
+                  localStorage.setItem("Auth","Multiple_Login");
+                  window.location.reload();
+                })
               }
 
             if(Message.message_code ==='queue' || Message.message_code =='empty_queue'){
@@ -139,12 +139,18 @@ export default function QueueDriver(props) {
 
     // ------------------เมื่อdriverกดปุ่มเข้าคิว----------------------
     function enQueue() {
+        console.log('date now :',Math.floor(new Date().getTime() / 1000))
+        console.log('penalty time :',Math.floor(new Date().getTime() / 1000) - penaltyTime)
         
+        if(Math.floor(new Date().getTime() / 1000) - penaltyTime > 0)
         conn.send(JSON.stringify({
             protocol: "enqueue", // protocol
             DriverID: `${props.driverId}`,
             win_id:`${winId}`
         }))
+        else{
+            NotificationManager.warning(`จะเข้าคิวใหม่ได้ในอีก ${-(Math.floor(new Date().getTime() / 1000) - penaltyTime)} วินาที`,'เนื่องจากคุณปฏิเสธลูกค้า' ,2000);
+        }
         conn.onerror = (e) =>{
             console.log(e)
         }
@@ -159,7 +165,7 @@ export default function QueueDriver(props) {
             <div className="queue-list" id="queueList"></div>
             <div className="button-queue">
                 <button  className="button-enQueue" onClick={enQueue}> เข้าคิว </button>
-                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId,conn,winId); }}> ออกคิว </button>
+                <button className="button-leaveQueue" onClick={()=>{leaveQueue(props.driverId,conn,winId,0); }}> ออกคิว </button>
             </div>
             
         </div>
