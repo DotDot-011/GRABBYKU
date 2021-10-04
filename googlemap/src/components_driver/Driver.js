@@ -451,6 +451,7 @@ class Driver extends React.Component {
                             winName = {this.winName}
                             profilepicture={this.profilepicture}
                             handleForChangeProfile={this.handleForChangeProfile.bind(this)}
+                            close={close}
                           />
                     )}
                  </Popup>
@@ -461,14 +462,18 @@ class Driver extends React.Component {
             <a><Popup trigger={<a id="home" ><i class="fas fa-history"></i> ประวัติการให้บริการ</a>} modal nested>
                     {           
                       close=>(
-                          <History closeMenu={this.closeMenu}/>
+                          <History closeMenu={this.closeMenu}
+                          close={close}
+                          />
                     )}
                  </Popup>
                  </a>
             <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
             {           
                     close=>(
-                        <Contact closeMenu={this.closeMenu}/>
+                        <Contact closeMenu={this.closeMenu}
+                        close={close}
+                        />
                     )}
                 </Popup>
             </a>

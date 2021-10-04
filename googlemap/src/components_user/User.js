@@ -864,7 +864,8 @@ class User extends React.Component {
           <a><Popup trigger={<a  id="home"  ><i class="far fa-address-card"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
                       close=>(
-                          <ProfileUser closeMenu={this.closeMenu} 
+                          <ProfileUser closeMenu={this.closeMenu}
+                            close={close} 
                             citizenId={this.citizenId} 
                             Fname={this.userFname} Lname={this.userLname} 
                             birthDate={this.birthDate} 
@@ -878,7 +879,10 @@ class User extends React.Component {
             <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
             {           
                     close=>(
-                        <Contact closeMenu={this.closeMenu}/>
+                        <Contact closeMenu={this.closeMenu}
+                        close={close}
+                        
+                        />
                     )}
                 </Popup>
             </a>
