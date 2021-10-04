@@ -145,7 +145,7 @@
     width: 36px;
     height: 30px;
     left: 80%;
-    top: 2%;
+    top: 20px;
   }
   
   /* Color/shape of burger icon bars */
@@ -214,7 +214,7 @@
   }
   #user-info{
     font-size: 36px;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
   }
  
   .bm-item:hover{
@@ -299,4 +299,21 @@
     #bottombutt{
       top: -90px;
     }
+  }
+  #test{
+    position: fixed;
+    display: flex;
+    /* margin: auto; */
+    align-items:center;
+    justify-content:center;
+    height: 50px;
+    top: 12px;
+    right: 15%;
+    /* left: 80%; */
+    font-size: 30px;
+    /* background:#ffffff6b; */
+    background:#ffffff63;
+    padding: 0px 70px 0px 15px;
+    margin-right: -20px;
+    border-radius: 20px;
   }
