@@ -84,7 +84,7 @@ export default function CommentDriver(props){
       
     return(
         <div className="comment-driver-container">
-            <CloseButton id="close-butt" onClick={()=>{props.handleForUpdate(null);}} />
+            <CloseButton id="close-butt" onClick={()=>{props.handleForUpdate(null);window.location.reload();}} />
             <div>   
                 <Box component="fieldset" mb={3} borderColor="transparent">
                     <Typography id="commentH" component="legend">ให้คะแนน</Typography>

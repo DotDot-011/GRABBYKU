@@ -539,7 +539,7 @@ class User extends React.Component {
       );
       window.location.reload()
     }
-
+    
     componentWillMount(){
       this.conn.onopen = function(e) {
         console.log("Connection established!");
