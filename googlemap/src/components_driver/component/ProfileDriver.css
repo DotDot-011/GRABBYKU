@@ -10,9 +10,10 @@
     background-color: #62d2A2;
     /* background-color: white; */
     border-radius: 20px;
-    border-style: inset;
-    border-width: 4px;
-    border-color:#137e63;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
 }
 .profile-picture img{
     max-width: 380px;
@@ -72,4 +73,7 @@
 .updateinfo-driver:active {
   transform: translateY(1px);
   box-shadow: 0 4px 7px #115745;
+}
+.name,.birthday,.citizen-id,.winName,.winNo,.plate{
+    background-color: rgba(211, 211, 211, 0.788);
 }

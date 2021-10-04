@@ -435,9 +435,9 @@ class Driver extends React.Component {
 
       <section className="app-section">
         <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
-        <a id="user-info"><i class="far fa-address-card"></i> : {localStorage.getItem("username")}</a>
+        <a id="user-info"><i class="fas fa-user-circle"></i> {localStorage.getItem("username")}</a>
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-          <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
+          <a><Popup trigger={<a  id="home"  ><i class="far fa-address-card"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
                       close=>(
                           <ProfileDriver 
@@ -482,12 +482,13 @@ class Driver extends React.Component {
               }).catch(err=>{
                 NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
               });
-            }}><i class="fas fa-sign-out"></i>ออกจากระบบ</a>
+            }}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
               
              
               
         </Menu>  
-        
+        {/* <i class="far fa-address-card"></i> :   */}
+        <div id="test">{localStorage.getItem("username")}</div>,
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
           <div key={this.state.driverId} className="driver-detail-driv">
             {this.queueDriver }

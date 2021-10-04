@@ -852,15 +852,15 @@ class User extends React.Component {
         return <img id="loading" src="../pictures/logo512.gif"/>
       }else{
       return(
+
         <div>
-
-
           {/* ตรงนี้คือส่วนของHamberger Bar แต่ถ้าใช้คำสั่งล่างที่commentไว้ คือจะใส่รูปภาพแทนขีดhamberger*/}
+          
           <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>   
           {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
           {/* <h1>{localStorage.getItem("username")}</h1> */}
-          <a id="user-info"><i class="far fa-address-card"></i> : {localStorage.getItem("username")}</a>
-          <a><Popup trigger={<a  id="home"  ><i class="far fa-user"></i> ข้อมูลผู้ใช้</a>} modal nested>
+          <a id="user-info"><i class="fas fa-user-circle"></i> {localStorage.getItem("username")}</a>
+          <a><Popup trigger={<a  id="home"  ><i class="far fa-address-card"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
                       close=>(
                           <ProfileUser closeMenu={this.closeMenu} 
@@ -904,7 +904,7 @@ class User extends React.Component {
           </Menu>
             
           
-        
+        <div id="test">{localStorage.getItem("username")}</div>,
         <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
           
         {this.watingQueue}
