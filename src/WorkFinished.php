@@ -31,15 +31,17 @@ $result_for_booking_id = $conn->query($sql6);
 if ($result_for_booking_id != NULL) {
     $row_for_booking_id  = $result_for_booking_id->fetch_assoc();
     $booking_id = $row_for_booking_id['booking_id'];
+    $win_id = $row_for_booking_id['win_id'];
     $date_booking = $row_for_booking_id['create_date'];
     $lng_user = $row_for_booking_id['lng_user'];
     $lat_user = $row_for_booking_id['lat_user'];
     $lng_des = $row_for_booking_id['lng_des'];
     $lat_des = $row_for_booking_id['lat_des'];
+    $currentTime = time();
 
     //insert history
-    $sql7 = "INSERT INTO history (history_id , driver_id , user_id , lng_user , lat_user , lng_des , lat_des , price , date)";
-    $sql7 = $sql7 . "VALUES('$booking_id' , '$driver_id' , '$user_id' , '$lng_user' , '$lat_user' , '$lng_des' , '$lat_des' ,'$cost' ,'$date_booking') ";
+    $sql7 = "INSERT INTO history (history_id , driver_id , user_id , win_id , lng_user , lat_user , lng_des , lat_des , price , date, time)";
+    $sql7 = $sql7 . "VALUES('$booking_id' , '$driver_id' , '$user_id' , '$win_id' , '$lng_user' , '$lat_user' , '$lng_des' , '$lat_des' ,'$cost' ,'$date_booking', '$currentTime') ";
     $conn->query($sql7);
 
     //Delete booking when done

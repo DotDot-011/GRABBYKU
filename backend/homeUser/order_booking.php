@@ -37,3 +37,18 @@ $data['driver_online'] = $row['driver_online'];
 $sql = "UPDATE websocket SET on_service = 1 WHERE id = '$user_id' and is_driver = 0";
 $conn->query($sql);
 
+$sql = "SELECT time FROM booking WHERE win_id = '$win_id' and driver_id is not NULL ORDER BY time DESC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $data['time'] = $row['time'];
+} else {
+    $sql = "SELECT time FROM history WHERE win_id = '$win_id' ORDER BY time DESC";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $data['time'] = $row['time'];
+    } else {
+        $data['time'] = 0;
+    }
+}

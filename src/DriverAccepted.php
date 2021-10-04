@@ -34,6 +34,9 @@ $sql = "UPDATE websocket SET on_service = 1 WHERE name = '$DriverName' AND id = 
 $conn->query($sql);
 $sql = "UPDATE websocket SET on_service = 1 WHERE name = '$UserName' and id = '$user_id' and is_driver = 0";
 $conn->query($sql);
+$currentTime = time();
+$sql = "UPDATE booking SET time = '$currentTime' WHERE driver_id = '$driver_id'";
+$conn->query($sql);
 
 require dirname(__DIR__) . "/src/deQueue.php";
 require dirname(__DIR__) . "/src/Booking.php";
