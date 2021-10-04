@@ -4,7 +4,7 @@ import axios from "axios";
 import getCookie from "../../getCookie";
 import { socketUrl, Url } from '../../LinkToBackend';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-
+import CloseButton from 'react-bootstrap/CloseButton'
 
 export default function History(props){
 
@@ -51,7 +51,7 @@ export default function History(props){
             }).catch(err=>{
                 NotificationManager.error(err.message,'Alert',1000);
             })
-        },1000) 
+        },100) 
         // const test = [
         //     {
         //         "booking_id": 1,
@@ -81,6 +81,7 @@ export default function History(props){
 
     return(
         <div className="history-page">
+            <CloseButton id="close-butt" onClick={()=>{props.close()}} />
              <div classname="history-list" id="history-list" >
                                          {/* <h2> ประวัติรายได้ </h2>  */}
             </div>        

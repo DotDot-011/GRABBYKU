@@ -94,7 +94,8 @@
 @media only screen and (max-height: 588px) {
     .queue-container {
         /* background-color: bisque; */
-        max-height: 500px;
+        height: 890%;
+        min-height: 485px;
     }
     .button-queue{
         position: relative;

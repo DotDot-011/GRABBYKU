@@ -6,6 +6,13 @@
 /* #messages > div > div{
     background-color: #9df3c4 !important;
 } */
+#messages > div > div > div > p{
+    /* background-color: #9df3c4 !important; */
+    font-size: 20px;
+    /* padding-top: 5px; */
+    margin: auto 0;
+
+}
 
 /*แถบชื่อ chat*/
 /* section > div > div > div{   
