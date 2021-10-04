@@ -3,9 +3,10 @@ import Popup from 'reactjs-popup';
 import { useEffect, useState } from 'react';
 import { socketUrl, Url } from '../LinkToBackend';
 import getCookie from "../getCookie";
+import  Timer from "react-time-counter"
 // ------------------ user รอ match กับ driver ------------------
 export default function Wait(props){
-    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId  , winName} = props; 
+    const { cancelQueue ,conn, handleForDriverAccept,userFname,userLname,userId  , winName, lastServiceTime} = props; 
     const [cost,setCost] = useState('');
     const [queue,setQueue] = useState(props.queueUser);
     const [availableDriver,setAvailableDriver] = useState(props.availableDriver)
@@ -67,7 +68,8 @@ export default function Wait(props){
     return(
         <div className="waiting-box" >
             <h4>กรุณารอ</h4>
-            
+            <div> มีการบริการครั้งล่าสุดเมื่อ : {Math.floor((Math.floor(new Date().getTime() / 1000) - lastServiceTime)/60) } นาที {(Math.floor(new Date().getTime() / 1000) - lastServiceTime)%60} วินาที</div>
+            <Timer showHours={false}/>
             <div id="waiting-detail">
                 <div class="num-queue">จำนวนคิวที่รอ : {queue}</div>
                 <div class="num-driver">จำนวนผู้ให้บริการ : {availableDriver} คน</div>

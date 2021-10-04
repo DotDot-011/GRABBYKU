@@ -11,6 +11,7 @@ export default function ChatUser(props){
     const [last_name, setLast_name] = useState("");
     const [avatar,setAvatar] = useState(null)
     const [count,setCount] = useState(0);
+    
     const { conn ,driverId} = props;
     
     function showPreviousChat(Message){
@@ -35,6 +36,7 @@ export default function ChatUser(props){
             console.log(Message)
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
+                
             }
             else if(Message.message_code == 'arrive'){
                 props.handleForUpdate(2);
@@ -93,14 +95,14 @@ export default function ChatUser(props){
         }));
     }
     return(
-        <div key={driverId}>
+        <div key={driverId} >
             <Chat
                 
                 handleNewUserMessage={handleNewUserMessage}
                 profileAvatar={avatar}
                 title={first_name+' '+last_name}
                 subtitle="And my cool subtitle"
-               
+                
             />
         </div>
     );

@@ -96,6 +96,7 @@ class User extends React.Component {
     travelDistance=0
     driverDistance=0
     winName=null;
+    lastServiceTime=null;
     //------------------------functionสำหรับหาตำแหน่งปัจจุบันของ user----------
     findMylocation=()=>{
         navigator.geolocation.getCurrentPosition(position=>{
@@ -492,7 +493,7 @@ class User extends React.Component {
           win_id : this.winId, 
         })
         .then(res=>{
-          console.log(res.data);
+          console.log('order_booking:',res.data);
           if(res.data.auth_code === false){
             axios.post(Url.LinkToBackend+"backend/api/logout_user",{
               username: localStorage.getItem("username")
@@ -503,7 +504,7 @@ class User extends React.Component {
             })
           }
           else{
-            
+            this.lastServiceTime=res.data.time;
             this.winName = res.data.win_name;
             this.queueUser=res.data.booking_order
             // console.log('---------',this.queueUser)
@@ -539,7 +540,7 @@ class User extends React.Component {
       );
       window.location.reload()
     }
-
+    
     componentWillMount(){
       this.conn.onopen = function(e) {
         console.log("Connection established!");
@@ -663,7 +664,7 @@ class User extends React.Component {
       
       if(!!this.state.waitingQueueAppear){
         this.watingQueue= <Wait queueUser={this.queueUser} cancelQueue={this.cancelQueue} travelDistance={this.travelDistance} conn={this.conn} winName={this.winName} handleForDriverAccept={this.handleForDriverAccept.bind(this)}
-        userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect} availableDriver = {this.availableDriver}/>
+        userFname={this.userFname} userLname={this.userLname} userId={this.userId} connect={this.connect} availableDriver = {this.availableDriver} lastServiceTime = {this.lastServiceTime}/>
       }
       else{
         this.watingQueue=null;
@@ -863,7 +864,8 @@ class User extends React.Component {
           <a><Popup trigger={<a  id="home"  ><i class="far fa-address-card"></i> ข้อมูลผู้ใช้</a>} modal nested>
                     {           
                       close=>(
-                          <ProfileUser closeMenu={this.closeMenu} 
+                          <ProfileUser closeMenu={this.closeMenu}
+                            close={close} 
                             citizenId={this.citizenId} 
                             Fname={this.userFname} Lname={this.userLname} 
                             birthDate={this.birthDate} 
@@ -877,7 +879,10 @@ class User extends React.Component {
             <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
             {           
                     close=>(
-                        <Contact closeMenu={this.closeMenu}/>
+                        <Contact closeMenu={this.closeMenu}
+                        close={close}
+                        
+                        />
                     )}
                 </Popup>
             </a>

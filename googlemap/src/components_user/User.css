@@ -67,9 +67,6 @@
     text-align: center;
     max-width: 560px;
     width: 90%;
-    border-bottom-right-radius: 20px;
-    box-shadow: 12px 12px 10px rgba(0, 0, 0, 0.205);
-
 }
 /* input location  */
 #input1.pac-target-input{
@@ -77,7 +74,6 @@
     height: 40px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    
 }
 /* input destination  */
 #input2.pac-target-input{
@@ -85,7 +81,6 @@
     max-width: 560px;
     width: 90%;
     height: 40px;
-    box-shadow: 12px 12px 10px rgba(0, 0, 0, 0.205);
 }
 
 /* yourlocation div */
@@ -100,7 +95,6 @@
     padding: 0px 45px;
     background-size: contain;
     font-size: 22px;
-    
 
 }
 /* destination div */
@@ -138,27 +132,27 @@
 
 /* ส่วนนี้คือHamberger bar ขวา ถ้าจะปรับแต่งต้องดูRef */
 .menu{
-  width: 150px;
-  height: 150px;
-  z-index: 1;
-  background-color: red;
-}
-/* Position and sizing of burger button */
-.bm-burger-button {
-  position: fixed;
-  margin: 0 auto;
-  width: 36px;
-  height: 30px;
-  /* left: 80%; */
-  right: 15%;
-  top: 20px;
+    width: 150px;
+    height: 150px;
+    z-index: 1;
+    background-color: red;
 }
 
-/* Color/shape of burger icon bars */
-.bm-burger-bars {
-  background: #373a47;
-  /* background: #07ff07; */
-}
+/* Position and sizing of burger button */
+.bm-burger-button {
+    position: fixed;
+    margin: 0 auto;
+    width: 36px;
+    height: 30px;
+    left: 80%;
+    top: 20px;
+  }
+  
+  /* Color/shape of burger icon bars */
+  .bm-burger-bars {
+    background: #373a47;
+  }
+  
   /* Color/shape of burger icon bars on hover*/
   .bm-burger-bars-hover {
     background: #ffffff;
@@ -220,7 +214,7 @@
   }
   #user-info{
     font-size: 36px;
-    color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
   }
  
   .bm-item:hover{
@@ -254,21 +248,6 @@
     font-family: fontawesome !important;
     font-style: normal;
   }
-  #signout{
-    border-top-style: solid;
-    padding-top: 12px;
-    border-width: 3px;
-    border-color: white;
-    /* color: red; */
-  }
-  #user-info{
-    /* border-bottom-style: solid;
-    padding-top: 12px;
-    border-width: 3px; */
-    border-color: rgb(0, 0, 0);
-    /* background-color: tomato; */
-    color: rgb(0, 0, 0);
-  }
   #loading{
     position: relative;
     top:30%;
@@ -287,7 +266,7 @@
       bottom: 490px;
     }
     #mapbox {
-      top: 120px;
+      top: 140px;
       height: 370px;
     }
     #bottombutt{
@@ -311,10 +290,10 @@
   @media only screen and (max-height: 570px) {
     .locationbox{
       /* background-color: rgb(17, 212, 50); */
-      bottom: 420px;
+      bottom: 430px;
     }
     #mapbox {
-      top: 100px;
+      top: 120px;
       height: 320px;
     }
     #bottombutt{

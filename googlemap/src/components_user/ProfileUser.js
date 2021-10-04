@@ -4,7 +4,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import axios from "axios";
 import getCookie from "../getCookie";
 import { socketUrl, Url } from '../LinkToBackend';
-
+import CloseButton from 'react-bootstrap/CloseButton'
 
 export default function ProfileUser(props){
     const {citizenId , Fname ,Lname , birthDate , phone,profilepicture ,handleForChangeProfile} = props;
@@ -105,6 +105,7 @@ export default function ProfileUser(props){
     return(
         
         <div className="profile-page">
+            <CloseButton id="close-butt" onClick={()=>{props.close()}} />
             <div className="profile-picture">
                 <img src="./pictures/defaultProfile.png"/>                
             </div>
