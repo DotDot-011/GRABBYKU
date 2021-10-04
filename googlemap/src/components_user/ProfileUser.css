@@ -7,7 +7,7 @@
     width: 90%;
     min-height: 530px;
     max-width: 500px;
-    background-color: #62d2A2;
+    background-color: #ffffff;
     /* background-color: white; */
     border-radius: 20px;
     border-style: solid;
@@ -16,8 +16,10 @@
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
 }
 .profile-picture img{
-    max-width: 380px;
-    max-height: 170px;
+    height: 150px;
+    width: 150px;
+    /* max-width: 380px;
+    max-height: 170px; */
 }
 #boxinfo-user{
     float: left;
@@ -73,4 +75,7 @@
 .updateinfo-user:active {
   transform: translateY(1px);
   box-shadow: 0 4px 7px #115745;
+}
+.name,.birthday,.citizen-id{
+    background-color: rgba(211, 211, 211, 0.788);
 }

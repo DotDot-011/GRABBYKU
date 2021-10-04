@@ -1,6 +1,7 @@
 
 .waiting-box{
-    margin:  auto;
+    /* margin: auto; */
+    margin-top: -5px;
     position: fixed;
     display: block;
     justify-content: center;
@@ -10,8 +11,8 @@
     width: 92%;
     max-width: 560px;
     height: 75%;
-    min-height: 650px;
-    /* max-height: 590px; */
+    min-height: 620px;
+    max-height: 650px;
     background-color: #62d2A2;
     border-radius: 20px;
     /* border-style: inset; */
@@ -19,11 +20,11 @@
     border-width: 3px;
     border-color:#000000c0;
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
-
 }
 .waiting-box h4{
     position:static;
-    margin-top: 40px;
+    margin-top: 50px;
+    margin-bottom: 20px;
     font-size: 36px;
     color: rgb(0, 0, 0);
     font-weight: bolder
@@ -171,8 +172,8 @@
 @media only screen and (max-height: 770px) {
     .waiting-box {
         /* background: #fd0202; */
-        height: 85%;
-        min-height: 570px;
+        height: 80%;
+        min-height: 560px;
       }
       #waiting-detail{
         margin: 30px auto;
@@ -181,7 +182,7 @@
 @media only screen and (max-height: 640px) {
     .waiting-box {
         /* background: #0afd02; */
-        height: 85%;
-        min-height: 490px;
+        height: 80%;
+        min-height: 480px;
       }
   }

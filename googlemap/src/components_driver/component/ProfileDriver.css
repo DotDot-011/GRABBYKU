@@ -74,3 +74,6 @@
   transform: translateY(1px);
   box-shadow: 0 4px 7px #115745;
 }
+.name,.birthday,.citizen-id,.winName,.winNo,.plate{
+    background-color: rgba(211, 211, 211, 0.788);
+}

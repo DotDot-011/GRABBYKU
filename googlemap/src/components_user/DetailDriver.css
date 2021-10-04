@@ -14,7 +14,7 @@
     width: 91%;
     background-color: #62d2A2;
     border-radius: 20px;
-    border-style: inset;
+    border-style: solid;
     border-width: 3px;
     border-color:#000000c0;
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
@@ -51,6 +51,11 @@
     background-color: white;
     border-radius: 20px;
     padding: 15px 0px 12px 0px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    /* top right bott left   */
+    padding: 15px 0px 15px 0px;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.377);
 }
 .driver-detail .image-driver{
     position: absolute;
@@ -85,6 +90,11 @@
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
     font-size: 22px;
+        background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    /* top right bott left   */
+    padding: 15px 0px 15px 0px;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.377);
 }
 
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
