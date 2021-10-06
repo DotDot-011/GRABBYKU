@@ -20,7 +20,14 @@ export default function ChatDriver(props){
     }
     
     useEffect(()=>{
-        
+        let intervalChatNonti =  setInterval(() => {
+            
+            if(parseInt( localStorage['chatNoti']) ===0){
+                // console.log('chatNoti')
+                // console.log('----',count,localStorage['chatNoti'] )
+                setCount(parseInt( localStorage['chatNoti']))
+            }
+        }, 500);
         console.log('------------',userId,userFname)
         conn.onmessage = function(e) {
             console.log('--------------');
@@ -29,6 +36,8 @@ export default function ChatDriver(props){
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
                 // console.log(Message);
+                localStorage["chatNoti"] = parseInt( localStorage["chatNoti"]) +1
+                setCount(parseInt( localStorage["chatNoti"]));
             }
             else if(Message.message_code ==='user-cancel'){
                 console.log(Message.message_code)
@@ -38,9 +47,12 @@ export default function ChatDriver(props){
                 showPreviousChat(Message)
             }
         };
-        
+        return ()=>{clearInterval(intervalChatNonti)}
 
     },[])
+
+
+    
 
 
 
@@ -66,7 +78,7 @@ export default function ChatDriver(props){
              handleNewUserMessage={handleNewUserMessage}
              profileAvatar={file}
              title={userFname+' '+userLname}
-             
+             badge={count}
             //  subtitle="And my cool subtitle"
              
         />

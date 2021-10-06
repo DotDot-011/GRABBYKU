@@ -5,6 +5,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Url } from '../LinkToBackend';
 import getCookie from '../getCookie';
 
+// localStorage.setItem("chatNoti", 0);
 
 export default function ChatUser(props){
     const [first_name, setFirst_name] = useState("");
@@ -36,6 +37,8 @@ export default function ChatUser(props){
             console.log(Message)
             if(Message.message_code =='chat'){
                 addResponseMessage(Message.message)
+                localStorage["chatNoti"] = parseInt( localStorage["chatNoti"]) +1
+                setCount(parseInt( localStorage["chatNoti"]));
                 
             }
             else if(Message.message_code == 'arrive'){
@@ -51,6 +54,15 @@ export default function ChatUser(props){
     },[])
 
     useEffect(()=>{
+        localStorage.setItem("chatNoti", 0);
+        let intervalChatNonti =  setInterval(() => {
+            
+            if(parseInt( localStorage['chatNoti']) ===0){
+                // console.log('chatNoti')
+                console.log('----',count,localStorage['chatNoti'] )
+                setCount(parseInt( localStorage['chatNoti']))
+            }
+        }, 500);
         let intervalId = setInterval(()=>{
             axios.post(Url.LinkToBackend +"backend/api/request_driver_info", {
                 driver_id: props.driverId,
@@ -79,7 +91,7 @@ export default function ChatUser(props){
                     NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
                 })
         },1200)
-        
+        return ()=>{clearInterval(intervalChatNonti)}
     },[])
     
     
@@ -102,6 +114,7 @@ export default function ChatUser(props){
                 profileAvatar={avatar}
                 title={first_name+' '+last_name}
                 subtitle="And my cool subtitle"
+                badge={count}
                 
             />
         </div>
