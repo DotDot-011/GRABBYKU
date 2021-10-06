@@ -5,10 +5,19 @@ import RegisDriver from "./regis_driver";
 import RegisUser from "./regis_user";
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import './login.css'
-
+import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 function Login() {
-
+    const [tmp,setTmp] = useState(0)
+    function handleNewUserMessage (newMessage){
+        console.log(`New message incomig! ${newMessage}`);
+        // Now send the message throught the backend API
+        addResponseMessage('XXX');
+      }
     useEffect(()=>{
+        setInterval(() => {
+            setTmp(tmp+1);
+            console.log(tmp)
+        }, 1500);
         if(localStorage.getItem("regis_success")){
             NotificationManager.success('ลงทะเบียนเสร็จสิ้น','',10000);
         }
@@ -45,6 +54,9 @@ function Login() {
                     <button classname="user_reg" id="user_reg" onClick={() => setCount(3)}>Customer</button>
                     <button classname="driver_reg" id="driver_reg" onClick={() => setCount(4)}>Driver</button>
                     <NotificationContainer />
+                    <Chat
+                        handleNewUserMessage={handleNewUserMessage}
+                    />
                 </div>
             </div>
             
