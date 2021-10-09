@@ -8,8 +8,8 @@
     align-items: center;
     text-align: center;
     z-index: 1;
-    height: 80%;
-    min-height: 575px;
+    height: 83%;
+    min-height: 560px;
     max-width: 560px;
     width: 91%;
     background-color: #62d2A2;
@@ -46,8 +46,10 @@
     position: relative;
     min-width: 280px;
     width: 55%;
-    height: 45%;
+    height: 220px;
+    /* height: 45%;
     max-height: 220px;
+    min-height: 220px; */
     background-color: white;
     border-radius: 20px;
     padding: 15px 0px 12px 0px;
@@ -86,7 +88,7 @@
     position: static;
     min-width: 250px;
     width: 50%;
-    height: 10%;
+    height: 60px;
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
     font-size: 22px;
@@ -171,15 +173,16 @@
 @media only screen and (max-height: 650px) {
     .detail-driver-container {
       /* background: #0afd02; */
-      height: 80%;
+      height: 84%;
       min-height: 520px;
     }
   }
-  @media only screen and (max-height: 590px) {
+  @media only screen and (max-height: 625px) {
     .detail-driver-container {
+        margin-top: -10px;
       /* background: #eeff00; */
       height: 85%;
-      min-height: 500px;
+      min-height: 485px;
     }
     .detail-driver-container h4{
         margin-top: 10px;
