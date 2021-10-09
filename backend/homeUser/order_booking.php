@@ -23,7 +23,7 @@ $sql = "INSERT INTO booking (user_id, win_id, lat_user, lng_user, lat_des, lng_d
 VALUES ('$user_id', '$win_id', '$lat_user', '$lng_user', '$lat_des', '$lng_des')";
 $result = $conn->query($sql);
 
-$sql = "SELECT * FROM booking WHERE win_id = '$win_id'";
+$sql = "SELECT * FROM booking WHERE win_id = '$win_id' and driver_id is NULL";
 $result = $conn->query($sql);
 
 $data['booking_order'] = $result->num_rows;
