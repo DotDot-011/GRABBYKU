@@ -26,7 +26,7 @@
   position: static;
   width: 100%;
   height: 40px;
-  background:#d7fbe8;
+  background:#ffffffbd;
   text-align: center;
   font-size: 18px;
 }
@@ -150,7 +150,7 @@ box-shadow: 0 4px 7px #555454;
   min-width: 300px;
   max-width: 500px;
   height: 50px;
-  background:#d7fbe8;
+  background:#ffffffbd;
   color: red;
   margin: 14px auto 0;
   display: block;
