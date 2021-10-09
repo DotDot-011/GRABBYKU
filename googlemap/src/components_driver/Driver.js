@@ -501,11 +501,11 @@ class Driver extends React.Component {
             <div className="detail">{this.userInfo}</div>
           </div>
           {/* <div className="pin-info"> */}
-            <div className="pin-green"></div>
-            <div className="pin-green-info">ตำแหน่งของลูกค้า</div>
+            <div id="pin-info" className="pin-green"></div>
+            <div id="pin-info" className="pin-green-info">ตำแหน่งของลูกค้า</div>
 
-            <div className="pin-red"></div>
-            <div className="pin-red-info">ตำแหน่งปลายทาง</div>
+            <div id="pin-info" className="pin-red"></div>
+            <div id="pin-info" className="pin-red-info">ตำแหน่งปลายทาง</div>
 
 
           {/* </div> */}

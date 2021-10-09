@@ -4,9 +4,9 @@ import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { Url } from '../LinkToBackend';
 import getCookie from '../getCookie';
+import './ChatUser.css'
 
 // localStorage.setItem("chatNoti", 0);
-
 export default function ChatUser(props){
     const [first_name, setFirst_name] = useState("");
     const [last_name, setLast_name] = useState("");
@@ -115,8 +115,10 @@ export default function ChatUser(props){
                 title={first_name+' '+last_name}
                 subtitle="And my cool subtitle"
                 badge={count}
+                fullScreenMode={true}
                 
             />
         </div>
+        
     );
 }

@@ -79,8 +79,8 @@ export default function ChatDriver(props){
              profileAvatar={file}
              title={userFname+' '+userLname}
              badge={count}
+             fullScreenMode={true}
             //  subtitle="And my cool subtitle"
-             
         />
     );
 }

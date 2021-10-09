@@ -504,11 +504,18 @@ class User extends React.Component {
             })
           }
           else{
-            this.lastServiceTime=res.data.time;
+            if(Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600) >= 11){
+              this.lastServiceTime = 'ยังไม่มีการเรียกใช้บริการในวันนี้'
+            }
+            else{
+              this.lastServiceTime=`ให้บริการล่าสุดเมื่อ ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600)} ชั่วโมง ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/60) } นาที ${(Math.floor(new Date().getTime() / 1000) - res.data.time)%60} วินาที`
+            }
+            
             this.winName = res.data.win_name;
             this.queueUser=res.data.booking_order
             // console.log('---------',this.queueUser)
             this.availableDriver = res.data.driver_online
+
             this.setState({
               waitingQueueAppear:1,
             })
@@ -851,6 +858,7 @@ class User extends React.Component {
       //loading screen
       if (this.state.loadingState===0){
         return <img id="loading" src="../pictures/logo512.gif"/>
+
       }else{
       return(
 
@@ -910,11 +918,10 @@ class User extends React.Component {
             
           
         <div id="test">{localStorage.getItem("username")}</div>,
-        <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
+        <div id="to_span_noti"style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
           
         {this.watingQueue}
-        {this.detailDriver}
-    
+        {this.detailDriver}        
         
         <MapWithAMarker  
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
