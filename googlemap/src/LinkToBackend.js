@@ -1,9 +1,9 @@
 
 export const Url = { 
-    LinkToBackend: "https://910f-2001-fb1-54-ab25-85ce-90c1-1867-df5e.ap.ngrok.io/",
+    LinkToBackend: "http://bb48-27-55-94-159.jp.ngrok.io/",
 };
 
 export const socketUrl = { 
-    LinkToWebSocket: "wss://b956-2001-fb1-54-ab25-85ce-90c1-1867-df5e.ap.ngrok.io",
+    LinkToWebSocket: "ws://c3d6-27-55-94-159.ap.ngrok.io",
 };
 

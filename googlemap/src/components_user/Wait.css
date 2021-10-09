@@ -23,9 +23,9 @@
 }
 .waiting-box h4{
     position:static;
-    margin-top: 50px;
-    margin-bottom: 20px;
-    font-size: 36px;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    font-size: 40px;
     color: rgb(0, 0, 0);
     font-weight: bolder
 }
@@ -37,7 +37,7 @@
 }
 
 #waiting-detail{
-    margin: 50px auto;
+    margin: 20px auto;
     position: relative;
     min-width: 260px;
     width: 55%;
@@ -169,20 +169,55 @@
     transform: translateY(1px);
     box-shadow: 0 4px 7px #555454;
 }
+.last-service{
+    margin: 0px auto;
+    padding: 2px;
+    font-size: 24px;
+    font-weight: 700;
+}
+.how-long{
+    margin: 0px auto;
+    /* background-color: azure; */
+    font-size: 26px;
+    font-weight: 600;
+    display: inline-flex;
+}
+.wang{
+    opacity: 0;
+}
 @media only screen and (max-height: 770px) {
     .waiting-box {
         /* background: #fd0202; */
-        height: 80%;
-        min-height: 560px;
+        height: 85%;
+        min-height: 550px;
       }
       #waiting-detail{
-        margin: 30px auto;
+        margin: 10px auto;
+    }
+    .waiting-box h4{
+        position:static;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 36px;
+        color: rgb(0, 0, 0);
+        font-weight: bolder
     }
   }
 @media only screen and (max-height: 640px) {
     .waiting-box {
         /* background: #0afd02; */
-        height: 80%;
-        min-height: 480px;
+        height: 85%;
+        min-height: 450px;
       }
+  }
+  @media only screen and (max-width: 335px) {
+    .waiting-box {
+        /* background: #035e00; */
+      }
+    .last-service{
+        margin: 0px auto;
+        padding: 2px;
+        font-size: 20px;
+        font-weight: 700;
+    }
   }

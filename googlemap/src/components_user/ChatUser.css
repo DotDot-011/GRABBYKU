@@ -1,0 +1,18 @@
+#messages > div > div > div{
+    font-size: 20px;
+    margin: 0 auto;
+}
+#messages > div > div > div > p{
+    /* font-size: 20px; */
+    margin: 0 auto;
+}
+#to_span_noti > div:nth-child(3)> div >button>span{
+    opacity: 1;
+    font-size: 22px;
+    /* left: 96%; */
+    right: 15px !important;
+    top: 90% !important;
+}
+/* #messages > div:nth-child(4) > div{
+    background-color: sandybrown;
+} */

@@ -6,12 +6,14 @@
 /* #messages > div > div{
     background-color: #9df3c4 !important;
 } */
-#messages > div > div > div > p{
-    /* background-color: #9df3c4 !important; */
+#messages > div > div > div{
     font-size: 20px;
-    /* padding-top: 5px; */
-    margin: auto 0;
+    margin: 0 auto;
+}
 
+#messages > div > div > div > p{
+    /* font-size: 20px; */
+    margin: 0 auto;
 }
 
 /*แถบชื่อ chat*/
@@ -22,4 +24,8 @@
 /*ปุ่ม chat*/
 /* section > div > button{
     background-color: #167964 !important;
+} */
+
+/* #to_span_noti>div:nth-child(3)>div{
+    background-color: chartreuse;
 } */

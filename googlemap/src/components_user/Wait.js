@@ -68,8 +68,8 @@ export default function Wait(props){
     return(
         <div className="waiting-box" >
             <h4>กรุณารอ</h4>
-            <div> มีการบริการครั้งล่าสุดเมื่อ : {Math.floor((Math.floor(new Date().getTime() / 1000) - lastServiceTime)/60) } นาที {(Math.floor(new Date().getTime() / 1000) - lastServiceTime)%60} วินาที</div>
-            <Timer showHours={false}/>
+            <div class="last-service"> ให้บริการล่าสุดเมื่อ {Math.floor((Math.floor(new Date().getTime() / 1000) - lastServiceTime)/60) } นาที {(Math.floor(new Date().getTime() / 1000) - lastServiceTime)%60} วินาที</div>
+            <div class="how-long"><i class="far fa-hourglass-half"></i><i class="wang">x</i><Timer class="howlong" showHours={false}/></div>
             <div id="waiting-detail">
                 <div class="num-queue">จำนวนคิวที่รอ : {queue}</div>
                 <div class="num-driver">จำนวนผู้ให้บริการ : {availableDriver} คน</div>

@@ -851,6 +851,7 @@ class User extends React.Component {
       //loading screen
       if (this.state.loadingState===0){
         return <img id="loading" src="../pictures/logo512.gif"/>
+
       }else{
       return(
 
@@ -910,11 +911,10 @@ class User extends React.Component {
             
           
         <div id="test">{localStorage.getItem("username")}</div>,
-        <div style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
+        <div id="to_span_noti"style={{ padding:'20px',marginLeft:'auto',marginRight:'auto', maxWidth: 600 }}>
           
         {this.watingQueue}
-        {this.detailDriver}
-    
+        {this.detailDriver}        
         
         <MapWithAMarker  
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
