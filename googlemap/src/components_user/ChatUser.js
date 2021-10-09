@@ -115,6 +115,7 @@ export default function ChatUser(props){
                 title={first_name+' '+last_name}
                 subtitle="And my cool subtitle"
                 badge={count}
+                fullScreenMode={true}
                 
             />
         </div>

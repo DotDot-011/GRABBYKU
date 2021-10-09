@@ -15,17 +15,16 @@
     /* font-size: 20px; */
     margin: 0 auto;
 }
-
-/*แถบชื่อ chat*/
-/* section > div > div > div{   
-    background-color: #167964 !important;
-} */
-
-/*ปุ่ม chat*/
-/* section > div > button{
-    background-color: #167964 !important;
-} */
-
-/* #to_span_noti>div:nth-child(3)>div{
-    background-color: chartreuse;
-} */
+#root > section > div:nth-child(5) > button > span{
+    opacity: 1;
+    font-size: 22px;
+    /* left: 96%; */
+    position: fixed !important;
+    margin-top: -20px !important;
+    /* right: 15px !important; */
+    /* top: 20px !important; */
+    /* bottom: -10px !important; */
+}
+#root > section > div:nth-child(5) > div > div:nth-child(1) > button{
+    margin-top: -5px !important;
+}
