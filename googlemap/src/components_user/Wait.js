@@ -15,6 +15,7 @@ export default function Wait(props){
     // }
     
     
+    
     useEffect(()=>{
         conn.onmessage = function(e){
             let Message = JSON.parse(e.data)
@@ -29,9 +30,10 @@ export default function Wait(props){
                 setQueue(Message.booking_order);
                 setAvailableDriver(Message.driver_online);
             }
-            
+        
             
         }
+        
     },[])
     // ------------------ คำนวณราคาค่ะ ------------------
     useEffect(()=>{
@@ -63,12 +65,13 @@ export default function Wait(props){
                 setCost(50)
             }
         }
-        // setCost(10+Math.ceil(props.travelDistance/170))
+
     },[props.travelDistance])
+    
     return(
         <div className="waiting-box" >
             <h4>กรุณารอ</h4>
-            <div class="last-service"> ให้บริการล่าสุดเมื่อ {Math.floor((Math.floor(new Date().getTime() / 1000) - lastServiceTime)/60) } นาที {(Math.floor(new Date().getTime() / 1000) - lastServiceTime)%60} วินาที</div>
+            <div class="last-service">{lastServiceTime}</div>
             <div class="how-long"><i class="far fa-hourglass-half"></i><i class="wang">x</i><Timer class="howlong" showHours={false}/></div>
             <div id="waiting-detail">
                 <div class="num-queue">จำนวนคิวที่รอ : {queue}</div>

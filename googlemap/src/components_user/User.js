@@ -504,11 +504,18 @@ class User extends React.Component {
             })
           }
           else{
-            this.lastServiceTime=res.data.time;
+            if(Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600) >= 11){
+              this.lastServiceTime = 'ยังไม่มีการเรียกใช้บริการในวันนี้'
+            }
+            else{
+              this.lastServiceTime=`ให้บริการล่าสุดเมื่อ ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600)} ชั่วโมง ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/60) } นาที ${(Math.floor(new Date().getTime() / 1000) - res.data.time)%60} วินาที`
+            }
+            
             this.winName = res.data.win_name;
             this.queueUser=res.data.booking_order
             // console.log('---------',this.queueUser)
             this.availableDriver = res.data.driver_online
+
             this.setState({
               waitingQueueAppear:1,
             })
