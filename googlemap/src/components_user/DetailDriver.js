@@ -143,7 +143,7 @@ export default function DetailDriver(props){
     return(
         <div className="detail-driver-container">
             <h4>กรุณารอ</h4>
-            <h5>เวลาโดยประมาณ : {estimatetime} นาที</h5>
+            <h5>คุณจะได้รับบริการภายใน : {estimatetime} นาที</h5>
             <div class="driver-detail" >
                 <Box id="starbox"component="fieldset" mb={3} borderColor="transparent">
                     <Rating name="half-rating-read" value={value} precision={1} readOnly />
