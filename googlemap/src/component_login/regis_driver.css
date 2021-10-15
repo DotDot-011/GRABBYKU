@@ -153,7 +153,7 @@
     text-align: center;
     margin-top: 9px;
     margin-left: 13px;
-    background-color: #616362;
+    background-color: #FF4935;
     border-radius: 3px 15px 15px 3px;
     border: none;
     color: white;
@@ -167,12 +167,12 @@
 }
 #back_driverreg:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px) translateX(7px);
-    background-color: #4f5050;
-    box-shadow: 0 8px 13px #555454;
+    background-color: #e43420;
+    box-shadow: 0 8px 13px #bd2514;
 }
 #back_driverreg:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 9px #555454;
+    box-shadow: 0 4px 9px #bd2514;
 }
 .controls {
     box-sizing: border-box;
