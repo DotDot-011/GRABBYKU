@@ -21,4 +21,13 @@
 } */
 #to_span_noti > div:nth-child(3) > div > div > div:nth-child(1) > button{
     margin-top: -5px !important;
+    /* background-color: #1fab89 !important; */
+}
+
+/* #to_span_noti > div:nth-child(3) > div > div > div:nth-child(1){
+    background-color: #1fab89 !important;
+} */
+
+#to_span_noti > div:nth-child(3) > div > div > div:nth-child(3) > input[type=text]{
+    font-size: 20px !important;
 }

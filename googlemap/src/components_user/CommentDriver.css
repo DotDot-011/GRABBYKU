@@ -9,6 +9,7 @@
     /* height: 620px; */
     height: 83%;
     min-height: 480px;
+    max-height: 650px;
     max-width: 560px;
     width: 91%;
     background-color: #62d2A2;

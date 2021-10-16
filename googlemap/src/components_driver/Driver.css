@@ -109,7 +109,9 @@ box-shadow: 0 4px 7px #115745;
   left: 30px;
   /* background-color: rgb(29, 53, 43); */
   /* background-color: #929191; */
-  background-color: #575757;
+  /* background-color: #575757; */
+  /* background-color: #FF4935; */
+  background-color: #d62310;
   border-radius: 20px;
   border: none;
   color: white;
@@ -149,16 +151,16 @@ box-shadow: 0 4px 7px #555454;
   width: 80%;
   min-width: 300px;
   max-width: 500px;
-  height: 50px;
+  height: 45px;
   background:#ffffffbd;
   color: red;
   margin: 14px auto 0;
   display: block;
   position: relative;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: bold;
   text-align: center;
-  border-radius: 30px;
+  border-radius: 25px;
 }
 #should-black{
   font-size: 28px;
