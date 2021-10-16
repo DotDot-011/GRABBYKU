@@ -508,8 +508,10 @@ class User extends React.Component {
               this.lastServiceTime = 'ยังไม่มีการเรียกใช้บริการในวันนี้'
             }
             else{
+              let hour = Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600)
+              let minute = Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/60) - 60*hour;
               // this.lastServiceTime=`ให้บริการล่าสุดเมื่อ ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600)} ชั่วโมง ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/60) } นาที ${(Math.floor(new Date().getTime() / 1000) - res.data.time)%60} วินาที`
-              this.lastServiceTime=`ให้บริการล่าสุดเมื่อ ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/3600)} ชั่วโมง ${Math.floor((Math.floor(new Date().getTime() / 1000) - res.data.time)/60) } นาที`
+              this.lastServiceTime=`ให้บริการล่าสุดเมื่อ ${hour} ชั่วโมง ${minute} นาที`
 
             }
             
