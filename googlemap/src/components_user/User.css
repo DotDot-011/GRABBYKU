@@ -292,10 +292,10 @@
       height: 323px;
     }
     #bottombutt{
-      top: -90px;
+      top: -80px;
     }
   }
-  @media only screen and (max-height: 580px) {
+  @media only screen and (max-height: 590px) {
     .locationbox{
       /* background-color: rgb(17, 212, 50); */
       bottom: 425px;
@@ -305,7 +305,7 @@
       height: 320px;
     }
     #bottombutt{
-      top: -90px;
+      top: -83px;
     }
   }
   #test{

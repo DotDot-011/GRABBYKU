@@ -9,6 +9,7 @@
     text-align: center;
     z-index: 1;
     height: 83%;
+    max-height: 650px;
     min-height: 560px;
     max-width: 560px;
     width: 91%;
@@ -147,7 +148,8 @@
 #not-cancel{
     margin-left: 12px;
     color: #ffffff;
-    background-color: #575757;
+    /* background-color: #FF4935; */
+    background-color: #d62310;
     border: none;
     border-radius: 18px;
     width: 100px;
@@ -170,6 +172,14 @@
     margin-top: 0px;
     margin-bottom: 10px;
 }
+@media only screen and (max-width: 350px) {
+    .detail-driver-container h5{
+        position:static;
+        margin-top: 10px;
+        font-size: 26px;
+        color: rgb(0, 0, 0);
+    }
+  }
 @media only screen and (max-height: 650px) {
     .detail-driver-container {
       /* background: #0afd02; */

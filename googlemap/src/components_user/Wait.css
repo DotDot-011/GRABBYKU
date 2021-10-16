@@ -152,7 +152,8 @@
 #not-cancel{
     margin-left: 12px;
     color: #ffffff;
-    background-color: #575757;
+    /* background-color: #FF4935; */
+    background-color: #d62310;
     border: none;
     border-radius: 18px;
     width: 100px;
@@ -172,7 +173,7 @@
 .last-service{
     margin: 0px auto;
     padding: 2px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
 }
 .how-long{
@@ -210,7 +211,7 @@
         min-height: 450px;
       }
   }
-  @media only screen and (max-width: 335px) {
+  @media only screen and (max-width: 360px) {
     .waiting-box {
         /* background: #035e00; */
       }

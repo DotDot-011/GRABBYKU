@@ -51,8 +51,8 @@
     text-align: center;
     margin-top: 30px;
     margin-right: 13px;
-    background-color: #29967b;
-    /* background-color: #008363; */
+    /* background-color: #29967b; */
+    background-color: #167964;
     border-radius: 15px 3px 3px 15px;
     border: none;
     color: white;
@@ -76,7 +76,9 @@
     text-align: center;
     margin-top: 30px;
     margin-left: 13px;
-    background-color: #FF4935;
+    /* background-color: #FF4935; */
+    /* background-color: #d62310; */
+    background-color: #b32617;
     border-radius: 3px 15px 15px 3px;
     border: none;
     color: white;
