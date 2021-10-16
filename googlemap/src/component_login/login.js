@@ -14,7 +14,7 @@ function Login() {
             NotificationManager.error('หมดเวลาการเชื่อมต่อ','',10000);
         }
         if(localStorage.getItem("Auth") ==="Multiple_Login"){
-            NotificationManager.error('มีผู้การเข้าสู่ระบบจากอุปกรณ์อื่น','',10000);
+            NotificationManager.error('มีผู้เข้าสู่ระบบจากอุปกรณ์อื่น','',10000);
         }
         localStorage.clear();
     },[]);
