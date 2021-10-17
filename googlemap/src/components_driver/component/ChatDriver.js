@@ -20,6 +20,7 @@ export default function ChatDriver(props){
     }
     
     useEffect(()=>{
+        localStorage.setItem("chatNoti", 0);
         let intervalChatNonti =  setInterval(() => {
             
             if(parseInt( localStorage['chatNoti']) ===0){
