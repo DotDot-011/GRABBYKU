@@ -16,6 +16,7 @@
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
 }
 .profile-picture img{
+    margin-left: 25px;
     height: 150px;
     width: 150px;
     /* max-width: 380px;
