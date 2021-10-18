@@ -91,7 +91,7 @@ function RegisUser() {
         (confirmPasswordRef.current.value != '') ? Count++ : NotificationManager.warning('กรุณากรอกยืนยันรหัสผ่าน');
         
         if(passwordRef.current.value === confirmPasswordRef.current.value & Count===10 & validateEmail(emailRef.current.value) 
-        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13) {
+        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13 && 2021 - birth_dateRef.current.value.split('-')[0] >=18) {
             axios.post(Url.LinkToBackend +"backend/api/register_user",{
                 fname: fnameRef.current.value,
                 lname: lnameRef.current.value,
@@ -143,6 +143,9 @@ function RegisUser() {
             }
             if(phoneRef.current.value.length != 10){
                 NotificationManager.warning('หมายเลขโทรศัพท์ไม่ถูกต้อง');   
+            }
+            if(2021 - birth_dateRef.current.value.split('-')[0] <18){
+                NotificationManager.warning('อายุยังไม่ถึงเกณฑ์');
             }
         }
         
