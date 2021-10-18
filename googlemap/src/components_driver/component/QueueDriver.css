@@ -53,6 +53,7 @@
     right: 19px;
     /* top: 5px; */
     transition: 0.3s;
+    padding: 0;
 }
 .button-enQueue:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -79,7 +80,7 @@
     left: 26px;
     /* top: 5px; */
     transition: 0.3s;
-
+    padding: 0;
 }
 
 .button-leaveQueue:hover {

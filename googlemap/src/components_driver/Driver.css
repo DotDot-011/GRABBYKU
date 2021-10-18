@@ -94,6 +94,7 @@ font-size: 22px;
   height: 42px;
   width: 100px;
   transition: 0.3s;
+  padding: 0;
 }
 .accept-button:hover {
 transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -120,7 +121,7 @@ box-shadow: 0 4px 7px #115745;
   height: 42px;
   width: 100px;
   transition: 0.3s;
-
+  padding: 0;
 }
 .cancel-button:hover {
 transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -149,7 +150,7 @@ box-shadow: 0 4px 7px #bd2514;
 }
 #accept-time{
   width: 80%;
-  min-width: 300px;
+  min-width: 320px;
   max-width: 500px;
   height: 45px;
   background:#ffffffbd;
@@ -177,6 +178,7 @@ box-shadow: 0 4px 7px #bd2514;
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
+  /* position: sticky; */
   margin: 0 auto;
   width: 36px;
   height: 30px;
@@ -212,6 +214,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-menu-wrap {
   top: 0;
   position: fixed;
+  /* position: sticky; */
   height: 100%;
 }
 
@@ -303,7 +306,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 }
 
-@media only screen and (max-height: 610px) {
+@media only screen and (max-height: 670px) {
   #pin-info{
     display: none;
   }
@@ -313,6 +316,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 #test{
   position: fixed;
+  /* position: sticky; */
   display: flex;
   /* margin: auto; */
   align-items:center;

@@ -25,7 +25,7 @@
     align-items: center;
     text-align: center;
     width: 35%;
-    min-width: 300px;
+    min-width: 280px;
     max-width: 400px;
 }
 #userlog label{
@@ -48,6 +48,7 @@
     padding-left: 8px;
 }
 #sum_user{
+    padding: 0;
     text-align: center;
     margin-top: 30px;
     margin-right: 13px;
@@ -73,6 +74,7 @@
 }
 
 #back_user{
+    padding: 0;
     text-align: center;
     margin-top: 30px;
     margin-left: 13px;

@@ -12,7 +12,7 @@
     max-height: 650px;
     min-height: 560px;
     max-width: 560px;
-    width: 91%;
+    width: 90%;
     background-color: #62d2A2;
     border-radius: 20px;
     border-style: solid;
@@ -135,6 +135,7 @@
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
+    padding: 0;
 }
 #don-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -156,6 +157,7 @@
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
+    padding: 0;
 }
 #not-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
