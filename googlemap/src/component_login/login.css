@@ -2,7 +2,7 @@
     position: relative;
     margin: 0 auto;
     top: 15%;
-    width: 800px;
+    width: 728px;
     height: 400px;
     display: flex;
     border-radius: 20px 20px 20px 20px;
@@ -17,11 +17,11 @@
     background-size: contain;
     background-color: whitesmoke;
     border-radius: 20px 0px 0px 20px;
-    width: 50%;
+    width: 55%;
 }
 .main_log{
     background-color: rgba(255, 255, 255, 0.45);
-    width: 50%;
+    width: 45%;
     min-width: 280px;
     padding-top: 30px;
     position: relative;
@@ -29,6 +29,7 @@
     align-items: center;
     text-align: center;
     border-radius: 0px 20px 20px 0px;
+    /* z-index: 1; */
 
 }
 .main_log h1 {
@@ -38,6 +39,7 @@
     font-size: 60px;
 }
 #user_log{
+    padding: 0;
     margin-right: 12px;
     background-color: #29967b;
     /* background-color: #38b8a4; */
@@ -60,6 +62,7 @@
     box-shadow: 0 4px 9px #115745;
 }
 #driver_log{
+    padding: 0;
     margin-left: 12px;
     /* background-color: #616362; */
     background-color: #168088;
@@ -91,6 +94,7 @@
     opacity: 80%;
 }
 #user_reg{
+    padding: 0;
     margin-right: 2px;
     /* background-color: #85ebb5c2;   */
     background-color: #5ecebd;  
@@ -119,6 +123,7 @@
     box-shadow: 0 4px 9px #115745;
 }
 #driver_reg{
+    padding: 0;
     margin-left: 2px;
     background-color: #5ecebd;  
     border-radius: 2px 15px 15px 2px;
@@ -145,7 +150,8 @@
     transform: translateY(1px);
     box-shadow: 0 4px 9px #555454;
 }
-@media only screen and (max-width: 840px) {
+/* @media only screen and (max-width: 840px) { */
+@media only screen and (max-width: 750px) {
     .main{
         display: flex;
         justify-content: center;
@@ -154,12 +160,21 @@
 
     }
     .main_log{
-        background-color: rgba(255, 255, 255, 0.45);
+        /* background-color: rgba(255, 255, 255, 0.45); */
         border-radius: 20px;
         box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
         /* box-shadow: 12px 12px 20px rgba(5, 40, 20, 0.705); */
+        /* background-image: url("./pictures/map.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain; */
     }
     .main_map{
+        /* position: fixed;
+        top:0;
+        left: 0;
+        width:200px;
+        z-index: 2; */
         width: 0;
     }
 }

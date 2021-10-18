@@ -1,7 +1,3 @@
-#messages {
-    /* background-color: #d7fbe8 !important; */
-}
-
 /*สีช่องแชท*/
 /* #messages > div > div{
     background-color: #9df3c4 !important;
@@ -27,4 +23,8 @@
 }
 #root > section > div:nth-child(5) > div > div:nth-child(1) > button{
     margin-top: -5px !important;
+}
+
+#root > section > div:nth-child(5) > div > div:nth-child(3) > input[type=text]{
+    font-size: 20px !important;
 }

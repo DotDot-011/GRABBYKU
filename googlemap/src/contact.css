@@ -17,6 +17,7 @@
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
 }
 .contact-page img{
+    margin-left: 25px;
     min-width: 120px;
     min-height: 160px;
     border-style: solid;

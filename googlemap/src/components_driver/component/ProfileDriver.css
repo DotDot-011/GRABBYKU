@@ -16,6 +16,7 @@
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
 }
 .profile-picture img{
+    margin-left: 25px;
     max-width: 380px;
     max-height: 170px;
 }
@@ -64,6 +65,7 @@
     font-size: 26px;
     transition: 0.3s;
     color: white;
+    padding: 0;
 }
 .updateinfo-driver:hover {
   transform: scaleX(1.05) scaleY(1.05) translateY(-5px);

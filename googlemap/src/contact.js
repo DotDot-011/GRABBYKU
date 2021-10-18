@@ -14,7 +14,7 @@ data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYA
             " />
             <h2>Suprawit Pattanasin <br/> Project Manager</h2>
             <p>Tel(+66) : 098-830-1559 <br/>
-               Email : bangtan_grill_chicken@grabbut.ku <br/>
+               Email : bangtan-grill-chick@GBK.com <br/>
                Web : bangtan-grill-chicken.com
             </p>
 

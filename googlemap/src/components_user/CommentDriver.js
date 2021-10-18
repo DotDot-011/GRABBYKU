@@ -109,7 +109,7 @@ export default function CommentDriver(props){
                 
             </div>
             
-            <Popup trigger={<button className="done-button" type="button" class="btn btn-primary" id="buttcancel"> ยืนยัน </button>} modal nested>
+            <Popup trigger={<button type="button" class="btn btn-primary" id="done-button-com"> ยืนยัน </button>} modal nested>
             { 
               close=>(
                 <div className="thankyou"> <h1>ยืนยันที่จะส่งข้อมูล</h1>

@@ -74,7 +74,20 @@ function RegisUser() {
           }
         }
       }
-
+    
+      function checkID(id)
+        {
+            let i,sum;
+            if(id.length != 13) {
+                return false;
+            }
+            for(i=0, sum=0; i < 12; i++){
+                sum += parseFloat(id.charAt(i))*(13-i);
+            } 
+            if((11-sum%11)%10!=parseFloat(id.charAt(12))){
+                return false; 
+            }
+        return true;}
 
     function sendData(){
 
@@ -91,7 +104,7 @@ function RegisUser() {
         (confirmPasswordRef.current.value != '') ? Count++ : NotificationManager.warning('กรุณากรอกยืนยันรหัสผ่าน');
         
         if(passwordRef.current.value === confirmPasswordRef.current.value & Count===10 & validateEmail(emailRef.current.value) 
-        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13) {
+        & passwordRef.current.value.length >= 4 & citizenIdRef.current.value.length ==13 && 2021 - birth_dateRef.current.value.split('-')[0] >=18) {
             axios.post(Url.LinkToBackend +"backend/api/register_user",{
                 fname: fnameRef.current.value,
                 lname: lnameRef.current.value,
@@ -138,11 +151,14 @@ function RegisUser() {
             if(passwordRef.current.value.length < 4 ){
                 NotificationManager.warning('รหัสผ่านสั้นเกินไป');
             }
-            if(citizenIdRef.current.value.length != 13){
+            if(!checkID(citizenIdRef.current.value) ){
                 NotificationManager.warning('รหัสประจำตัวประชาชนไม่ถูกต้อง');
             }
             if(phoneRef.current.value.length != 10){
                 NotificationManager.warning('หมายเลขโทรศัพท์ไม่ถูกต้อง');   
+            }
+            if(2021 - birth_dateRef.current.value.split('-')[0] <18){
+                NotificationManager.warning('อายุยังไม่ถึงเกณฑ์');
             }
         }
         

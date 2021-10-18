@@ -9,9 +9,10 @@
     text-align: center;
     z-index: 1;
     height: 83%;
+    max-height: 650px;
     min-height: 560px;
     max-width: 560px;
-    width: 91%;
+    width: 90%;
     background-color: #62d2A2;
     border-radius: 20px;
     border-style: solid;
@@ -134,6 +135,7 @@
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
+    padding: 0;
 }
 #don-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -147,22 +149,24 @@
 #not-cancel{
     margin-left: 12px;
     color: #ffffff;
-    background-color: #575757;
+    /* background-color: #FF4935; */
+    background-color: #d62310;
     border: none;
     border-radius: 18px;
     width: 100px;
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
+    padding: 0;
 }
 #not-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #424242;
-    box-shadow: 0 8px 11px #555454;
+    background-color: #e43420;
+    box-shadow: 0 8px 11px #bd2514;
 }
 #not-cancel:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 7px #555454;
+    box-shadow: 0 4px 7px #bd2514;
 }
 
 #starbox{
@@ -170,6 +174,14 @@
     margin-top: 0px;
     margin-bottom: 10px;
 }
+@media only screen and (max-width: 350px) {
+    .detail-driver-container h5{
+        position:static;
+        margin-top: 10px;
+        font-size: 26px;
+        color: rgb(0, 0, 0);
+    }
+  }
 @media only screen and (max-height: 650px) {
     .detail-driver-container {
       /* background: #0afd02; */
