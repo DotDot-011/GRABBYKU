@@ -74,7 +74,20 @@ function RegisUser() {
           }
         }
       }
-
+    
+      function checkID(id)
+        {
+            let i,sum;
+            if(id.length != 13) {
+                return false;
+            }
+            for(i=0, sum=0; i < 12; i++){
+                sum += parseFloat(id.charAt(i))*(13-i);
+            } 
+            if((11-sum%11)%10!=parseFloat(id.charAt(12))){
+                return false; 
+            }
+        return true;}
 
     function sendData(){
 
@@ -138,7 +151,7 @@ function RegisUser() {
             if(passwordRef.current.value.length < 4 ){
                 NotificationManager.warning('รหัสผ่านสั้นเกินไป');
             }
-            if(citizenIdRef.current.value.length != 13){
+            if(!checkID(citizenIdRef.current.value) ){
                 NotificationManager.warning('รหัสประจำตัวประชาชนไม่ถูกต้อง');
             }
             if(phoneRef.current.value.length != 10){
