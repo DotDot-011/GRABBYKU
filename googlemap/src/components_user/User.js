@@ -201,6 +201,7 @@ class User extends React.Component {
     
     //--------------------------function ถูกเรียกตอนวางMarkerสีเขียวปักลงในแผนที่  ------------------
     onMarkerDragEnd = (event)=>{
+      this.positionNameRef.current.value=null;
       let newLat = event.latLng.lat();
       let newLng= event.latLng.lng();
       console.log('newLat',newLat);
@@ -251,6 +252,7 @@ class User extends React.Component {
 
     //-------------------function ถูกเรียกตอนวางMarkerสีแดงปักลงในแผนที่----------------
     onMarkerDestinationDragEnd = (event)=>{
+      this.positionDestinationNameRef.current.value=null;
       let newLat = event.latLng.lat();
       let newLng= event.latLng.lng();
       console.log('newLat',newLat);
@@ -302,6 +304,7 @@ class User extends React.Component {
     //----------------------function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีเขียว--------
     onPlaceSelected = (place)=>{
       //กรณีไม่เจอไม่เจอสถานที่
+      
       if (!place.geometry) {                                                  
         NotificationManager.error("ไม่พบ :'" + place.name + "'",'Alert',3000);
         return;
@@ -323,13 +326,32 @@ class User extends React.Component {
           lat: newLat,
           lng: newLng
         },
-        showPlaceHolder:place.name+" "+address,
+        // showPlaceHolder:place.name+" "+address,
         // mapPosition: {
         //   lat: newLat,
         //   lng: newLng
         // },
       })
-      
+      if
+        (!isPointInPolygon({latitude: newLat, longitude: newLng},this.redZonePath) && 
+         (
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_1 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_2 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_3 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_4 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_5 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_6 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_7 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_8 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_9 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_10 ) 
+         )
+       ){
+         console.log(1);
+       }
+       else{
+        NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',1500);
+       }
     }
     
     //function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีแดง
@@ -357,6 +379,26 @@ class User extends React.Component {
         },
         showPlaceHolderDestination:place.name+" "+address,
       })
+      if
+        (!isPointInPolygon({latitude: newLat, longitude: newLng},this.redZonePath) && 
+         (
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_1 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_2 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_3 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_4 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_5 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_6 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_7 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_8 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_9 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_10 ) 
+         )
+       ){
+         console.log(1);
+       }
+       else{
+        NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',1500);
+       }
     }
     
     //---------------เก็บตำแหน่งPolygonของบริเวณพื้นที่ให้บริการ---------
@@ -709,8 +751,170 @@ class User extends React.Component {
       this.setState({menuOpen: false})
     }
     
-    
-    
+    MapWithAMarker = withScriptjs(withGoogleMap(props =>       
+      <GoogleMap div id="con"
+        //------------------setting ของตัวแผนที่--------------------------
+        defaultZoom={15}
+        defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
+        
+        
+        defaultOptions={{
+          
+          zoomControl:true,
+          scrollwheel:true,
+          streetViewControl: false,
+          draggable:true,
+          // minZoom:1,
+          // maxZoom:16,
+          mapTypeControl:false,
+          restriction:{
+            latLngBounds:{
+              north: this.state.mapPosition.lat+ 0.010,
+              south: this.state.mapPosition.lat - 0.0127,
+              east: this.state.mapPosition.lng + 0.0134,
+              west: this.state.mapPosition.lng - 0.0103,
+            },
+            strictBounds:true,
+            
+          },
+          styles:mapStyle,
+         }}
+      >
+        {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
+        <Marker
+          draggable={true}
+          position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
+          onDragEnd={this.onMarkerDragEnd}
+          icon={{
+            url:"../pictures/markgreen.png",
+            scaledSize:{height: 40 , width: 25},
+          }}
+          
+          >  
+        </Marker>
+          {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
+        <Marker 
+          draggable={true}
+          onDragEnd={this.onMarkerDestinationDragEnd}
+          icon={{
+            url:"../pictures/markred.png",
+            scaledSize:{height: 40 , width: 25},
+          }}
+          // animation={4}
+          position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
+          >  
+        </Marker>
+        <div class="locationbox">
+          <div id="inbutt">
+        {/* ----------component กล่องค้นหาตำแหน่งเริ่มต้น--------- */}
+        <Autocomplete id="input1"
+          ref={this.positionNameRef}
+          options={
+            {
+              bounds:{
+                north: this.state.mapPosition.lat+ 0.01,
+                south: this.state.mapPosition.lat - 0.01,
+                east: this.state.mapPosition.lng + 0.01,
+                west: this.state.mapPosition.lng - 0.01,
+              },
+              strictBounds: true,
+              types: ["establishment"],
+              componentRestrictions :{
+                country: "th",
+              },
+              fields: ["address_components","formatted_address", "geometry", "icon", "name"],
+            }
+          }
+
+          onPlaceSelected={this.onPlaceSelected}
+          placeholder={this.state.showPlaceHolder}
+          />
+
+        <button class="button-currentLocation" onClick={this.findMylocation}></button>
+        </div>  
+          {/* ----------component กล่องค้นหาตำแหน่งปลายทาง--------- */}
+        <Autocomplete id="input2"
+          ref={this.positionDestinationNameRef} 
+          options={
+            {
+              bounds:{
+                north: this.state.mapPosition.lat+ 0.01,
+                south: this.state.mapPosition.lat - 0.01,
+                east: this.state.mapPosition.lng + 0.01,
+                west: this.state.mapPosition.lng - 0.01,
+              },
+              strictBounds: true,
+              types: ["establishment"],
+              componentRestrictions :{
+                country: "th",
+              },
+              fields: ["address_components","formatted_address", "geometry", "icon", "name"],
+            }
+          }
+          onPlaceSelected={this.onPlaceDestinationSelected}
+          placeholder={this.state.showPlaceHolderDestination}
+          />
+        </div>
+
+        {/* <Polygon 
+          path={[
+            {lat:13.855458118865057, lng:100.56596600925597},
+            {lat:13.857277966250578, lng:100.57639848267323},
+            {lat:13.857659300458918, lng:100.58083861265405},
+            {lat:13.850487798245787, lng:100.5815458679391},
+            {lat:13.836416483501072, lng:100.57339372833995},
+            {lat:13.842558941191157, lng:100.5590814720114},
+            {lat:13.855458118865057, lng:100.56596600925597},
+          ]}
+          
+          options={
+            {
+              strokeColor: "green",
+              strokeOpacity: 0,
+              strokeWeight: 3,
+              fillColor: "green",
+              fillOpacity: 0,
+            }
+          }
+        /> */}
+
+        {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
+        <div id="bottombutt">
+        <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
+          {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
+        </div>
+        <Polygon 
+            path={[
+              {lat: 13.84680634471089,lng: 100.56479688230758},
+              {lat: 13.848348039187117, lng: 100.56569906630881},
+              {lat:13.850380257189924, lng:100.56586145942902},           // ซ้ายบน
+              {lat:13.85035863118457, lng:100.57246193775138},            // ขวาบน
+              {lat:13.844138264502986, lng:100.57239696593405},
+              {lat:13.842717700160385, lng:100.57165572383603},
+              // {lat:13.850240104794747, lng:100.57237522791787},
+              // {lat:13.844213471850779, lng:100.57230305319777},
+              // {lat:13.842952063786939, lng:100.57158130599677},
+              {lat: 13.84680634471089,lng: 100.56479688230758},
+            ]}
+            
+            options={
+              {
+                strokeColor: "#d34052",
+                strokeOpacity: 0.5,
+                strokeWeight: 2,
+                fillColor: "#d34052",
+                fillOpacity: 0.3,
+              }
+            }
+        />
+      
+      </GoogleMap>
+    ));
+    constructor(props) {
+      super(props);
+      this.positionNameRef = React.createRef();
+      this.positionDestinationNameRef = React.createRef();
+    }
     render(){
       
       if(!!this.state.waitingQueueAppear){
@@ -738,163 +942,7 @@ class User extends React.Component {
       } 
       
       //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
-      const MapWithAMarker = withScriptjs(withGoogleMap(props =>       
-        <GoogleMap div id="con"
-          //------------------setting ของตัวแผนที่--------------------------
-          defaultZoom={15}
-          defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
-          
-          
-          defaultOptions={{
-            
-            zoomControl:true,
-            scrollwheel:true,
-            streetViewControl: false,
-            draggable:true,
-            // minZoom:1,
-            // maxZoom:16,
-            mapTypeControl:false,
-            restriction:{
-              latLngBounds:{
-                north: this.state.mapPosition.lat+ 0.010,
-                south: this.state.mapPosition.lat - 0.0127,
-                east: this.state.mapPosition.lng + 0.0134,
-                west: this.state.mapPosition.lng - 0.0103,
-              },
-              strictBounds:true,
-              
-            },
-            styles:mapStyle,
-           }}
-        >
-          {/* ----------componentของmarkerตำแหน่งเริ่มต้น(สีเขียว) ----------*/}
-          <Marker
-            draggable={true}
-            position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
-            onDragEnd={this.onMarkerDragEnd}
-            icon={{
-              url:"../pictures/markgreen.png",
-              scaledSize:{height: 40 , width: 25},
-            }}
-            
-            >  
-          </Marker>
-            {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
-          <Marker 
-            draggable={true}
-            onDragEnd={this.onMarkerDestinationDragEnd}
-            icon={{
-              url:"../pictures/markred.png",
-              scaledSize:{height: 40 , width: 25},
-            }}
-            // animation={4}
-            position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
-            >  
-          </Marker>
-          <div class="locationbox">
-            <div id="inbutt">
-          {/* ----------component กล่องค้นหาตำแหน่งเริ่มต้น--------- */}
-          <Autocomplete id="input1"
-            options={
-              {
-                bounds:{
-                  north: this.state.mapPosition.lat+ 0.01,
-                  south: this.state.mapPosition.lat - 0.01,
-                  east: this.state.mapPosition.lng + 0.01,
-                  west: this.state.mapPosition.lng - 0.01,
-                },
-                strictBounds: true,
-                types: ["establishment"],
-                componentRestrictions :{
-                  country: "th",
-                },
-                fields: ["address_components","formatted_address", "geometry", "icon", "name"],
-              }
-            }
-
-            onPlaceSelected={this.onPlaceSelected}
-            placeholder={this.state.showPlaceHolder}
-            />
-
-          <button class="button-currentLocation" onClick={this.findMylocation}></button>
-          </div>  
-            {/* ----------component กล่องค้นหาตำแหน่งปลายทาง--------- */}
-          <Autocomplete id="input2" 
-            options={
-              {
-                bounds:{
-                  north: this.state.mapPosition.lat+ 0.01,
-                  south: this.state.mapPosition.lat - 0.01,
-                  east: this.state.mapPosition.lng + 0.01,
-                  west: this.state.mapPosition.lng - 0.01,
-                },
-                strictBounds: true,
-                types: ["establishment"],
-                componentRestrictions :{
-                  country: "th",
-                },
-                fields: ["address_components","formatted_address", "geometry", "icon", "name"],
-              }
-            }
-            onPlaceSelected={this.onPlaceDestinationSelected}
-            placeholder={this.state.showPlaceHolderDestination}
-            />
-          </div>
-
-          {/* <Polygon 
-            path={[
-              {lat:13.855458118865057, lng:100.56596600925597},
-              {lat:13.857277966250578, lng:100.57639848267323},
-              {lat:13.857659300458918, lng:100.58083861265405},
-              {lat:13.850487798245787, lng:100.5815458679391},
-              {lat:13.836416483501072, lng:100.57339372833995},
-              {lat:13.842558941191157, lng:100.5590814720114},
-              {lat:13.855458118865057, lng:100.56596600925597},
-            ]}
-            
-            options={
-              {
-                strokeColor: "green",
-                strokeOpacity: 0,
-                strokeWeight: 3,
-                fillColor: "green",
-                fillOpacity: 0,
-              }
-            }
-          /> */}
-
-          {/* <button class="button-currentLocation" onClick={this.findMylocation}>your location</button> */}
-          <div id="bottombutt">
-          <button className="button-start" type="button" class="btn btn-primary" id="buttstart" onClick={this.addLocation}>เริ่มต้น</button>
-            {/* <button class="btn btn-primary" type="submit">เริ่มต้น</button> */}
-          </div>
-          <Polygon 
-              path={[
-                {lat: 13.84680634471089,lng: 100.56479688230758},
-                {lat: 13.848348039187117, lng: 100.56569906630881},
-                {lat:13.850380257189924, lng:100.56586145942902},           // ซ้ายบน
-                {lat:13.85035863118457, lng:100.57246193775138},            // ขวาบน
-                {lat:13.844138264502986, lng:100.57239696593405},
-                {lat:13.842717700160385, lng:100.57165572383603},
-                // {lat:13.850240104794747, lng:100.57237522791787},
-                // {lat:13.844213471850779, lng:100.57230305319777},
-                // {lat:13.842952063786939, lng:100.57158130599677},
-                {lat: 13.84680634471089,lng: 100.56479688230758},
-              ]}
-              
-              options={
-                {
-                  strokeColor: "#d34052",
-                  strokeOpacity: 0.5,
-                  strokeWeight: 2,
-                  fillColor: "#d34052",
-                  fillOpacity: 0.3,
-                }
-              }
-          />
-        
-        </GoogleMap>
-      ));
+      
       
       //loading screen
       if (this.state.loadingState===0){
@@ -964,7 +1012,7 @@ class User extends React.Component {
         {this.watingQueue}
         {this.detailDriver}        
         
-        <MapWithAMarker  
+        <this.MapWithAMarker  
           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
           // containerElement={<div id="map" style={{ height: `342px`}} />}
           containerElement={<div id="mapbox"  />}

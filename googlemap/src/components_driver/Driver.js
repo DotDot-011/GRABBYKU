@@ -26,7 +26,7 @@ import getCookie from "../getCookie";
 import History from "./component/booking_history";
 import ProfileDriver from "./component/ProfileDriver";
 import Contact from '../contact';
-
+import  Timer from "react-time-counter"
 
 Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
 
@@ -91,8 +91,8 @@ class Driver extends React.Component {
   profilepicture=null;
   penaltyTime=null;
   conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
-  
-  
+  theMenu=null;
+  MenuBar=null;
   
   // ------------------ เช็คว่า user cancel หรือยัง ------------------
   cancelIntervalId=0;
@@ -293,6 +293,132 @@ class Driver extends React.Component {
       buttonAcceptCancelAppear: null,
     });
   }
+  turnOnMenu=(mode)=>{
+    if(mode){
+      this.MenuBar = <div id="test">{localStorage.getItem("username")}</div>
+      this.theMenu = <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right >
+          
+      <a id="user-info"><i class="fas fa-user-circle"></i> {localStorage.getItem("username")}</a>
+        {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
+        <a><Popup trigger={<a  id="home"  ><i class="far fa-address-card"></i> ข้อมูลผู้ใช้</a>} modal nested>
+                  {           
+                    close=>(
+                        <ProfileDriver 
+                          closeMenu={this.closeMenu} 
+                          citizenId={this.citizenId} 
+                          Fname={this.driverFname} Lname={this.driverLname} 
+                          birthDate={this.birthDate} 
+                          phone={this.phone}
+                          plate={this.plate}
+                          winNo={this.winNo}
+                          winName = {this.winName}
+                          profilepicture={this.profilepicture}
+                          handleForChangeProfile={this.handleForChangeProfile.bind(this)}
+                          close={close}
+                        />
+                  )}
+               </Popup>
+               </a>
+
+          
+          
+          <a><Popup trigger={<a id="home" ><i class="fas fa-history"></i> ประวัติการให้บริการ</a>} modal nested>
+                  {           
+                    close=>(
+                        <History closeMenu={this.closeMenu}
+                        close={close}
+                        />
+                  )}
+               </Popup>
+               </a>
+          <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
+          {           
+                  close=>(
+                      <Contact closeMenu={this.closeMenu}
+                      close={close}
+                      />
+                  )}
+              </Popup>
+          </a>
+          <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
+            axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
+              username: localStorage.getItem("username")
+            })
+            .then(res=>{
+              localStorage.clear(); 
+              window.location.reload();
+            }).catch(err=>{
+              NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
+            });
+          }}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
+            
+           
+            
+      </Menu>
+    }
+    else{
+      this.theMenu=null;
+      this.MenuBar = null;
+    }
+  }
+
+
+  MapWithAMarker = withScriptjs(withGoogleMap(props =>
+    <GoogleMap
+    // ------------------ set default map KA(ค่ะ) ------------------
+    defaultZoom={15}
+    defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
+    defaultOptions={{
+      
+      zoomControl:true,
+      scrollwheel:true,
+      streetViewControl: false,
+      draggable:true,
+      minZoom:15,
+      // maxZoom:16,
+      mapTypeControl:false,
+      restriction:{
+        latLngBounds:{
+          north: this.state.mapPosition.lat+ 0.012,
+          south: this.state.mapPosition.lat - 0.012,
+          east: this.state.mapPosition.lng + 0.012,
+          west: this.state.mapPosition.lng - 0.012,
+        },
+        strictBounds: false,
+      },
+      styles: mapStyle,
+    }}
+    
+    >
+  {/* ----------componentของmarkerตำแหน่งที่ต้องไปรับ(สีเขียว) ----------*/}
+  <Marker
+    draggable={false}
+    // onDragEnd={this.onMarkerDragEnd}
+    position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
+    icon={{
+      url:"/pictures/markgreen.png",
+      scaledSize:{height: 40 , width: 25},
+    }}
+    animation={4}
+  >
+  </Marker>
+
+  {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
+  <Marker 
+      icon={{
+        url:"/pictures/markred.png",
+        scaledSize:{height: 40 , width: 25},
+      }}
+      
+      position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}
+      animation={4}
+      >  
+    </Marker>
+
+</GoogleMap>
+));
+  
+
 
   render() {
         if(this.state.queueDriverAppear === 1){
@@ -301,8 +427,10 @@ class Driver extends React.Component {
           this.queueDriver= <QueueDriver handleForUpdate = {this.handleForUpdate.bind(this)}  handleForDriverReconnect = {this.handleForDriverReconnect.bind(this) } 
           driverId={this.state.driverId} conn={this.conn} cancelCase={this.cancelCase} winId={this.winId} winName ={this.winName} penaltyTime={this.penaltyTime}/>
           this.userInfo = null;
+          this.turnOnMenu(true)
         }
         else if(this.state.queueDriverAppear === 2){
+          this.turnOnMenu(false)
           clearInterval(this.cancelIntervalId);
           clearTimeout(this.driverTimeOut);
           this.userInfo = null;
@@ -316,11 +444,14 @@ class Driver extends React.Component {
         }
         else if(this.state.queueDriverAppear===0)
         {
+          this.turnOnMenu(false)
           this.queueDriver= null;
           clearTimeout(this.driverTimeOut)
           clearInterval(this.cancelIntervalId)
           this.PenaltyTimeOut();
           this.userInfo = <UserInfo userFname={this.state.userFname} userLname={this.state.userLname} />;
+          // this.countdown=<span id="accept-time"><b id="should-black">กรุณาตอบรับภายใน</b><Timer showMinutes={false} showHours={false} seconds={timeCooldown/1000} backward={true}/> วินาที
+          //        </span>
           this.countdown= <Countdown date={Date.now() + timeCooldown} renderer={({seconds, completed }) => {
             
               return (
@@ -338,7 +469,7 @@ class Driver extends React.Component {
           clearInterval(this.cancelIntervalId);
           this.queueDriver=null;
           this.countdown=null;
-          
+          this.turnOnMenu(true)
         }
 
         if(!!this.state.buttonAcceptCancelAppear){
@@ -349,8 +480,10 @@ class Driver extends React.Component {
                                     </div>
           this.buttonDone=null;
           this.chatDriver=null; 
+
         }
         else if(this.state.queueDriverAppear===3 && !!!this.state.buttonAcceptCancelAppear){
+          this.turnOnMenu(true)
           this.chatDriver=null;
           this.buttonDone = <div className="button-accept-cancel-done">
                               <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
@@ -358,7 +491,7 @@ class Driver extends React.Component {
                             </div>
         }
         else{
-          
+          this.turnOnMenu(true)
           this.buttonAcceptCancel=null;
           this.buttonDone = <div className="button-accept-cancel-done">
                               <Receipt disableButton={this.state.disableButton} driverFname={this.driverFname} driverLname={this.driverLname} driverId={this.state.driverId} 
@@ -369,60 +502,7 @@ class Driver extends React.Component {
         }
         
         //-----------------codeสำหรับสร้าง component ทุกอย่างที่เป็นของ googlemap ต้องเขียนใน tag Googlemap------------
-        const MapWithAMarker = withScriptjs(withGoogleMap(props =>
-          <GoogleMap
-          // ------------------ set default map KA(ค่ะ) ------------------
-          defaultZoom={15}
-          defaultCenter={{ lat:this.state.mapPosition.lat, lng: this.state.mapPosition.lng }}
-          defaultOptions={{
-            
-            zoomControl:true,
-            scrollwheel:true,
-            streetViewControl: false,
-            draggable:true,
-            minZoom:15,
-            // maxZoom:16,
-            mapTypeControl:false,
-            restriction:{
-              latLngBounds:{
-                north: this.state.mapPosition.lat+ 0.012,
-                south: this.state.mapPosition.lat - 0.012,
-                east: this.state.mapPosition.lng + 0.012,
-                west: this.state.mapPosition.lng - 0.012,
-              },
-              strictBounds: false,
-            },
-            styles: mapStyle,
-          }}
-          
-          >
-        {/* ----------componentของmarkerตำแหน่งที่ต้องไปรับ(สีเขียว) ----------*/}
-        <Marker
-          draggable={false}
-          // onDragEnd={this.onMarkerDragEnd}
-          position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
-          icon={{
-            url:"/pictures/markgreen.png",
-            scaledSize:{height: 40 , width: 25},
-          }}
-          animation={4}
-        >
-        </Marker>
-
-        {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
-        <Marker 
-            icon={{
-              url:"/pictures/markred.png",
-              scaledSize:{height: 40 , width: 25},
-            }}
-            
-            position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}
-            animation={4}
-            >  
-          </Marker>
-
-      </GoogleMap>
-    ));
+        
 
     
     if (this.state.loadingState===0){
@@ -434,66 +514,9 @@ class Driver extends React.Component {
     return (
 
       <section className="app-section">
-        <Menu isOpen={ this.state.menuOpen } onStateChange={(state) => this.handleStateChange(state)} right>
-        <a id="user-info"><i class="fas fa-user-circle"></i> {localStorage.getItem("username")}</a>
-          {/* <Menu customBurgerIcon={ <img src="" /> } right> */}
-          <a><Popup trigger={<a  id="home"  ><i class="far fa-address-card"></i> ข้อมูลผู้ใช้</a>} modal nested>
-                    {           
-                      close=>(
-                          <ProfileDriver 
-                            closeMenu={this.closeMenu} 
-                            citizenId={this.citizenId} 
-                            Fname={this.driverFname} Lname={this.driverLname} 
-                            birthDate={this.birthDate} 
-                            phone={this.phone}
-                            plate={this.plate}
-                            winNo={this.winNo}
-                            winName = {this.winName}
-                            profilepicture={this.profilepicture}
-                            handleForChangeProfile={this.handleForChangeProfile.bind(this)}
-                            close={close}
-                          />
-                    )}
-                 </Popup>
-                 </a>
-
-            
-            
-            <a><Popup trigger={<a id="home" ><i class="fas fa-history"></i> ประวัติการให้บริการ</a>} modal nested>
-                    {           
-                      close=>(
-                          <History closeMenu={this.closeMenu}
-                          close={close}
-                          />
-                    )}
-                 </Popup>
-                 </a>
-            <a><Popup trigger={<a id="contact" ><i class="fas fa-phone"></i> ติดต่อ </a>} modal nested>
-            {           
-                    close=>(
-                        <Contact closeMenu={this.closeMenu}
-                        close={close}
-                        />
-                    )}
-                </Popup>
-            </a>
-            <a id="contact" className="menu-item" id="signout" onClick={()=>{ 
-              axios.post(Url.LinkToBackend+"backend/api/logout_driver",{
-                username: localStorage.getItem("username")
-              })
-              .then(res=>{
-                localStorage.clear(); 
-                window.location.reload();
-              }).catch(err=>{
-                NotificationManager.error('ขออภัยในความไม่สะดวก','การเชื่อมต่อมีปัญหา',1000);
-              });
-            }}><i class="fas fa-sign-out"></i> ออกจากระบบ</a>
-              
-             
-              
-        </Menu>  
+          {this.theMenu}
         {/* <i class="far fa-address-card"></i> :   */}
-        <div id="test">{localStorage.getItem("username")}</div>,
+        {this.MenuBar}
         <div class ="detail-map"style={{ padding: '1rem', margin: '0 auto', maxWidth: 560 , maxHeight: 900 }}>
           <div key={this.state.driverId} className="driver-detail-driv">
             {this.queueDriver }
@@ -510,7 +533,7 @@ class Driver extends React.Component {
 
           {/* </div> */}
          
-          <MapWithAMarker
+          <this.MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div id="map"  />}
