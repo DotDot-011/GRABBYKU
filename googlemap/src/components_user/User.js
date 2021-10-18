@@ -227,6 +227,26 @@ class User extends React.Component {
           
         })
       })
+      if
+        (!isPointInPolygon({latitude: newLat, longitude: newLng},this.redZonePath) && 
+         (
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_1 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_2 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_3 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_4 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_5 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_6 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_7 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_8 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_9 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_10 ) 
+         )
+       ){
+         console.log(1);
+       }
+       else{
+        NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',1500);
+       }
     }
 
     //-------------------function ถูกเรียกตอนวางMarkerสีแดงปักลงในแผนที่----------------
@@ -257,6 +277,26 @@ class User extends React.Component {
           
         })
       })
+      if
+        (!isPointInPolygon({latitude: newLat, longitude: newLng},this.redZonePath) && 
+         (
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_1 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_2 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_3 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_4 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_5 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_6 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_7 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_8 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_9 ) ||
+           isPointInPolygon({latitude: newLat, longitude: newLng},WinZone.path_10 ) 
+         )
+       ){
+         console.log(1);
+       }
+       else{
+        NotificationManager.error('ไม่อยู่ในพื้นที่บริการ','Alert',1500);
+       }
     }
 
     //----------------------function ถูกเรียกเมื่อค้นหาสถานที่ในช่องค้นหาของmarker สีเขียว--------
@@ -736,10 +776,7 @@ class User extends React.Component {
               url:"../pictures/markgreen.png",
               scaledSize:{height: 40 , width: 25},
             }}
-            animation={4}
-            // options={{
-
-            // }}
+            
             >  
           </Marker>
             {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
@@ -750,7 +787,7 @@ class User extends React.Component {
               url:"../pictures/markred.png",
               scaledSize:{height: 40 , width: 25},
             }}
-            animation={4}
+            // animation={4}
             position={{ lat: this.state.markerDestinationPosition.lat, lng: this.state.markerDestinationPosition.lng }}         
             >  
           </Marker>

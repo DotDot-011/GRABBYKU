@@ -8,13 +8,13 @@ import './login.css'
 function Login() {
     useEffect(()=>{
         if(localStorage.getItem("regis_success")){
-            NotificationManager.success('ลงทะเบียนเสร็จสิ้น','',10000);
+            NotificationManager.success('ลงทะเบียนเสร็จสิ้น','',3000);
         }
         if(localStorage.getItem("Auth") === "failed"){
-            NotificationManager.error('หมดเวลาการเชื่อมต่อ','',10000);
+            NotificationManager.error('หมดเวลาการเชื่อมต่อ','',3000);
         }
         if(localStorage.getItem("Auth") ==="Multiple_Login"){
-            NotificationManager.error('มีผู้เข้าสู่ระบบจากอุปกรณ์อื่น','',10000);
+            NotificationManager.error('มีผู้เข้าสู่ระบบจากอุปกรณ์อื่น','',3000);
         }
         localStorage.clear();
     },[]);
