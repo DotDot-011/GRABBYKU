@@ -6,6 +6,7 @@
   text-align: center;
 }
 #buttstart{
+    padding: 0;
     background-color: #167964;
     border-radius: 20px;
     /* border-color:#1FAB89; */
@@ -114,7 +115,7 @@
 /* map position */
 #mapbox{
   height: 400px;
-  width: 99%;
+  width: 97%;
   /* margin-left: 1%; */
   top: 145px;
   position: relative;
@@ -143,6 +144,7 @@
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
+  /* position: sticky; */
   margin: 0 auto;
   width: 36px;
   height: 30px;
@@ -178,7 +180,8 @@
   */
   .bm-menu-wrap {
     top: 0;
-    position: fixed;
+  position: fixed;
+  /* position: sticky; */
     height: 100%;
   }
   
@@ -309,7 +312,8 @@
     }
   }
   #test{
-    position: fixed;
+  position: fixed;
+  /* position: sticky; */
     display: flex;
     /* margin: auto; */
     align-items:center;
@@ -323,3 +327,12 @@
     margin-right: -20px;
     border-radius: 20px;
   }
+  /* @media only screen and (max-width: 520px) {
+    #logoo{
+      background-image: url("./pictures/text-logo-lowprofile3.png");
+      width: 280px;
+    }
+  }
+  button{ 
+    padding: 0;
+  } */

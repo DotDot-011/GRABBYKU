@@ -3,12 +3,13 @@
     /* margin: auto; */
     margin-top: -5px;
     position: fixed;
+    /* position: sticky; */
     display: block;
     justify-content: center;
     align-items: center;
     text-align: center;
     z-index: 1;
-    width: 92%;
+    width: 90%;
     max-width: 560px;
     height: 75%;
     min-height: 620px;
@@ -20,6 +21,7 @@
     border-width: 3px;
     border-color:#000000c0;
     box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+    overflow: auto;
 }
 .waiting-box h4{
     position:static;
@@ -70,7 +72,7 @@
     /* background-color: rgb(41, 80, 64); */
     /* background-color: #929191; */
     /* background-color: #535353; */
-    background-color: #575757;
+    background-color: #d43726;
     border: none;
     border-radius: 18px;
     width: 100px;
@@ -78,16 +80,16 @@
     font-size: 26px;
     transition: 0.3s;
     box-shadow: 4px px 10px rgba(0, 0, 0, 0.185);
-
+    padding: 0;
 }
 #buttcancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #424242;
-    box-shadow: 0 8px 11px #555454;
+    background-color: #e43420;
+    box-shadow: 0 8px 11px #bd2514;
 }
 #buttcancel:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 7px #555454;
+    box-shadow: 0 4px 7px #bd2514;
 }
 
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
@@ -139,6 +141,7 @@
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
+    padding: 0;
 }
 #don-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
@@ -160,15 +163,16 @@
     height: 45px;
     font-size: 26px;
     transition: 0.3s;
+    padding: 0;
 }
 #not-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #424242;
-    box-shadow: 0 8px 11px #555454;
+    background-color: #e43420;
+    box-shadow: 0 8px 11px #bd2514;
 }
 #not-cancel:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 7px #555454;
+    box-shadow: 0 4px 7px #bd2514;
 }
 .last-service{
     margin: 0px auto;
@@ -192,9 +196,9 @@
         height: 85%;
         min-height: 550px;
       }
-      #waiting-detail{
+      /* #waiting-detail{
         margin: 10px auto;
-    }
+    } */
     .waiting-box h4{
         position:static;
         margin-top: 20px;
