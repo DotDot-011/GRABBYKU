@@ -112,7 +112,7 @@ box-shadow: 0 4px 7px #115745;
   /* background-color: #929191; */
   /* background-color: #575757; */
   /* background-color: #FF4935; */
-  background-color: #d62310;
+  background-color: #942013;
   border-radius: 20px;
   border: none;
   color: white;
@@ -126,12 +126,12 @@ box-shadow: 0 4px 7px #115745;
 .cancel-button:hover {
 transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
 /* background-color: #6e6e6e; */
-background-color: #e43420;
-box-shadow: 0 8px 11px #bd2514;
+background-color: #aa2718;
+box-shadow: 0 8px 11px #9e1f11;
 }
 .cancel-button:active {
 transform: translateY(1px);
-box-shadow: 0 4px 7px #bd2514;
+box-shadow: 0 4px 7px #9e1f11;
 }
 
 #map{
