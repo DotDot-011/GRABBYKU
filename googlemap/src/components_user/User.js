@@ -786,8 +786,8 @@ class User extends React.Component {
           position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
           onDragEnd={this.onMarkerDragEnd}
           icon={{
-            url:"../pictures/markgreen.png",
-            scaledSize:{height: 40 , width: 25},
+            url:"../pictures/markgreen.ver2.png",
+            scaledSize:{height: 42 , width: 30},
           }}
           
           >  
@@ -797,7 +797,7 @@ class User extends React.Component {
           draggable={true}
           onDragEnd={this.onMarkerDestinationDragEnd}
           icon={{
-            url:"../pictures/markred.png",
+            url:"../pictures/markred.ver2.png",
             scaledSize:{height: 40 , width: 25},
           }}
           // animation={4}
