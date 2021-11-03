@@ -40,7 +40,7 @@ if ($result->num_rows == 1) {
     }
 } else {
     echo json_encode([
-        "message"=> "username and password not registered yet"
+        "message"=> FALSE
     ]);
 }
 

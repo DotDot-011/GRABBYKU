@@ -36,7 +36,9 @@ if ($result->num_rows == 1) {
         ]);
     }
 } else {
-    echo "username and password not register yet";
+    echo json_encode([
+        "message"=> FALSE
+    ]);
 }
 
 
