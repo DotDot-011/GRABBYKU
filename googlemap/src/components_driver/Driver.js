@@ -28,7 +28,7 @@ import ProfileDriver from "./component/ProfileDriver";
 import Contact from '../contact';
 import  Timer from "react-time-counter"
 
-Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
+Geocode.setApiKey("AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4");
 
 // const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`)
 // conn.onopen = function(e) {
@@ -534,7 +534,7 @@ class Driver extends React.Component {
           {/* </div> */}
          
           <this.MapWithAMarker
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div id="map"  />}
                 mapElement={<div style={{ height: `100%` }} />}

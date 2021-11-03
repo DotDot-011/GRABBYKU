@@ -28,7 +28,7 @@ import { pathPosition, WinZone } from "./WinZone";
 import ProfileUser from "./ProfileUser";
 import Popup from 'reactjs-popup';
 import distance from 'google_directions';
-Geocode.setApiKey("AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4");
+Geocode.setApiKey("AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4");
 
 
 // const conn = new WebSocket(`${socketUrl.LinkToWebSocket}`);
@@ -441,7 +441,7 @@ class User extends React.Component {
       await axios.post(Url.LinkToBackend+"backend/api/getDistance",{
         origin: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
         destination: `${this.state.markerDestinationPosition.lat},${this.state.markerDestinationPosition.lng}`,
-        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+        key: "AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4",
         mode: "walking",
         
       })
@@ -453,6 +453,7 @@ class User extends React.Component {
         // })
       })
       .catch(err=>{
+        console.log('fails')
         NotificationManager.error(err.message,'Alert',1000);
       })
       // distance.getDirections(params_farecost, (err,data)=> {
@@ -478,7 +479,7 @@ class User extends React.Component {
       await axios.post(Url.LinkToBackend+"backend/api/getDistance",{
         origin: `${this.state.DriverPosition.lat},${this.state.DriverPosition.lng}`,
         destination: `${this.state.markerPosition.lat},${this.state.markerPosition.lng}`,
-        key: "AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4",
+        key: "AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4",
         mode: "walking",
         
       })
@@ -1013,7 +1014,7 @@ class User extends React.Component {
         {this.detailDriver}        
         
         <this.MapWithAMarker  
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrjHmzaE-oExXPRlnkij2Ko3svtUwy9p4&v=3.exp&libraries=geometry,drawing,places"
+          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4&v=3.exp&libraries=geometry,drawing,places"
           // containerElement={<div id="map" style={{ height: `342px`}} />}
           containerElement={<div id="mapbox"  />}
           loadingElement={<div style={{ height: `100%` }} />}
