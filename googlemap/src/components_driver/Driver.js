@@ -523,7 +523,7 @@ class Driver extends React.Component {
             {/* <h1 className="head-detail">Driver</h1> */}
             <div className="detail">{this.userInfo}</div>
           </div>
-          {/* <div className="pin-info"> */}
+          <div className="pin-infooo">
             <div id="pin-info" className="pin-green"></div>
             <div id="pin-info" className="pin-green-info">ตำแหน่งของลูกค้า</div>
 
@@ -531,7 +531,7 @@ class Driver extends React.Component {
             <div id="pin-info" className="pin-red-info">ตำแหน่งปลายทาง</div>
 
 
-          {/* </div> */}
+          </div>
          
           <this.MapWithAMarker
                 googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC__3G8SAUj96QoOW547p-TGDCsTOXZ0j4&v=3.exp&libraries=geometry,drawing,places"

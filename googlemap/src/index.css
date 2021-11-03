@@ -110,19 +110,22 @@ input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 #logoo{
+  /* position: fixed; */
   position: sticky;
-  top: 0.8%;
+  /* top: 0.8%; */
+  /* top: 5px; */
   left: 2%;
-  height: 60px;
-  background-image: url("./pictures/text-logo2.png");
+  /* padding-top: 50px; */
+  height: 65px;
+  background-image: url("./pictures/text-logo3.png");
   background-repeat: no-repeat;
   background-size: contain;
   width: 280px;
 }
 @media only screen and (max-width: 520px) {
   #logoo{
-    background-image: url("./pictures/text-logo-lowprofile3.png");
-    width: 280px;
+    background-image: url("./pictures/text-logo-lowprofile4.png");
+    height: 65px;
   }
 }
 button{ 

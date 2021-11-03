@@ -22,15 +22,25 @@
 .driver-detail-driv{
   margin: 0 auto;
   /* padding: 20px; */
-  border-radius: 30px;
+  border-radius: 30px 30px 0px 0px;
   position: static;
   width: 100%;
   height: 40px;
-  background:#ffffffbd;
+  /* background:#ffffffbd; */
+  background:#d1f0e6;
   text-align: center;
   font-size: 18px;
+  /* padding-top: -10px; */
 }
-
+.pin-infooo{
+  height: 45px;
+  /* background:#ffffffbd; */
+  background:#d1f0e6;
+  border-radius: 0px 0px 30px 30px;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  /* padding-bottom: -20px; */
+}
 .pin-red,.pin-green,.pin-green-info,.pin-red-info{
   margin: 5px auto;
 display: inline-block;
@@ -153,7 +163,8 @@ box-shadow: 0 4px 7px #9e1f11;
   min-width: 320px;
   max-width: 500px;
   height: 45px;
-  background:#ffffffbd;
+  /* background:#ffffffbd; */
+  background:#d1f0e6;
   color: red;
   margin: 14px auto 0;
   display: block;
@@ -310,6 +321,28 @@ Note: Beware of modifying this element as it can break the animations - you shou
   #pin-info{
     display: none;
   }
+  .pin-infooo{
+    display: none;
+  }
+  .driver-detail-driv{
+    border-radius: 30px;
+    padding: 0;
+  }
+  .driver-detail-driv{
+    margin-bottom: 10px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  #pin-info{
+    display: none;
+  }
+  .pin-infooo{
+    display: none;
+  }
+  .driver-detail-driv{
+    border-radius: 30px;
+    padding: 0;
+  }
   .driver-detail-driv{
     margin-bottom: 10px;
   }
@@ -322,7 +355,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
   align-items:center;
   justify-content:center;
   height: 50px;
-  top: 12px;
+  top: 9px;
   right: 15%;
   font-size: 30px;
   background:#ffffff63;
