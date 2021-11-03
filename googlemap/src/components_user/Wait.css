@@ -72,7 +72,7 @@
     /* background-color: rgb(41, 80, 64); */
     /* background-color: #929191; */
     /* background-color: #535353; */
-    background-color: #d43726;
+    background-color: #942013;
     border: none;
     border-radius: 18px;
     width: 100px;
@@ -84,12 +84,12 @@
 }
 #buttcancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #e43420;
-    box-shadow: 0 8px 11px #bd2514;
+    background-color: #aa2718;
+    box-shadow: 0 8px 11px #9e1f11;
 }
 #buttcancel:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 7px #bd2514;
+    box-shadow: 0 4px 7px #9e1f11;
 }
 
 /*ส่วนของ pop-up ยืนยันการยกเลิก*/
@@ -156,7 +156,7 @@
     margin-left: 12px;
     color: #ffffff;
     /* background-color: #FF4935; */
-    background-color: #d62310;
+    background-color: #942013;
     border: none;
     border-radius: 18px;
     width: 100px;
@@ -167,12 +167,12 @@
 }
 #not-cancel:hover {
     transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
-    background-color: #e43420;
-    box-shadow: 0 8px 11px #bd2514;
+    background-color: #aa2718;
+    box-shadow: 0 8px 11px #9e1f11;
 }
 #not-cancel:active {
     transform: translateY(1px);
-    box-shadow: 0 4px 7px #bd2514;
+    box-shadow: 0 4px 7px #9e1f11;
 }
 .last-service{
     margin: 0px auto;

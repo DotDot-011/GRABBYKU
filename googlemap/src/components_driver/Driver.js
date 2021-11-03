@@ -396,7 +396,7 @@ class Driver extends React.Component {
     // onDragEnd={this.onMarkerDragEnd}
     position={{ lat: this.state.markerPosition.lat, lng: this.state.markerPosition.lng }}
     icon={{
-      url:"/pictures/markgreen.png",
+      url:"/pictures/markgreen.ver2.png",
       scaledSize:{height: 40 , width: 25},
     }}
     animation={4}
@@ -406,7 +406,7 @@ class Driver extends React.Component {
   {/*--------- componentของmarkerตำแหน่งปลายทาง(สีแดง) -------*/}
   <Marker 
       icon={{
-        url:"/pictures/markred.png",
+        url:"/pictures/markred.ver2.png",
         scaledSize:{height: 40 , width: 25},
       }}
       
