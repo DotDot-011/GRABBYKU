@@ -1,0 +1,133 @@
+/* @font-face {
+  font-family: 'fc_minimalbold_italic';
+  src: url('fc_minimal_bold_italic-webfont.eot');
+  src: url('fc_minimal_bold_italic-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fc_minimal_bold_italic-webfont.woff2') format('woff2'),
+       url('fc_minimal_bold_italic-webfont.woff') format('woff'),
+       url('fc_minimal_bold_italic-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'fc_minimalbold';
+  src: url('fc_minimal_bold-webfont.eot');
+  src: url('fc_minimal_bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fc_minimal_bold-webfont.woff2') format('woff2'),
+       url('fc_minimal_bold-webfont.woff') format('woff'),
+       url('fc_minimal_bold-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'fc_minimalitalic';
+  src: url('fc_minimal_italic-webfont.eot');
+  src: url('fc_minimal_italic-webfont.eot?#iefix') format('embedded-opentype'),
+       url('fc_minimal_italic-webfont.woff2') format('woff2'),
+       url('fc_minimal_italic-webfont.woff') format('woff'),
+       url('fc_minimal_italic-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+
+} */
+
+@font-face {
+  font-family: 'fc_minimalregular';
+  src: url('../src/font/fc_minimal_regular-webfont.eot');
+  src: url('../src/font/fc_minimal_regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../src/font/fc_minimal_regular-webfont.woff2') format('woff2'),
+       url('../src/font/fc_minimal_regular-webfont.woff') format('woff'),
+       url('../src/font/fc_minimal_regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  /* font-family: 'fc_minimalregular' !important; */
+}
+
+/* top is font */
+html,body {
+  width: 100%;
+  /* height: 100%; */
+  margin: 0;
+  font-family: 'fc_minimalregular' !important;
+  /* font-family: 'fc_minimalregular', sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background-image: linear-gradient(to top, #38a3a5, 
+  #34aea6, #38b8a4, #45c2a0, #57cc99); */
+  background-image: linear-gradient(to top, #38a3a5, 
+  #34aea6, #38b8a4, #45c2a0, #57cc99);
+  /* overflow: hidden; */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+code {
+  /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace; */
+}
+#root {
+  /* background-color: #9dF3C4;   */
+  /* background-image: linear-gradient(to bottom, #38a3a5, */
+   /* #34aea6, #38b8a4, #45c2a0, #57cc99); */
+   /* background-image: linear-gradient(to top, #38a3a5, 
+   #34aea6, #38b8a4, #45c2a0, #57cc99); */
+  width: 100%;
+  height: 92%;
+  position: static;
+  /* top: -8%; */
+}
+
+.top{
+  position: relative;
+  width: 100%;
+  height: 8%;
+  /* background-color: #57CC99; */
+
+}
+/* .logo{
+  z-index: 1;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+} */
+#text{
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  height: 60px;
+  /* bottom: 0%;
+  height: 80%; */
+  /* min-height: 50px; */
+  /* opacity: 0.9; */
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+#logoo{
+  /* position: fixed; */
+  position: sticky;
+  /* top: 0.8%; */
+  /* top: 5px; */
+  left: 2%;
+  /* padding-top: 50px; */
+  height: 65px;
+  background-image: url("./pictures/text-logo3.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 280px;
+}
+@media only screen and (max-width: 520px) {
+  #logoo{
+    background-image: url("./pictures/text-logo-lowprofile4.png");
+    height: 65px;
+  }
+}
+button{ 
+	padding: 0;
+}

@@ -1,0 +1,79 @@
+#done_button{
+    top: 10px;
+    background-color: #167964;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-size: 26px;
+    position: relative;
+    height: 45px;
+    width: 100px;
+    transition: 0.3s;
+    padding: 0;
+}
+#done_button:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #105e4d;
+  box-shadow: 0 8px 11px #115745;
+}
+#done_button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
+}
+
+/*ส่วนของ pop-up ยืนยันการยกเลิก*/
+
+#confirmCancel-money{
+    /* margin: 0 auto; */
+    padding: 45px 0;
+    position:relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+    /* max-width: 560px; */
+    /* width: 90%; */
+    width: 320px;
+    height: 270px;
+    background-color: white;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+#confirmCancel-money h1{
+    font-size: 32px;
+    font-weight: bolder;
+    margin-bottom: 25px;
+}
+#input-mon{
+    padding-left: 15px;
+    font-size: 22px;
+    max-width: 500px;
+    width: 90%;
+    height: 45px;
+    margin-bottom: 8%;
+    border-style: solid;
+    border-color: #137e63;;
+    border-radius: 10px;
+}
+#sub-button{
+    color: #ffffff;
+    background-color: #167964;
+    border-radius: 20px;
+    border: none;
+    width: 100px;
+    height: 45px;
+    font-size: 26px;
+    transition: 0.3s;
+    padding: 0;
+}
+#sub-button:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #105e4d;
+    box-shadow: 0 8px 11px #115745;
+}
+#sub-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #115745;
+}

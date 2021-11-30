@@ -1,0 +1,142 @@
+.queue-container{
+    margin: 0 auto;
+    /* position: fixed; */
+    position: relative;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    max-width: 700px;
+    /* height: 630px; */
+    height: 90%;
+    min-height: 505px;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+    /* opacity: 0; */
+}
+
+.queue-container h4 {
+    padding-top: 10px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+#queueList{
+    margin: 15px auto;
+    /* padding: 15px; */
+    position: relative;
+    /* min-width: 350px; */
+    /* max-height: 6000px; */
+    width: 80%;
+    height: 65%;
+    font-size: 30px;
+}
+.button-queue{
+    /* background-color: silver; */
+    position: relative;
+    top: 3px;
+    /* margin: 0 auto; */
+}
+.button-enQueue{
+    background-color: #167964;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-size: 26px;
+    position: relative;
+    height: 42px;
+    width: 100px;
+    right: 19px;
+    /* top: 5px; */
+    transition: 0.3s;
+    padding: 0;
+}
+.button-enQueue:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #105e4d;
+    box-shadow: 0 8px 11px #115745;
+}
+.button-enQueue:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #115745;
+}
+
+.button-leaveQueue{
+    /* background-color: rgb(29, 53, 43); */
+    /* background-color: #929191; */
+    /* background-color: #FF4935; */
+    background-color: #942013;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    font-size: 26px;
+    position: relative;
+    height: 42px;
+    width: 100px;
+    left: 26px;
+    /* top: 5px; */
+    transition: 0.3s;
+    padding: 0;
+}
+
+.button-leaveQueue:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #aa2718;
+    box-shadow: 0 8px 11px #9e1f11;
+}
+.button-leaveQueue:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #9e1f11;
+}
+
+@media only screen and (max-height: 588px) {
+    .queue-container {
+        /* background-color: bisque; */
+        height: 890%;
+        min-height: 485px;
+    }
+    .button-queue{
+        position: relative;
+        top: -20px;
+    }
+}
+@media only screen and (min-height: 720px) and (max-height: 749px){
+    .queue-container {
+        /* background-color: red; */
+        height: 990%;
+        min-height: 600px;
+    }
+    .button-queue{
+        position: relative;
+        top: 0px;
+    }
+}
+
+@media only screen and (min-height: 750px) {
+    .queue-container {
+        /* background-color: rgb(207, 196, 255); */
+        height: 1000%;
+        min-height: 620px;
+    }
+    .button-queue{
+        position: relative;
+        top: 0px;
+    }
+}
+
+@media only screen and (min-height: 610px) and (max-height: 719px) {
+    .queue-container {
+        /* background-color: rgb(88, 207, 19); */
+        min-height: 520px;
+    }
+    .button-queue{
+        position: relative;
+        top: 0px;
+    }
+}
+  

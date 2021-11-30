@@ -1,0 +1,338 @@
+#bottombutt{
+  position:relative;
+  top: -70px;
+    /* margin: 20px; */
+    /* background-color: burlywood; */
+  text-align: center;
+}
+#buttstart{
+    padding: 0;
+    background-color: #167964;
+    border-radius: 20px;
+    /* border-color:#1FAB89; */
+    border: none;
+    width: 100px;
+    height: 45px;
+    align-content: center;
+    margin: auto;
+    font-size: 26px;
+    transition: 0.3s;
+}
+#buttstart:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #105e4d;
+  box-shadow: 0 8px 11px #115745;
+}
+#buttstart:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
+}
+
+.button-currentLocation{
+    float: right;
+    height: 40px;
+    width: 15%;
+    background-image: url("./pictures/pinme3.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: whitesmoke;
+    border-style: solid;
+    border-color: rgb(223, 223, 223);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.button-currentLocation:hover {
+  /* transform: scaleX(1.05) scaleY(1.05) translateY(-5px); */
+  background-color: rgb(219, 219, 219);
+  box-shadow: 0 3px 6px #929191;
+}
+.button-currentLocation:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 4px #929191;
+}
+
+.locationbox{
+    bottom: 525px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+    min-width: 300px;
+    max-width: 550px;
+    /* background-color: cornflowerblue; */
+}
+
+#inbutt{
+    margin: 0 auto;
+    text-align: center;
+    max-width: 560px;
+    width: 90%;
+}
+/* input location  */
+#input1.pac-target-input{
+    width: 85%;
+    height: 40px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+/* input destination  */
+#input2.pac-target-input{
+    margin-top: 4%;
+    max-width: 560px;
+    width: 90%;
+    height: 40px;
+}
+
+/* yourlocation div */
+#input1{
+    background-color: rgb(255, 255, 255);
+    background-image: url('./pictures/markgreen.ver2.png');
+    background-position: 4px 0px;
+    background-repeat: no-repeat;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: whitesmoke;
+    padding: 0px 40px;
+    background-size: contain;
+    font-size: 22px;
+
+}
+/* destination div */
+#input2{
+    background-color: rgb(255, 255, 255);
+    background-image: url('./pictures/markred.ver2.png');
+    background-position: 5px 0px;
+    background-repeat: no-repeat;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: whitesmoke;
+    padding: 0px 40px;
+    background-size: contain;
+    font-size: 22px;
+
+}
+/* map position */
+#mapbox{
+  height: 400px;
+  width: 97%;
+  /* margin-left: 1%; */
+  top: 145px;
+  position: relative;
+  border-style: solid;
+  border-width: 2px;
+  border-color:#00000069;
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.329);
+  
+}
+
+.redzone-error{
+    z-index: 1;
+    width: 300px;
+    height: 300px;
+    background-color: red;
+}
+
+/* ส่วนนี้คือHamberger bar ขวา ถ้าจะปรับแต่งต้องดูRef */
+.menu{
+    width: 150px;
+    height: 150px;
+    z-index: 1;
+    background-color: red;
+}
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  /* position: sticky; */
+  margin: 0 auto;
+  width: 36px;
+  height: 30px;
+  /* left: 80%; */
+  right: 15%;
+  top: 20px;
+}
+  
+  /* Color/shape of burger icon bars */
+  .bm-burger-bars {
+    background: #373a47;
+  }
+  
+  /* Color/shape of burger icon bars on hover*/
+  .bm-burger-bars-hover {
+    background: #ffffff;
+  }
+  
+  /* Position and sizing of clickable cross button */
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  /* Color/shape of close button cross */
+  .bm-cross {
+    background: #ffffff;
+  }
+  
+  /*
+  Sidebar wrapper styles
+  Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+  */
+  .bm-menu-wrap {
+    top: 0;
+  position: fixed;
+  /* position: sticky; */
+    height: 100%;
+  }
+  
+  /* General sidebar styles */
+  .bm-menu {
+    /* background: #2a5d8d; */
+    background: #22577A;
+    /* top right bott left   */
+    padding: 1.5em 1.5em 0 1em;
+    font-size: 26px;
+    color: coral;
+  }
+  
+  /* Morph shape necessary with bubble or elastic */
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+  
+  /* Wrapper for item list */
+  .bm-item-list {
+    color: #ffffff;
+    padding: 1em;
+  }
+  
+  /* Individual item */
+  .bm-item {
+    /* background-color: bisque; */
+    /* border-style: solid;
+    border-width: 2px;
+    border-color: chartreuse; */
+    margin-top: 20px;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+  }
+  #user-info{
+    font-size: 36px;
+    color: rgb(0, 0, 0);
+  }
+ 
+  .bm-item:hover{
+    color: black;
+    /* transform: scaleX(1.05) scaleY(1.05) translateY(-5px); */
+  }
+  #signout:hover{
+    color: red;
+    /* transform: scaleX(1.05) scaleY(1.05) translateY(-5px); */
+  }
+  
+  /* Styling of overlay */
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* ด้านล่างนี้คิือCSSสำหรับตัวNotification */
+  .message{
+    font-size: 20px;
+  }
+
+  .notification-message{
+    font-size: 20px;
+  }
+
+  .notification{
+    /* width: 50px; */
+  }
+  /* icon in menu */
+  .far,.fas{
+    font-family: fontawesome !important;
+    font-style: normal;
+  }
+  #signout{
+    border-top-style: solid;
+    padding-top: 12px;
+    border-width: 3px;
+    border-color: white;
+    /* color: red; */
+  }
+  #loading{
+    position: relative;
+    top:30%;
+    display: block;
+    margin: 0 auto;
+    /* margin-top: 50%; */
+    width: 200px;
+  }
+  #here + div > div{
+    background-color: burlywood;
+    height: 0px;
+  }
+  @media only screen and (max-height: 800px) {
+    .locationbox{
+      /* background-color: salmon; */
+      bottom: 490px;
+    }
+    #mapbox {
+      top: 140px;
+      height: 370px;
+    }
+    #bottombutt{
+      top: -80px;
+    }
+  }
+
+  @media only screen and (max-height: 680px) {
+    .locationbox{
+      /* background-color: rgb(139, 14, 0); */
+      bottom: 440px;
+    }
+    #mapbox {
+      top: 120px;
+      height: 323px;
+    }
+    #bottombutt{
+      top: -80px;
+    }
+  }
+  @media only screen and (max-height: 590px) {
+    .locationbox{
+      /* background-color: rgb(17, 212, 50); */
+      bottom: 425px;
+    }
+    #mapbox {
+      top: 105px;
+      height: 320px;
+    }
+    #bottombutt{
+      top: -83px;
+    }
+  }
+  #test{
+  position: fixed;
+  /* position: sticky; */
+    display: flex;
+    /* margin: auto; */
+    align-items:center;
+    justify-content:center;
+    height: 50px;
+    top: 9px;
+    right: 15%;
+    font-size: 30px;
+    background:#ffffff63;
+    padding: 0px 70px 0px 15px;
+    margin-right: -20px;
+    border-radius: 20px;
+  }
+  /* @media only screen and (max-width: 520px) {
+    #logoo{
+      background-image: url("./pictures/text-logo-lowprofile3.png");
+      width: 280px;
+    }
+  }
+  button{ 
+    padding: 0;
+  } */

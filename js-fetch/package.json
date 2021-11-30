@@ -1,0 +1,11 @@
+{
+  "name": "js-fetch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server queueDriver.json --port 1235 & json-server driverDetail.json --port 1237 & json-server location.json --port 1236"
+  },
+  "author": "",
+  "license": "ISC"
+}

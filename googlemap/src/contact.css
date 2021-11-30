@@ -1,0 +1,37 @@
+.contact-page{
+    margin: auto;
+    padding: 30px 30px;
+    text-align: center;
+    z-index: 1;
+    height: 70%;
+    width: 90%;
+    min-height: 440px;
+    min-width: 320px;
+    max-width: 500px;
+    background-color: #62d2A2;
+    background-color: white;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+.contact-page img{
+    margin-left: 25px;
+    min-width: 120px;
+    min-height: 160px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    border-radius: 5px;
+    
+}
+.contact-page h2{
+    margin-top: 25px;
+    font-size: 26px;
+    font-weight: bolder;
+}
+.contact-page p{
+    margin-top: 15px;
+    font-size: 20px;
+}

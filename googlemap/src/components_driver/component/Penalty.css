@@ -1,0 +1,43 @@
+.cooldown-container{
+    margin: auto;
+    padding: 30px 30px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    height: 80%;
+    min-height: 540px;
+    width: 100%;
+    max-width: 560px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+.cooldown-container h1 {
+    font-size: 36px;
+    font-weight: bolder;
+    /* margin-bottom: 3%; */
+}
+.cooldown-container h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.timer-wrapper > div{
+    margin: 20px auto;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bolder;
+}
+@media only screen and (max-height: 630px) {
+    .cooldown-container{
+        height: 80%;
+        min-height: 480px;
+    }
+}

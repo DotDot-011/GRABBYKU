@@ -1,0 +1,108 @@
+#main_userreg{
+    margin: 0 auto;
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+    height:100%;
+    /* background-color: blue; */
+}
+#main_userreg h1 {
+    margin-top: 7px;
+    margin-bottom: 10px;
+    font-size: 42px;
+}
+#userreg{
+    align-items: center;
+    text-align: center;
+    position: static;
+    /* background-color: rgb(26, 157, 180); */
+    height: 80%;
+    max-height: 630px;
+    min-height: 450px;
+    margin-bottom: -10%px;
+}
+#boxinput-user{
+    margin: 0px auto;
+    /* background-color: lavender; */
+    width: 90%;
+    max-width: 700px;
+    height: 11.11111111%;
+    max-height: 70px;
+    min-height: 50px;
+}
+
+#userreg label{
+    margin: 0 auto;
+    float: left;
+    position: static;
+    font-size: 23px;
+}
+#userreg input{
+    position: static;
+    float: right;
+    font-size: 18px;
+    width: 40%;
+    max-width: 300px;
+    height: 80%;
+    max-height: 50px;
+    border-style: solid;
+    border-color: #12634f;
+    border-radius: 5px;
+    padding-left:10px;
+}
+
+#sum_userreg{
+    padding: 0;
+    text-align: center;
+    /* margin-top: -20px; */
+    margin-right: 13px;
+    background-color: #167964;
+    border-radius: 15px 3px 3px 15px;
+    border: none;
+    color: white;
+    font-size: 27px;
+    position: static;
+    height: 10%;
+    min-height: 40px;
+    max-height: 50px;
+    width: 110px;
+    transition: 0.3s;
+}
+#sum_userreg:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px) translateX(-7px);
+    background-color: #21725e;
+    box-shadow: 0 8px 13px #115745;
+}
+#sum_userreg:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 9px #115745;
+}
+
+#back{
+    padding: 0;
+    text-align: center;
+    /* margin-top: -20px; */
+    margin-left: 13px;
+    background-color: #942013;
+    border-radius: 3px 15px 15px 3px;
+    border: none;
+    color: white;
+    font-size: 27px;
+    position: static;
+    height: 10%;
+    min-height: 40px;
+    max-height: 50px;
+    width: 110px;
+    transition: 0.3s;
+}
+#back:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px) translateX(7px);
+    background-color: #aa2718;
+    box-shadow: 0 8px 13px #9e1f11;
+}
+#back:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 9px #9e1f11;
+}

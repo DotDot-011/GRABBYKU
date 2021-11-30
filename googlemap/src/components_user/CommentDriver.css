@@ -1,0 +1,121 @@
+.comment-driver-container{
+    margin: -2px auto;
+    padding: 30px 30px;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    /* height: 620px; */
+    height: 83%;
+    min-height: 480px;
+    max-height: 650px;
+    max-width: 560px;
+    width: 90%;
+    background-color: #62d2A2;
+    /* background-color: white; */
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+#close-butt{
+    float: right;
+    border-width: 2px;
+}
+#commentH{
+    margin-top: 35px;
+    font-size: 35px;
+    font-weight: bolder;
+    margin-bottom: 3%;
+    font-family: 'fc_minimalregular';
+}
+#rate-name{
+    font-size: 28px;
+    margin-bottom: 4%;
+}
+#comments{
+    padding: 15px;
+    font-size: 22px;
+    max-width: 560px;
+    width: 90%;
+    height: 160px;
+    margin-bottom: 8%;
+    border-style: solid;
+    border-color: #137e63;;
+    border-width: 3px;
+    border-radius: 10px;
+}
+#done-button-com{
+    color: #ffffff;
+    background-color: #167964;
+    border: none;
+    border-radius: 18px;
+    width: 100px;
+    height: 45px;
+    font-size: 26px;
+    transition: 0.3s;
+    padding: 0;
+}
+#done-button-com:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #105e4d;
+    box-shadow: 0 8px 11px #115745;
+}
+#done-button-com:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #115745;
+}
+
+/*ส่วนของ pop-up ยืนยันการยกเลิก*/
+
+.thankyou {
+    /* margin: 0 auto; */
+    padding: 25% 0;
+    position:relative;
+    display: block;
+    align-items: center;
+    text-align: center;
+    /* max-width: 560px; */
+    /* width: 90%; */
+    width: 320px;
+    height: 270px;
+    background-color: white;
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+.thankyou h1{
+    font-size: 32px;
+    font-weight: bolder;
+    margin-bottom: 40px;
+}
+#thank-button{
+    color: #ffffff;
+    background-color: #167964;
+    border-radius: 20px;
+    border: none;
+    width: 100px;
+    height: 45px;
+    font-size: 26px;
+    transition: 0.3s;
+    padding: 0;
+}
+#thank-button:hover {
+    transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+    background-color: #105e4d;
+    box-shadow: 0 8px 11px #115745;
+}
+#thank-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 7px #115745;
+}
+/* @media only screen and (max-height: 650px) {
+    .comment-driver-container {
+      height: 87%;
+      min-height: 490px;
+    }
+  } */

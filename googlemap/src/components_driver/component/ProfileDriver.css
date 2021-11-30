@@ -1,0 +1,81 @@
+.profile-page{
+    margin: auto;
+    padding: 20px 20px;
+    text-align: center;
+    z-index: 1;
+    height: 70%;
+    width: 90%;
+    min-height: 530px;
+    max-width: 500px;
+    background-color: #62d2A2;
+    /* background-color: white; */
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color:#000000c0;
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.5);
+}
+.profile-picture img{
+    margin-left: 25px;
+    max-width: 380px;
+    max-height: 170px;
+}
+#boxinfo-driver{
+    float: left;
+    margin: 1px auto 0px;
+    height: auto;
+    width: 100%;
+    max-width: 700px;
+}
+#boxinfo-driver h4{
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 24px;
+    font-weight: bolder
+}
+.driver-info label{
+    margin: 0 auto;
+    margin-left: 13px;
+    position: static;
+    float: left;
+    font-size: 18px;
+}
+.driver-info input{
+    margin-right: 13px;
+    position: static;
+    float: right;
+    font-size: 17px;
+    width: 43%;
+    max-width: 300px;
+    height: 80%;
+    max-height: 50px;
+    border-style: solid;
+    border-color: #12634f;
+    border-radius: 5px;
+    padding-left: 8px;
+}
+.updateinfo-driver{
+    background-color: #167964;
+    border-radius: 20px;
+    border: none;
+    width: 100px;
+    height: 45px;
+    align-content: center;
+    margin: 4px auto 2px;
+    font-size: 26px;
+    transition: 0.3s;
+    color: white;
+    padding: 0;
+}
+.updateinfo-driver:hover {
+  transform: scaleX(1.05) scaleY(1.05) translateY(-5px);
+  background-color: #105e4d;
+  box-shadow: 0 8px 11px #115745;
+}
+.updateinfo-driver:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 7px #115745;
+}
+.name,.birthday,.citizen-id,.winName,.winNo,.plate{
+    background-color: rgba(211, 211, 211, 0.788);
+}
